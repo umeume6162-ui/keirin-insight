@@ -1,7 +1,7 @@
 name: Update KEIRIN INSIGHT public JSON (manual test first)
 on:
   workflow_dispatch:
-    schedule:
+  schedule:
     - cron: '25 22 * * *'
 permissions:
   contents: write
