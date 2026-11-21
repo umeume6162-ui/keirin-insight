@@ -23,7 +23,10 @@ def fetch_sheet(credentials_json):
     """Google Sheets API read-only; never uses public/anonymous sheet publication."""
     from google.oauth2 import service_account
     from google.auth.transport.requests import AuthorizedSession
-    info = json.loads(credentials_json)
+    try:
+        info = json.loads(credentials_json)
+    except json.JSONDecodeError as e:
+        raise ValueError(f'Google credential JSON format error: {e.msg} (line {e.lineno}, column {e.colno}). Check GitHub Secret GOOGLE_SERVICE_ACCOUNT_JSON; do not print its contents.') from None
     creds = service_account.Credentials.from_service_account_info(
         info, scopes=['https://www.googleapis.com/auth/spreadsheets.readonly'])
     session = AuthorizedSession(creds)
