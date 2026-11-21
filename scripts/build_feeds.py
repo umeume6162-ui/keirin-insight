@@ -154,6 +154,23 @@ def main():
     stamp=datetime.now(timezone.utc).strftime('%Y-%m-%d')
     index,rider=construct(data,stamp)
     validate_against_existing(index,rider,root,allow_drop=args.allow_rebuild)
+    # Operational diagnostics: distinguish a healthy publish from stale upstream V99 data.
+    previous_path=root/'rider-results-feed-v1.json'
+    if previous_path.exists():
+        previous=json.loads(previous_path.read_text(encoding='utf-8'))
+        old_rows=len(previous.get('rows',[]))
+        old_latest=previous.get('latestEventDate','')
+        delta=len(rider['rows'])-old_rows
+        print(f'FEED_AUDIT rows_previous={old_rows} rows_current={len(rider["rows"])} delta={delta} latest_previous={old_latest} latest_current={index["latest_race_date"]}')
+        if delta == 0:
+            print('WARNING: V99 has no new rider rows relative to the published feed. Check upstream GAS collection and V99 append logs; JSON publishing alone cannot add missing results.',file=sys.stderr)
+        if index['latest_race_date']==old_latest:
+            print('WARNING: Latest race date has not advanced. Verify source collection settings and trigger executions.',file=sys.stderr)
+    latest_date=datetime.strptime(index['latest_race_date'],'%Y-%m-%d').date()
+    lag=(datetime.now(timezone.utc).date()-latest_date).days
+    print(f'FEED_AUDIT latest_race_lag_days={lag}')
+    if lag>7:
+        print(f'WARNING: Latest V99 race is {lag} days old; collection freshness needs investigation.',file=sys.stderr)
     # Stage both serialized feeds before replacing either baseline.
     # GitHub Actions will only commit if this entire step succeeds.
     index_json=json.dumps(index,ensure_ascii=False,separators=(',',':'))+'\n'
