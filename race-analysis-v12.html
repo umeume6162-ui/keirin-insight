@@ -26,4 +26,55 @@ function lookup(){if(!loaded){$('resultStatus').textContent='公開JSON未取得
 function evaluate(){let g=checkLine(),top=[1,2,3].map(x=>Number($('rank'+x).value));if(top.some(x=>!x)||new Set(top).size!==3){$('resultSummary').textContent='1〜3着の異なる車番を入力してください。';return}if(!g){$('resultSummary').textContent='事前ラインの形式検査が必要です。';return}let record=g.map(x=>({g:x,n:x.filter(y=>top.includes(y)).length}));let solo=record.filter(x=>x.g.length===1&&x.n>0);let max=Math.max(...record.map(x=>x.n));$('resultSummary').innerHTML='<div class="stats">'+stat(top.join(' - '),'入力された上位3着車番')+stat(solo.length,'3着以内の単騎人数')+stat(max,'同一ライン最多3着以内人数')+'</div><p>'+record.map(x=>'<span class="pill">'+x.g.join('-')+'：3着以内 '+x.n+'人</span>').join('')+'</p><p class="tiny">これは事前想定ラインと着順の単純照合です。実際の隊列・牽制・切り替えを証明するものではありません。</p>'}
 function report(){let g=checkLine(),res=[1,2,3].map(n=>$('rank'+n).value||'未入力');const lines=['KEIRIN INSIGHT v12.0 実戦分析・事後検証メモ','開催日：'+($('day').value||'未設定'),'競輪場：'+($('track').value||'未設定')+' '+$('race').value+'R','級班：'+$('grade').value,'公開JSONの取得状況：'+$('dataStatus').textContent,'選手の入力：',...[1,2,3,4,5,6,7].map(n=>{let x=getInput(n),f=findRider(n);let valid=f.items.filter(r=>r.rank!==null);return n+'番 '+(x.name||'未入力')+' '+(x.pref||'')+' '+(x.period||'')+'期　近走収録 '+f.items.length+'件　数値着順 '+valid.length+'件　直近 '+f.items.map(r=>r.rank===null?'未確定':r.rank+'着').join(',')}),'想定ライン：'+(g?g.map(x=>x.join('-')).join(' / '):'形式不備・未確定'),'ライン出典：'+$('lineSource').value,'並び確認：'+$('lineVerify').value,'映像確認：'+$('videoVerify').value,'先行候補：'+$('leader').value,'番手仮説：'+$('second').value,'単騎仮説：'+$('solo').value,'展開仮説：'+$('hypothesis').value,'上位3着（入力）：'+res.join('-'),'事後検証メモ：'+$('review').value,'注意：収録結果は予測勝率ではなく、ヨコ・切り替えは映像未確認なら断定不可。'];$('report').value=lines.join('\n');$('reportStatus').textContent='レポート作成済み。必要ならコピーまたは保存してください。'}
 $('analyze').onclick=analyze;$('reload').onclick=loadData;$('checkLine').onclick=checkLine;$('lookup').onclick=lookup;$('evaluate').onclick=evaluate;$('buildReport').onclick=report;$('copyReport').onclick=async()=>{if(!$('report').value)report();try{await navigator.clipboard.writeText($('report').value);$('reportStatus').textContent='コピーしました'}catch(e){$('reportStatus').textContent='コピーできない場合はレポート欄を長押ししてコピーしてください'}};$('downloadReport').onclick=()=>{if(!$('report').value)report();let u=URL.createObjectURL(new Blob([$('report').value],{type:'text/plain;charset=utf-8'}));let a=document.createElement('a');a.href=u;a.download='keirin-insight-v12-'+($('day').value||'memo')+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),5000);$('reportStatus').textContent='保存を開始しました'};$('grade').onchange=analyze;$('recent').onchange=analyze;checkLine();loadData();
+</script><script>
+(() => {
+  'use strict';
+  const container = document.getElementById('riderInputs');
+  const analyze = document.getElementById('analyze');
+  if (!container || !analyze || document.getElementById('ki-bulk-import')) return;
+  const panel = document.createElement('section');
+  panel.id = 'ki-bulk-import';
+  panel.style.cssText = 'padding:14px;margin:12px 0;border:1px solid #466879;border-radius:12px;background:#102c3b';
+  const heading = document.createElement('strong');
+  heading.textContent = 'v12.1｜7選手まとめて入力';
+  const note = document.createElement('p');
+  note.style.cssText = 'font-size:13px;opacity:.9;margin:8px 0';
+  note.textContent = '1行に「車番,氏名,府県,期別」。府県・期別は省略できます。例：1,杉山 正和,三重,59';
+  const field = document.createElement('textarea');
+  field.rows = 7;
+  field.placeholder = '1,杉山 正和,三重,59\n2,選手名,府県,期別\n3,選手名';
+  field.setAttribute('aria-label', '出走選手一括入力');
+  field.style.cssText = 'display:block;width:100%;min-height:140px;padding:10px;border-radius:8px;background:#071827;color:#fff;border:1px solid #557486;font-size:16px';
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.textContent = '7選手を一括反映・成績照合';
+  button.style.cssText = 'margin-top:10px;min-height:44px;padding:10px 14px;cursor:pointer';
+  const status = document.createElement('p');
+  status.setAttribute('role', 'status');
+  status.style.cssText = 'font-size:13px;margin:8px 0 0';
+  button.addEventListener('click', () => {
+    const lines = field.value.trim().split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+    if (!lines.length || lines.length > 7) {
+      status.textContent = '1〜7行を入力してください。'; return;
+    }
+    const parsed = [];
+    for (const line of lines) {
+      const cells = line.split(/[,，\t]/).map(x => x.trim());
+      const num = Number(cells[0]);
+      if (!Number.isInteger(num) || num < 1 || num > 7 || !cells[1] || cells.length > 4 || parsed.some(x => x.num === num)) {
+        status.textContent = '入力形式を確認してください：車番1〜7、氏名必須、車番重複なし。'; return;
+      }
+      parsed.push({num, name:cells[1], pref:cells[2] || '', period:(cells[3] || '').replace(/期$/, '')});
+    }
+    for (const rider of parsed) {
+      document.getElementById('name'+rider.num).value = rider.name;
+      document.getElementById('pref'+rider.num).value = rider.pref;
+      document.getElementById('period'+rider.num).value = rider.period;
+    }
+    status.textContent = parsed.length + '名を反映しました。公開JSONの収録成績を照合します。';
+    analyze.click();
+  });
+  panel.append(heading,note,field,button,status);
+  container.before(panel);
+})();
 </script></body></html>
