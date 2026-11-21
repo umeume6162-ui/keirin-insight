@@ -1,8 +1,9 @@
-name: Update KEIRIN INSIGHT public JSON (manual test first)
+name: Update KEIRIN INSIGHT public JSON
 on:
   workflow_dispatch:
   schedule:
-    - cron: '25 22 * * *'
+    # JST 10:25 and 19:25; allow morning GAS collection to finish.
+    - cron: '25 1,10 * * *'
 permissions:
   contents: write
 concurrency:
@@ -42,5 +43,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- results-feed-v1.json rider-results-feed-v1.json
-          git commit -m 'Update validated V99 public results feeds'
+          git commit -m 'Update validated V96–V99 public results feeds'
           git push
