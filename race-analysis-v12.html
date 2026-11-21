@@ -25,10 +25,19 @@ function showFeedAudit(){
  if(!panel){panel=document.createElement('section');panel.id='kiFeedAudit';panel.style.cssText='padding:12px 14px;margin:12px 0;border:1px solid #527083;border-radius:10px;background:#102b3a;line-height:1.7';$('dataStatus').after(panel)}
  const totals={A3:0,'A1/A2':0,other:0};
  for(const r of races)totals[r.grade]===undefined?totals.other++:totals[r.grade]++;
- const unique=new Set(rows.map(r=>r.name.replace(/[\\s\\u3000]/g,'')+'|'+r.pref+'|'+r.period)).size;
- const date=String(meta.latest||'');
- const days=/^\\d{4}-\\d{2}-\\d{2}$/.test(date)?Math.floor((Date.now()-new Date(date+'T00:00:00Z').getTime())/86400000):null;
- panel.textContent='【公開データ監査】A3：'+totals.A3+'レース／A1・A2：'+totals['A1/A2']+'レース／その他：'+totals.other+'レース。選手出走記録：'+rows.length+'件、氏名・府県・期別の組合せ：'+unique+'件。最終収録開催日：'+(meta.latest||'不明')+'。'+(days!==null&&days>7?' ⚠ 最終収録開催日から'+days+'日経過。直近成績が未収録の可能性があります。':'')+' ※収録件数は全競輪結果の網羅を意味しません。公式結果との全件独立照合は未完了です。';
+ const unique=new Set(rows.map(r=>r.name.replace(/[\s\u3000]/g,'')+'|'+r.pref+'|'+r.period)).size;
+ const latest=String(meta.latest||'');
+ const snapshot=String(meta.snapshot||'');
+ const parseDay=d=>/^\d{4}-\d{2}-\d{2}$/.test(d)?Date.parse(d+'T00:00:00Z'):NaN;
+ const now=Date.now(),eventDay=parseDay(latest),snapshotDay=parseDay(snapshot);
+ const eventAge=Number.isFinite(eventDay)?Math.max(0,Math.floor((now-eventDay)/86400000)):null;
+ const publicationAge=Number.isFinite(snapshotDay)?Math.max(0,Math.floor((now-snapshotDay)/86400000)):null;
+ const sourceGap=Number.isFinite(eventDay)&&Number.isFinite(snapshotDay)?Math.max(0,Math.floor((snapshotDay-eventDay)/86400000)):null;
+ const warnings=[];
+ if(eventAge!==null&&eventAge>7)warnings.push('⚠ 最新収録レースは'+eventAge+'日前。直近の結果が不足している可能性があります');
+ if(sourceGap!==null&&sourceGap>7)warnings.push('⚠ 公開JSONの生成日と最終収録開催日の差は'+sourceGap+'日。上流の収集停滞を確認してください');
+ if(publicationAge!==null&&publicationAge>2)warnings.push('⚠ 公開JSONの基準日は'+publicationAge+'日前。GitHub Actionsの更新状況を確認してください');
+ panel.textContent='【公開データ監査】A3：'+totals.A3+'レース／A1・A2：'+totals['A1/A2']+'レース／その他：'+totals.other+'レース。選手出走記録：'+rows.length+'件、氏名・府県・期別の組合せ：'+unique+'件。公開JSON基準日：'+(snapshot||'不明')+'。最終収録開催日：'+(latest||'不明')+'。'+(warnings.length?' '+warnings.join('。')+'。':'')+' ※収録件数は全競輪結果の網羅を意味しません。公式結果との全件独立照合は未完了です。';
 }
 function updateCoverage(count,found){
  let panel=$('kiCoverage');
