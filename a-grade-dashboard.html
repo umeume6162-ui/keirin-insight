@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#081522"><title>A級成績ダッシュボード | KEIRIN INSIGHT</title>
+<style>
+:root{color-scheme:dark;--bg:#081522;--panel:#122535;--line:#2a4756;--text:#edf8f7;--muted:#a7bfc9;--mint:#91eac5}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 90% 0%,#15483e,transparent 42%),var(--bg);color:var(--text);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif}.wrap{max-width:1100px;margin:auto;padding:20px 15px 70px}a{color:#acf4d4}.top{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}.brand{font-size:13px;font-weight:850;letter-spacing:.16em}.back{border:1px solid #52766e;border-radius:12px;padding:8px 12px;text-decoration:none}h1{font-size:clamp(26px,5vw,42px);margin:27px 0 8px;line-height:1.2}.eyebrow{font-size:11px;letter-spacing:.19em;color:var(--mint);font-weight:800}.desc,.muted{color:var(--muted)}.notice{border-left:3px solid #e3ba70;padding:9px 12px;margin:18px 0;background:#302b22;color:#f2dfbe;font-size:12px}.panel,.metric{background:linear-gradient(145deg,#132838,#0e202e);border:1px solid var(--line);border-radius:16px}.filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:16px}.filters label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted)}select,input{width:100%;border-radius:9px;border:1px solid #3a5a66;background:#071521;color:white;padding:12px;min-width:0;font:inherit}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:15px 0}.metric{padding:15px}.metric b{display:block;font-size:26px}.metric small{color:var(--muted)}h2{font-size:19px;margin:25px 0 10px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;min-width:660px;font-size:13px}thead{background:#173442}th,td{padding:11px 10px;text-align:left;border-bottom:1px solid #294150;white-space:nowrap}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}tbody tr:nth-child(even){background:#102333}.small{font-size:12px;color:var(--muted)}button{color:#10231d;background:var(--mint);border:0;padding:9px 14px;border-radius:10px;font-weight:800;font:inherit;cursor:pointer}.empty{padding:25px 12px;color:var(--muted)}.status{margin:12px 0;font-size:13px;color:var(--muted)}.error{color:#ffadad}.positive{color:var(--mint)}.footer{padding-top:18px;color:var(--muted);font-size:12px}@media(max-width:650px){.metrics{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:repeat(2,minmax(0,1fr))}.filters .search{grid-column:1/-1}.metric b{font-size:23px}}
+</style></head>
+<body><div class="wrap">
+<div class="top"><div class="brand">KEIRIN INSIGHT <span class="positive">/ A CLASS</span></div><a class="back" href="./research-hub.html">研究ホームに戻る</a></div>
+<div class="eyebrow" style="margin-top:29px">HISTORICAL PERFORMANCE / V11.4</div>
+<h1>A級 成績ダッシュボード</h1>
+<p class="desc">公開済みの選手別結果とレース索引を照合し、A1/A2とA3を分離集計。競輪場・車立て・選手名で絞り込めます。</p>
+<div class="notice">過去結果の集計です。予想精度や今後の勝率を保証するものではありません。ライン・展開・番手・S/B回数は、この公開JSONだけでは検証できないため推定表示しません。</div>
+<div class="panel filters">
+<label>級班<select id="grade"><option value="ALL">A級すべて</option><option value="A1/A2">A1/A2</option><option value="A3">A3（チャレンジ）</option></select></label>
+<label>競輪場<select id="track"><option value="ALL">すべての競輪場</option></select></label>
+<label>車立て<select id="size"><option value="ALL">すべて</option><option value="7">7車</option><option value="9">9車</option></select></label>
+<label class="search">選手名で検索<input id="search" type="search" placeholder="例：山田（部分一致）" autocomplete="off"></label>
+</div>
+<div id="status" class="status" role="status" aria-live="polite">データ取得中…</div>
+<div class="metrics"><div class="metric"><small>対象レース</small><b id="race-count">—</b></div><div class="metric"><small>選手出走結果</small><b id="row-count">—</b></div><div class="metric"><small>対象選手（氏名＋府県＋期別）</small><b id="rider-count">—</b></div><div class="metric"><small>1着率（着順判明分）</small><b id="win-rate">—</b></div></div>
+<div class="section-head"><h2>選手別成績</h2><button id="reload" type="button">再読み込み</button></div>
+<p class="small">1着・3着内の率は着順が数字で記録された出走結果を分母に計算。選手名だけで統合せず府県・期別を併用します。着順不明・失格などは率の分母から除外します。標本数が小さい選手の数値には注意してください。</p>
+<div class="table-wrap"><table><thead><tr><th>選手</th><th>府県 / 期別</th><th class="num">出走行</th><th class="num">着順判明</th><th class="num">1着</th><th class="num">3着内</th><th class="num">1着率</th><th class="num">3着内率</th></tr></thead><tbody id="rows"><tr><td colspan="8">データを読み込んでいます…</td></tr></tbody></table></div>
+<p id="limit" class="small"></p>
+<div class="footer"><p id="source">出典：KEIRIN INSIGHT公開JSON（公式全件独立照合未完了）</p><p>使用データ：<a href="./results-feed-v1.json">レース索引</a>・<a href="./rider-results-feed-v1.json">選手結果</a>。更新はGitHub Actions経由です。</p></div>
+</div><script>
+'use strict';
+const $=id=>document.getElementById(id);
+const fmt=n=>Number(n).toLocaleString('ja-JP');
+const rate=(a,b)=>b?(100*a/b).toFixed(1)+'%':'—';
+let dataset=null;
+function key(date,code,race){return [String(date).trim(),String(code).trim(),String(Number(race))].join('|')}
+function status(message,isError=false){$('status').textContent=message;$('status').className='status'+(isError?' error':'')}
+async function load(){status('公開JSONを確認しています…');$('reload').disabled=true;try{
+const [r1,r2]=await Promise.all(['results-feed-v1.json','rider-results-feed-v1.json'].map(p=>fetch('./'+p+'?t='+Date.now(),{cache:'no-store'})));
+if(!r1.ok||!r2.ok)throw Error('公開JSONの取得に失敗しました（HTTP '+r1.status+' / '+r2.status+'）');
+const [raceData,riderData]=await Promise.all([r1.json(),r2.json()]);
+if(raceData.schema!=='ki-public-results-index-v1'||riderData.schema!=='ki-rider-results-v1')throw Error('対応していない公開JSON形式です');
+if(!Array.isArray(raceData.races)||!Array.isArray(riderData.rows)||!Array.isArray(riderData.columns))throw Error('公開JSONの配列形式が不正です');
+const fieldNames=['name','prefecture','period','date','track','trackCode','race','finishRaw'];
+const ids=Object.fromEntries(fieldNames.map(n=>[n,riderData.columns.indexOf(n)]));
+if(Object.values(ids).some(i=>i<0))throw Error('必要な選手結果列が見つかりません');
+if(raceData.summary?.races!==raceData.races.length||riderData.summary?.rows!==riderData.rows.length)throw Error('公開JSONの件数整合性が取れません');
+const races=new Map(raceData.races.map(r=>[r.key,r]));const records=[];
+for(const row of riderData.rows){if(!Array.isArray(row))continue;const get=n=>String(row[ids[n]]??'').trim();const race=races.get(key(get('date'),get('trackCode'),get('race')));if(!race||!['A1/A2','A3'].includes(race.grade))continue;records.push({race, name:get('name'),pref:get('prefecture'),period:get('period'),finish:get('finishRaw')});}
+if(!records.length)throw Error('照合できるA級選手結果がありません');
+dataset={records,raceData,riderData};const tracks=[...new Set(records.map(x=>x.race.track))].sort((a,b)=>a.localeCompare(b,'ja'));const existing=$('track').value;$('track').replaceChildren();for(const [label,value] of [['すべての競輪場','ALL'],...tracks.map(t=>[t,t])]){const option=document.createElement('option');option.value=value;option.textContent=label;$('track').append(option)}$('track').value=tracks.includes(existing)?existing:'ALL';render();
+}catch(e){dataset=null;status('読み込み失敗：'+e.message,true);$('rows').replaceChildren();const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=8;td.textContent='データを表示できません。再読み込みを試してください。';tr.append(td);$('rows').append(tr)}finally{$('reload').disabled=false}}
+function render(){if(!dataset)return;const grade=$('grade').value,track=$('track').value,size=$('size').value,term=$('search').value.replace(/\s/g,'').toLowerCase();let rows=dataset.records.filter(x=>(grade==='ALL'||x.race.grade===grade)&&(track==='ALL'||x.race.track===track)&&(size==='ALL'||x.race.size===Number(size))&&(!term||x.name.replace(/\s/g,'').toLowerCase().includes(term)));
+const eventSet=new Set(rows.map(x=>x.race.key));const stats=new Map();let valid=0,wins=0;for(const r of rows){const k=[r.name,r.pref,r.period].join('\u0001');if(!stats.has(k))stats.set(k,{name:r.name,pref:r.pref,period:r.period,starts:0,known:0,wins:0,top3:0});const s=stats.get(k);s.starts++;if(/^\d+$/.test(r.finish)){const n=Number(r.finish);if(n>=1&&n<=r.race.size){s.known++;valid++;if(n===1){s.wins++;wins++}if(n<=3)s.top3++}}}
+$('race-count').textContent=fmt(eventSet.size);$('row-count').textContent=fmt(rows.length);$('rider-count').textContent=fmt(stats.size);$('win-rate').textContent=rate(wins,valid);
+const ordered=[...stats.values()].sort((a,b)=>b.starts-a.starts||b.wins-a.wins||a.name.localeCompare(b.name,'ja'));const display=ordered.slice(0,200),tbody=$('rows');tbody.replaceChildren();if(!ordered.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=8;td.textContent='条件に一致する結果がありません';tr.append(td);tbody.append(tr)}for(const s of display){const tr=document.createElement('tr');for(const [v,numeric] of [[s.name,false],[s.pref+' / '+s.period+'期',false],[fmt(s.starts),true],[fmt(s.known),true],[fmt(s.wins),true],[fmt(s.top3),true],[rate(s.wins,s.known),true],[rate(s.top3,s.known),true]]){const td=document.createElement('td');td.textContent=v;if(numeric)td.className='num';tr.append(td)}tbody.append(tr)}$('limit').textContent=ordered.length>200?'上位200人を表示中（出走行の多い順）。条件を絞ってください。':'選手 '+fmt(ordered.length)+'人を表示中（出走行の多い順）';$('source').textContent='出典：V99公開JSON／更新日 '+(dataset.riderData.snapshotDate||'不明')+'／最新収録レース '+(dataset.raceData.latest_race_date||'不明')+'／公式全件独立照合未完了';status('取得成功：A級 '+fmt(dataset.records.length)+'出走結果を照合しました。絞り込み結果は上の数値に反映されます。')}
+for(const id of ['grade','track','size','search'])$(id).addEventListener(id==='search'?'input':'change',render);$('reload').addEventListener('click',load);load();
+</script></body></html>
