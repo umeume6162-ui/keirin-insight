@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only V99 -> public snapshots. No changes to the Google spreadsheet."""
+"""Read-only V96–V99 -> public snapshots. No changes to the Google spreadsheet."""
 import argparse
 import csv
 import io
@@ -14,7 +14,8 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 
 SHEET_ID = '1gCe5q5STYH0T8XKqxJbVawB0Cl8TPsCISFJiRUdA02M'
-SHEET_NAME = 'V99選手結果蓄積'
+SHEET_NAMES = ['V96複数開催テスト','V97自動収集テスト01','V98自動収集テスト01','V99選手結果蓄積']
+SHEET_NAME = 'V96–V99統合'
 HEADERS = ['開催日','競輪場','場コード','グレード','R','レース級','着順原文','車番','選手名','年齢','府県','期別','選手級班','着差','上り','決まり手','S/B','個人状況','結果分類','正式選手ID','照合状態','出典URL','取得日時']
 RIDER_COLUMNS = ['name','prefecture','period','date','track','trackCode','race','finishRaw','number','riderClass','winningMethod','sourceUrl']
 
@@ -30,10 +31,20 @@ def fetch_sheet(credentials_json):
     creds = service_account.Credentials.from_service_account_info(
         info, scopes=['https://www.googleapis.com/auth/spreadsheets.readonly'])
     session = AuthorizedSession(creds)
-    url = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID + '/values/' + SHEET_NAME + '!A1:W'
-    response = session.get(url, timeout=45)
+    url = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID + '/values:batchGet'
+    response = session.get(url, params=[('ranges', "'"+name+"'!A1:W") for name in SHEET_NAMES], timeout=45)
     response.raise_for_status()
-    return response.json()['values']
+    ranges = response.json()['valueRanges']
+    if len(ranges) != len(SHEET_NAMES):
+        raise ValueError('Missing source tab; abort publishing')
+    merged = [HEADERS]
+    for name, item in zip(SHEET_NAMES, ranges):
+        values = item.get('values', [])
+        validated = normalize(values)
+        print(f'SOURCE_TAB {name}: {len(validated)} rider rows')
+        merged.extend([[d[k] for k in HEADERS] for d in validated])
+    # normalize(merged) rejects every cross-tab duplicate key; no silent deduplication.
+    return merged
 
 
 def cleaned(x):
@@ -42,7 +53,7 @@ def cleaned(x):
 
 def normalize(rows):
     if not rows or [cleaned(v) for v in rows[0]] != HEADERS:
-        raise ValueError('V99 header mismatch: abort without publishing')
+        raise ValueError('Source header mismatch: abort without publishing')
     # An exact row key prevents accidentally double-counting script retries.
     candidates=[]
     seen=set()
@@ -99,7 +110,7 @@ def construct(data, date):
     races.sort(key=lambda x:(x['date'],int(x['track_code']),x['race']),reverse=True)
     summary=Counter(x['grade'] for x in races)
     latest=max(x['date'] for x in races)
-    result={'schema':'ki-public-results-index-v1','origin_sheet':SHEET_NAME,'source_snapshot_date':date,'latest_race_date':latest,'official_result_independent_audit':'incomplete','notes':'Read-only Google Sheets V99 snapshot. Not live prediction data or proof of official validation.','summary':{'races':len(races),'rider_rows':len(data),'by_grade':dict(summary)},'races':races}
+    result={'schema':'ki-public-results-index-v1','origin_sheet':SHEET_NAME,'source_snapshot_date':date,'latest_race_date':latest,'official_result_independent_audit':'incomplete','notes':'Read-only Google Sheets V96–V99 combined snapshot. Not live prediction data or proof of official validation.','summary':{'races':len(races),'rider_rows':len(data),'by_grade':dict(summary)},'races':races}
     # Preserve the v10.8 row schema verbatim for existing pages.
     rider_rows=[[x[k] for k in ['選手名','府県','期別','開催日','競輪場','場コード','R','着順原文','車番','選手級班','決まり手','出典URL']] for x in data]
     ident={(x[0].replace(' ', '').replace('　',''),x[1],x[2]) for x in rider_rows}
@@ -163,14 +174,14 @@ def main():
         delta=len(rider['rows'])-old_rows
         print(f'FEED_AUDIT rows_previous={old_rows} rows_current={len(rider["rows"])} delta={delta} latest_previous={old_latest} latest_current={index["latest_race_date"]}')
         if delta == 0:
-            print('WARNING: V99 has no new rider rows relative to the published feed. Check upstream GAS collection and V99 append logs; JSON publishing alone cannot add missing results.',file=sys.stderr)
+            print('WARNING: V96–V99 have no new rider rows relative to the published feed. Check upstream GAS collection and V99 append logs; JSON publishing alone cannot add missing results.',file=sys.stderr)
         if index['latest_race_date']==old_latest:
             print('WARNING: Latest race date has not advanced. Verify source collection settings and trigger executions.',file=sys.stderr)
     latest_date=datetime.strptime(index['latest_race_date'],'%Y-%m-%d').date()
     lag=(datetime.now(timezone.utc).date()-latest_date).days
     print(f'FEED_AUDIT latest_race_lag_days={lag}')
     if lag>7:
-        print(f'WARNING: Latest V99 race is {lag} days old; collection freshness needs investigation.',file=sys.stderr)
+        print(f'WARNING: Latest combined race is {lag} days old; collection freshness needs investigation.',file=sys.stderr)
     # Stage both serialized feeds before replacing either baseline.
     # GitHub Actions will only commit if this entire step succeeds.
     index_json=json.dumps(index,ensure_ascii=False,separators=(',',':'))+'\n'
