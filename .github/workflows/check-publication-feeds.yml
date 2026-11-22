@@ -14,6 +14,9 @@ on:
       - 'tools/audit_official_primary_candidate.cjs'
       - 'tools/test_reconcile_reconstructed_race.cjs'
       - 'tools/reconstruction-candidates/**'
+      - 'tools/audits/**'
+      - 'tools/test_audit_all_acquired_races.cjs'
+      - 'tools/audit_all_acquired_races.cjs'
       - 'tools/audit_formal_race_readiness.cjs'
       - '.github/workflows/check-publication-feeds.yml'
   pull_request:
@@ -29,6 +32,9 @@ on:
       - 'tools/audit_official_primary_candidate.cjs'
       - 'tools/test_reconcile_reconstructed_race.cjs'
       - 'tools/reconstruction-candidates/**'
+      - 'tools/audits/**'
+      - 'tools/test_audit_all_acquired_races.cjs'
+      - 'tools/audit_all_acquired_races.cjs'
       - '.github/workflows/check-publication-feeds.yml'
   workflow_dispatch:
 
@@ -46,6 +52,10 @@ jobs:
           node-version: '22'
       - name: Test source-first entry/result exception reconciliation
         run: node tools/test_reconcile_reconstructed_race.cjs
+      - name: Test all previously acquired races and no implicit PASS
+        run: node tools/test_audit_all_acquired_races.cjs
+      - name: Audit all prior research and comparison races
+        run: node tools/audit_all_acquired_races.cjs > /tmp/keirin-acquired-race-audit.json
       - name: Test official-primary evidence comparison (no implicit PASS)
         run: node tools/test_audit_official_primary_candidate.cjs
       - name: Run missing-rider reconciliation tests
