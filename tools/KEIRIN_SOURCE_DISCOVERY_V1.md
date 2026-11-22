@@ -100,3 +100,12 @@ KEIRIN.JP https://www.keirin.jp/pc/jyolist
 - DMM競輪 https://keirin.dmm.com/maebashi/race/2026-11-20/result は検索から発見したが、今回の直接openでは読み取り可能な原文行が0。結果照合成功元として数えない。
 - 高嶋一朗 岡山62期 登録011935、及び高鍋邦彰 福岡95期 登録014489のKEIRIN.JPとWINTICKETの全プロフィール原文を確認。KEIRIN.JPの高嶋原文更新2026-10-15、高鍋は2026-08-06。四項目一致の結果を既存台帳377・378行へ保存して再読込。選手公開用フィード135件となった。
 - 研究候補tools/reconstruction-candidates/2026-11-20_22_1.research.jsonとREPORT.mdを保存。研究用サイト表示一覧・場コード横断の構造検査に追加。正式レース結果は2独立原結果生成元がまだ未確認なので更新しない。
+
+## 2026-11-22 継続取得：前橋2Rと情報源のS/B欄欠損
+
+- 新規研究候補：2026-11-20 前橋F2チャレンジ予選2R（キー2026-11-20|22|2）。当該レース7車の元出走表：Kドリームス https://keirin.kdreams.jp/maebashi/racedetail/2220261120010002/?pageType=result およびチャリロト https://www.chariloto.com/keirin/athletes/2026-11-20/22/2/?odds=1 。出走7車、結果7人、数字着順7人、結果の車番順 2-6-1-7-4-5-3。
+- **第三の全文結果確認元**：日刊ゲンダイ競輪WEB https://keirin-autorace.nikkan-gendai.com/Keirin/Result?date=20261120&placeCode=22&raceNo=2 は7名の着差・上がり・決まり手付きの原文表を直接取得。Kドリームス上記URLとnetkeirin https://keirin.netkeiba.com/race/result/?race_id=202611202202 も同じ着順7車・上がり・着差・決まり手を掲載。**相互に独立したデータ生成元かは未証明**（第三ドメインを足しても自動的に独立3原本にはならない）。
+- **項目ごとの原文の非対称性**：⑥右近陸人のS表示はKドリームス・netkeirinでは「S」、日刊ゲンダイの該当S/B欄は空欄。未掲載は「Sなしの確定」ではない。このソースを上がり・着差の補足に使う際も、欠けているS/B情報を結果フィールドの独立した検証値として使わない。項目別 SOURCE_FIELD_NOT_DISPLAYED を記録。
+- 予想並び：KドリームスとKEIRIN HEX https://keirinhex.jp/races/20261120/022220261120/ の前日公開予測は 2-1-3 / 5-4 / 6-7 と一致。HEXは予測掲載時刻2026-11-19 19:20を明示し、実走並びとは区別。公開ホスト間の異なりだけで独立原稿の生成元だと判断しない。
+- 選手原本：高尾剛文 福岡66期 012319（公式PC原文更新2026-10-15）と高峰賢治 山梨73期 012809（同2026-10-27）はKEIRIN.JP・WINTICKETの直接閲覧プロフィールで四項目一致。Google Sheetsの既存379・380行のG:K更新と再読込済み。公開選手IDフィード137件へ増加、原本A:Fは保持。
+- 新規研究JSON・REPORTを tools/reconstruction-candidates/2026-11-20_22_2.* に保存し、専用研究ビューに追加、読み取り専用構造検査テストに追加。正式結果フィードには反映せず、二独立原資料の実際の生成元確認を続ける。
