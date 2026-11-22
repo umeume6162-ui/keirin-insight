@@ -1,0 +1,133 @@
+{
+  "schema": "ki-legacy-race-full-field-recheck-v1",
+  "dateJST": "2026-11-23",
+  "raceKey": "2026-10-05|75|2",
+  "storedSource": "comparison-races-v1.json",
+  "sources": [
+    {
+      "organization": "Chariloto",
+      "url": "https://www.chariloto.com/keirin/results/75/2026-10-05",
+      "retrieval": "direct full result 2R, 2026-11-23"
+    },
+    {
+      "organization": "netkeirin",
+      "url": "https://keirin.netkeiba.com/race/result/?race_id=202610057502",
+      "retrieval": "direct full results 2R, 2026-11-23"
+    },
+    {
+      "organization": "Kdreams",
+      "url": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020002/?pageType=result",
+      "retrieval": "original race detail open, 2026-11-23",
+      "providerAttribution": "予想担当アオケイ、並び提供金星社"
+    }
+  ],
+  "transcribedRows": [
+    {
+      "finish": 1,
+      "car": 5,
+      "name": "安東宏高",
+      "prefecture": "大分",
+      "period": 90,
+      "grade": "A1",
+      "lapSeconds": 11.8,
+      "marginRaw": "",
+      "winningMethodRaw": "差し",
+      "sbRaw": ""
+    },
+    {
+      "finish": 2,
+      "car": 7,
+      "name": "野上竜太",
+      "prefecture": "岡山",
+      "period": 115,
+      "grade": "A2",
+      "lapSeconds": 12.3,
+      "marginRaw": "1/2車輪",
+      "winningMethodRaw": "逃げ",
+      "sbRaw": "B"
+    },
+    {
+      "finish": 3,
+      "car": 3,
+      "name": "山崎晃",
+      "prefecture": "石川",
+      "period": 95,
+      "grade": "A2",
+      "lapSeconds": 12,
+      "marginRaw": "タイヤ差",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 4,
+      "car": 4,
+      "name": "小峰烈",
+      "prefecture": "長野",
+      "period": 98,
+      "grade": "A1",
+      "lapSeconds": 11.5,
+      "marginRaw": "1車身",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 5,
+      "car": 6,
+      "name": "塚本勝士",
+      "prefecture": "栃木",
+      "period": 81,
+      "grade": "A2",
+      "lapSeconds": 11.8,
+      "marginRaw": "1/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 6,
+      "car": 1,
+      "name": "佐藤正吾",
+      "prefecture": "宮城",
+      "period": 88,
+      "grade": "A2",
+      "lapSeconds": 11.8,
+      "marginRaw": "1/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "S"
+    },
+    {
+      "finish": 7,
+      "car": 2,
+      "name": "山本貴章",
+      "prefecture": "岡山",
+      "period": 76,
+      "grade": "A2",
+      "lapSeconds": 12.3,
+      "marginRaw": "1/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    }
+  ],
+  "normalization": {
+    "winningMethod": {
+      "差": "差し",
+      "逃": "逃げ",
+      "ク": "マーク"
+    },
+    "margin": {
+      "タイヤ差": "タイヤ"
+    },
+    "number": "12.0 and 12 treated as equal numeric values; original displayed lexical form retained in primary source",
+    "spacing": "NFKC and whitespace removal"
+  },
+  "summary": {
+    "rows": 7,
+    "fieldComparisons": 63,
+    "differences": 0,
+    "allMatch": true
+  },
+  "mismatches": [],
+  "originalOfficialResult": "NOT_DIRECTLY_RETRIEVED",
+  "upstreamOriginIndependence": "NOT_PROVEN_SHARED_ORIGINAL_POSSIBLE",
+  "publicationStatus": "RESEARCH_ONLY_PENDING",
+  "note": "Research source publication consistency only, official first-party result unverified; payout optional."
+}
