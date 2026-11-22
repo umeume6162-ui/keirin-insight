@@ -74,7 +74,10 @@
           "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_11.html",
           "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020011/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
         ],
-        "verifiedDate": "2026-11-23"
+        "verifiedDate": "2026-11-23",
+        "basis": "rider_comments_and_published_forecast",
+        "label": "選手コメントに基づく事前ライン構成",
+        "basisNote": "Archived Chariloto rider comments for riders 4,2,3,5 and solo 1,6,7, corroborated by Oddspark predicted grouping"
       },
       "sourceEvidenceFile": "tools/reconstruction-candidates/2026-10-05_75_11.research.json"
     },
@@ -131,7 +134,10 @@
           "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020012/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
           "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_12.html"
         ],
-        "verifiedDate": "2026-11-23"
+        "verifiedDate": "2026-11-23",
+        "basis": "published_forecast",
+        "label": "事前の並び予想",
+        "basisNote": "K-Dreams and Oddspark published full ordered groups; label not attributed to full rider comments"
       },
       "sourceEvidenceFile": "tools/reconstruction-candidates/2026-10-05_75_12.research.json"
     }
