@@ -2,7 +2,7 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-23",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "148名の氏名・府県・期別・登録番号の固定4項目についてKEIRIN.JP公式とWINTICKET個別原文で一致。元選手台帳389-391行へ証拠保存し再読込済み。",
+  "verificationNote": "公開選手ID172件。各レコードの氏名・府県・期別・6桁登録番号について、KEIRIN.JP公式と別媒体の2サイト一致を個別証拠URLで記録。補助媒体・取得方式・保存行は各選手のofficialVerification.noteを参照。表示件数はsummary.rowsを正本とし、過去の件数や単一組合せの媒体名を全件共通の根拠として扱わない。",
   "summary": {
     "rows": 172
   },
