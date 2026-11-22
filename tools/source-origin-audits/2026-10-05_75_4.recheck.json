@@ -1,0 +1,123 @@
+{
+  "schema": "ki-legacy-race-full-field-recheck-v1",
+  "dateJST": "2026-11-23",
+  "raceKey": "2026-10-05|75|4",
+  "storedSource": "comparison-races-v1.json",
+  "sources": [
+    {
+      "organization": "Chariloto",
+      "url": "https://www.chariloto.com/keirin/results/75/2026-10-05",
+      "retrieval": "direct archived complete published 4R result table"
+    },
+    {
+      "organization": "netkeirin",
+      "url": "https://keirin.netkeiba.com/race/result/?race_id=202610057504",
+      "retrieval": "direct 4R full original published results"
+    }
+  ],
+  "transcribedRows": [
+    {
+      "finish": 1,
+      "car": 6,
+      "name": "三好陽一",
+      "prefecture": "愛媛",
+      "period": 88,
+      "grade": "A1",
+      "lapSeconds": 11.8,
+      "marginRaw": "",
+      "winningMethodRaw": "差し",
+      "sbRaw": ""
+    },
+    {
+      "finish": 2,
+      "car": 1,
+      "name": "田中和磨",
+      "prefecture": "岡山",
+      "period": 113,
+      "grade": "A1",
+      "lapSeconds": 11.9,
+      "marginRaw": "1/4車輪",
+      "winningMethodRaw": "差し",
+      "sbRaw": ""
+    },
+    {
+      "finish": 3,
+      "car": 3,
+      "name": "石田拓真",
+      "prefecture": "愛知",
+      "period": 119,
+      "grade": "A1",
+      "lapSeconds": 12.2,
+      "marginRaw": "3/4車身",
+      "winningMethodRaw": "",
+      "sbRaw": "B"
+    },
+    {
+      "finish": 4,
+      "car": 5,
+      "name": "小林信晴",
+      "prefecture": "愛知",
+      "period": 83,
+      "grade": "A1",
+      "lapSeconds": 11.8,
+      "marginRaw": "3/4車身",
+      "winningMethodRaw": "",
+      "sbRaw": "S"
+    },
+    {
+      "finish": 5,
+      "car": 4,
+      "name": "岡本英之",
+      "prefecture": "千葉",
+      "period": 85,
+      "grade": "A1",
+      "lapSeconds": 11.9,
+      "marginRaw": "1/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 6,
+      "car": 7,
+      "name": "須賀和彦",
+      "prefecture": "茨城",
+      "period": 89,
+      "grade": "A2",
+      "lapSeconds": 11.9,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 7,
+      "car": 2,
+      "name": "吉竹尚城",
+      "prefecture": "静岡",
+      "period": 109,
+      "grade": "A1",
+      "lapSeconds": 13.3,
+      "marginRaw": "大差",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    }
+  ],
+  "normalization": {
+    "method": {
+      "差": "差し",
+      "逃": "逃げ"
+    },
+    "space": "NFKC + whitespace reduction",
+    "lap": "numeric comparison"
+  },
+  "summary": {
+    "rows": 7,
+    "fieldComparisons": 63,
+    "differences": 0,
+    "allMatch": true
+  },
+  "mismatches": [],
+  "originalOfficialResult": "NOT_DIRECTLY_OBTAINED",
+  "independentUpstreamOrigin": "NOT_PROVEN",
+  "publicationStatus": "RESEARCH_ONLY_PENDING",
+  "note": "Fourth formerly acquired Matsuyama race checked; official feed remains unchanged, original result primary not captured."
+}
