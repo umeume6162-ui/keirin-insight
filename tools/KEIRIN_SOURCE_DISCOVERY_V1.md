@@ -62,3 +62,11 @@ KEIRIN.JP https://www.keirin.jp/pc/jyolist
 - 数字着順があり上がりだけ未掲載という事例は、途中棄権・欠車・行欠落とは独立した欠損理由として残す。両サイトで空欄でも未観測であり、架空の数値一致ではない。
 - 任意・適用外・原ページ未掲載・抽出失敗は、既存の必須条件に沿って区別。必須を勝手に任意へ変えない。
 - tools/reconstruction-candidates/2026-11-20_42_3.research.json と同 REPORT.md に全7車と事前並びを研究候補として保存・再読込。独立元の帰属と上がりの欠損が解消するまで正式PASSに数えない。
+
+## 2026-11-22 追加実地検証：名古屋5R・出走表と全着順の対応
+
+- 競輪ネット＠なびNEXT（旧版とは別の有効経路）：https://www.keirin-mobile.jp/New/races/20261120/42/05/ を web.open で直接取得。2026/11/20名古屋5R、A級特予選、7車全名簿と車番・級班・競走得点掲載。ページは公式公開情報を出所と明記するため、別媒体の独立オリジナルと即断しない。旧SoftBank/Android URLの DisabledError とは別の到達性を記録する。
+- 東スポ競輪 https://keirin.tokyo-sports.co.jp/list/race/20261119_32051 ：前日出走表・7車・選手コメントを原文で確認。①森田－②保科－⑥山口、⑤伊藤－③篠塚－④大川、⑦亀谷単騎が予想グループ。元記事は前日掲載。
+- Kドリームス https://keirin.kdreams.jp/nagoya/racedetail/4220261120010005/?pageType=result とチャリロト https://www.chariloto.com/keirin/results/42/2026-11-20 のレース結果全文で、7車すべての結果と上がり・着差・S/B・決まり手の一致を確認。着順車番2-1-3-4-7-5-6。元出走表の車番集合1〜7と結果車番集合が一致する。
+- 新しい研究候補 tools/reconstruction-candidates/2026-11-20_42_5.research.json および REPORT.md を保存、再取得済み。上流原本の独立性と正式な変更後出走表・欠車公告は未検査。正式レースPASSとは扱わず、現行6研究比較レースと別区分で記録。
+- 実装新規: tools/reconcile_reconstructed_race.cjs は出走表車番と結果行を機械的に対比し、例外着順・結果にない車番・欠車情報不足をエラー/警告に分ける**読み取り専用**検査器。これだけで二独立原本PASSとすることは禁止。GitHub上にコード保存済みだがGitHub Actions組込・Node実行テスト・自動タスク導入は別途要検証。
