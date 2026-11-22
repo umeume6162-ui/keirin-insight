@@ -10,11 +10,12 @@ const margin=x=>norm(x).replace('タイヤ差','タイヤ');
 function checkReceipt(receipt,races=legacy.races){
  const original=races.find(x=>x.key===receipt.raceKey),errors=[];
  if(!original)errors.push('unknown race key');
- if(!Array.isArray(receipt.transcribedRows))return{raceKey:receipt.raceKey,errors:['missing transcription rows'],publicationPassed:false};
+ const rows=receipt.transcribedRows??receipt.sourceTranscribedRows;
+ if(!Array.isArray(rows))return{raceKey:receipt.raceKey,errors:['missing transcription rows'],publicationPassed:false};
  const byCar=new Map(original?.finishers?.map(x=>[Number(x.number),x])||[]);
- if(byCar.size!==receipt.transcribedRows.length)errors.push('result rider count differs');
+ if(byCar.size!==rows.length)errors.push('result rider count differs');
  const seen=new Set();let compared=0;
- for(const row of receipt.transcribedRows){
+ for(const row of rows){
   const car=Number(row.car),orig=byCar.get(car);
   if(seen.has(car))errors.push('duplicate car '+car);
   seen.add(car);
