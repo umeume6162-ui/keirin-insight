@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "124選手の4項目2サイト原文一致を記録。従来121件を維持し、新規3名を追加。",
+  "verificationNote": "127選手の氏名・府県・期別・登録番号が2掲載元原文で一致。前回124名を維持し3名新規追加。",
   "summary": {
-    "rows": 124
+    "rows": 127
   },
   "riders": [
     {
@@ -2981,6 +2981,78 @@
           "https://www.winticket.jp/keirin/cyclist/014168"
         ],
         "note": "2026-11-22 JST KEIRIN.JP公式PC原文（掲載更新 2026-11-13）とWINTICKET選手プロフィール原文を直接閲覧。氏名=高橋 和也・府県=愛知・期別=91期・6桁登録番号=014168の4項目一致。出典1 https://www.keirin.jp/pc/racerprofile?snum=014168 ／出典2 https://www.winticket.jp/keirin/cyclist/014168。原文取得は保存キャッシュ本文でありライブ時点の競走得点・級班を保証しない。原本A:F不変。"
+      }
+    },
+    {
+      "id": "014087",
+      "name": "高橋 隆太",
+      "prefecture": "静岡",
+      "period": "90",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014087",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014087",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014087",
+          "https://www.winticket.jp/keirin/cyclist/014087"
+        ],
+        "note": "2026-11-22 JST：KEIRIN.JP PC選手原文（掲載更新2026-09-27）とWINTICKET選手プロフィール全文を直接確認。氏名=高橋 隆太、府県=静岡、期別=90期、登録番号=014087 の4項目が2掲載元で一致。出典1 https://keirin.jp/pc/racerprofile?snum=014087 出典2 https://www.winticket.jp/keirin/cyclist/014087。公式原文は保存・索引時点、現在値/ライブ競走得点と混同しない。元A:Fは維持。"
+      }
+    },
+    {
+      "id": "014614",
+      "name": "高橋清太郎",
+      "prefecture": "岡山",
+      "period": "97",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014614",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014614",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014614",
+          "https://www.winticket.jp/keirin/cyclist/014614"
+        ],
+        "note": "2026-11-22 JST：KEIRIN.JP PC選手原文（掲載更新2026-11-04）とWINTICKET選手プロフィール全文を直接確認。氏名=高橋清太郎、府県=岡山、期別=97期、登録番号=014614 の4項目が2掲載元で一致。出典1 https://keirin.jp/pc/racerprofile?snum=014614 出典2 https://www.winticket.jp/keirin/cyclist/014614。公式原文は保存・索引時点、現在値/ライブ競走得点と混同しない。元A:Fは維持。"
+      }
+    },
+    {
+      "id": "013741",
+      "name": "高原 仁志",
+      "prefecture": "徳島",
+      "period": "85",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013741",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013741",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013741",
+          "https://www.winticket.jp/keirin/cyclist/013741"
+        ],
+        "note": "2026-11-22 JST：KEIRIN.JP PC選手原文（掲載更新2026-11-02）とWINTICKET選手プロフィール全文を直接確認。氏名=高原 仁志、府県=徳島、期別=85期、登録番号=013741 の4項目が2掲載元で一致。出典1 https://keirin.jp/pc/racerprofile?snum=013741 出典2 https://www.winticket.jp/keirin/cyclist/013741。公式原文は保存・索引時点、現在値/ライブ競走得点と混同しない。元A:Fは維持。"
       }
     }
   ],
