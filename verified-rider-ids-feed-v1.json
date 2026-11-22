@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "氏名・府県・期別・登録番号の2サイト一致が確認された35人。元30人に吉川敬介・吉田優斗・吉野太晟・及川裕奨・宮倉勇を追加。",
+  "verificationNote": "4必須項目を異なる2サイトで照合一致した38選手。既存35件に宮崎一彰・境啓亨・玉村元気を追加。",
   "summary": {
-    "rows": 35
+    "rows": 38
   },
   "riders": [
     {
@@ -845,6 +845,78 @@
           "https://www.winticket.jp/keirin/cyclist/011487"
         ],
         "note": "両プロフィール原文で氏名・府県・期別・登録番号4項目を一致確認。台帳未照合から救済。"
+      }
+    },
+    {
+      "id": "014778",
+      "name": "宮崎 一彰",
+      "prefecture": "高知",
+      "period": "99",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014778",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014778",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014778",
+          "https://www.winticket.jp/keirin/cyclist/014778"
+        ],
+        "note": "KEIRIN.JP・WINTICKETの両プロフィール本文で、氏名・府県・期別・登録番号の4必須項目を個別確認して一致。旧未照合を手動救済。"
+      }
+    },
+    {
+      "id": "015214",
+      "name": "境 啓亨",
+      "prefecture": "熊本",
+      "period": "111",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015214",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015214",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015214",
+          "https://www.winticket.jp/keirin/cyclist/015214"
+        ],
+        "note": "KEIRIN.JP・WINTICKETの両プロフィール本文で、氏名・府県・期別・登録番号の4必須項目を個別確認して一致。旧未照合を手動救済。"
+      }
+    },
+    {
+      "id": "014872",
+      "name": "玉村 元気",
+      "prefecture": "香川",
+      "period": "101",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014872",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014872",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014872",
+          "https://www.winticket.jp/keirin/cyclist/014872"
+        ],
+        "note": "KEIRIN.JP・WINTICKETの両プロフィール本文で、氏名・府県・期別・登録番号の4必須項目を個別確認して一致。旧未照合を手動救済。"
       }
     }
   ],
