@@ -53,7 +53,8 @@
       "sbRaw": "",
       "exceptionRaw": "",
       "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
-      "unresolvedFields": []
+      "unresolvedFields": [],
+      "finishRaw": "1"
     },
     {
       "finish": 2,
@@ -68,7 +69,8 @@
       "sbRaw": "B",
       "exceptionRaw": "",
       "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
-      "unresolvedFields": []
+      "unresolvedFields": [],
+      "finishRaw": "2"
     },
     {
       "finish": 3,
@@ -83,7 +85,8 @@
       "sbRaw": "S",
       "exceptionRaw": "",
       "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
-      "unresolvedFields": []
+      "unresolvedFields": [],
+      "finishRaw": "3"
     },
     {
       "finish": 4,
@@ -98,7 +101,8 @@
       "sbRaw": "",
       "exceptionRaw": "",
       "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
-      "unresolvedFields": []
+      "unresolvedFields": [],
+      "finishRaw": "4"
     },
     {
       "finish": 5,
@@ -113,7 +117,8 @@
       "sbRaw": "",
       "exceptionRaw": "",
       "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
-      "unresolvedFields": []
+      "unresolvedFields": [],
+      "finishRaw": "5"
     },
     {
       "finish": 6,
@@ -128,7 +133,8 @@
       "sbRaw": "",
       "exceptionRaw": "",
       "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
-      "unresolvedFields": []
+      "unresolvedFields": [],
+      "finishRaw": "6"
     },
     {
       "finish": 7,
@@ -145,7 +151,8 @@
       "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
       "unresolvedFields": [
         "lapSeconds: BOTH_PROVIDERS_BLANK_NUMERIC_FINISHER"
-      ]
+      ],
+      "finishRaw": "7"
     }
   ],
   "resultUrls": [
@@ -199,5 +206,91 @@
     "Validate complete pre-race lineup provenance at required independence level",
     "Run cross-feed publication checks and publish only when all required comparisons pass"
   ],
-  "notes": "New research-only reconstruction candidate (not official result and not permitted verified training input)."
+  "notes": "New research-only reconstruction candidate (not official result and not permitted verified training input).",
+  "originalEntries": [
+    {
+      "car": 1,
+      "name": "北村翔太",
+      "prefecture": "群馬",
+      "period": 129,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 2,
+      "name": "藤野竜也",
+      "prefecture": "栃木",
+      "period": 117,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 3,
+      "name": "邊見斎",
+      "prefecture": "福島",
+      "period": 92,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 4,
+      "name": "井坂泰誓",
+      "prefecture": "大阪",
+      "period": 115,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 5,
+      "name": "池上孝之",
+      "prefecture": "兵庫",
+      "period": 69,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 6,
+      "name": "齋藤和也",
+      "prefecture": "福島",
+      "period": 78,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 7,
+      "name": "梶山大輔",
+      "prefecture": "神奈川",
+      "period": 76,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    }
+  ],
+  "originalEntrySourceAudit": {
+    "checkedDateJST": "2026-11-23",
+    "url": "https://www.chariloto.com/keirin/athletes/2026-11-20/42/3/?odds=1",
+    "secondaryUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261119_32059",
+    "status": "CAR_NAME_AND_PERIOD_COMPARISON_TO_DATED_PRE_RACE_DISPLAY",
+    "limitations": "Original source/card entries were checked at original archived pages. This is not independently obtained organizer's final amended startcard, nor evidence of official race-result status."
+  },
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      2,
+      1,
+      3,
+      6,
+      5,
+      4,
+      7
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 7,
+    "nonNumericResultRows": 0,
+    "confirmedWithdrawals": [],
+    "revisedStartCardSource": null,
+    "confirmedStarterCount": null,
+    "sourceStatus": "ORIGINAL_PRE_RACE_ROSTER_CONFIRMED; OFFICIAL_AMENDED_CARD_NOT_OBTAINED",
+    "missingLapPersisted": "Car 7 Kajiyama numeric 7th; lap time not published in inspected detail results; null retained."
+  }
 }
