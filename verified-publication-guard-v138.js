@@ -7,7 +7,7 @@
  const required=['date','track','trackCode','race','number','name','prefecture','period','finishRaw','riderClass','sourceUrl'];if(!Array.isArray(b.columns)||new Set(b.columns).size!==b.columns.length||required.some(k=>!b.columns.includes(k)))fail('必須列');
  const pos=Object.fromEntries(b.columns.map((x,n)=>[x,n]));for(const row of b.rows){if(!Array.isArray(row)||row.length!==b.columns.length)fail('出走行形式');const get=k=>row[pos[k]],k=[get('date'),String(get('trackCode')),Number(get('race'))].join('|'),r=keys.get(k),n=Number(get('number')),rk=k+'|'+n;if(!r||get('track')!==r.track||!Number.isInteger(n)||n<1||n>9||!norm(get('name'))||!norm(get('prefecture'))||!/^\d+$/.test(String(get('period')))||!norm(get('finishRaw'))||!norm(get('riderClass'))||!official(get('sourceUrl'))||seen.has(rk))fail('出走行の照合・重複');seen.add(rk);counts.set(k,(counts.get(k)||0)+1)}
  for(const [k,r] of keys)if(counts.get(k)!==r.size)fail('レース別人数');
- const lineKeys=new Set();for(const x of l.races){if(!evidence(x)||!x.id||lineKeys.has(x.id)||!Array.isArray(x.riders)||x.riders.length!==7)fail('ライン照合根拠・重複');lineKeys.add(x.id);if(!a.races.some(r=>r.date===x.date&&r.track===x.track&&Number(r.race)===Number(x.race)))fail('ライン結果未接続')}
+ const lineKeys=new Set();for(const x of l.races){if(!evidence(x)||!x.id||lineKeys.has(x.id)||!Array.isArray(x.riders)||![7,9].includes(x.riders.length))fail('ライン照合根拠・重複');lineKeys.add(x.id);const connected=a.races.find(r=>r.date===x.date&&r.track===x.track&&Number(r.race)===Number(x.race));if(!connected||connected.size!==x.riders.length)fail('ライン結果人数・接続不一致')}
  if(l.summary?.rider_rows!==l.races.reduce((n,x)=>n+x.riders.length,0))fail('ライン人数');
 }
 const originalFetch=window.fetch.bind(window);
