@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "氏名・府県・期別・6桁登録番号の2掲載元一致87選手。既存84人維持、新規戸田洋平・戸邉捺希・戸邉香奈実。",
+  "verificationNote": "公開キャッシュの異なる2プロフィール元で必須4項目が一致した90選手。既存87人を維持し五十嵐綾・五十嵐力・五日市誠を追加。",
   "summary": {
-    "rows": 87
+    "rows": 90
   },
   "riders": [
     {
@@ -2093,6 +2093,78 @@
           "https://www.winticket.jp/keirin/cyclist/015757"
         ],
         "note": "2026-11-22取得のキャッシュ本文を照合。KEIRIN.JP https://www.keirin.jp/pc/racerprofile?snum=015757（資料更新2026-07-16）、WINTICKET https://www.winticket.jp/keirin/cyclist/015757で登録番号・氏名・府県・期別一致。公式PC URLは canonical source として保存、公式SPで閲覧時はその別URLを記録。台帳328行。"
+      }
+    },
+    {
+      "id": "015601",
+      "name": "五十嵐　綾",
+      "prefecture": "福島",
+      "period": "121",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015601",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015601",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015601",
+          "https://www.winticket.jp/keirin/cyclist/015601"
+        ],
+        "note": "2026-11-22、KEIRIN.JP公開原文（原資料更新2026-08-03）とWINTICKETの公開プロフィール本文を照合し氏名・府県・期別・6桁登録番号一致。古いキャッシュ閲覧はライブ取得と区別。元台帳329行G:K。"
+      }
+    },
+    {
+      "id": "013852",
+      "name": "五十嵐　力",
+      "prefecture": "神奈川",
+      "period": "87",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013852",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013852",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013852",
+          "https://www.winticket.jp/keirin/cyclist/013852"
+        ],
+        "note": "2026-11-22、KEIRIN.JP公開原文（原資料更新2026-07-01）とWINTICKETの公開プロフィール本文を照合し氏名・府県・期別・6桁登録番号一致。古いキャッシュ閲覧はライブ取得と区別。元台帳330行G:K。"
+      }
+    },
+    {
+      "id": "013982",
+      "name": "五日市　誠",
+      "prefecture": "青森",
+      "period": "89",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013982",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013982",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013982",
+          "https://www.winticket.jp/keirin/cyclist/013982"
+        ],
+        "note": "2026-11-22、KEIRIN.JP公開原文（原資料更新2026-08-10）とWINTICKETの公開プロフィール本文を照合し氏名・府県・期別・6桁登録番号一致。古いキャッシュ閲覧はライブ取得と区別。元台帳331行G:K。"
       }
     }
   ],
