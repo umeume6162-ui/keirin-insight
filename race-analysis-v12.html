@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#081827"><title>実戦分析ワークスペース v12.14 | KEIRIN INSIGHT</title>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#081827"><title>実戦分析ワークスペース v12.15 | KEIRIN INSIGHT</title>
 <style>
 :root{color-scheme:dark;--bg:#081827;--pane:#122b3c;--line:#38566a;--txt:#edf8fb;--sub:#b0c8d4;--mint:#8ef0c4;--amber:#ffe1a0}*{box-sizing:border-box}body{background:radial-gradient(ellipse at right top,#16483f 0,transparent 44%),var(--bg);color:var(--txt);margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif}main{max-width:1100px;margin:auto;padding:20px 15px 80px}a{color:var(--mint)}h1{font-size:clamp(26px,5vw,40px);line-height:1.25;margin:15px 0}h2{font-size:20px;margin:0 0 13px}h3{font-size:16px;margin:0 0 8px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.logo{font-weight:900;letter-spacing:.1em}.sub{color:var(--sub)}.panel{background:var(--pane);border:1px solid var(--line);border-radius:16px;padding:17px;margin:16px 0}.notice{border-left:4px solid var(--amber);padding:11px 13px;background:#302d2c;border-radius:9px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px}.field span{font-size:13px;color:var(--sub)}input,select,textarea{width:100%;background:#071d2c;color:var(--txt);border:1px solid #557387;border-radius:9px;padding:11px;font:inherit}textarea{resize:vertical;min-height:80px}input:focus,textarea:focus,select:focus{outline:2px solid var(--mint)}.actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}button{border:0;background:var(--mint);color:#072b21;font-weight:750;border-radius:10px;padding:12px 14px;font:inherit;cursor:pointer}button.alt{background:#274457;color:var(--txt);border:1px solid var(--line)}button:disabled{opacity:.55}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:9px;margin:12px 0}.stat{background:#092234;border:1px solid var(--line);border-radius:11px;padding:10px}.stat b{display:block;font-size:23px}.stat small{color:var(--sub)}.table{width:100%;overflow-x:auto}table{border-collapse:collapse;min-width:720px;width:100%}th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top}th{color:var(--mint);font-size:12px}td small{color:var(--sub)}.tiny{font-size:12px;color:var(--sub)}.good{color:var(--mint)}.warn{color:var(--amber)}.pill{display:inline-block;background:#254455;color:#d9f7ed;padding:3px 7px;border-radius:8px;margin:3px}.footer{color:var(--sub);margin-top:25px;font-size:12px}.hide{display:none}.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}@media(max-width:400px){main{padding:15px 11px 60px}.panel{padding:12px}}
-</style></head><body><main><div class="top"><div class="logo">KEIRIN INSIGHT / V12.14</div><a href="./research-hub.html">研究ホームへ</a></div>
+</style></head><body><main><div class="top"><div class="logo">KEIRIN INSIGHT / V12.15</div><a href="./research-hub.html">研究ホームへ</a></div>
 <h1>A級7車 実戦分析ワークスペース</h1><p class="sub">公開済み成績を比較し、ライン・展開仮説・結果検証を1画面で整理する研究用ツール。オッズによる自動選定は行いません。</p>
 <div class="notice">⚠️ これは予測勝率や車券推奨を出すAIではありません。出走選手・事前並び・展開は利用者の入力情報です。過去の収録着順だけで先行力、ヨコの強さ、実際の切り替えを断定できません。</div>
 <section class="panel"><h2>① レース・出走選手</h2><div class="grid"><label class="field"><span>開催日</span><input id="day" type="date"></label><label class="field"><span>競輪場</span><input id="track" placeholder="例：奈良"></label><label class="field"><span>レース番号</span><select id="race"></select></label><label class="field"><span>級班</span><select id="grade"><option value="A1/A2">A1/A2</option><option value="A3">A3チャレンジ</option></select></label><label class="field"><span>集計する近走数</span><select id="recent"><option>5</option><option selected>10</option><option>20</option></select></label></div>
@@ -124,7 +124,7 @@ function updateCoverage(count,found){
  for(let n=1;n<=7;n++){let x=findRider(n);if(!x.q.name)continue;total+=x.all.length;if(x.all.length){matched++;if(x.all.length<5)sparse.push(n+'番')}else missing.push(n+'番')}
  panel.textContent='【データ充足度】'+matched+'/'+count+'名に収録記録あり／合計'+total+'出走記録。'+(missing.length?' 未収録または照合不一致：'+missing.join('・')+'。':'')+(sparse.length?' 5件未満：'+sparse.join('・')+'。':'')+' ※これは公開JSONの収録範囲であり、選手の全成績ではありません。0件や少数件から実力・勝率を判断しないでください。';
 }
-function checkLine(){let raw=$('lineup').value.trim(),parts=raw.split(/\s*[/／;；]\s*/).map(x=>x.trim()).filter(Boolean),groups=[],seen=[];for(let p of parts){let nums=p.split(/\s*[-－ー→>・,，]\s*/).filter(Boolean);if(nums.length===0||nums.some(x=>!/^[1-7]$/.test(x))){$('lineStatus').textContent='⚠️ 車番は1〜7、ラインは「1-4-6 / 2-5 / 3-7」の形式で入力してください。';$('lineChips').textContent='';lastLine=null;showLineEvidence(null);showStructureResearch(null);showPairResearch(null);return null}groups.push(nums.map(Number));seen.push(...nums.map(Number))}let missing=[1,2,3,4,5,6,7].filter(x=>!seen.includes(x)),dup=seen.filter((x,i)=>seen.indexOf(x)!==i);if(dup.length||missing.length||seen.length!==7){$('lineStatus').textContent='⚠️ 車番の重複／不足：重複 '+(dup.join(',')||'なし')+'、不足 '+(missing.join(',')||'なし')+'。7車すべてを指定してください。';$('lineChips').textContent='';lastLine=null;showLineEvidence(null);showStructureResearch(null);showPairResearch(null);return null}lastLine=groups;$('lineStatus').textContent='✅ 7車の想定並びを形式検査済み（現実の並びの確認ではありません）。ライン '+groups.length+'本・単騎 '+groups.filter(g=>g.length===1).length+'人。';$('lineChips').innerHTML=groups.map(g=>'<span class="pill">'+g.join(' - ')+(g.length===1?' （単騎）':'')+'</span>').join('');showLineEvidence(groups);showStructureResearch(groups);showPairResearch(groups);showSnapshotResearch();return groups}
+function checkLine(){let raw=$('lineup').value.trim(),parts=raw.split(/\s*[/／;；]\s*/).map(x=>x.trim()).filter(Boolean),groups=[],seen=[];for(let p of parts){let nums=p.split(/\s*[-－ー→>・,，]\s*/).filter(Boolean);if(nums.length===0||nums.some(x=>!/^[1-7]$/.test(x))){$('lineStatus').textContent='⚠️ 車番は1〜7、ラインは「1-4-6 / 2-5 / 3-7」の形式で入力してください。';$('lineChips').textContent='';lastLine=null;showLineEvidence(null);showStructureResearch(null);showPairResearch(null);showSnapshotResearch();return null}groups.push(nums.map(Number));seen.push(...nums.map(Number))}let missing=[1,2,3,4,5,6,7].filter(x=>!seen.includes(x)),dup=seen.filter((x,i)=>seen.indexOf(x)!==i);if(dup.length||missing.length||seen.length!==7){$('lineStatus').textContent='⚠️ 車番の重複／不足：重複 '+(dup.join(',')||'なし')+'、不足 '+(missing.join(',')||'なし')+'。7車すべてを指定してください。';$('lineChips').textContent='';lastLine=null;showLineEvidence(null);showStructureResearch(null);showPairResearch(null);return null}lastLine=groups;$('lineStatus').textContent='✅ 7車の想定並びを形式検査済み（現実の並びの確認ではありません）。ライン '+groups.length+'本・単騎 '+groups.filter(g=>g.length===1).length+'人。';$('lineChips').innerHTML=groups.map(g=>'<span class="pill">'+g.join(' - ')+(g.length===1?' （単騎）':'')+'</span>').join('');showLineEvidence(groups);showStructureResearch(groups);showPairResearch(groups);showSnapshotResearch();return groups}
 function showLineEvidence(groups){
  let panel=$('kiLineEvidence');
  if(!panel){panel=document.createElement('section');panel.id='kiLineEvidence';panel.className='panel';$('lineChips').after(panel)}
@@ -207,13 +207,54 @@ function snapshotIdentity(r){
  const pref=x=>({'神奈川':'神奈','北海道':'北海','和歌山':'和歌'}[norm(x)]||norm(x));
  return [norm(r.name),pref(r.prefecture??r.pref),norm(r.period).replace(/期$/,'')].join('|');
 }
+function snapshotIdentityComplete(r){
+ return !!String(r.name??'').trim()&&!!String(r.prefecture??r.pref??'').trim()&&/^\d+$/.test(String(r.period??'').trim().replace(/期$/,''));
+}
 function connectSnapshot(s,results){
+ if(!Array.isArray(s.riders)||s.riders.length!==7||s.riders.some(r=>r.identityComplete===false||!snapshotIdentityComplete(r)))return null;
  const candidates=results.filter(r=>r.date===s.date&&r.track===s.track&&Number(r.race)===Number(s.race));
  if(candidates.length!==7||new Set(candidates.map(r=>Number(r.num))).size!==7)return null;
  const by=new Map(candidates.map(r=>[Number(r.num),r]));
  const connected=s.riders.map(x=>({snapshot:x,result:by.get(Number(x.number))}));
- if(connected.length!==7||connected.some(x=>!x.result||snapshotIdentity(x.snapshot)!==snapshotIdentity(x.result)))return null;
+ if(connected.length!==7||connected.some(x=>!x.result||!snapshotIdentityComplete(x.result)||snapshotIdentity(x.snapshot)!==snapshotIdentity(x.result)))return null;
  return connected;
+}
+function lineOutcomeStats(connected){
+ const out={positions:{},sizes:{},pairs:{},races:0};
+ function bucket(map,k){return map[k]??(map[k]={total:0,valid:0,win:0,top3:0,bothTop3:0,leaderTop3:0,secondTop3:0,secondAhead:0,secondWin:0,allTop3:0,anyTop3:0})}
+ const valid=r=>Number.isInteger(r.rank)&&r.rank>=1&&r.rank<=7;
+ for(const rr of connected){
+ if(!rr||rr.length!==7)continue;out.races++;
+ const groups=new Map();
+ for(const x of rr){
+ const p=bucket(out.positions,x.snapshot.position),r=x.result;
+ p.total++;if(valid(r)){p.valid++;if(r.rank===1)p.win++;if(r.rank<=3)p.top3++}
+ const key=x.snapshot.line.join('-');if(!groups.has(key))groups.set(key,[]);groups.get(key).push(x);
+ }
+ for(const g of groups.values()){
+ const size=g.length,b=bucket(out.sizes,String(size));b.total++;
+ if(!g.every(x=>valid(x.result)))continue;
+ b.valid++;if(g.some(x=>x.result.rank===1))b.win++;if(g.some(x=>x.result.rank<=3))b.anyTop3++;if(g.every(x=>x.result.rank<=3))b.allTop3++;
+ if(size<2)continue;
+ const lead=g.find(x=>x.snapshot.number===x.snapshot.line[0]),second=g.find(x=>x.snapshot.number===x.snapshot.line[1]);
+ if(!lead||!second)continue;
+ const p=bucket(out.pairs,String(size));p.total++;p.valid++;
+ if(lead.result.rank<=3)p.leaderTop3++;if(second.result.rank<=3)p.secondTop3++;if(lead.result.rank<=3&&second.result.rank<=3)p.bothTop3++;
+ if(second.result.rank<lead.result.rank)p.secondAhead++;if(second.result.rank===1)p.secondWin++;
+ }
+ }return out;
+}
+function renderLineOutcomeStats(stats){
+ const frac=(a,b)=>b?a+'/'+b+' ('+(100*a/b).toFixed(1)+'%)':'—';
+ let h='<h4>事前位置別・収録成績</h4><p class="tiny">指定開催日の前日まで・選択級班のみ。率の分母は数値着順の記録。実際の隊列や戦法を示しません。少数データは能力・優位性の根拠にしません。</p>';
+ if(!stats.races)return h+'<p class="warn">条件に合う全員照合済みレースが0件です。0%とは表示しません。</p>';
+ h+='<div class="table"><table style="min-width:440px"><thead><tr><th>事前位置</th><th>記録／数値</th><th>1着</th><th>3着以内</th></tr></thead><tbody>';
+ for(const [k,v] of Object.entries(stats.positions))h+='<tr><td>'+safe(k)+'</td><td>'+v.total+'／'+v.valid+(v.valid<20?' <small>少数</small>':'')+'</td><td>'+frac(v.win,v.valid)+'</td><td>'+frac(v.top3,v.valid)+'</td></tr>';
+ h+='</tbody></table></div><h4>ライン人数別・上位入着</h4><p class="tiny">全員の数値着順がそろった組のみを分母とします。</p><div class="table"><table style="min-width:460px"><thead><tr><th>人数</th><th>全組／集計組</th><th>1着を含む</th><th>3着以内を含む</th><th>全員3着以内</th></tr></thead><tbody>';
+ for(const [k,v] of Object.entries(stats.sizes))h+='<tr><td>'+safe(k==='1'?'単騎':k+'車')+'</td><td>'+v.total+'／'+v.valid+(v.valid<20?' <small>少数</small>':'')+'</td><td>'+frac(v.win,v.valid)+'</td><td>'+frac(v.anyTop3,v.valid)+'</td><td>'+frac(v.allTop3,v.valid)+'</td></tr>';
+ h+='</tbody></table></div><h4>事前先頭・番手の成績</h4><p class="tiny">番手先着は着順比較であり、差し・牽制・追走成功の証明ではありません。</p><div class="table"><table style="min-width:530px"><thead><tr><th>人数</th><th>集計組</th><th>先頭3着内</th><th>番手3着内</th><th>両者3着内</th><th>番手先着</th><th>番手1着</th></tr></thead><tbody>';
+ for(const [k,v] of Object.entries(stats.pairs))h+='<tr><td>'+safe(k+'車')+'</td><td>'+v.valid+(v.valid<20?' <small>少数</small>':'')+'</td><td>'+frac(v.leaderTop3,v.valid)+'</td><td>'+frac(v.secondTop3,v.valid)+'</td><td>'+frac(v.bothTop3,v.valid)+'</td><td>'+frac(v.secondAhead,v.valid)+'</td><td>'+frac(v.secondWin,v.valid)+'</td></tr>';
+ return h+'</tbody></table></div>';
 }
 async function loadLineSnapshots(){
  lineSnapshots=[];lineFeedStatus='取得中';showSnapshotResearch();
@@ -235,23 +276,23 @@ function showSnapshotResearch(){
  if(!panel){panel=document.createElement('section');panel.id='kiSnapshotResearch';panel.className='panel';const anchor=$('kiPairResearch');if(!anchor)return;anchor.after(panel)}
  let html='<h3>事前ラインと結果の接続研究</h3><p class="tiny">台帳の事前想定並びと結果を照合します。実際の隊列・ヨコの動きではありません。発走前取得および公式結果の独立確認は未完了です。</p><p>'+safe(lineFeedStatus)+'</p>';
  if(!lineSnapshots.length||!loaded){panel.innerHTML=html+'<p class="tiny">公開データがそろうまで集計しません。</p>';return}
- let linked=0,pending=0,top3=0,den=0;
+ let linked=0,pending=0,incomplete=0,eligible=[];const cutoff=$('day').value,selected=$('grade').value;
  for(const s of lineSnapshots){
  const rr=connectSnapshot(s,rows);
- if(rr)linked++;else pending++;
+ if(rr){linked++;if(cutoff&&s.date<cutoff&&rr.every(x=>x.result.grade===selected))eligible.push(rr)}else{pending++;if(s.riders.some(x=>!snapshotIdentityComplete(x)||x.identityComplete===false))incomplete++;}
  const groups=[...new Set(s.riders.map(x=>x.line.join('-')))];
- html+='<details><summary style="padding:10px 0;cursor:pointer">'+safe(s.date+' '+s.track+' '+s.race+'R ／ '+(rr?'全員一致':'未接続・照合不一致'))+'</summary><p>'+safe('事前並び：'+groups.join(' / '))+'</p><p class="tiny">'+safe('取得：'+s.captured+'／出典：'+s.source)+'</p>';
+ html+='<details><summary style="padding:10px 0;cursor:pointer">'+safe(s.date+' '+s.track+' '+s.race+'R ／ '+(rr?'全員一致':s.riders.some(x=>!snapshotIdentityComplete(x)||x.identityComplete===false)?'本人照合情報不足':'未接続・照合不一致'))+'</summary><p>'+safe('事前並び：'+groups.join(' / '))+'</p><p class="tiny">'+safe('取得：'+s.captured+'／出典：'+s.source)+'</p>';
  if(rr){html+='<div class="table"><table style="min-width:380px"><thead><tr><th>車番・選手</th><th>事前位置</th><th>収録着順</th></tr></thead><tbody>';
  for(const {snapshot:x,result:y} of rr){html+='<tr><td>'+safe(x.number+' '+x.name)+'</td><td>'+safe(x.position)+'</td><td>'+safe(y.rank===null?'非数値':y.rank+'着')+'</td></tr>';}
  html+='</tbody></table></div>';}
  html+='</details>';
  }
- panel.innerHTML=html+'<p>'+safe('全員一致 '+linked+'R／未接続・照合不一致 '+pending+'R')+'</p>';
+ panel.innerHTML=html+'<p>'+safe('全員一致 '+linked+'R／未接続・照合不一致 '+pending+'R（本人情報不足 '+incomplete+'R）')+'</p>'+(cutoff?renderLineOutcomeStats(lineOutcomeStats(eligible)):'<p class="warn">位置別集計には開催日を指定してください。</p>');
 }
 function raceMatch(){return races.find(r=>r.date===$('day').value&&r.track===$('track').value.trim()&&String(r.race)===$('race').value&&r.grade===$('grade').value)}
 function lookup(){if(!loaded){$('resultStatus').textContent='公開JSON未取得';return}let race=raceMatch();if(!race){$('resultStatus').textContent='条件に一致する収録レースがありません（未開催・未収録・入力の不一致など）。';return}let rs=rows.filter(x=>x.date===race.date&&x.code===String(race.track_code)&&x.race===String(race.race)&&x.grade===race.grade);let top=rs.filter(x=>x.rank!==null&&x.rank<=3).sort((x,y)=>x.rank-y.rank);if(top.length!==3||top.some(x=>!/^[1-7]$/.test(x.num))){$('resultStatus').textContent='一致するレースはありますが、上位3着の車番を確定できません。';return}for(let i=0;i<3;i++)$('rank'+(i+1)).value=top[i].num;$('resultStatus').textContent='公開JSONの収録結果を入力しました：'+top.map(x=>x.rank+'着 '+x.num+'番 '+x.name).join('／')+'。結果の公式独立照合は未完了。';evaluate()}
 function evaluate(){let g=checkLine(),top=[1,2,3].map(x=>Number($('rank'+x).value));if(top.some(x=>!x)||new Set(top).size!==3){$('resultSummary').textContent='1〜3着の異なる車番を入力してください。';return}if(!g){$('resultSummary').textContent='事前ラインの形式検査が必要です。';return}let record=g.map(x=>({g:x,n:x.filter(y=>top.includes(y)).length}));let solo=record.filter(x=>x.g.length===1&&x.n>0);let max=Math.max(...record.map(x=>x.n));$('resultSummary').innerHTML='<div class="stats">'+stat(top.join(' - '),'入力された上位3着車番')+stat(solo.length,'3着以内の単騎人数')+stat(max,'同一ライン最多3着以内人数')+'</div><p>'+record.map(x=>'<span class="pill">'+x.g.join('-')+'：3着以内 '+x.n+'人</span>').join('')+'</p><p class="tiny">これは事前想定ラインと着順の単純照合です。実際の隊列・牽制・切り替えを証明するものではありません。</p>'}
-function report(){let g=checkLine(),res=[1,2,3].map(n=>$('rank'+n).value||'未入力');const lines=['KEIRIN INSIGHT v12.14 実戦分析・事後検証メモ','開催日：'+($('day').value||'未設定'),'競輪場：'+($('track').value||'未設定')+' '+$('race').value+'R','級班：'+$('grade').value,'公開JSONの取得状況：'+$('dataStatus').textContent,'選手の入力：',...[1,2,3,4,5,6,7].map(n=>{let x=getInput(n),f=findRider(n);let valid=f.items.filter(r=>r.rank!==null);return n+'番 '+(x.name||'未入力')+' '+(x.pref||'')+' '+(x.period||'')+'期　近走収録 '+f.items.length+'件　数値着順 '+valid.length+'件　直近 '+f.items.map(r=>r.rank===null?'未確定':r.rank+'着').join(',')}),'想定ライン：'+(g?g.map(x=>x.join('-')).join(' / '):'形式不備・未確定'),'ライン出典：'+$('lineSource').value,'並び確認：'+$('lineVerify').value,'映像確認：'+$('videoVerify').value,'先行候補：'+$('leader').value,'番手仮説：'+$('second').value,'単騎仮説：'+$('solo').value,'展開仮説：'+$('hypothesis').value,'上位3着（入力）：'+res.join('-'),'事後検証メモ：'+$('review').value,'注意：収録結果は予測勝率ではなく、ヨコ・切り替えは映像未確認なら断定不可。'];$('report').value=lines.join('\n');$('reportStatus').textContent='レポート作成済み。必要ならコピーまたは保存してください。'}
+function report(){let g=checkLine(),res=[1,2,3].map(n=>$('rank'+n).value||'未入力');const lines=['KEIRIN INSIGHT v12.15 実戦分析・事後検証メモ','開催日：'+($('day').value||'未設定'),'競輪場：'+($('track').value||'未設定')+' '+$('race').value+'R','級班：'+$('grade').value,'公開JSONの取得状況：'+$('dataStatus').textContent,'選手の入力：',...[1,2,3,4,5,6,7].map(n=>{let x=getInput(n),f=findRider(n);let valid=f.items.filter(r=>r.rank!==null);return n+'番 '+(x.name||'未入力')+' '+(x.pref||'')+' '+(x.period||'')+'期　近走収録 '+f.items.length+'件　数値着順 '+valid.length+'件　直近 '+f.items.map(r=>r.rank===null?'未確定':r.rank+'着').join(',')}),'想定ライン：'+(g?g.map(x=>x.join('-')).join(' / '):'形式不備・未確定'),'ライン出典：'+$('lineSource').value,'並び確認：'+$('lineVerify').value,'映像確認：'+$('videoVerify').value,'先行候補：'+$('leader').value,'番手仮説：'+$('second').value,'単騎仮説：'+$('solo').value,'展開仮説：'+$('hypothesis').value,'上位3着（入力）：'+res.join('-'),'事後検証メモ：'+$('review').value,'注意：収録結果は予測勝率ではなく、ヨコ・切り替えは映像未確認なら断定不可。'];$('report').value=lines.join('\n');$('reportStatus').textContent='レポート作成済み。必要ならコピーまたは保存してください。'}
 $('analyze').onclick=analyze;$('reload').onclick=()=>{loadData();loadLineSnapshots()};$('checkLine').onclick=checkLine;$('lookup').onclick=lookup;$('evaluate').onclick=evaluate;$('buildReport').onclick=report;$('copyReport').onclick=async()=>{if(!$('report').value)report();try{await navigator.clipboard.writeText($('report').value);$('reportStatus').textContent='コピーしました'}catch(e){$('reportStatus').textContent='コピーできない場合はレポート欄を長押ししてコピーしてください'}};$('downloadReport').onclick=()=>{if(!$('report').value)report();let u=URL.createObjectURL(new Blob([$('report').value],{type:'text/plain;charset=utf-8'}));let a=document.createElement('a');a.href=u;a.download='keirin-insight-v12-'+($('day').value||'memo')+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),5000);$('reportStatus').textContent='保存を開始しました'};$('track').onchange=analyze;$('day').onchange=analyze;$('grade').onchange=analyze;$('recent').onchange=analyze;checkLine();loadData();loadLineSnapshots();
 </script><script>
 (() => {
