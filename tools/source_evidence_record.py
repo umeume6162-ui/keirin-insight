@@ -17,3 +17,8 @@ def capture_record(url, observed_at, method, original_text):
             "sha256":sha256(original_text.encode("utf-8")).hexdigest(),
             "byteLength":len(original_text.encode("utf-8")),
             "publicationAllowed":False,"trainingAllowed":False}
+
+def verify_record(record, original_text):
+    """Verify the supplied original against its recorded digest and byte count."""
+    expected=capture_record(record["url"],record["observedAt"],record["method"],original_text)
+    return expected["sha256"]==record.get("sha256") and expected["byteLength"]==record.get("byteLength")
