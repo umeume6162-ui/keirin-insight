@@ -20,6 +20,7 @@ function checkReceipt(receipt,races=legacy.races){
   if(seen.has(car))errors.push('duplicate car '+car);
   seen.add(car);
   if(!orig){errors.push('missing car '+car);continue;}
+  if(row.lapSeconds===null||row.lapSeconds===undefined||String(row.lapSeconds).trim()===''||orig.lastLap===null||orig.lastLap===undefined||String(orig.lastLap).trim()==='')errors.push('car '+car+' lap is missing; blank cannot compare as zero');
   const tests=[['finish',String(row.finish),String(orig.finish)],['name',norm(row.name),norm(orig.name)],['lap',Number(row.lapSeconds),Number(orig.lastLap)],['margin',margin(row.marginRaw),margin(orig.margin)],['method',method(row.winningMethodRaw),method(orig.winningMethod)],['SB',norm(row.sbRaw),norm(orig.startBack)]];
   if(Object.hasOwn(row,'prefecture'))tests.push(['prefecture',norm(row.prefecture),norm(orig.prefecture)]);
   if(Object.hasOwn(row,'period'))tests.push(['period',Number(row.period),Number(orig.period)]);
