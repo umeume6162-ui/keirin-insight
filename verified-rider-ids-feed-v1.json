@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "必要4項目が2サイト一致した45人。既存41人は保持し、未照合4人を追加。",
+  "verificationNote": "4必須項目の2サイト一致確認済み49選手。既存45人は保持し、未照合4人を救済。",
   "summary": {
-    "rows": 45
+    "rows": 49
   },
   "riders": [
     {
@@ -1085,6 +1085,102 @@
           "https://www.winticket.jp/keirin/cyclist/014080"
         ],
         "note": "2026-11-22：KEIRIN.JPおよびWINTICKETの選手プロフィールで氏名・府県・期別・6桁登録番号を独立に照合し4項目一致。元台帳未照合から救済。"
+      }
+    },
+    {
+      "id": "015554",
+      "name": "近藤 翔馬",
+      "prefecture": "愛媛",
+      "period": "119",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015554",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015554",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015554",
+          "https://www.winticket.jp/keirin/cyclist/015554"
+        ],
+        "note": "2026-11-22：KEIRIN.JP と WINTICKET プロフィール原文の氏名・府県・期別・登録番号4項目が完全一致。級班・年齢など時点情報は識別条件にしない。"
+      }
+    },
+    {
+      "id": "015966",
+      "name": "近内 三孝",
+      "prefecture": "栃木",
+      "period": "129",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015966",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015966",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015966",
+          "https://www.winticket.jp/keirin/cyclist/015966"
+        ],
+        "note": "2026-11-22：KEIRIN.JP と WINTICKET プロフィール原文の氏名・府県・期別・登録番号4項目が完全一致。級班・年齢など時点情報は識別条件にしない。"
+      }
+    },
+    {
+      "id": "015208",
+      "name": "金ヶ江勇気",
+      "prefecture": "佐賀",
+      "period": "111",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015208",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015208",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015208",
+          "https://www.winticket.jp/keirin/cyclist/015208"
+        ],
+        "note": "2026-11-22：KEIRIN.JP と WINTICKET プロフィール原文の氏名・府県・期別・登録番号4項目が完全一致。級班・年齢など時点情報は識別条件にしない。"
+      }
+    },
+    {
+      "id": "014450",
+      "name": "金子 哲大",
+      "prefecture": "埼玉",
+      "period": "95",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014450",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014450",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014450",
+          "https://www.winticket.jp/keirin/cyclist/014450"
+        ],
+        "note": "2026-11-22：KEIRIN.JP と WINTICKET プロフィール原文の氏名・府県・期別・登録番号4項目が完全一致。級班・年齢など時点情報は識別条件にしない。"
       }
     }
   ],
