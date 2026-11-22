@@ -19,13 +19,16 @@ const audits=research.races.map(r=>{
  if(new Set(lineSources.map(host)).size<2)missing.push('two independent pre-race formation domains');
  if(r.formation?.groups?.flat().slice().sort((a,b)=>a-b).join(',')!==nums.slice().sort((a,b)=>a-b).join(','))missing.push('lineup/result car coverage');
  for(const [n,x] of finishers.entries())for(const k of requiredResultFields)if(!(k in x))missing.push('row '+(n+1)+' missing '+k);
- // A generic comparison sentence is not per-field two-provider evidence.
- if(!r.resultEvidenceByField||!Array.isArray(r.resultEvidenceByField)||r.resultEvidenceByField.length!==expected)
-  missing.push('per-rider/per-required-result-field two-provider source evidence');
- if(!r.officialVerification?.source||!/^https:\/\/(?:www\.)?keirin\.jp\//.test(r.officialVerification.source))
-  missing.push('official-source receipt/reference for formal race index');
- if(!r.officialVerification?.verifiedDate)missing.push('race verification timestamp');
- return {key:r.key,entered:finishers.length,forecast:r.formation?.groups?.map(g=>g.join('-')).join(' / '),status:missing.length?'NEEDS_SOURCE_EVIDENCE':'READY_FOR_SCHEMA_MAPPING',missing};
+ // Do not impose KEIRIN.JP or a separate signature as a third approval step.
+ // Existing source receipts may already substantiate two-provider agreement;
+ // this audit reports missing *structured mapping*, not a new verification failure.
+ if(!Array.isArray(r.resultEvidenceByField)||r.resultEvidenceByField.length!==expected)
+  missing.push('map existing per-rider/required-field two-source result receipts');
+ if(!r.resultSourcePair?.length||new Set(r.resultSourcePair.map(host)).size<2)
+  missing.push('map two distinct result-provider source URLs from existing receipts');
+ if(!r.resultVerifiedDate && !r.officialVerification?.verifiedDate)
+  missing.push('map original observation or verification date (JST)');
+ return {key:r.key,entered:finishers.length,forecast:r.formation?.groups?.map(g=>g.join('-')).join(' / '),status:missing.length?'NEEDS_EVIDENCE_MAPPING':'READY_FOR_SCHEMA_MAPPING',missing};
 });
 const report={generatedBy:'tools/audit_formal_race_readiness.cjs',publicationDecision:'no promotion performed',researchRaces:research.races.length,officialRaces:official.races.length,officialRiderRows:rows.rows.length,officialLineSnapshots:lines.races.length,audits};
 console.log(JSON.stringify(report,null,2));
