@@ -43,7 +43,7 @@ function showCoverageDashboard(){
  const ratio=(n,d)=>d?n+'/'+d+'（'+(100*n/d).toFixed(1)+'%）':'—';
  let h='<h3>公開データ品質・収録範囲</h3><p class="tiny">収録成績の範囲を示す監査です。全開催の網羅率や予測精度ではありません。</p><div class="stats">'+stat(rows.length,'出走結果')+stat(races.length,'レース数')+stat(m.dates.length,'収録日数')+'</div><p>'+safe('収録期間：'+(m.dates[0]||'—')+' ～ '+(m.dates[m.dates.length-1]||'—'))+'</p>';
  h+='<details><summary>級班別収録数・開催日一覧</summary><p>'+safe(Object.entries(m.gradeCounts).map(([g,n])=>g+' '+n+'R').join(' ／ '))+'</p><p class="tiny">'+safe(m.dates.join(' ／ '))+'</p></details>';
- h+='<p>'+safe('上り記載 '+ratio(m.lap,rows.length)+' ／ S/B記載 '+ratio(m.sb,rows.length))+'</p><p class="tiny">S/B空欄は記載なし。取得漏れか非該当かは区別できません。</p><p>'+safe('公式ID接続 '+(officialIds.size?ratio(m.idRows,rows.length):'未取得')+' ／ ライン結果接続 '+(lineSnapshots.length?ratio(m.linked,lineSnapshots.length):'未取得・収録なし'))+'</p>';
+ h+='<p>'+safe('上り記載 '+ratio(m.lap,rows.length)+' ／ S/B記載 '+ratio(m.sb,rows.length))+'</p><p class="tiny">S/B空欄は記載なし。取得漏れか非該当かは区別できません。</p><p>'+safe('公式ID接続 '+(officialIds.size?ratio(m.idRows,rows.length):'未取得')+' ／ ライン結果接続 '+(lineSnapshots.length?String(m.linked)+'R（掲載条件合格）':'未取得・収録なし'))+'</p>';
  panel.innerHTML=h;
 }
 
@@ -294,9 +294,12 @@ function snapshotIdentityComplete(r){
  return !!String(r.name??'').trim()&&!!String(r.prefecture??r.pref??'').trim()&&/^\d+$/.test(String(r.period??'').trim().replace(/期$/,''));
 }
 function connectSnapshot(s,results){
+ if(s.officialVerification?.status!=='verified'||typeof s.officialVerification?.source!=='string'||!/^https:\/\/(www\.)?keirin\.jp\//.test(s.officialVerification.source))return null;
+ const sg=String(s.grade||'');const expected=/^A3/.test(sg)?'A3':/^A[12]/.test(sg)?'A1/A2':/^S[12S]?/.test(sg)?'S級':null;if(!expected)return null;
+
  if(!Array.isArray(s.riders)||s.riders.length!==7||s.riders.some(r=>r.identityComplete===false||!snapshotIdentityComplete(r)))return null;
  const candidates=results.filter(r=>r.date===s.date&&r.track===s.track&&Number(r.race)===Number(s.race));
- if(candidates.length!==7||new Set(candidates.map(r=>Number(r.num))).size!==7)return null;
+ if(candidates.length!==7||new Set(candidates.map(r=>Number(r.num))).size!==7||candidates.some(r=>r.grade!==expected||!Number.isInteger(r.rank)||r.rank<1||r.rank>7)||new Set(candidates.map(r=>r.rank)).size!==7)return null;
  const by=new Map(candidates.map(r=>[Number(r.num),r]));
  const connected=s.riders.map(x=>({snapshot:x,result:by.get(Number(x.number))}));
  if(connected.length!==7||connected.some(x=>!x.result||!snapshotIdentityComplete(x.result)||snapshotIdentity(x.snapshot)!==snapshotIdentity(x.result)))return null;
@@ -350,7 +353,7 @@ async function loadLineSnapshots(){
  for(const r of j.races){
  if(!Array.isArray(r.riders)||r.riders.length!==7||r.riders.map(x=>Number(x.number)).sort((a,b)=>a-b).join(',')!=='1,2,3,4,5,6,7'||r.riders.some(x=>!Array.isArray(x.line)||!x.line.includes(x.number)))throw Error('並び形式不一致');
  }
- lineSnapshots=j.races;lineFeedStatus='取得成功：'+j.races.length+'R';
+ lineSnapshots=j.races.filter(x=>x.officialVerification?.status==='verified'&&typeof x.officialVerification?.source==='string'&&/^https:\/\/(www\.)?keirin\.jp\//.test(x.officialVerification.source));lineFeedStatus='確認済み候補を取得';
  }catch(e){lineFeedStatus='未取得（'+e.message+'）';}
  showSnapshotResearch();showOfficialPairResearch(lastLine);showCoverageDashboard();
 }
@@ -397,12 +400,13 @@ function showOfficialPairResearch(groups){
 function showSnapshotResearch(){
  let panel=$('kiSnapshotResearch');
  if(!panel){panel=document.createElement('section');panel.id='kiSnapshotResearch';panel.className='panel';const anchor=$('kiPairResearch');if(!anchor)return;anchor.after(panel)}
- let html='<h3>事前ラインと結果の接続研究</h3><p class="tiny">台帳の事前想定並びと結果を照合します。実際の隊列・ヨコの動きではありません。発走前取得および公式結果の独立確認は未完了です。</p><p>'+safe(lineFeedStatus)+'</p>';
+ let html='<h3>事前ラインと結果の接続研究</h3><p class="tiny">台帳の事前想定並びと結果を照合します。実際の隊列・ヨコの動きではありません。公式確認記録と全員の結果照合が成立したレースだけ掲載します。</p><p>'+safe(lineFeedStatus)+'</p>';
  if(!lineSnapshots.length||!loaded){panel.innerHTML=html+'<p class="tiny">公開データがそろうまで集計しません。</p>';return}
  let linked=0,pending=0,incomplete=0,eligible=[];const cutoff=$('day').value,selected=$('grade').value;
  for(const s of lineSnapshots){
  const rr=connectSnapshot(s,rows);
  if(rr){linked++;if(cutoff&&s.date<cutoff&&rr.every(x=>x.result.grade===selected))eligible.push(rr)}else{pending++;if(s.riders.some(x=>!snapshotIdentityComplete(x)||x.identityComplete===false))incomplete++;}
+ if(!rr)continue;
  const groups=[...new Set(s.riders.map(x=>x.line.join('-')))];
  html+='<details><summary style="padding:10px 0;cursor:pointer">'+safe(s.date+' '+s.track+' '+s.race+'R ／ '+(rr?'全員一致':s.riders.some(x=>!snapshotIdentityComplete(x)||x.identityComplete===false)?'本人照合情報不足':'未接続・照合不一致'))+'</summary><p>'+safe('事前並び：'+groups.join(' / '))+'</p><p class="tiny">'+safe('取得：'+s.captured+'／出典：'+s.source)+'</p>';
  if(rr){html+='<div class="table"><table style="min-width:380px"><thead><tr><th>車番・選手</th><th>事前位置</th><th>収録着順</th></tr></thead><tbody>';
@@ -410,7 +414,7 @@ function showSnapshotResearch(){
  html+='</tbody></table></div>';}
  html+='</details>';
  }
- panel.innerHTML=html+'<p>'+safe('全員一致 '+linked+'R／未接続・照合不一致 '+pending+'R（本人情報不足 '+incomplete+'R）')+'</p>'+(cutoff?renderLineOutcomeStats(lineOutcomeStats(eligible)):'<p class="warn">位置別集計には開催日を指定してください。</p>');
+ panel.innerHTML=html+'<p>'+safe('掲載済み・全員一致 '+linked+'R')+'</p>'+(cutoff?renderLineOutcomeStats(lineOutcomeStats(eligible)):'<p class="warn">位置別集計には開催日を指定してください。</p>');
 }
 function raceMatch(){return races.find(r=>r.date===$('day').value&&r.track===$('track').value.trim()&&String(r.race)===$('race').value&&r.grade===$('grade').value)}
 function lookup(){if(!loaded){$('resultStatus').textContent='公開JSON未取得';return}let race=raceMatch();if(!race){$('resultStatus').textContent='条件に一致する収録レースがありません（未開催・未収録・入力の不一致など）。';return}let rs=rows.filter(x=>x.date===race.date&&x.code===String(race.track_code)&&x.race===String(race.race)&&x.grade===race.grade);let top=rs.filter(x=>x.rank!==null&&x.rank<=3).sort((x,y)=>x.rank-y.rank);if(top.length!==3||top.some(x=>!/^[1-7]$/.test(x.num))){$('resultStatus').textContent='一致するレースはありますが、上位3着の車番を確定できません。';return}for(let i=0;i<3;i++)$('rank'+(i+1)).value=top[i].num;$('resultStatus').textContent='公開JSONの収録結果を入力しました：'+top.map(x=>x.rank+'着 '+x.num+'番 '+x.name).join('／')+'。結果の公式独立照合は未完了。';evaluate()}
