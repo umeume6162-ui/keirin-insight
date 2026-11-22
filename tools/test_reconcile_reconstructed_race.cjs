@@ -33,6 +33,15 @@ assert.equal(r7.numericFinishers,7);
 assert.equal(r7.missingFromResult.length,0);
 assert.equal(r7.publicationPassed,false);
 assert.equal(r7.officialStartersKnown,false);
+// Nagoya 8R preserves all seven entrants, finish ranks and pre-race groups without auto-promotion.
+const r8=check(load(8));
+assert.equal(r8.raceKey,'2026-11-20|42|8');
+assert.equal(r8.structuralOk,true,JSON.stringify(r8.errors));
+assert.equal(r8.documentedResultRows,7);
+assert.equal(r8.numericFinishers,7);
+assert.deepEqual(r8.missingFromResult,[]);
+assert.equal(r8.publicationPassed,false);
+assert.equal(r8.officialStartersKnown,false);
 // Five numeric places plus fall/disqualification must be retained without ranking the exceptions.
 const r4=check(load(4));
 assert.equal(r4.structuralOk,true,JSON.stringify(r4.errors));
@@ -53,4 +62,4 @@ assert.equal(missing.publicationPassed,false);
 const duplicate=load(5);
 duplicate.results[1].car=duplicate.results[0].car;
 assert.equal(check(duplicate).structuralOk,false);
-console.log('source-first race reconciliation tests passed (5 authentic candidates + missing/duplicate regression cases)');
+console.log('source-first race reconciliation tests passed (6 authentic candidates + missing/duplicate regression cases)');
