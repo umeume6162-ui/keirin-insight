@@ -1,0 +1,167 @@
+{
+  "schema": "ki-legacy-race-full-field-recheck-v1",
+  "dateJST": "2026-11-23",
+  "raceKey": "2026-10-05|75|3",
+  "storedSource": "comparison-races-v1.json",
+  "sources": [
+    {
+      "organization": "Chariloto",
+      "url": "https://www.chariloto.com/keirin/results/75/2026-10-05",
+      "retrieval": "full original dated result 3R, web.open",
+      "fields": [
+        "finish",
+        "car",
+        "name",
+        "prefecture",
+        "period",
+        "grade",
+        "lap",
+        "margin",
+        "method",
+        "SB"
+      ]
+    },
+    {
+      "organization": "netkeirin",
+      "url": "https://keirin.netkeiba.com/race/result/?race_id=202610057503",
+      "retrieval": "full dated result 3R, web.open",
+      "fields": [
+        "finish",
+        "car",
+        "name",
+        "lap",
+        "margin",
+        "method",
+        "SB"
+      ]
+    }
+  ],
+  "transcribedRows": [
+    {
+      "finish": 1,
+      "car": 3,
+      "name": "滝本泰行",
+      "prefecture": "岡山",
+      "period": 107,
+      "grade": "A1",
+      "lapSeconds": 12,
+      "marginRaw": "",
+      "winningMethodRaw": "差し",
+      "sbRaw": ""
+    },
+    {
+      "finish": 2,
+      "car": 4,
+      "name": "野中祐志",
+      "prefecture": "埼玉",
+      "period": 98,
+      "grade": "A1",
+      "lapSeconds": 11.9,
+      "marginRaw": "1車輪",
+      "winningMethodRaw": "差し",
+      "sbRaw": ""
+    },
+    {
+      "finish": 3,
+      "car": 7,
+      "name": "吉田航",
+      "prefecture": "大分",
+      "period": 127,
+      "grade": "A2",
+      "lapSeconds": 12.2,
+      "marginRaw": "1車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "B"
+    },
+    {
+      "finish": 4,
+      "car": 1,
+      "name": "小原唯志",
+      "prefecture": "茨城",
+      "period": 101,
+      "grade": "A1",
+      "lapSeconds": 12,
+      "marginRaw": "3/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 5,
+      "car": 2,
+      "name": "内山慧大",
+      "prefecture": "福井",
+      "period": 123,
+      "grade": "A1",
+      "lapSeconds": 12,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "S"
+    },
+    {
+      "finish": 6,
+      "car": 5,
+      "name": "水谷将司",
+      "prefecture": "愛知",
+      "period": 105,
+      "grade": "A2",
+      "lapSeconds": 12,
+      "marginRaw": "1車輪",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 7,
+      "car": 6,
+      "name": "田中勝仁",
+      "prefecture": "千葉",
+      "period": 93,
+      "grade": "A2",
+      "lapSeconds": 12,
+      "marginRaw": "1/2車輪",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    }
+  ],
+  "normalization": {
+    "number": "numeric lap: 12 and 12.0 equivalent",
+    "width": "NFKC",
+    "spaces": "discard extra spaces in names and margins",
+    "winningMethod": {
+      "差": "差し",
+      "逃": "逃げ",
+      "ク": "マーク"
+    }
+  },
+  "summary": {
+    "rows": 7,
+    "fieldComparisons": 63,
+    "differences": 0,
+    "allMatch": true
+  },
+  "mismatches": [],
+  "preRaceFormation": [
+    [
+      2,
+      5
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      7,
+      3
+    ],
+    [
+      6
+    ]
+  ],
+  "preRaceFormationSources": [
+    "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020003/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+    "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_3.html"
+  ],
+  "officialPrimaryOriginal": "NOT_RETRIEVED",
+  "upstreamSourceIndependence": "NOT_PROVEN",
+  "publicationStatus": "RESEARCH_ONLY_PENDING",
+  "note": "This adds third legacy race cross-site comparison; no formal publication or ticket payout data changes."
+}
