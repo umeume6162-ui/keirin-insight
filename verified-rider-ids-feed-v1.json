@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "全4項目を2サイトで比較した選手を掲載。既存7件に奥村諭志・横関裕樹・横田政直の3件を追加。重複登録なし。",
+  "verificationNote": "必要4項目を2サイトで確認した12選手を掲載。旧データの再照合・重複を避け、未合格選手から追加。",
   "summary": {
-    "rows": 10
+    "rows": 12
   },
   "riders": [
     {
@@ -245,6 +245,54 @@
           "https://www.winticket.jp/keirin/cyclist/014931"
         ],
         "note": "既存選手台帳の氏名・府県・期別・登録番号をKEIRIN.JPおよびWINTICKETの各プロフィールと比較し4項目一致。既存元台帳は維持。"
+      }
+    },
+    {
+      "id": "013965",
+      "name": "岡田 雅也",
+      "prefecture": "高知",
+      "period": "88",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013965",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013965",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013965",
+          "https://www.winticket.jp/keirin/cyclist/013965"
+        ],
+        "note": "既存選手ID照合台帳の4項目とKEIRIN.JP・WINTICKET公開プロフィールの4項目が一致。合格済み元台帳を維持。"
+      }
+    },
+    {
+      "id": "013212",
+      "name": "岡田 浩太",
+      "prefecture": "岡山",
+      "period": "78",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013212",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013212",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013212",
+          "https://www.winticket.jp/keirin/cyclist/013212"
+        ],
+        "note": "既存選手ID照合台帳の4項目とKEIRIN.JP・WINTICKET公開プロフィールの4項目が一致。合格済み元台帳を維持。"
       }
     }
   ],
