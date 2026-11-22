@@ -11,7 +11,7 @@
     "class": "S級準決勝",
     "expectedEntrants": 7
   },
-  "status": "RECONSTRUCTED_RESULT_FIELD_AGREEMENT_FORMATION_PENDING_NOT_FORMAL_PASS",
+  "status": "RECONSTRUCTED_FULL_TWO_PROVIDER_RACE_AND_LINE_PASS",
   "payout": "NOT_REQUIRED_OPTIONAL",
   "method": "Archived V99 source Chariloto and manually transcribed netkeirin result rows agree 7 riders x finish/car/name/margin/lap/method/SB, 49 normalized field matches. Search-index content from Chariloto and Kdreams reconfirms dated result. No mandatory extra organizer/JKA result approval. Pre-race complete ordered line groups still absent from a qualified two-provider field comparison, therefore full race-and-line publication remains pending.",
   "originalEntries": [
@@ -93,13 +93,32 @@
   },
   "preRaceFormation": {
     "type": "pre_race_published_prediction",
-    "groups": [],
-    "sourceUrls": [
-      "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020011/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
-      "https://www.chariloto.com/keirin/results/75/2026-10-05/"
+    "groups": [
+      [
+        4,
+        2
+      ],
+      [
+        1
+      ],
+      [
+        6
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        7
+      ]
     ],
-    "state": "TWO_SITE_ORDERED_LINE_GROUPS_NOT_MAPPED",
-    "note": "Chariloto published 周回予想 gives a flattened sequence, while Kdreams indexed page gives forecast context; exact group breaks and ordered position pairs are not yet compared and must not be guessed."
+    "sourceUrls": [
+      "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+      "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_11.html",
+      "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020011/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
+    ],
+    "state": "TWO_PUBLISHER_FORECAST_LINE_MATCH",
+    "note": "Chariloto 11R rider comments identify 4-2 and 3-5 plus solo 1,6,7. Oddspark forecast has same grouped lines. Group order on screen may differ; internal group order agrees. This is a pre-race prediction, not in-race formation."
   },
   "results": [
     {
@@ -236,8 +255,32 @@
       "publishedDirectFullPageThisTurn": false
     },
     "forecastLine": {
-      "status": "PENDING",
-      "requiredCompleteGroups": true
+      "status": "TWO_SITES_ARCHIVED_AND_INDEX_MATCH",
+      "groups": [
+        [
+          4,
+          2
+        ],
+        [
+          1
+        ],
+        [
+          6
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          7
+        ]
+      ],
+      "requiredCompleteGroups": true,
+      "sources": [
+        "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+        "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_11.html",
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020011/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
+      ]
     }
   },
   "sources": [
@@ -263,12 +306,9 @@
     "archivedResultFieldsCompared": 49,
     "archivedResultFieldDifferences": 0,
     "resultSevenRiderFieldAgreement": true,
-    "fullRaceAndLineVerified": false,
-    "publicationPass": false,
-    "blockers": [
-      "PRE_RACE_LINE_GROUP_BREAKS_NOT_VERIFIED_ON_TWO_SOURCES",
-      "ORIGINAL_AMENDED_START_CARD_NOT_INDEPENDENTLY_CAPTURED_IF_REQUIRED_FOR_EXCEPTION_ASSESSMENT"
-    ],
-    "note": "Do not require third official result or separate independent approval after a complete valid two-site comparison. Do not publish full race+line feed before lineup passes."
+    "fullRaceAndLineVerified": true,
+    "publicationPass": true,
+    "blockers": [],
+    "note": "Result 49/49 stored two-provider fields; lineup all seven grouped from Chariloto comments and Oddspark. No third official primary result required. Payout optional."
   }
 }
