@@ -15,4 +15,29 @@ const e=inspectSourceFirst(exceptional);assert.equal(e.numericFinishers,6);asser
 const comparison={races:[{key:'2026-10-05|75|1',track:'松山',finishers:Array.from({length:7},(_,i)=>({number:i+1,finish:String(i+1)})),formation:{groups:[[1,2,3,4,5,6,7]]},resultSourcePair:['https://a.example/','https://b.example/']}]};
 const sum=auditAll([base],comparison);assert.equal(sum.summary.allRaces,2);assert.equal(sum.summary.resultRows,14);assert.equal(sum.summary.formalPass,0);
 assert.throws(()=>auditAll([base,base],comparison),/DUPLICATE_RACE_KEYS/);
+// Regression against real archived 2026-11-20 Nagoya 1-4R records after roster normalization.
+// These assertions verify structure ONLY and must never assert official-source provenance.
+const fs=require('node:fs'),path=require('node:path');
+const dataDir=path.join(__dirname,'reconstruction-candidates');
+for(const n of [1,2,3,4]){
+ const d=JSON.parse(fs.readFileSync(path.join(dataDir,'2026-11-20_42_'+n+'.research.json'),'utf8'));
+ const q=inspectSourceFirst(d);
+ assert.equal(q.originalEntriesStructured,7,'original 7-card source must be structured for '+n);
+ assert.equal(q.documentedRows,7);
+ assert.equal(q.formationCars,7);
+ assert.equal(q.numericFinishers,n===4?5:7);
+ assert.equal(q.exceptionRows.length,n===4?2:0);
+ assert.equal(q.publicationPassed,false);
+ assert.ok(!q.blockers.includes('ORIGINAL_ENTRY_CARD_NOT_STRUCTURED'),'legacy entry schema issue must be resolved');
+ assert.ok(!q.warnings.includes('LEGACY_FINISH_RAW_MISSING_NORMALIZE_WITHOUT_INVENTING'),'source rank raw schema must be normalized');
+}
+const legacy1=JSON.parse(fs.readFileSync(path.join(dataDir,'2026-11-20_42_1.research.json'),'utf8'));
+assert.ok(inspectSourceFirst(legacy1).blockers.some(x=>x.startsWith('SOURCE_SB_MARKER_CONFLICT')),'do not erase historical S/B disagreement');
+const legacy3=JSON.parse(fs.readFileSync(path.join(dataDir,'2026-11-20_42_3.research.json'),'utf8'));
+assert.ok(inspectSourceFirst(legacy3).blockers.some(x=>x.startsWith('NUMERIC_FINISHER_LAP_NOT_DISPLAYED')),'do not invent seventh-place lap');
+const priorAudit=JSON.parse(fs.readFileSync(path.join(__dirname,'audits','2026-11-23_acquired_18_races.json'),'utf8'));
+assert.equal(priorAudit.summary.totalRaces,18);
+assert.equal(priorAudit.summary.totalRiderRows,126);
+assert.equal(priorAudit.summary.sourceFirstMissingOriginalEntries,0);
+assert.equal(priorAudit.summary.formalPass,0);
 console.log('OK: all-acquired-race audit catches legacy missing source mapping, blank laps, exception rows, duplicate races; NEVER publishes PASS');
