@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "96選手の氏名・府県・期別・6桁登録番号が異なる2つの掲載元で一致。旧93人保持、新規後藤悠・後藤祐貴・光岡義洋。",
+  "verificationNote": "99人、2独立掲載元における氏名・府県・期別・6桁登録番号の4項目一致。既存96人維持。",
   "summary": {
-    "rows": 96
+    "rows": 99
   },
   "riders": [
     {
@@ -2309,6 +2309,78 @@
           "https://www.winticket.jp/keirin/cyclist/012827"
         ],
         "note": "2026-11-22に本文公開キャッシュを読み取り。公式掲載時点2026-08-06。KEIRIN.JPおよびWINTICKETの氏名・府県・期別・6桁登録番号一致。ライブ取得ではない。台帳337行。"
+      }
+    },
+    {
+      "id": "015314",
+      "name": "向井　円",
+      "prefecture": "大阪",
+      "period": "114",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015314",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015314",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015314",
+          "https://www.winticket.jp/keirin/cyclist/015314"
+        ],
+        "note": "2026-11-22に公表キャッシュ原文直接開封、KEIRIN.JP元資料2026-07-25更新とWINTICKETプロフィールの氏名・府県・期別・登録番号が一致。ライブ現時点情報と区別。台帳338行。"
+      }
+    },
+    {
+      "id": "014067",
+      "name": "工藤　考生",
+      "prefecture": "埼玉",
+      "period": "90",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014067",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014067",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014067",
+          "https://www.winticket.jp/keirin/cyclist/014067"
+        ],
+        "note": "2026-11-22に公表キャッシュ原文直接開封、KEIRIN.JP元資料2026-07-28更新とWINTICKETプロフィールの氏名・府県・期別・登録番号が一致。ライブ現時点情報と区別。台帳339行。"
+      }
+    },
+    {
+      "id": "013601",
+      "name": "工藤　政志",
+      "prefecture": "青森",
+      "period": "84",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013601",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013601",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013601",
+          "https://www.winticket.jp/keirin/cyclist/013601"
+        ],
+        "note": "2026-11-22に公表キャッシュ原文直接開封、KEIRIN.JP元資料2026-08-09更新とWINTICKETプロフィールの氏名・府県・期別・登録番号が一致。ライブ現時点情報と区別。台帳340行。"
       }
     }
   ],
