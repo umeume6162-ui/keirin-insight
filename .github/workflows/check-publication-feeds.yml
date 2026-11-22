@@ -16,6 +16,8 @@ on:
       - 'tools/reconstruction-candidates/**'
       - 'tools/audits/**'
       - 'tools/test_audit_all_acquired_races.cjs'
+      - 'tools/check_legacy_rechecks.cjs'
+      - 'tools/source-origin-audits/**'
       - 'tools/audit_all_acquired_races.cjs'
       - 'tools/audit_formal_race_readiness.cjs'
       - '.github/workflows/check-publication-feeds.yml'
@@ -34,6 +36,8 @@ on:
       - 'tools/reconstruction-candidates/**'
       - 'tools/audits/**'
       - 'tools/test_audit_all_acquired_races.cjs'
+      - 'tools/check_legacy_rechecks.cjs'
+      - 'tools/source-origin-audits/**'
       - 'tools/audit_all_acquired_races.cjs'
       - '.github/workflows/check-publication-feeds.yml'
   workflow_dispatch:
@@ -52,6 +56,8 @@ jobs:
           node-version: '22'
       - name: Test source-first entry/result exception reconciliation
         run: node tools/test_reconcile_reconstructed_race.cjs
+      - name: Validate acquired Matsuyama 1R and 2R source rechecks
+        run: node tools/check_legacy_rechecks.cjs
       - name: Test all previously acquired races and no implicit PASS
         run: node tools/test_audit_all_acquired_races.cjs
       - name: Audit all prior research and comparison races
