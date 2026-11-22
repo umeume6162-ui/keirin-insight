@@ -1,0 +1,186 @@
+{
+  "schema": "ki-source-origin-review-v1",
+  "raceKey": "2026-11-20|22|2",
+  "reviewDateJST": "2026-11-22",
+  "currentStatus": "FIELD_CORROBORATED_OFFICIAL_RESULT_ORIGIN_NOT_YET_DIRECTLY_CAPTURED",
+  "discovery": "Multiple publisher sites may receive results from a shared industry competition-data system; downstream different hostnames do not imply independent data origination. This is a general documented architecture, not proof that any named provider used the same exact upstream feed on this race.",
+  "architecture": [
+    {
+      "publisher": "Ministry of Economy, Trade and Industry",
+      "url": "https://www.meti.go.jp/shingikai/sankoshin/seizo_sangyo/sharyo_kyogi/pdf/020_01_00.pdf",
+      "proof": "Published reference diagram of keirin business core system with track/JKA inputs, KEIRIN.JP and media distribution channels",
+      "granularity": "industry architecture only",
+      "readMode": "web PDF text extraction; screenshot attempt returned 403"
+    },
+    {
+      "publisher": "JKA",
+      "url": "https://www.keirin-autorace.or.jp/documents/www/work/plan/h26_plan.pdf",
+      "proof": "Historical FY2014 public business plan expressly describes competition data delivery to organizers, Kyodo, specialist papers, and KEIRIN.JP",
+      "granularity": "historical ecosystem, not necessarily unchanged in 2026",
+      "readMode": "web PDF text extraction; screenshot attempt returned 403"
+    }
+  ],
+  "sources": [
+    {
+      "host": "keirin.kdreams.jp",
+      "organization": "Rakuten Kdreams",
+      "url": "https://keirin.kdreams.jp/maebashi/racedetail/2220261120010002/?pageType=result",
+      "access": "direct_full_page",
+      "provides": [
+        "7 car identities and finish rank",
+        "lap",
+        "margin",
+        "winning method",
+        "S/B",
+        "pre-race forecast"
+      ],
+      "originalSource": "unknown for official result rows",
+      "notes": "Site advises to reconcile with organizer announcement"
+    },
+    {
+      "host": "keirin.netkeiba.com",
+      "organization": "netkeirin",
+      "url": "https://keirin.netkeiba.com/race/result/?race_id=202611202202",
+      "access": "direct_full_page",
+      "provides": [
+        "7 car identities and finish rank",
+        "lap",
+        "margin",
+        "winning method",
+        "S/B"
+      ],
+      "originalSource": "unknown for official result rows",
+      "notes": "S on rider car 6 shown"
+    },
+    {
+      "host": "keirin-autorace.nikkan-gendai.com",
+      "organization": "Nikkan Gendai",
+      "url": "https://keirin-autorace.nikkan-gendai.com/Keirin/Result?date=20261120&placeCode=22&raceNo=2",
+      "access": "direct_full_page",
+      "provides": [
+        "7 car identities and finish rank",
+        "lap",
+        "margin",
+        "winning method"
+      ],
+      "missing": [
+        "S/B for rider car 6"
+      ],
+      "originalSource": "not established"
+    },
+    {
+      "host": "www.yen-joy.net",
+      "organization": "Nikkan Prosports Shinbunsha",
+      "url": "https://www.yen-joy.net/kaisai/race/result/detail/202611/22/20261120/20261120/2",
+      "access": "direct_full_page",
+      "provides": [
+        "all 7 car identities and finish rank"
+      ],
+      "doesNotProvideInViewedPage": [
+        "lap times",
+        "margins",
+        "winning method",
+        "S/B"
+      ],
+      "observedCarOrder": [
+        2,
+        6,
+        1,
+        7,
+        4,
+        5,
+        3
+      ],
+      "originalSource": "Editorial publisher known but actual source of raw finish data not stated"
+    },
+    {
+      "host": "www.keirin.jp",
+      "organization": "JKA official KEIRIN.JP",
+      "url": "https://www.keirin.jp/pc/search",
+      "access": "direct search interface",
+      "provides": [
+        "race search interface"
+      ],
+      "missing": [
+        "directly retrieved official dated Nov 20 Maebashi 2R result table"
+      ],
+      "originalSource": "authoritative official portal, individual result unresolved"
+    }
+  ],
+  "fieldCoverage": {
+    "rankAndCar": {
+      "value": [
+        2,
+        6,
+        1,
+        7,
+        4,
+        5,
+        3
+      ],
+      "matchingPublishers": [
+        "Kdreams",
+        "netkeirin",
+        "Nikkan Gendai",
+        "Nikkan Prosports"
+      ],
+      "state": "FOUR_PUBLISHERS_DISPLAY_AGREE_UPSTREAM_NOT_PROVEN_INDEPENDENT"
+    },
+    "lapAndMargin": {
+      "matchingPublishers": [
+        "Kdreams",
+        "netkeirin",
+        "Nikkan Gendai"
+      ],
+      "state": "THREE_PUBLISHERS_DISPLAY_AGREE_UPSTREAM_NOT_PROVEN_INDEPENDENT"
+    },
+    "SCar6": {
+      "value": "S",
+      "positive": [
+        "Kdreams",
+        "netkeirin"
+      ],
+      "unknown": [
+        "Nikkan Gendai",
+        "Nikkan Prosports viewed result detail"
+      ],
+      "state": "TWO_PUBLISHERS_POSITIVE_OTHER_FIELDS_ABSENT_NOT_CONTRADICTORY"
+    },
+    "entryRoster": {
+      "state": "Kdreams and Chariloto dated original-card match, official late amendments not directly obtained"
+    },
+    "preRaceLine": {
+      "value": [
+        [
+          2,
+          1,
+          3
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          6,
+          7
+        ]
+      ],
+      "sources": [
+        "Kdreams",
+        "KEIRIN HEX"
+      ],
+      "state": "TWO_PUBLISHED_FORECASTS_MATCH_ORIGIN_INDEPENDENCE_UNQUALIFIED"
+    }
+  },
+  "qualificationTracks": {
+    "A": "Organizer/JKA original dated final result + at least one separately maintained editorial or official-channel cross-display, with per-field integrity and exception-row tests; this is a PROPOSED audited route, not yet authorized verified publication",
+    "B": "If official result cannot be fetched, require observed full row agreement of 3 or more separately operated publishers with explicit shared-upstream uncertainty and source-field audit; use provisional multi-publisher corroborated status, NOT formal official PASS unless canonical publication criteria are approved and satisfied",
+    "C": "Original video/discretionary race record can independently substantiate selected visible facts but cannot be used to invent accurate tenth-second lap, margins, and official adjudication statuses without explicit source support"
+  },
+  "remaining": [
+    "Get direct date-scoped organizer/KEIRIN.JP original full results or organizer-operated documented official archive",
+    "Determine what provenance information each publisher provides, instead of demanding two separately generated physical race results",
+    "Review proposal for a source-trust hierarchy and publication schema; do not silently relax existing official gate"
+  ],
+  "publicationStatus": "research_only_no_promotion"
+}
