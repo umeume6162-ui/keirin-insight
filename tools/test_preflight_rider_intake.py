@@ -2,7 +2,7 @@
 import copy
 import unittest
 from audit_evidence_sheet import HEADERS, POLICY
-from preflight_rider_intake import preflight
+from preflight_rider_intake import preflight, preflight_ledger_row, from_rider_ledger_row
 
 def fixture(mode="MANUAL"):
     return ["TEST-RIDER-001",mode,"2026-11-22T17:00:00+09:00",
@@ -84,6 +84,28 @@ class TestPreflight(unittest.TestCase):
     def test_invalid_header(self):
         self.auto=[["invalid"]]
         with self.assertRaises(ValueError): self.run_check()
+
+    def test_actual_ledger_column_mapping(self):
+        # A:name B:pref C:period D:result-count E:first F:last G:registration
+        ledger=["試験 太郎","神奈","105","2","2026-10-01","2026-10-02","012345","公式照合済","","",""]
+        self.assertEqual(from_rider_ledger_row(ledger),self.original)
+        self.assertTrue(preflight_ledger_row(ledger,self.row,self.auto,self.manual)["eligible"])
+
+    def test_ledger_count_must_not_be_mistaken_for_period(self):
+        ledger=["試験 太郎","神奈","105","80","2026-10-01","2026-10-02","012345","","","",""]
+        self.assertTrue(preflight_ledger_row(ledger,self.row,self.auto,self.manual)["eligible"])
+
+    def test_ledger_missing_registration_fails_closed(self):
+        ledger=["試験 太郎","神奈","105","2","","",None]
+        result=preflight_ledger_row(ledger,self.row,self.auto,self.manual)
+        self.assertFalse(result["eligible"])
+        self.assertIn("INVALID_ORIGINAL",result["issues"])
+
+    def test_ledger_registration_conflict(self):
+        ledger=["試験 太郎","神奈","105","2","","","012346"]
+        result=preflight_ledger_row(ledger,self.row,self.auto,self.manual)
+        self.assertFalse(result["eligible"])
+        self.assertIn("REGISTRATION_MISMATCH",result["issues"])
 
     def test_no_input_mutation(self):
         before=copy.deepcopy((self.original,self.row,self.auto,self.manual))
