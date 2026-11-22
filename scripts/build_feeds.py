@@ -190,6 +190,127 @@ def construct_lines(values, date):
         r['riders'].sort(key=lambda x:x['number'])
     return dict(schema='ki-line-snapshots-v1',snapshotDate=date,sourceTab='AI事前出走スナップ',verificationNote='台帳由来の事前並び。発走前取得の独立確認・公式結果との独立照合は未完了。実際の隊列ではない。',summary=dict(races=len(grouped),rider_rows=sum(len(r['riders']) for r in grouped.values())),races=sorted(grouped.values(),key=lambda x:x['id'],reverse=True))
 
+
+ID_HEADERS=['選手名（原文）','府県（原文）','期別','結果行数','最初の記録日','最後の記録日','公式登録番号（文字列）','照合状態','公式照合URL','照合日','照合メモ']
+
+def fetch_id_sheet(secret):
+    from google.oauth2 import service_account
+    from google.auth.transport.requests import AuthorizedSession
+    creds=service_account.Credentials.from_service_account_info(json.loads(secret),scopes=['https://www.googleapis.com/auth/spreadsheets.readonly'])
+    response=AuthorizedSession(creds).get('https://sheets.googleapis.com/v4/spreadsheets/'+SHEET_ID+'/values:batchGet',params={'ranges':"'選手ID照合台帳'!A1:K",'valueRenderOption':'FORMATTED_VALUE'},timeout=45)
+    response.raise_for_status()
+    return response.json()['valueRanges'][0]['values']
+
+def id_key(r):
+    norm=lambda x: re.sub(r'\s+','',cleaned(x))
+    p=norm(r['prefecture'])
+    p={'神奈川':'神奈','北海道':'北海','和歌山':'和歌'}.get(p,p)
+    return (norm(r['name']),p,re.sub(r'期
+    data=json.dumps(payload,ensure_ascii=False,separators=(',',':'))+'\n'
+    with tempfile.NamedTemporaryFile('w',encoding='utf-8',dir=path.parent,delete=False) as f:
+        f.write(data); temp=f.name
+    os.replace(temp,path)
+
+
+def main():
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--fixtures',help='Local CSV test file (not for scheduled publishing)')
+    parser.add_argument('--root',default='.')
+    parser.add_argument('--allow-rebuild',action='store_true',help='Manual repair only, not used by automation')
+    args=parser.parse_args()
+    root=Path(args.root)
+    if args.fixtures:
+        with open(args.fixtures,encoding='utf-8-sig',newline='') as f: values=list(csv.reader(f))
+    else:
+        secret=os.environ.get('GOOGLE_SERVICE_ACCOUNT_JSON','')
+        if not secret: raise ValueError('GOOGLE_SERVICE_ACCOUNT_JSON is missing; no writes performed')
+        values=fetch_sheet(secret)
+    data=normalize(values)
+    stamp=datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    index,rider=construct(data,stamp)
+    validate_against_existing(index,rider,root,allow_drop=args.allow_rebuild)
+    # Operational diagnostics: distinguish a healthy publish from stale upstream V99 data.
+    previous_path=root/'rider-results-feed-v1.json'
+    if previous_path.exists():
+        previous=json.loads(previous_path.read_text(encoding='utf-8'))
+        old_rows=len(previous.get('rows',[]))
+        old_latest=previous.get('latestEventDate','')
+        delta=len(rider['rows'])-old_rows
+        print(f'FEED_AUDIT rows_previous={old_rows} rows_current={len(rider["rows"])} delta={delta} latest_previous={old_latest} latest_current={index["latest_race_date"]}')
+        if delta == 0:
+            print('WARNING: V96–V99 have no new rider rows relative to the published feed. Check upstream GAS collection and V99 append logs; JSON publishing alone cannot add missing results.',file=sys.stderr)
+        if index['latest_race_date']==old_latest:
+            print('WARNING: Latest race date has not advanced. Verify source collection settings and trigger executions.',file=sys.stderr)
+    latest_date=datetime.strptime(index['latest_race_date'],'%Y-%m-%d').date()
+    lag=(datetime.now(timezone.utc).date()-latest_date).days
+    print(f'FEED_AUDIT latest_race_lag_days={lag}')
+    if lag>7:
+        print(f'WARNING: Latest combined race is {lag} days old; collection freshness needs investigation.',file=sys.stderr)
+    # Optional independent snapshot feed: do not block validated result publishing.
+    if not args.fixtures:
+        try:
+            line_feed=construct_lines(fetch_line_sheet(secret),stamp)
+            baseline=root/'line-snapshots-feed-v1.json'
+            if baseline.exists():
+                old=json.loads(baseline.read_text(encoding='utf-8'))
+                if not {r['id'] for r in old['races']}.issubset({r['id'] for r in line_feed['races']}):
+                    raise ValueError('Previously published line snapshot missing')
+            write_atomic(baseline,line_feed)
+            print(f'LINE_FEED {line_feed["summary"]}')
+        except Exception as e:
+            print(f'WARNING: Line feed unchanged: {e}',file=sys.stderr)
+    if not args.fixtures:
+        try:
+            id_feed=construct_ids(fetch_id_sheet(secret),stamp)
+            baseline=root/'rider-ids-feed-v1.json'
+            if baseline.exists(): validate_id_baseline(json.loads(baseline.read_text(encoding='utf-8')),id_feed)
+            write_atomic(baseline,id_feed)
+            print(f'ID_FEED {id_feed["summary"]}')
+        except Exception as e:
+            print(f'WARNING: ID feed unchanged: {e}',file=sys.stderr)
+    # Stage both serialized feeds before replacing either baseline.
+    # GitHub Actions will only commit if this entire step succeeds.
+    index_json=json.dumps(index,ensure_ascii=False,separators=(',',':'))+'\n'
+    rider_json=json.dumps(rider,ensure_ascii=False,separators=(',',':'))+'\n'
+    json.loads(index_json); json.loads(rider_json)
+    write_atomic(root/'results-feed-v1.json',index)
+    write_atomic(root/'rider-results-feed-v1.json',rider)
+    print(f'Validated: {index["summary"]["races"]} races, {rider["summary"]["rows"]} rows, {rider["summary"]["riders"]} riders; latest {index["latest_race_date"]}')
+
+
+if __name__=='__main__':
+    try: main()
+    except Exception as e:
+        print(f'ABORT (public JSON unchanged): {e}',file=sys.stderr)
+        sys.exit(1)
+,'',norm(r['period'])))
+
+def construct_ids(values,date):
+    if not values or [cleaned(x) for x in values[0]]!=ID_HEADERS:
+        raise ValueError('ID ledger header mismatch')
+    records=[]; ids=set(); keys=set()
+    for raw in values[1:]:
+        v=[cleaned(x) for x in raw]+['']*max(0,11-len(raw))
+        if v[7]!='公式照合済': continue
+        if len(v)!=11: raise ValueError('Unexpected ID ledger columns')
+        name,pref,period,_,_,_,rid,status,source,verified,_=v
+        if not name or not pref or not re.fullmatch(r'\d+期?',period) or not re.fullmatch(r'\d{6}',rid) or not re.fullmatch(r'https://(?:www\.)?keirin\.jp/(?:pc|sp)/racerprofile\?snum='+rid,source):
+            raise ValueError('Invalid official ID row: '+name)
+        if not re.fullmatch(r'20\d\d-\d\d-\d\d',verified): raise ValueError('Invalid ID verification date: '+name)
+        r=dict(name=name,prefecture=pref,period=period,id=rid,source=source,verifiedDate=verified)
+        key=id_key(r)
+        if rid in ids or key in keys: raise ValueError('Duplicate official ID or identity: '+name)
+        ids.add(rid);keys.add(key);records.append(r)
+    if not records: raise ValueError('Empty official ID feed')
+    return dict(schema='ki-official-rider-ids-v1',snapshotDate=date,sourceTab='選手ID照合台帳',verificationNote='台帳記録で公式照合済の行のみ。プロフィールの独立再照合は今回未実施。',summary=dict(rows=len(records)),riders=records)
+
+def validate_id_baseline(old,new):
+    current={r['id']:id_key(r) for r in new['riders']}
+    for r in old['riders']:
+        if current.get(r['id'])!=id_key(r):
+            raise ValueError('Previously published ID missing or identity changed: '+r['id'])
+
+
 def write_atomic(path, payload):
     data=json.dumps(payload,ensure_ascii=False,separators=(',',':'))+'\n'
     with tempfile.NamedTemporaryFile('w',encoding='utf-8',dir=path.parent,delete=False) as f:
