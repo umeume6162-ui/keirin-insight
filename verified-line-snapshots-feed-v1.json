@@ -4,8 +4,8 @@
   "sourceTab": "VERIFIED publication",
   "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence.",
   "summary": {
-    "races": 2,
-    "rider_rows": 14
+    "races": 3,
+    "rider_rows": 21
   },
   "races": [
     {
@@ -231,6 +231,130 @@
           "line": [
             3,
             7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-05|84|1",
+      "key": "2026-10-05|84|1",
+      "date": "2026-10-05",
+      "track": "武雄",
+      "trackCode": "84",
+      "race": 1,
+      "size": 7,
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/takeo/racedetail/8420261003030001/?kakeshikiType=3renhuku&pageType=odds",
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/takeo/racedetail/8420261003030001/?kakeshikiType=3renhuku&pageType=odds",
+          "https://sp.oddspark.com/keirin/yosou/takeo/2026/1005.html"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ]
+      },
+      "forecastGroups": [
+        [
+          1,
+          2
+        ],
+        [
+          7,
+          3,
+          4,
+          5,
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "太田 将成",
+          "prefecture": "宮城",
+          "period": "113",
+          "line": [
+            1,
+            2
+          ]
+        },
+        {
+          "number": 2,
+          "name": "十文字菊雄",
+          "prefecture": "福島",
+          "period": "75",
+          "line": [
+            1,
+            2
+          ]
+        },
+        {
+          "number": 5,
+          "name": "田川 辰二",
+          "prefecture": "熊本",
+          "period": "72",
+          "line": [
+            7,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "田村 裕也",
+          "prefecture": "徳島",
+          "period": "113",
+          "line": [
+            7,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "number": 4,
+          "name": "山中 崇弘",
+          "prefecture": "高知",
+          "period": "113",
+          "line": [
+            7,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "number": 3,
+          "name": "下野 義城",
+          "prefecture": "愛媛",
+          "period": "115",
+          "line": [
+            7,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "number": 6,
+          "name": "高田 真幸",
+          "prefecture": "福岡",
+          "period": "83",
+          "line": [
+            7,
+            3,
+            4,
+            5,
+            6
           ]
         }
       ]
