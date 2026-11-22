@@ -46,6 +46,11 @@ class EvidenceAuditTests(unittest.TestCase):
         x[7]="阿部　弘";x[8]="高知県";x[9]="99期"
         self.assertEqual(self.check(x)["counts"],{"PENDING_INDEPENDENT_REVIEW":1})
     def test_distinct_pending_preserved(self):
-        x=row();x[14]="PENDING";x[3]="cached_official_profile"
+        x=row();x[14]="PENDING";x[3]="cached_official_profile";x[13]="SYNTHETIC CACHE REFERENCE ONLY"
         self.assertEqual(self.check(x)["counts"],{"HELD":1})
+    def test_cached_missing_reference_quarantined(self):
+        x=row();x[14]="PENDING";x[3]="cached_official_profile";x[13]=""
+        r=self.check(x)
+        self.assertEqual(r["counts"],{"QUARANTINED":1})
+        self.assertIn("MISSING_CACHED_EVIDENCE",r["records"][0]["issues"])
 if __name__=="__main__":unittest.main()
