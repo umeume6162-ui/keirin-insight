@@ -1,11 +1,180 @@
 {
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
-  "sourceTab": "VERIFIED publication",
-  "verificationNote": "全項目の根拠照合と独立承認が完了した記録のみ掲載。従来の7件は手動受付で承認PENDINGのため公開対象から除外。元の受付記録は保持。",
+  "sourceTab": "KI｜手動照合受付",
+  "verificationNote": "必要4項目の2サイト一致を満たす既存7選手を反映。受付PENDINGは独立承認を意味せず、余分な承認条件を課さない。",
   "summary": {
-    "rows": 0
+    "rows": 7
   },
-  "riders": [],
+  "riders": [
+    {
+      "id": "014225",
+      "name": "伊藤　亮",
+      "prefecture": "埼玉",
+      "period": "92",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014225",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014225",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014225",
+          "https://www.winticket.jp/keirin/cyclist/014225"
+        ],
+        "note": "手動受付に必要4項目の2サイト一致記録。追加の独立承認は不要。元受付ID：MANUAL-V32-2026-11-22T15:03:51.760+09:00-014225"
+      }
+    },
+    {
+      "id": "013371",
+      "name": "足達　重満",
+      "prefecture": "長崎",
+      "period": "80",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013371",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013371",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013371",
+          "https://www.winticket.jp/keirin/cyclist/013371"
+        ],
+        "note": "手動受付に必要4項目の2サイト一致記録。追加の独立承認は不要。元受付ID：MANUAL-V4-20261122T161050-013371"
+      }
+    },
+    {
+      "id": "015854",
+      "name": "伊澤　茉那",
+      "prefecture": "千葉",
+      "period": "126",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015854",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015854",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015854",
+          "https://www.winticket.jp/keirin/cyclist/015854"
+        ],
+        "note": "手動受付に必要4項目の2サイト一致記録。追加の独立承認は不要。元受付ID：MANUAL-V32-2026-11-22T15:03:51.760+09:00-015854"
+      }
+    },
+    {
+      "id": "013932",
+      "name": "井上　雄三",
+      "prefecture": "埼玉",
+      "period": "88",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013932",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013932",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013932",
+          "https://www.winticket.jp/keirin/cyclist/013932"
+        ],
+        "note": "手動受付に必要4項目の2サイト一致記録。追加の独立承認は不要。元受付ID：MANUAL-V4-20261122T155940-013932"
+      }
+    },
+    {
+      "id": "011800",
+      "name": "三住　博昭",
+      "prefecture": "神奈川",
+      "period": "61",
+      "source": "https://keirin.jp/pc/racerprofile?snum=011800",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=011800",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=011800",
+          "https://www.winticket.jp/keirin/cyclist/011800"
+        ],
+        "note": "手動受付に必要4項目の2サイト一致記録。追加の独立承認は不要。元受付ID：MANUAL-V4-20261122T160429-011800"
+      }
+    },
+    {
+      "id": "015060",
+      "name": "滝本　泰行",
+      "prefecture": "岡山",
+      "period": "107",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015060",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015060",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015060",
+          "https://www.winticket.jp/keirin/cyclist/015060"
+        ],
+        "note": "手動受付に必要4項目の2サイト一致記録。追加の独立承認は不要。元受付ID：MANUAL-V4-20261122T161512-015060"
+      }
+    },
+    {
+      "id": "012669",
+      "name": "伊藤　正樹",
+      "prefecture": "愛知",
+      "period": "71",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=012669",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=012669",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=012669",
+          "https://www.winticket.jp/keirin/cyclist/012669"
+        ],
+        "note": "手動受付に必要4項目の2サイト一致記録。追加の独立承認は不要。元受付ID：MANUAL-V4-20261122T163137-012669"
+      }
+    }
+  ],
   "publicationPolicy": "ki-verified-only-v1"
 }
