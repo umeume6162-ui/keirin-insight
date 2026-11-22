@@ -89,6 +89,16 @@ assert.deepEqual(matsuyama7.missingFromResult,[]);
 assert.equal(matsuyama7.publicationPassed,false);
 assert.equal(matsuyama7.officialStartersKnown,false);
 assert.ok(matsuyama7.warnings.some(w=>w.includes('pre-race formation does not cover entire original card')));
+// Recovered Matsuyama 8R: 7 historical ranked results are consistent; original amended entries and line groups remain unverified.
+const matsuyama8=check(JSON.parse(fs.readFileSync(path.join(base,'2026-10-05_75_8.research.json'),'utf8')));
+assert.equal(matsuyama8.raceKey,'2026-10-05|75|8');
+assert.equal(matsuyama8.structuralOk,true,JSON.stringify(matsuyama8.errors));
+assert.equal(matsuyama8.documentedResultRows,7);
+assert.equal(matsuyama8.numericFinishers,7);
+assert.deepEqual(matsuyama8.missingFromResult,[]);
+assert.equal(matsuyama8.publicationPassed,false);
+assert.equal(matsuyama8.officialStartersKnown,false);
+assert.ok(matsuyama8.warnings.some(w=>w.includes('pre-race formation does not cover entire original card')));
 // Five numeric places plus fall/disqualification must be retained without ranking the exceptions.
 const r4=check(load(4));
 assert.equal(r4.structuralOk,true,JSON.stringify(r4.errors));
