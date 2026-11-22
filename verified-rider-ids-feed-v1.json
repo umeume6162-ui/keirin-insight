@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付",
   "verificationNote": "148名の氏名・府県・期別・登録番号の固定4項目についてKEIRIN.JP公式とWINTICKET個別原文で一致。元選手台帳389-391行へ証拠保存し再読込済み。",
   "summary": {
-    "rows": 156
+    "rows": 157
   },
   "riders": [
     {
@@ -3749,6 +3749,30 @@
           "https://www.winticket.jp/keirin/cyclist/014459"
         ],
         "note": "2026-11-23 JST: two complete cached profile texts directly opened (KEIRIN.JP last updated 2026-07-25; WINTICKET text update unknown). Full name, prefecture, period, six-digit ID match after normalization. Not a live source retrieval or proven independent upstream generators. Sheet row 399 G:K write/readback confirmed."
+      }
+    },
+    {
+      "id": "013311",
+      "name": "根本 雄紀",
+      "prefecture": "茨城",
+      "period": "80",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013311",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013311",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013311",
+          "https://www.winticket.jp/keirin/cyclist/013311"
+        ],
+        "note": "2026-11-23 JST: cached full KEIRIN.JP profile (displayed update 2026-07-28 02:37) and cached full WINTICKET profile agree on 4 permanent identity fields. Not live retrieval; origin independence unproven. Sheet row 400 verified."
       }
     }
   ],
