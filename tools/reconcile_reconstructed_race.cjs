@@ -10,7 +10,7 @@ function check(r) {
  const key=r.raceKey||'', count=r.race?.expectedEntrants;
  const entries=Array.isArray(r.originalEntries)?r.originalEntries:null;
  const result=Array.isArray(r.results)?r.results:[];
- if(!/^\\d{4}-\\d{2}-\\d{2}\\|\\d{2}\\|(?:[1-9]|1[0-2])$/.test(key))add(errors,'invalid race key');
+ if(!/^\d{4}-\d{2}-\d{2}\|\d{2}\|(?:[1-9]|1[0-2])$/.test(key))add(errors,'invalid race key');
  if(![7,9].includes(count))add(errors,'race size not 7 or 9');
  if(!result.length)add(errors,'missing result rows');
  const cs=new Set(), numericFinishes=new Set();
@@ -20,7 +20,7 @@ function check(r) {
    if(cs.has(car))add(errors,'duplicate result car '+car);
    cs.add(car);
    const raw=String(x.finishRaw??x.finish??'').trim();
-   if(/^\\d+$/.test(raw)){
+   if(/^\d+$/.test(raw)){
      const n=Number(raw); if(n<1||n>9||numericFinishes.has(n))add(errors,'invalid/duplicate numeric finish '+raw);
      numericFinishes.add(n);
      if(x.finish!==undefined&&x.finish!==null&&Number(x.finish)!==n)add(errors,'finish/raw mismatch '+car);
@@ -50,7 +50,7 @@ function check(r) {
  if(!r.reconciliation?.revisedStartCardSource)add(warnings,'REVISED_RACECARD_NOT_VERIFIED: actual start count is not certified by original card alone');
  if(!r.fieldVerification || /PASS/i.test(String(r.status||''))&&!/NOT_VERIFIED_PASS/.test(String(r.status)))add(warnings,'Formal PASS is not determined by this structural check');
  const dif=entryCars.filter(x=>!cs.has(x));
- const nonNumeric=result.filter(x=>!/^\\d+$/.test(String(x.finishRaw??x.finish??''))).map(x=>({car:x.car,status:x.exceptionRaw||x.finishRaw||'UNSPECIFIED'}));
+ const nonNumeric=result.filter(x=>!/^\d+$/.test(String(x.finishRaw??x.finish??''))).map(x=>({car:x.car,status:x.exceptionRaw||x.finishRaw||'UNSPECIFIED'}));
  return {raceKey:key,entryCount:entryCars.length||null,documentedResultRows:result.length,numericFinishers:numericFinishes.size,nonNumericResultRows:nonNumeric,missingFromResult:dif,officialStartersKnown:!!r.reconciliation?.revisedStartCardSource,errors,warnings,structuralOk:errors.length===0,publicationPassed:false};
 }
 if(require.main===module){
