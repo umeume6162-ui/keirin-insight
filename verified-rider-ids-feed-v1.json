@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "必要4項目の2サイト一致確認済み30選手。既存24件を維持し未照合6件を救済、重複なし。",
+  "verificationNote": "必要4項目2サイト一致確認済み33人。既存30人を保持し、吉川敬介・吉田優斗・吉野太晟を追加。",
   "summary": {
-    "rows": 30
+    "rows": 33
   },
   "riders": [
     {
@@ -725,6 +725,78 @@
           "https://www.winticket.jp/keirin/cyclist/016003"
         ],
         "note": "KEIRIN.JP・WINTICKETの公開選手プロフィールで氏名・府県・期別・登録番号の全4項目を比較し一致。元台帳の未照合項目を手動救済。"
+      }
+    },
+    {
+      "id": "015980",
+      "name": "吉川 敬介",
+      "prefecture": "東京",
+      "period": "129",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015980",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015980",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015980",
+          "https://www.winticket.jp/keirin/cyclist/015980"
+        ],
+        "note": "両サイトのプロフィール本文から氏名・府県・期別・登録番号4項目を独立に確認。元台帳の未照合を手動救済。"
+      }
+    },
+    {
+      "id": "015783",
+      "name": "吉田 優斗",
+      "prefecture": "岩手",
+      "period": "125",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015783",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015783",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015783",
+          "https://www.winticket.jp/keirin/cyclist/015783"
+        ],
+        "note": "両サイトのプロフィール本文から氏名・府県・期別・登録番号4項目を独立に確認。元台帳の未照合を手動救済。"
+      }
+    },
+    {
+      "id": "015920",
+      "name": "吉野 太晟",
+      "prefecture": "岡山",
+      "period": "127",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015920",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015920",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015920",
+          "https://www.winticket.jp/keirin/cyclist/015920"
+        ],
+        "note": "両サイトのプロフィール本文から氏名・府県・期別・登録番号4項目を独立に確認。元台帳の未照合を手動救済。"
       }
     }
   ],
