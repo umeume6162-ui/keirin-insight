@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "137名の氏名・府県・期別・登録番号について2サイト原文一致。高尾剛文・高峰賢治を元台帳の既存2行に反映・再読込済み。",
+  "verificationNote": "139選手の氏名・府県・期別・登録番号を二媒体の原文で照合。元台帳381/382行へ証拠追記・再読込。",
   "summary": {
-    "rows": 137
+    "rows": 139
   },
   "riders": [
     {
@@ -3293,6 +3293,54 @@
           "https://www.winticket.jp/keirin/cyclist/012809"
         ],
         "note": "2026-11-22 JSTの照合：KEIRIN.JP公式PC選手プロフィール（サイト掲載更新2026-10-27）とWINTICKET個別選手プロフィール原文を直接閲覧し、氏名=高峰 賢治、府県=山梨、期別=73期、6桁登録番号=012809の4項目一致。出典1 https://www.keirin.jp/pc/racerprofile?snum=012809 出典2 https://www.winticket.jp/keirin/cyclist/012809。原文はウェブ取得時のキャッシュ/掲載内容でありライブ成績を保証しない。既存A:F列不変。"
+      }
+    },
+    {
+      "id": "015866",
+      "name": "高木 萌那",
+      "prefecture": "福岡",
+      "period": "126",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015866",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015866",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015866",
+          "https://www.winticket.jp/keirin/cyclist/015866"
+        ],
+        "note": "2026-11-22 JST web.openでKEIRIN.JP公式の選手プロフィール（原文更新日2026-11-14）とWINTICKET個別プロフィール全文を取得。氏名高木 萌那、府県福岡、期別126、登録番号015866の4項目が2掲載元で一致。参照：https://keirin.jp/pc/racerprofile?snum=015866 ／ https://www.winticket.jp/keirin/cyclist/015866。期別・ID固定。級班・得点は履歴/掲載時点情報として別扱い。A:F原本は変更しない。"
+      }
+    },
+    {
+      "id": "013070",
+      "name": "高木 和仁",
+      "prefecture": "福岡",
+      "period": "76",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013070",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013070",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013070",
+          "https://www.winticket.jp/keirin/cyclist/013070"
+        ],
+        "note": "2026-11-22 JST web.openでKEIRIN.JP公式の選手プロフィール（原文更新日2026-11-18）とWINTICKET個別プロフィール全文を取得。氏名高木 和仁、府県福岡、期別76、登録番号013070の4項目が2掲載元で一致。参照：https://www.keirin.jp/pc/racerprofile?snum=013070 ／ https://www.winticket.jp/keirin/cyclist/013070。期別・ID固定。級班・得点は履歴/掲載時点情報として別扱い。A:F原本は変更しない。"
       }
     }
   ],
