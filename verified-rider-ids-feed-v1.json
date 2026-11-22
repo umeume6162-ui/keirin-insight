@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "2026-11-22時点で必要4項目を2サイト照合一致した53選手。既存49人は保存、新規4人を追加。",
+  "verificationNote": "本人識別4項目を2サイトで照合した56人。既存53人維持、新規3人を追加。",
   "summary": {
-    "rows": 53
+    "rows": 56
   },
   "riders": [
     {
@@ -1277,6 +1277,78 @@
           "https://www.winticket.jp/keirin/cyclist/014093"
         ],
         "note": "KEIRIN.JPとWINTICKETの本人プロフィールで氏名・府県・期別・登録番号4項目一致。元の未照合から手動救済。"
+      }
+    },
+    {
+      "id": "014135",
+      "name": "金澤 幸司",
+      "prefecture": "福島",
+      "period": "91",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014135",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014135",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014135",
+          "https://www.winticket.jp/keirin/cyclist/014135"
+        ],
+        "note": "KEIRIN.JPとWINTICKETのプロフィールで氏名・府県・期別・6桁登録番号の4項目一致を実確認。時点依存の級班等は照合対象外。"
+      }
+    },
+    {
+      "id": "015697",
+      "name": "熊崎 麻人",
+      "prefecture": "埼玉",
+      "period": "123",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015697",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015697",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015697",
+          "https://www.winticket.jp/keirin/cyclist/015697"
+        ],
+        "note": "KEIRIN.JPとWINTICKETのプロフィールで氏名・府県・期別・6桁登録番号の4項目一致を実確認。時点依存の級班等は照合対象外。"
+      }
+    },
+    {
+      "id": "014944",
+      "name": "栗山 俊介",
+      "prefecture": "奈良",
+      "period": "103",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014944",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014944",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014944",
+          "https://www.winticket.jp/keirin/cyclist/014944"
+        ],
+        "note": "KEIRIN.JPとWINTICKETのプロフィールで氏名・府県・期別・6桁登録番号の4項目一致を実確認。時点依存の級班等は照合対象外。"
       }
     }
   ],
