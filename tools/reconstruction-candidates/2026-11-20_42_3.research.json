@@ -1,0 +1,203 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-11-20|42|3",
+  "race": {
+    "date": "2026-11-20",
+    "venue": "名古屋",
+    "venueCode": "42",
+    "raceNo": 3,
+    "grade": "F2",
+    "class": "A級チャレンジ予選",
+    "expectedEntrants": 7
+  },
+  "createdDateJST": "2026-11-22",
+  "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
+  "payout": "NOT_COLLECTED_OPTIONAL",
+  "method": "Source-rich race selected independently of legacy V99 queue. Direct original-provider pages read: Kdreams detailed result, Chariloto dated result, Tokyo Sports original pre-race racecard; KEIRIN HEX as supplemental candidate only.",
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [
+      [
+        1,
+        2,
+        3,
+        6
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        7
+      ]
+    ],
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010003/?pageType=result",
+      "https://keirin.tokyo-sports.co.jp/list/race/20261119_32059"
+    ],
+    "displayedSequence": "1-2-3-6 / 4-5 / 7 solo",
+    "agreement": "PUBLISHER_RENDERED_AND_PRE_RACE_COMMENTS_AGREE; upstream independence unproven",
+    "note": "Kdreams shows arrow 1先行 2追込 3追込 6追込 4押え先 5追込 7追上. Tokyo Sports comments 1自力,2北村君,3関東へ,6辺見君の後ろ,4自力自在,5井坂君,7単騎; do not infer actual race formation."
+  },
+  "results": [
+    {
+      "finish": 1,
+      "car": 2,
+      "name": "藤野竜也",
+      "prefecture": "栃木",
+      "period": 117,
+      "grade": "A3",
+      "lapSeconds": 12.5,
+      "marginRaw": "",
+      "winningMethodRaw": "差し",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
+      "unresolvedFields": []
+    },
+    {
+      "finish": 2,
+      "car": 1,
+      "name": "北村翔太",
+      "prefecture": "群馬",
+      "period": 129,
+      "grade": "A3",
+      "lapSeconds": 12.6,
+      "marginRaw": "1/2車輪",
+      "winningMethodRaw": "逃げ",
+      "sbRaw": "B",
+      "exceptionRaw": "",
+      "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
+      "unresolvedFields": []
+    },
+    {
+      "finish": 3,
+      "car": 3,
+      "name": "邊見斎",
+      "prefecture": "福島",
+      "period": 92,
+      "grade": "A3",
+      "lapSeconds": 12.4,
+      "marginRaw": "3/4車身",
+      "winningMethodRaw": "",
+      "sbRaw": "S",
+      "exceptionRaw": "",
+      "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
+      "unresolvedFields": []
+    },
+    {
+      "finish": 4,
+      "car": 6,
+      "name": "齋藤和也",
+      "prefecture": "福島",
+      "period": 78,
+      "grade": "A3",
+      "lapSeconds": 12.4,
+      "marginRaw": "1車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
+      "unresolvedFields": []
+    },
+    {
+      "finish": 5,
+      "car": 5,
+      "name": "池上孝之",
+      "prefecture": "兵庫",
+      "period": 69,
+      "grade": "A3",
+      "lapSeconds": 12.7,
+      "marginRaw": "4車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
+      "unresolvedFields": []
+    },
+    {
+      "finish": 6,
+      "car": 4,
+      "name": "井坂泰誓",
+      "prefecture": "大阪",
+      "period": 115,
+      "grade": "A3",
+      "lapSeconds": 14.2,
+      "marginRaw": "大差",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
+      "unresolvedFields": []
+    },
+    {
+      "finish": 7,
+      "car": 7,
+      "name": "梶山大輔",
+      "prefecture": "神奈川",
+      "period": 76,
+      "grade": "A3",
+      "lapSeconds": null,
+      "marginRaw": "大差",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceEvidence": "Kdreams full result and Chariloto full dated result agree on all displayed rows",
+      "unresolvedFields": [
+        "lapSeconds: BOTH_PROVIDERS_BLANK_NUMERIC_FINISHER"
+      ]
+    }
+  ],
+  "resultUrls": [
+    "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010003/?pageType=result",
+    "https://www.chariloto.com/keirin/results/42/2026-11-20"
+  ],
+  "otherDiscoveryUrls": [
+    "https://keirinhex.jp/races/20261120/034220261120/",
+    "https://keirin.netkeiba.com/race/result/?race_id=202611204203"
+  ],
+  "fieldVerification": {
+    "raceIdentity": "TWO_PUBLISHED_RESULT_PAGES_MATCH",
+    "allSevenCarAndRank": "TWO_PUBLISHED_RESULT_PAGES_MATCH",
+    "allSevenRiderIdentity": "TWO_PUBLISHED_RESULT_PAGES_MATCH_NORMALIZED_NAMES",
+    "allSevenMargins": "TWO_PUBLISHED_RESULT_PAGES_MATCH",
+    "sixOfSevenLap": "TWO_PUBLISHED_RESULT_PAGES_MATCH",
+    "seventhLap": "BOTH_SOURCE_RESULTS_BLANK_NOT_VERIFIED_NUMERIC_VALUE",
+    "winningMethodsAndSB": "DISPLAYED_FIELDS_MATCH_TWO_PUBLISHERS",
+    "preRaceLines": "TWO_DISPLAY_SITES_AND_TOKYO_SPORTS_ROLE_COMMENTS_CORROBORATE",
+    "sourceIndependence": "UPSTREAM_ORIGINAL_INDEPENDENCE_UNPROVEN",
+    "publicationGate": "PENDING_MISSING_NUMERIC_FINISHER_LAP_AND_SOURCE_INDEPENDENCE"
+  },
+  "sourceIntegrity": {
+    "retrievedDateJST": "2026-11-22",
+    "retrievalMethod": "web.open directly read full original-provider page",
+    "sourceUrls": {
+      "result": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010003/?pageType=result",
+        "https://www.chariloto.com/keirin/results/42/2026-11-20"
+      ],
+      "formation": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010003/?pageType=result",
+        "https://keirin.tokyo-sports.co.jp/list/race/20261119_32059"
+      ],
+      "extra": [
+        "https://keirinhex.jp/races/20261120/034220261120/",
+        "https://keirin.netkeiba.com/race/result/?race_id=202611204203"
+      ]
+    },
+    "originalPublicationDate": "Race 2026-11-20, Tokyo Sports dated 2026-11-19 as pre-race original",
+    "knownDiscrepancies": [
+      "The original 7th rider has numeric finish rank 7 and no lap time on both original result pages: not nonstarter and not automatically DNF",
+      "Tokyo Sports renders 斎藤/辺見, other sites render 齋藤/邊見; compare with qualified alias normalization, preserve originals"
+    ],
+    "upstreamOriginality": "Kdreams and Chariloto may share a common results upstream; independent original source not proved.",
+    "mediaLicensing": "Structured factual results only; do not republish proprietary editorial texts."
+  },
+  "remainingToPass": [
+    "Qualify truly independent originating sources for all mandatory fields",
+    "Resolve the seventh-ranked #7 梶山大輔 missing lap via original provider or documented source-approved field-applicability policy; do not fabricate numeric lap or change numeric finish to DNF",
+    "Validate complete pre-race lineup provenance at required independence level",
+    "Run cross-feed publication checks and publish only when all required comparisons pass"
+  ],
+  "notes": "New research-only reconstruction candidate (not official result and not permitted verified training input)."
+}
