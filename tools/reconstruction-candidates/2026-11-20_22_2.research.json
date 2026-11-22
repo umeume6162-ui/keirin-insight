@@ -1,0 +1,260 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-11-20|22|2",
+  "createdDateJST": "2026-11-22",
+  "race": {
+    "date": "2026-11-20",
+    "venue": "前橋",
+    "venueCode": "22",
+    "raceNo": 2,
+    "grade": "F2",
+    "event": "ニッカン・コム杯",
+    "class": "A級チャレンジ予選",
+    "expectedEntrants": 7,
+    "startTimeLocal": "21:10"
+  },
+  "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
+  "payout": "NOT_COLLECTED_OPTIONAL",
+  "method": "Source-first race discovery and full-page direct access: Kdreams original displayed result and pre-race entry/lines; netkeirin 7-row result; Nikkan Gendai result shows a meaningful S-marker omission; Chariloto dated card corroborates original entries; HEX dated pre-race prediction.",
+  "originalEntries": [
+    {
+      "car": 1,
+      "name": "山本 恵太郎",
+      "prefecture": "東京",
+      "period": 71,
+      "sourceStatus": "K_DREAMS_AND_CHARILOTO_PRE_RACE_SEVEN_CAR_CARDS"
+    },
+    {
+      "car": 2,
+      "name": "阿部 凪汰",
+      "prefecture": "埼玉",
+      "period": 129,
+      "sourceStatus": "K_DREAMS_AND_CHARILOTO_PRE_RACE_SEVEN_CAR_CARDS"
+    },
+    {
+      "car": 3,
+      "name": "坂本 英一",
+      "prefecture": "栃木",
+      "period": 59,
+      "sourceStatus": "K_DREAMS_AND_CHARILOTO_PRE_RACE_SEVEN_CAR_CARDS"
+    },
+    {
+      "car": 4,
+      "name": "秋永 昂人",
+      "prefecture": "福岡",
+      "period": 98,
+      "sourceStatus": "K_DREAMS_AND_CHARILOTO_PRE_RACE_SEVEN_CAR_CARDS"
+    },
+    {
+      "car": 5,
+      "name": "楠本 政明",
+      "prefecture": "福岡",
+      "period": 123,
+      "sourceStatus": "K_DREAMS_AND_CHARILOTO_PRE_RACE_SEVEN_CAR_CARDS"
+    },
+    {
+      "car": 6,
+      "name": "右近 陸人",
+      "prefecture": "山口",
+      "period": 127,
+      "sourceStatus": "K_DREAMS_AND_CHARILOTO_PRE_RACE_SEVEN_CAR_CARDS"
+    },
+    {
+      "car": 7,
+      "name": "井山 和裕",
+      "prefecture": "山口",
+      "period": 84,
+      "sourceStatus": "K_DREAMS_AND_CHARILOTO_PRE_RACE_SEVEN_CAR_CARDS"
+    }
+  ],
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      2,
+      6,
+      1,
+      7,
+      4,
+      5,
+      3
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 7,
+    "nonNumericResultRows": 0,
+    "confirmedWithdrawals": [],
+    "revisedStartCardSource": null,
+    "confirmedStarterCount": null,
+    "note": "Seven numeric finishes correspond to all seven original cars; revised official racecard/organizer cancellation notices not retrieved."
+  },
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [
+      [
+        2,
+        1,
+        3
+      ],
+      [
+        5,
+        4
+      ],
+      [
+        6,
+        7
+      ]
+    ],
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/maebashi/racedetail/2220261120010002/?pageType=result",
+      "https://keirinhex.jp/races/20261120/022220261120/"
+    ],
+    "sourceStatus": "PUBLISHED_PREDICTION_GROUPS_AGREE_ORIGIN_INDEPENDENCE_UNPROVEN",
+    "provider": "Kdreams displays provider attribution; check upstream separately. HEX independently timestamps prediction on 2026-11-19 19:20, not necessarily independent original lineup creator.",
+    "note": "Forecast car group order only, not actual in-race order."
+  },
+  "results": [
+    {
+      "car": 2,
+      "name": "阿部 凪汰",
+      "prefecture": "埼玉",
+      "period": 129,
+      "grade": "A3",
+      "finishRaw": "1",
+      "finish": 1,
+      "lapSeconds": 10.6,
+      "marginRaw": "",
+      "winningMethodRaw": "逃",
+      "sbRaw": "B",
+      "exceptionRaw": "",
+      "sourceStatus": "K_DREAMS_AND_NETKEIRIN_FULL_RESULT_DISPLAY_MATCH_DISPLAYED_FIELDS"
+    },
+    {
+      "car": 6,
+      "name": "右近 陸人",
+      "prefecture": "山口",
+      "period": 127,
+      "grade": "A3",
+      "finishRaw": "2",
+      "finish": 2,
+      "lapSeconds": 10.5,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "ク",
+      "sbRaw": "S",
+      "exceptionRaw": "",
+      "sourceStatus": "K_DREAMS_AND_NETKEIRIN_FULL_RESULT_DISPLAY_MATCH_DISPLAYED_FIELDS"
+    },
+    {
+      "car": 1,
+      "name": "山本 恵太郎",
+      "prefecture": "東京",
+      "period": 71,
+      "grade": "A3",
+      "finishRaw": "3",
+      "finish": 3,
+      "lapSeconds": 10.5,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "K_DREAMS_AND_NETKEIRIN_FULL_RESULT_DISPLAY_MATCH_DISPLAYED_FIELDS"
+    },
+    {
+      "car": 7,
+      "name": "井山 和裕",
+      "prefecture": "山口",
+      "period": 84,
+      "grade": "A3",
+      "finishRaw": "4",
+      "finish": 4,
+      "lapSeconds": 10.6,
+      "marginRaw": "2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "K_DREAMS_AND_NETKEIRIN_FULL_RESULT_DISPLAY_MATCH_DISPLAYED_FIELDS"
+    },
+    {
+      "car": 4,
+      "name": "秋永 昂人",
+      "prefecture": "福岡",
+      "period": 98,
+      "grade": "A3",
+      "finishRaw": "5",
+      "finish": 5,
+      "lapSeconds": 10.3,
+      "marginRaw": "1車身1/2",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "K_DREAMS_AND_NETKEIRIN_FULL_RESULT_DISPLAY_MATCH_DISPLAYED_FIELDS"
+    },
+    {
+      "car": 5,
+      "name": "楠本 政明",
+      "prefecture": "福岡",
+      "period": 123,
+      "grade": "A3",
+      "finishRaw": "6",
+      "finish": 6,
+      "lapSeconds": 10.4,
+      "marginRaw": "1/8車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "K_DREAMS_AND_NETKEIRIN_FULL_RESULT_DISPLAY_MATCH_DISPLAYED_FIELDS"
+    },
+    {
+      "car": 3,
+      "name": "坂本 英一",
+      "prefecture": "栃木",
+      "period": 59,
+      "grade": "A3",
+      "finishRaw": "7",
+      "finish": 7,
+      "lapSeconds": 10.6,
+      "marginRaw": "1/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "K_DREAMS_AND_NETKEIRIN_FULL_RESULT_DISPLAY_MATCH_DISPLAYED_FIELDS"
+    }
+  ],
+  "resultUrls": [
+    "https://keirin.kdreams.jp/maebashi/racedetail/2220261120010002/?pageType=result",
+    "https://keirin.netkeiba.com/race/result/?race_id=202611202202"
+  ],
+  "sourceAudit": {
+    "retrievalDateJST": "2026-11-22",
+    "method": "web.open full original result bodies and pre-race card",
+    "resultKdreams": "Result table displays 2-6-1-7-4-5-3, lap 10.6/10.5/10.5/10.6/10.3/10.4/10.6, S mark on car 6, B on car 2",
+    "resultNetkeirin": "Same seven placements and numeric times, car 6 shows S, second method ク, first 逃.",
+    "resultGendai": "https://keirin-autorace.nikkan-gendai.com/Keirin/Result?date=20261120&placeCode=22&raceNo=2 third published result has SAME seven placements/laps/margins/methods, BUT car 6 S/B column is blank whereas Kdreams and netkeirin mark S. Treat as a missing source field, not an affirmative contradictory no-S record.",
+    "preRaceHEX": "https://keirinhex.jp/races/20261120/022220261120/ directly viewed pre-race forecast groups 2-1-3 / 5-4 / 6-7, published 2026-11-19 19:20",
+    "entryChariloto": "https://www.chariloto.com/keirin/athletes/2026-11-20/22/2/?odds=1 directly indexed full 7-car card, no assumption of official revised card",
+    "upstreamIndependence": "No proof that result data are separately originated; distinct hostnames may share organizer or joint feeds. No verified PASS.",
+    "licensing": "Public structured race facts only."
+  },
+  "fieldVerification": {
+    "entryCoverage": "ORIGINAL_CARD_SEVEN_DISTINCT_CARS",
+    "sevenFinishCarAndLap": "K_DREAMS_NETKEIRIN_AND_GENDAI_DISPLAY_MATCH",
+    "sevenMargins": "THREE_PUBLISHED_RESULT_PAGES_MATCH",
+    "winningMethod": "ALL_PUBLISHED_METHODS_AGREE_WITH_逃_逃げ_AND_ク_マーク_NORMALIZATION",
+    "sbCar2": "B_MARK_DISPLAYED",
+    "sbCar6": "K_DREAMS_NETKEIRIN_MARK_S; GENDAI_COLUMN_BLANK_MISSING_DATA_NOT_NEGATIVE_ASSERTION",
+    "formation": "K_DREAMS_HEX_PUBLISHED_FORECASTS_MATCH",
+    "resultOriginIndependent": "NOT_PROVEN",
+    "publicationGate": "RESEARCH_ONLY_PENDING_PROVENANCE_QUALIFICATION"
+  },
+  "remainingToPass": [
+    "Verify genuinely separately originated full result sources for all mandatory result fields and line prediction, not merely three hosting domains",
+    "Audit Gendai missing S field if using that provider for S/B corroboration; a blank is not a contradictory zero",
+    "Obtain qualified official final/amended racecard where required and run cross-feed technical publication guard"
+  ]
+}
