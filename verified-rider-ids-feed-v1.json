@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "必要4項目2サイト一致確認済み33人。既存30人を保持し、吉川敬介・吉田優斗・吉野太晟を追加。",
+  "verificationNote": "氏名・府県・期別・登録番号の2サイト一致が確認された35人。元30人に吉川敬介・吉田優斗・吉野太晟・及川裕奨・宮倉勇を追加。",
   "summary": {
-    "rows": 33
+    "rows": 35
   },
   "riders": [
     {
@@ -797,6 +797,54 @@
           "https://www.winticket.jp/keirin/cyclist/015920"
         ],
         "note": "両サイトのプロフィール本文から氏名・府県・期別・登録番号4項目を独立に確認。元台帳の未照合を手動救済。"
+      }
+    },
+    {
+      "id": "013749",
+      "name": "及川 裕奨",
+      "prefecture": "岩手",
+      "period": "86",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013749",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013749",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013749",
+          "https://www.winticket.jp/keirin/cyclist/013749"
+        ],
+        "note": "両プロフィール原文で氏名・府県・期別・登録番号4項目を一致確認。台帳未照合から救済。"
+      }
+    },
+    {
+      "id": "011487",
+      "name": "宮倉 勇",
+      "prefecture": "千葉",
+      "period": "58",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=011487",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=011487",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=011487",
+          "https://www.winticket.jp/keirin/cyclist/011487"
+        ],
+        "note": "両プロフィール原文で氏名・府県・期別・登録番号4項目を一致確認。台帳未照合から救済。"
       }
     }
   ],
