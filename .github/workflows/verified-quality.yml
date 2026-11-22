@@ -2,13 +2,13 @@ name: Verified data quality tests
 on:
   push:
     paths:
-      - 'tools/prepare_verified_release.py'
-      - 'tools/test_verified_release.py'
+      - 'tools/**'
+      - 'verified-*-feed-v1.json'
       - '.github/workflows/verified-quality.yml'
   pull_request:
     paths:
-      - 'tools/prepare_verified_release.py'
-      - 'tools/test_verified_release.py'
+      - 'tools/**'
+      - 'verified-*-feed-v1.json'
       - '.github/workflows/verified-quality.yml'
   workflow_dispatch:
 permissions:
@@ -23,6 +23,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Compile validation scripts
-        run: python -m py_compile tools/prepare_verified_release.py tools/test_verified_release.py
+        run: python -m compileall -q tools
       - name: Run isolated synthetic regression tests
-        run: python -m unittest discover -s tools -p test_verified_release.py -v
+        run: python -m unittest discover -s tools -p 'test_*.py' -v
