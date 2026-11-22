@@ -1,10 +1,11 @@
 {
-  "schema": "ki-evidence-status-v1",
+  "schema": "ki-evidence-status-v2",
   "snapshotDate": "2026-11-22",
   "scope": "rider_identity",
-  "observed": 2,
-  "pendingIndependentReview": 2,
-  "approved": 0,
-  "sourceType": "cached_official_profile",
-  "note": "公式プロフィールの保存内容から本人識別4項目を確認。独立承認なし。最新の級班・現役状態は未確認。"
+  "status": "unverified_evidence_ledger",
+  "historicalClaimCount": 2,
+  "documentedObservationCount": null,
+  "pendingIndependentReview": null,
+  "approved": null,
+  "note": "以前の2件は保存済み集計の申告値。個別取得証拠・独立承認台帳を確認できないため実績には算入しない。nullは未確認であり0件を意味しない。"
 }
