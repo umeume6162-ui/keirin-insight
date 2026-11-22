@@ -14,10 +14,10 @@
   },
   "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
   "createdDateJST": "2026-11-22",
-  "method": "Choose a recent race with multiple indexed complete result and archived pre-race sources; reconstruct factual fields from public web-search snippets; direct original page opens failed/cache-missed; do not equate search snippets to original full-body proof.",
+  "method": "Source-first race selection; full original result bodies were directly opened on 2026-11-22 for Nikkan Gendai and Kdreams, plus dated pre-race racecards from Kdreams and Tokyo Sports. Preserve distinct source markings; no PASS while S/B conflict or origin independence unresolved.",
   "payout": "NOT_COLLECTED_OPTIONAL",
   "preRaceFormation": {
-    "status": "SEARCH_SNIPPETS_TWO_OR_MORE_PUBLISHERS_AGREE_FULL_ORDER_NOT_ORIGINAL_FETCH",
+    "status": "TWO_DIRECT_ORIGINAL_ENTRY_PAGES_RETRIEVED_LINE_GROUPS_AGREE_PROVENANCE_INDEPENDENCE_REVIEW",
     "groups": [
       [
         1,
@@ -35,8 +35,7 @@
     ],
     "note": "Pre-race predicted line only; not the actual in-race running order.",
     "sourceUrls": [
-      "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010001/?pageType=odds",
-      "https://keirin.netkeiba.com/race/data/?race_id=202611204201",
+      "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010001/?pageType=result",
       "https://keirin.tokyo-sports.co.jp/list/race/20261119_32063"
     ]
   },
@@ -52,8 +51,8 @@
       "marginRaw": "",
       "winningMethodRaw": "逃げ",
       "sbRaw": "B",
-      "sbDiscrepancy": "Kdreams search listing shows SB, Nikkan Gendai snippet shows B; retain both and do not certify S.",
-      "sourceStatus": "SINGLE_SEARCH_SNIPPET_FOR_ALL_FIELDS_MULTIPLE_PROVIDERS_CONFIRM_FINISH"
+      "sbDiscrepancy": "Nikkan Gendai original B, Kdreams original SB (unresolved).",
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
     },
     {
       "finish": 2,
@@ -66,7 +65,7 @@
       "marginRaw": "1/2車身",
       "winningMethodRaw": "マーク",
       "sbRaw": "",
-      "sourceStatus": "SINGLE_SEARCH_SNIPPET_FOR_MARGINS_LAP_AND_METHOD_MULTIPLE_PROVIDERS_CONFIRM_FINISH"
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
     },
     {
       "finish": 3,
@@ -79,7 +78,7 @@
       "marginRaw": "1車身",
       "winningMethodRaw": null,
       "sbRaw": null,
-      "sourceStatus": "SEARCH_SNIPPET_NIKKAN_G_GIVES_TIME_MARGIN_KDREAMS_CONFIRMS_POSITION"
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
     },
     {
       "finish": 4,
@@ -92,7 +91,7 @@
       "marginRaw": "3/4車身",
       "winningMethodRaw": null,
       "sbRaw": null,
-      "sourceStatus": "SEARCH_SNIPPET_NIKKAN_G_GIVES_TIME_MARGIN_KDREAMS_CONFIRMS_POSITION"
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
     },
     {
       "finish": 5,
@@ -105,7 +104,7 @@
       "marginRaw": "1車身1/2",
       "winningMethodRaw": null,
       "sbRaw": null,
-      "sourceStatus": "SEARCH_SNIPPET_NIKKAN_G_GIVES_TIME_MARGIN_KDREAMS_CONFIRMS_POSITION"
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
     },
     {
       "finish": 6,
@@ -118,7 +117,7 @@
       "marginRaw": "1/8車輪",
       "winningMethodRaw": null,
       "sbRaw": null,
-      "sourceStatus": "SEARCH_SNIPPET_NIKKAN_G_GIVES_TIME_MARGIN_KDREAMS_CONFIRMS_POSITION"
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
     },
     {
       "finish": 7,
@@ -131,7 +130,7 @@
       "marginRaw": "5車身",
       "winningMethodRaw": null,
       "sbRaw": null,
-      "sourceStatus": "SEARCH_SNIPPET_NIKKAN_G_GIVES_TIME_MARGIN_KDREAMS_CONFIRMS_POSITION"
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
     }
   ],
   "resultUrls": [
@@ -141,28 +140,56 @@
     "https://www.chariloto.com/keirin/results/42/2026-11-20"
   ],
   "fieldVerification": {
-    "raceIdentity": "MULTIPLE_SEARCH_LISTINGS",
-    "sevenEntryNamesAndPeriods": "TWO_OR_MORE_SEARCH_LISTINGS",
-    "allSevenFinishCar": "TWO_OR_MORE_SEARCH_LISTINGS",
-    "allSevenMarginAndLap": "ONLY_ONE_FULL_SEARCH_RESULT_EXCERPTS_NOT_TWO_ORIGINALS",
-    "finishWinningMethod": "PARTIAL_FIRST_TWO_ONLY_SEARCH_LISTINGS",
-    "allSevenSB": "UNRESOLVED_CONFLICT_FIRST_FINISH_AND_OTHERS_NOT_INDICATED",
-    "completeIndependentOriginals": "NO_DIRECT_BODY_FETCH_CACHE_MISS",
-    "preRaceLines": "SEARCH_LISTINGS_AGREE_NOT_FULL_ORIGINALS",
-    "publicationGate": "FAIL_RESEARCH_ONLY"
+    "raceIdentity": "DIRECT_ORIGINALS_MATCH",
+    "sevenEntryNamesAndPeriods": "KDREAMS_AND_TOKYO_SPORTS_DIRECT_ORIGINALS_MATCH_EXCEPT_NAME_GLYPH_TRUE_ORIGINAL_PRESERVED",
+    "allSevenFinishCar": "NIKKAN_GENDAI_AND_KDREAMS_DIRECT_ORIGINALS_MATCH",
+    "allSevenMarginAndLap": "NIKKAN_GENDAI_AND_KDREAMS_DIRECT_ORIGINALS_MATCH_NORMALIZATION",
+    "finishWinningMethod": "NIKKAN_GENDAI_AND_KDREAMS_DIRECT_ORIGINALS_AGREE_ON_FIRST_TWO_OTHER_ROWS_BLANK_IN_BOTH",
+    "allSevenSB": "DISAGREEMENT_WINNER_2_B_VS_SB",
+    "completeIndependentOriginals": "TWO_DIRECT_RESULT_BODIES_FETCHED_UPSTREAM_INDEPENDENCE_NOT_YET_PROVEN",
+    "preRaceLines": "KDREAMS_AND_TOKYO_SPORTS_DIRECT_PRE_RACE_PAGES_AGREE",
+    "publicationGate": "PENDING_SB_DISAGREEMENT_AND_SOURCE_ORIGIN_QUALIFICATION"
   },
   "sourceIntegrity": {
-    "pageOpen": "2026-11-22 attempted web open; cache misses",
+    "pageOpen": "2026-11-22 direct body access succeeded: Nikkan Gendai 183-line original result and Kdreams 1524-line detail, Tokyo Sports 256-line archived racecard",
     "indexing": "search engine extracted snippets crawled 2026-11-20 to 2026-11-22",
-    "independentProvenance": "provider organization independence not fully established; do not count mirrored result feeds twice",
-    "copyright": "facts transcribed, no page text or proprietary predictions reproduced"
+    "independentProvenance": "Two separate publishing sites observed; shared upstream result feed origin not established. No formal independent two-origin PASS claimed.",
+    "copyright": "facts transcribed, no page text or proprietary predictions reproduced",
+    "readOnlyRecovery": "Older snippet-only evidence upgraded in this existing candidate, no extra race counted."
   },
   "remainingToPass": [
-    "Obtain reliable full body or licensed original record of each result field from first provider",
-    "Obtain independent full body or licensed original record of same fields from a second qualified source",
-    "Resolve racewide S/B notation and any mandatory method/exception information per schema",
-    "Reconfirm pre-race lines from independently accessible dated original snapshots",
-    "Map into formal approved result/rider-result/line-snapshot schemas; cross-feed and publish-guard checks"
+    "Resolve winner #2 S/B discrepancy: Nikkan Gendai B vs Kdreams SB through original qualifying source, retaining both raw values",
+    "Verify upstream independence and provenance requirements for each compared mandatory field",
+    "Run existing approved result/rider-result/line feed schema and cross-feed validation, then publish only after complete PASS"
   ],
-  "notes": "A coherent *candidate complete seven-finisher table* was assembled, not a prediction and not a passed or live-published result."
+  "notes": "A coherent *candidate complete seven-finisher table* was assembled, not a prediction and not a passed or live-published result.",
+  "sourceAudit20261122": {
+    "resultOriginals": [
+      {
+        "url": "https://keirin-autorace.nikkan-gendai.com/Keirin/Result?date=20261120&placeCode=42&raceNo=1",
+        "method": "web_open_full_original",
+        "fields": "all seven ranks, cars, riders, class, prefecture, periods, lastLap, margins, winner method and B"
+      },
+      {
+        "url": "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010001/?pageType=result",
+        "method": "web_open_full_original",
+        "fields": "all seven ranks, cars, names, lastLap, margins, winner method and SB"
+      }
+    ],
+    "preRaceOriginals": [
+      {
+        "url": "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010001/?pageType=result",
+        "method": "web_open_full_original",
+        "groups": "1-3-4 / 2-6 / 5-7"
+      },
+      {
+        "url": "https://keirin.tokyo-sports.co.jp/list/race/20261119_32063",
+        "method": "web_open_full_original",
+        "groups": "1-3-4 / 2-6 / 5-7"
+      }
+    ],
+    "fullComparison": "7/7 result rows align in rank, car number, normalized names, margins, lap times and winning-method display; winner S/B conflicts.",
+    "retrievalDateJST": "2026-11-22",
+    "publicationDecision": "PENDING_NO_FORMAL_PASS"
+  }
 }
