@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "必須4項目の2サイト一致を確認済み41選手。既存38人を保持し近藤修康、近藤雄太、金子兼久を追加。",
+  "verificationNote": "必要4項目が2サイト一致した45人。既存41人は保持し、未照合4人を追加。",
   "summary": {
-    "rows": 41
+    "rows": 45
   },
   "riders": [
     {
@@ -989,6 +989,102 @@
           "https://www.winticket.jp/keirin/cyclist/013384"
         ],
         "note": "KEIRIN.JP・WINTICKETプロフィールの氏名、府県、期別、登録番号の4項目一致を確認。元台帳の未照合を手動救済。"
+      }
+    },
+    {
+      "id": "013855",
+      "name": "近藤 俊明",
+      "prefecture": "神奈",
+      "period": "87",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013855",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013855",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013855",
+          "https://www.winticket.jp/keirin/cyclist/013855"
+        ],
+        "note": "2026-11-22：KEIRIN.JPおよびWINTICKETの選手プロフィールで氏名・府県・期別・6桁登録番号を独立に照合し4項目一致。元台帳未照合から救済。"
+      }
+    },
+    {
+      "id": "013357",
+      "name": "近藤 誠二",
+      "prefecture": "香川",
+      "period": "80",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013357",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013357",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013357",
+          "https://www.winticket.jp/keirin/cyclist/013357"
+        ],
+        "note": "2026-11-22：KEIRIN.JPおよびWINTICKETの選手プロフィールで氏名・府県・期別・6桁登録番号を独立に照合し4項目一致。元台帳未照合から救済。"
+      }
+    },
+    {
+      "id": "012986",
+      "name": "近藤 直幹",
+      "prefecture": "徳島",
+      "period": "75",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=012986",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=012986",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=012986",
+          "https://www.winticket.jp/keirin/cyclist/012986"
+        ],
+        "note": "2026-11-22：KEIRIN.JPおよびWINTICKETの選手プロフィールで氏名・府県・期別・6桁登録番号を独立に照合し4項目一致。元台帳未照合から救済。"
+      }
+    },
+    {
+      "id": "014080",
+      "name": "近藤 隆司",
+      "prefecture": "千葉",
+      "period": "90",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014080",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014080",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014080",
+          "https://www.winticket.jp/keirin/cyclist/014080"
+        ],
+        "note": "2026-11-22：KEIRIN.JPおよびWINTICKETの選手プロフィールで氏名・府県・期別・6桁登録番号を独立に照合し4項目一致。元台帳未照合から救済。"
       }
     }
   ],
