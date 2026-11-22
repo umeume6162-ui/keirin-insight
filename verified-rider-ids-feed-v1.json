@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "116選手の氏名・府県・期別・6桁登録番号を独立2原文で確認し保存。旧113人維持、新規6名は2回に分けて追加。",
+  "verificationNote": "119選手の氏名・府県・期別・6桁登録番号が異なる2掲載元の公開原文で一致。前回116件維持。",
   "summary": {
-    "rows": 116
+    "rows": 119
   },
   "riders": [
     {
@@ -2789,6 +2789,78 @@
           "https://www.winticket.jp/keirin/cyclist/015157"
         ],
         "note": "2026-11-22 JST 独立2掲載元の歴史的キャッシュ本文を直接読んで照合。KEIRIN.JP公式2026-08-02版とWINTICKET全文の4項目一致。A:F保持、元台帳359行。"
+      }
+    },
+    {
+      "id": "015222",
+      "name": "高橋　智香",
+      "prefecture": "愛知",
+      "period": "112",
+      "source": "https://keirin.jp/sp/racerprofile?snum=015222",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=015222",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=015222",
+          "https://www.winticket.jp/keirin/cyclist/015222"
+        ],
+        "note": "2026-11-22 JST KEIRIN.JPの公式プロフィール(2026-07-13更新の原文)とWINTICKETの公開キャッシュ原文を両方直接読み、4項目の氏名・府県・期別・6桁登録番号が一致。ライブ確認ではない。選手ID台帳360行。"
+      }
+    },
+    {
+      "id": "015082",
+      "name": "高橋　朋恵",
+      "prefecture": "東京",
+      "period": "108",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015082",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015082",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015082",
+          "https://www.winticket.jp/keirin/cyclist/015082"
+        ],
+        "note": "2026-11-22 JST KEIRIN.JPの公式プロフィール(2026-07-25更新の原文)とWINTICKETの公開キャッシュ原文を両方直接読み、4項目の氏名・府県・期別・6桁登録番号が一致。ライブ確認ではない。選手ID台帳361行。"
+      }
+    },
+    {
+      "id": "014644",
+      "name": "高橋　明久",
+      "prefecture": "宮城",
+      "period": "98",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014644",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014644",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014644",
+          "https://www.winticket.jp/keirin/cyclist/014644"
+        ],
+        "note": "2026-11-22 JST KEIRIN.JPの公式プロフィール(2026-07-28更新の原文)とWINTICKETの公開キャッシュ原文を両方直接読み、4項目の氏名・府県・期別・6桁登録番号が一致。ライブ確認ではない。選手ID台帳362行。"
       }
     }
   ],
