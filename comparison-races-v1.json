@@ -3,11 +3,11 @@
   "publicationPolicy": "research-comparison-separate-from-verified",
   "sourceSheet": "KI｜レース結果手動照合",
   "sourceSpreadsheet": "https://docs.google.com/spreadsheets/d/1gCe5q5STYH0T8XKqxJbVawB0Cl8TPsCISFJiRUdA02M/edit#gid=2101100506",
-  "notes": "全7車の必要結果項目と事前の並びがそれぞれ2サイトで一致した4レースを掲載。追加の独立承認条件は無し。払戻・主催者公式原本の未照合は注記として保持。元台帳と研究用公開は分離。",
+  "notes": "全7車の必要結果項目と発走前の並びが2サイトで一致した5レースを研究用掲載。松山5Rは出走表・予想ページから並び1-6／2-4／7-3-5を追加照合。実走隊列、主催者原本・払戻の未確認項目は区別。",
   "summary": {
-    "races": 4,
-    "finishers": 28,
-    "formations": 4,
+    "races": 5,
+    "finishers": 35,
+    "formations": 5,
     "formationPending": 0
   },
   "races": [
@@ -415,6 +415,139 @@
         }
       ],
       "provenance": "元台帳の全7車主要項目と予想並びの2サイト一致を再利用。追加独立承認は要求しない。公式主催者の独立原本を取得済みとは主張しない。"
+    },
+    {
+      "key": "2026-10-05|75|5",
+      "date": "2026-10-05",
+      "track": "松山",
+      "trackCode": "75",
+      "race": 5,
+      "grade": "F1",
+      "className": "A1",
+      "sourceReceiptId": "RACE-MANUAL-V4-20261122T163137-75-5",
+      "sourceReceiptState": "PENDING",
+      "independentApproval": "PENDING",
+      "resultAgreement": "all_required_comparison_fields_two_sites_agree",
+      "resultComparison": "7選手の主要7項目が正規化後一致",
+      "resultLimitations": "主催者公式原本・供給元独立性・払戻独立照合未確認",
+      "resultSourceUrl": "https://www.chariloto.com/keirin/results/75/2026-10-05",
+      "formation": {
+        "type": "pre_race_published_prediction",
+        "state": "two_site_agreement_recorded",
+        "groups": [
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            7,
+            3,
+            5
+          ]
+        ],
+        "sources": [
+          "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020005/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+          "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_5.html"
+        ]
+      },
+      "finishers": [
+        {
+          "finish": "1",
+          "number": 7,
+          "name": "齊藤英伊須",
+          "prefecture": "青森",
+          "period": "125",
+          "riderClass": "A1",
+          "margin": "",
+          "lastLap": "11.9",
+          "winningMethod": "捲くり",
+          "startBack": "B",
+          "exception": ""
+        },
+        {
+          "finish": "2",
+          "number": 3,
+          "name": "高橋 秀吉",
+          "prefecture": "秋田",
+          "period": "88",
+          "riderClass": "A1",
+          "margin": "1 車輪",
+          "lastLap": "11.9",
+          "winningMethod": "マーク",
+          "startBack": "",
+          "exception": ""
+        },
+        {
+          "finish": "3",
+          "number": 2,
+          "name": "曽我 圭佑",
+          "prefecture": "熊本",
+          "period": "113",
+          "riderClass": "A1",
+          "margin": "3/4車身",
+          "lastLap": "11.7",
+          "winningMethod": "",
+          "startBack": "S",
+          "exception": ""
+        },
+        {
+          "finish": "4",
+          "number": 4,
+          "name": "池田 浩士",
+          "prefecture": "佐賀",
+          "period": "86",
+          "riderClass": "A2",
+          "margin": "1 車輪",
+          "lastLap": "11.7",
+          "winningMethod": "",
+          "startBack": "",
+          "exception": ""
+        },
+        {
+          "finish": "5",
+          "number": 5,
+          "name": "黒滝 大翔",
+          "prefecture": "茨城",
+          "period": "117",
+          "riderClass": "A1",
+          "margin": "1 車輪",
+          "lastLap": "11.6",
+          "winningMethod": "",
+          "startBack": "",
+          "exception": ""
+        },
+        {
+          "finish": "6",
+          "number": 6,
+          "name": "武田 良太",
+          "prefecture": "愛媛",
+          "period": "88",
+          "riderClass": "A2",
+          "margin": "3/4車身",
+          "lastLap": "11.6",
+          "winningMethod": "",
+          "startBack": "",
+          "exception": ""
+        },
+        {
+          "finish": "7",
+          "number": 1,
+          "name": "木村 浩宣",
+          "prefecture": "香川",
+          "period": "97",
+          "riderClass": "A1",
+          "margin": "1車身1/2",
+          "lastLap": "11.5",
+          "winningMethod": "",
+          "startBack": "",
+          "exception": ""
+        }
+      ],
+      "provenance": "既存結果台帳の全7名主要7項目一致を維持し、2026-11-22に出走表・並び予想からKドリームスとオッズパーク2掲載元の全車ライン順を照合。実走隊列ではない。払戻と主催者公式原本は元の保留記録を維持。"
     },
     {
       "key": "2026-10-05|75|6",
