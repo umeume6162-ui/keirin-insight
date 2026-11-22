@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "必要4項目2サイト一致84選手。既存81人保持、古川大輔・戸ノ下太郎・戸田康平を追加。",
+  "verificationNote": "氏名・府県・期別・6桁登録番号の2掲載元一致87選手。既存84人維持、新規戸田洋平・戸邉捺希・戸邉香奈実。",
   "summary": {
-    "rows": 84
+    "rows": 87
   },
   "riders": [
     {
@@ -2021,6 +2021,78 @@
           "https://www.winticket.jp/keirin/cyclist/014885"
         ],
         "note": "2026-11-22 KEIRIN.JP 2026年08月09日掲載更新資料とWINTICKETのプロフィール原文キャッシュを比較。6桁登録番号・氏名・府県・期別の4項目一致。ライブ取得とは区別。選手ID照合台帳325行。"
+      }
+    },
+    {
+      "id": "014259",
+      "name": "戸田　洋平",
+      "prefecture": "岡山",
+      "period": "92",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014259",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014259",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014259",
+          "https://www.winticket.jp/keirin/cyclist/014259"
+        ],
+        "note": "2026-11-22取得のキャッシュ本文を照合。KEIRIN.JP https://keirin.jp/sp/racerprofile?snum=014259（資料更新2026-07-29）、WINTICKET https://www.winticket.jp/keirin/cyclist/014259で登録番号・氏名・府県・期別一致。公式PC URLは canonical source として保存、公式SPで閲覧時はその別URLを記録。台帳326行。"
+      }
+    },
+    {
+      "id": "015427",
+      "name": "戸邉　捺希",
+      "prefecture": "埼玉",
+      "period": "117",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015427",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015427",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015427",
+          "https://www.winticket.jp/keirin/cyclist/015427"
+        ],
+        "note": "2026-11-22取得のキャッシュ本文を照合。KEIRIN.JP https://keirin.jp/sp/racerprofile?snum=015427（資料更新2026-07-01）、WINTICKET https://www.winticket.jp/keirin/cyclist/015427で登録番号・氏名・府県・期別一致。公式PC URLは canonical source として保存、公式SPで閲覧時はその別URLを記録。台帳327行。"
+      }
+    },
+    {
+      "id": "015757",
+      "name": "戸邉　香奈実",
+      "prefecture": "茨城",
+      "period": "124",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015757",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015757",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015757",
+          "https://www.winticket.jp/keirin/cyclist/015757"
+        ],
+        "note": "2026-11-22取得のキャッシュ本文を照合。KEIRIN.JP https://www.keirin.jp/pc/racerprofile?snum=015757（資料更新2026-07-16）、WINTICKET https://www.winticket.jp/keirin/cyclist/015757で登録番号・氏名・府県・期別一致。公式PC URLは canonical source として保存、公式SPで閲覧時はその別URLを記録。台帳328行。"
       }
     }
   ],
