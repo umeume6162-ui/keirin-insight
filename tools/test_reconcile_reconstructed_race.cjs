@@ -70,6 +70,15 @@ assert.equal(maebashi.numericFinishers,7);
 assert.deepEqual(maebashi.missingFromResult,[]);
 assert.equal(maebashi.officialStartersKnown,false);
 assert.equal(maebashi.publicationPassed,false);
+// Maebashi 3R: independent venue regression and explicit nonpublication of source-first data.
+const maebashi3=check(JSON.parse(fs.readFileSync(path.join(base,'2026-11-20_22_3.research.json'),'utf8')));
+assert.equal(maebashi3.raceKey,'2026-11-20|22|3');
+assert.equal(maebashi3.structuralOk,true,JSON.stringify(maebashi3.errors));
+assert.equal(maebashi3.documentedResultRows,7);
+assert.equal(maebashi3.numericFinishers,7);
+assert.deepEqual(maebashi3.missingFromResult,[]);
+assert.equal(maebashi3.officialStartersKnown,false);
+assert.equal(maebashi3.publicationPassed,false);
 // Five numeric places plus fall/disqualification must be retained without ranking the exceptions.
 const r4=check(load(4));
 assert.equal(r4.structuralOk,true,JSON.stringify(r4.errors));
@@ -90,4 +99,4 @@ assert.equal(missing.publicationPassed,false);
 const duplicate=load(5);
 duplicate.results[1].car=duplicate.results[0].car;
 assert.equal(check(duplicate).structuralOk,false);
-console.log('source-first race reconciliation tests passed (9 authentic candidates + missing/duplicate regression cases)');
+console.log('source-first race reconciliation tests passed (10 authentic candidates + missing/duplicate regression cases)');
