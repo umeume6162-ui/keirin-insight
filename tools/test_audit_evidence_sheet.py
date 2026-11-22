@@ -37,4 +37,15 @@ class EvidenceAuditTests(unittest.TestCase):
         self.assertEqual(self.check(x)["counts"],{"HELD":1})
     def test_header(self):
         with self.assertRaises(ValueError):audit([["wrong"]])
+    def test_pending_collision(self):
+        a=row();a[14]="PENDING";a[3]="cached_official_profile"
+        b=row("AUTO-TEST","AUTO")
+        self.assertEqual(self.check(a,b)["counts"],{"QUARANTINED":2})
+    def test_official_notation(self):
+        x=row();x[4]="阿部 弘";x[5]="高知";x[6]="99"
+        x[7]="阿部　弘";x[8]="高知県";x[9]="99期"
+        self.assertEqual(self.check(x)["counts"],{"PENDING_INDEPENDENT_REVIEW":1})
+    def test_distinct_pending_preserved(self):
+        x=row();x[14]="PENDING";x[3]="cached_official_profile"
+        self.assertEqual(self.check(x)["counts"],{"HELD":1})
 if __name__=="__main__":unittest.main()
