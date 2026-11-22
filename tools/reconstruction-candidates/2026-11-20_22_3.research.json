@@ -1,0 +1,257 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-11-20|22|3",
+  "createdDateJST": "2026-11-22",
+  "race": {
+    "date": "2026-11-20",
+    "venue": "前橋",
+    "venueCode": "22",
+    "raceNo": 3,
+    "grade": "F2",
+    "event": "ニッカン・コム杯",
+    "class": "A級チャレンジ予選",
+    "expectedEntrants": 7,
+    "startTimeLocal": "21:30"
+  },
+  "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
+  "method": "Source-first: read entire original Kdreams detailed racecard+result and netkeirin full result; KEIRIN HEX separately corroborates rank and predicted line. No automated formal PASS from different web publishing hosts.",
+  "payout": "NOT_COLLECTED_OPTIONAL",
+  "originalEntries": [
+    {
+      "car": 1,
+      "name": "滿田 光紀",
+      "prefecture": "熊本",
+      "period": 129,
+      "sourceStatus": "KDREAMS_FULL_DATED_PRE_RACE_CARD"
+    },
+    {
+      "car": 2,
+      "name": "田中 弘章",
+      "prefecture": "福岡",
+      "period": 68,
+      "sourceStatus": "KDREAMS_FULL_DATED_PRE_RACE_CARD"
+    },
+    {
+      "car": 3,
+      "name": "中野 良",
+      "prefecture": "北海道",
+      "period": 83,
+      "sourceStatus": "KDREAMS_FULL_DATED_PRE_RACE_CARD"
+    },
+    {
+      "car": 4,
+      "name": "高嶋 一朗",
+      "prefecture": "岡山",
+      "period": 62,
+      "sourceStatus": "KDREAMS_FULL_DATED_PRE_RACE_CARD"
+    },
+    {
+      "car": 5,
+      "name": "菅原 洋輔",
+      "prefecture": "岩手",
+      "period": 98,
+      "sourceStatus": "KDREAMS_FULL_DATED_PRE_RACE_CARD"
+    },
+    {
+      "car": 6,
+      "name": "岡田 哲夫",
+      "prefecture": "福島",
+      "period": 92,
+      "sourceStatus": "KDREAMS_FULL_DATED_PRE_RACE_CARD"
+    },
+    {
+      "car": 7,
+      "name": "和泉田 喜一",
+      "prefecture": "千葉",
+      "period": 59,
+      "sourceStatus": "KDREAMS_FULL_DATED_PRE_RACE_CARD"
+    }
+  ],
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      1,
+      2,
+      4,
+      7,
+      6,
+      3,
+      5
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 7,
+    "nonNumericResultRows": 0,
+    "confirmedWithdrawals": [],
+    "revisedStartCardSource": null,
+    "confirmedStarterCount": null,
+    "note": "Seven pre-race entrants are represented once in numeric detailed results; official amended final start list not independently obtained."
+  },
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [
+      [
+        1,
+        2,
+        4
+      ],
+      [
+        5,
+        3,
+        6
+      ],
+      [
+        7
+      ]
+    ],
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/maebashi/racedetail/2220261120010003/?pageType=result",
+      "https://keirinhex.jp/races/20261120/032220261120/"
+    ],
+    "providerAttribution": "Kdreams credits アオケイ as author/publisher of predicted lineup",
+    "comments": "1自力,2滿田君,4九州勢へ,5自分で何かやる,3菅原君,6北の3番手,7切れ目から. KEIRIN HEX confirms 1-2-4 front forecast and second line/solo in pre-race page.",
+    "sourceStatus": "TWO_PUBLISHED_PREDICTIONS_CORROBORATE_GROUPS_UPSTREAM_UNQUALIFIED",
+    "note": "Pre-race predicted teams, never treat actual running order as known."
+  },
+  "results": [
+    {
+      "car": 1,
+      "name": "滿田 光紀",
+      "prefecture": "熊本",
+      "period": 129,
+      "grade": "A3",
+      "finishRaw": "1",
+      "finish": 1,
+      "lapSeconds": 10.2,
+      "marginRaw": "",
+      "winningMethodRaw": "逃",
+      "sbRaw": "SB",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_FULL_RESULT_ROWS_MATCH"
+    },
+    {
+      "car": 2,
+      "name": "田中 弘章",
+      "prefecture": "福岡",
+      "period": 68,
+      "grade": "A3",
+      "finishRaw": "2",
+      "finish": 2,
+      "lapSeconds": 10.2,
+      "marginRaw": "3/4車身",
+      "winningMethodRaw": "ク",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_FULL_RESULT_ROWS_MATCH"
+    },
+    {
+      "car": 4,
+      "name": "高嶋 一朗",
+      "prefecture": "岡山",
+      "period": 62,
+      "grade": "A3",
+      "finishRaw": "3",
+      "finish": 3,
+      "lapSeconds": 10,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_FULL_RESULT_ROWS_MATCH"
+    },
+    {
+      "car": 7,
+      "name": "和泉田 喜一",
+      "prefecture": "千葉",
+      "period": 59,
+      "grade": "A3",
+      "finishRaw": "4",
+      "finish": 4,
+      "lapSeconds": 10,
+      "marginRaw": "1車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_FULL_RESULT_ROWS_MATCH"
+    },
+    {
+      "car": 6,
+      "name": "岡田 哲夫",
+      "prefecture": "福島",
+      "period": 92,
+      "grade": "A3",
+      "finishRaw": "5",
+      "finish": 5,
+      "lapSeconds": 10,
+      "marginRaw": "2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_FULL_RESULT_ROWS_MATCH"
+    },
+    {
+      "car": 3,
+      "name": "中野 良",
+      "prefecture": "北海道",
+      "period": 83,
+      "grade": "A3",
+      "finishRaw": "6",
+      "finish": 6,
+      "lapSeconds": 10.7,
+      "marginRaw": "5車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_FULL_RESULT_ROWS_MATCH"
+    },
+    {
+      "car": 5,
+      "name": "菅原 洋輔",
+      "prefecture": "岩手",
+      "period": 98,
+      "grade": "A3",
+      "finishRaw": "7",
+      "finish": 7,
+      "lapSeconds": 11.2,
+      "marginRaw": "6車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_FULL_RESULT_ROWS_MATCH"
+    }
+  ],
+  "resultUrls": [
+    "https://keirin.kdreams.jp/maebashi/racedetail/2220261120010003/?pageType=result",
+    "https://keirin.netkeiba.com/race/result/?race_id=202611202203"
+  ],
+  "sourceAudit": {
+    "retrievedDateJST": "2026-11-22",
+    "retrievalMethod": "web.open direct full source pages",
+    "Kdreams": "Original page directly exposes all 7 entries, names, periods, forecast 1-2-4 / 5-3-6 / 7 and results with SB + 7 last-lap/margin fields",
+    "netkeirin": "Direct full result shows 7 numeric finishers and same 1-2-4-7-6-3-5 ranked car order and lap/margin/method/SB",
+    "HEX": "https://keirinhex.jp/races/20261120/032220261120/ provides result list and pre-race predicted 1-2-4; lacks lap/margin source in viewed body, hence corroborates only ranks and original forecast group",
+    "officialResult": "Not directly retrieved from organizer/KEIRIN.JP for this race",
+    "originality": "Publisher identity does not establish upstream independent result creation; shared official competition feed probable but not documented per event",
+    "licensing": "Structured race facts only."
+  },
+  "fieldVerification": {
+    "resultRankCar": "KDREAMS_NETKEIRIN_AND_HEX_RANKS_DISPLAY_AGREE",
+    "lapMarginMethodSB": "KDREAMS_AND_NETKEIRIN_DISPLAY_AGREE",
+    "entries": "KDREAMS_DATED_CARD_ALL_7",
+    "line": "KDREAMS_AND_HEX_PUBLISHED_PREDICTIONS_AGREE",
+    "independentOfficialOriginal": "NOT_RETRIEVED",
+    "formalPublication": "RESEARCH_ONLY_PENDING_OFFICIAL_PRIMARY_OR_ORIGINAL_SOURCE_QUALIFICATION"
+  },
+  "remainingToPass": [
+    "Capture official organizer full result or qualify approved alternative source route with exact independent evidence",
+    "Confirm actual record production origin or approved field-specific publisher corroboration for formal gates",
+    "Never treat nonofficial forecast as actual running line or replace missing official start audit with inference"
+  ]
+}
