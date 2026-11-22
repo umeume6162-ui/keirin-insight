@@ -5,7 +5,7 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const base=path.resolve(__dirname,'..'),legacy=JSON.parse(fs.readFileSync(path.join(base,'comparison-races-v1.json'),'utf8'));
 const norm=x=>String(x??'').normalize('NFKC').replace(/[\s\u3000]/g,'');
-const method=x=>({'逃':'逃げ','差':'差し','ク':'マーク'}[norm(x)]||norm(x));
+const method=x=>({'逃':'逃げ','差':'差し','ク':'マーク','捲':'捲くり','捲り':'捲くり'}[norm(x)]||norm(x));
 const margin=x=>norm(x).replace('タイヤ差','タイヤ');
 function checkReceipt(receipt,races=legacy.races){
  const original=races.find(x=>x.key===receipt.raceKey),errors=[];
@@ -33,7 +33,7 @@ function checkReceipt(receipt,races=legacy.races){
  return{raceKey:receipt.raceKey,compared,errors,allMatched:errors.length===0,publicationPassed:false};
 }
 if(require.main===module){
- const names=['2026-10-05_75_1.recheck.json','2026-10-05_75_2.recheck.json','2026-10-05_75_3.recheck.json','2026-10-05_75_4.recheck.json'],output=[];
+ const names=['2026-10-05_75_1.recheck.json','2026-10-05_75_2.recheck.json','2026-10-05_75_3.recheck.json','2026-10-05_75_4.recheck.json','2026-10-05_75_5.recheck.json'],output=[];
  for(const n of names){const record=JSON.parse(fs.readFileSync(path.join(__dirname,'source-origin-audits',n),'utf8'));const v=checkReceipt(record);output.push(v);}
  console.log(JSON.stringify({schema:'ki-legacy-recheck-validation-v1',records:output,publicationPassed:false},null,2));
  if(output.some(x=>!x.allMatched))process.exitCode=1;
