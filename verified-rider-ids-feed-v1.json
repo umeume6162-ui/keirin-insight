@@ -2868,7 +2868,7 @@
       "name": "高橋　聖太",
       "prefecture": "愛媛",
       "period": "129",
-      "source": "https://keirin.jp/sp/racerprofile?snum=016006",
+      "source": "https://keirin.jp/pc/racerprofile?snum=016006",
       "officialVerification": {
         "status": "verified",
         "fields": [
@@ -2878,12 +2878,12 @@
           "id"
         ],
         "method": "two_distinct_sites_agree",
-        "source": "https://keirin.jp/sp/racerprofile?snum=016006",
+        "source": "https://keirin.jp/pc/racerprofile?snum=016006",
         "matchingSources": [
-          "https://keirin.jp/sp/racerprofile?snum=016006",
+          "https://keirin.jp/pc/racerprofile?snum=016006",
           "https://www.winticket.jp/keirin/cyclist/016006"
         ],
-        "note": "2026-11-22：KEIRIN.JP mobile 2026-10-03 profile and WINTICKET profile full original body read. 4 identity fields matched. Sheet row358 readback verified; historical cache not live."
+        "note": "2026-11-22：KEIRIN.JP mobile 2026-10-03 profile and WINTICKET profile full original body read. 4 identity fields matched. Sheet row358 readback verified; historical cache not live. Additional direct KEIRIN.JP PC full profile updated 2026-11-13 confirms same 4 fields; PC canonical URL used for existing website guard."
       },
       "verifiedDate": "2026-11-22"
     },
