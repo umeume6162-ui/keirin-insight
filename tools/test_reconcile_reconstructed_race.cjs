@@ -145,18 +145,20 @@ assert.equal(matsuyama12.audit.publicationPass,true,'formal source record tracks
 assert.equal(matsuyama12.fieldVerification.resultFields.fieldComparisons,49);
 assert.deepEqual(matsuyama12.preRaceFormation.groups,[[1,4,6],[5,2],[3,7]]);
 assert.equal(new Set(matsuyama12.preRaceFormation.groups.flat()).size,7);
-// Takeo A-class 1R: previously captured 7 finishers agree on five fields, missing evidence must remain explicit.
+// Takeo A-class 1R: saved V99 vs K-Dreams full indexed table 49/49 and two-provider complete ordered forecast.
 const takeo1=JSON.parse(fs.readFileSync(path.join(base,'2026-10-05_84_1.research.json'),'utf8'));
 const takeoCheck=check(takeo1);
 assert.equal(takeoCheck.structuralOk,true,JSON.stringify(takeoCheck.errors));
 assert.equal(takeoCheck.documentedResultRows,7);
 assert.equal(takeoCheck.numericFinishers,7);
 assert.deepEqual(takeoCheck.missingFromResult,[]);
-assert.equal(takeoCheck.publicationPassed,false);
-assert.equal(takeo1.audit.publicationPass,false);
-assert.equal(takeo1.fieldVerification.resultFields.fieldComparisons,35);
-assert.deepEqual(takeo1.fieldVerification.resultFields.missingSecondSourceForFields,['margin','startBack']);
-assert.ok(takeoCheck.warnings.some(w=>w.includes('pre-race formation does not cover entire original card')));
+assert.equal(takeoCheck.publicationPassed,false,'structural check alone never publishes without independently recorded source decision');
+assert.equal(takeo1.audit.publicationPass,true);
+assert.equal(takeo1.fieldVerification.resultFields.fieldComparisons,49);
+assert.equal(takeo1.fieldVerification.resultFields.differences,0);
+assert.deepEqual(takeo1.preRaceFormation.groups,[[1,2],[7,3,4,5,6]]);
+assert.equal(new Set(takeo1.preRaceFormation.groups.flat()).size,7);
+assert.equal(takeo1.fieldVerification.forecastLine.status,'TWO_SITES_FULL_ORDERED_GROUPS_MATCH');
 // Five numeric places plus fall/disqualification must be retained without ranking the exceptions.
 const r4=check(load(4));
 assert.equal(r4.structuralOk,true,JSON.stringify(r4.errors));
