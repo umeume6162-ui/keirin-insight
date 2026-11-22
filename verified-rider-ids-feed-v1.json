@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-23",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "固定4項目（氏名・府県・期別・6桁登録番号）をKEIRIN.JPと別媒体で照合し個別証拠を保存。公開登録176件。取得方法の違いとソースURLは各選手レコードを参照。",
+  "verificationNote": "固定本人識別4項目を公式＋別媒体で照合。現在179件。選手個別の取得方法・確認URLは各officialVerificationを参照し、ページ上流独立性を無条件に断定しない。",
   "summary": {
-    "rows": 176
+    "rows": 179
   },
   "riders": [
     {
@@ -4236,6 +4236,81 @@
           "https://www.yen-joy.net/racer/data/014719"
         ],
         "note": "2026-11-23 cached KEIRIN.JP official displayed updated 2026-07-20, full WINTICKET profile and Nikkan Pro Sports (yen-joy) full identity page: name/prefecture/cohort/six-digit ID agree. Source content not a new live crawl, upstream independent generation not proven. Original Sheet row 419 G:K readback passed."
+      }
+    },
+    {
+      "id": "013589",
+      "name": "佐竹 和也",
+      "prefecture": "徳島",
+      "period": "83",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013589",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013589",
+        "method": "two_distinct_sites_agree",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013589",
+          "https://www.winticket.jp/keirin/cyclist/013589",
+          "https://www.oddspark.com/keirin/PlayerDetail.do?playerCd=013589"
+        ],
+        "note": "2026-11-23 JST KEIRIN.JP cached full official profile updated 2026-08-06, secondary WINTICKET and another athlete/news profile. Four fixed fields match after whitespace/prefecture normalization; cache/search indexed vs live retrieval distinguished. Independently generated upstream not proven. Google Sheet row 420 G:K saved and reread."
+      }
+    },
+    {
+      "id": "014350",
+      "name": "佐藤 雅春",
+      "prefecture": "宮城",
+      "period": "94",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014350",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014350",
+        "method": "two_distinct_sites_agree",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014350",
+          "https://www.winticket.jp/keirin/cyclist/014350",
+          "https://www.yen-joy.net/racer/data/014350/3"
+        ],
+        "note": "2026-11-23 JST KEIRIN.JP cached full official profile updated 2026-08-07, secondary WINTICKET and another athlete/news profile. Four fixed fields match after whitespace/prefecture normalization; cache/search indexed vs live retrieval distinguished. Independently generated upstream not proven. Google Sheet row 421 G:K saved and reread."
+      }
+    },
+    {
+      "id": "013827",
+      "name": "佐藤 雅彦",
+      "prefecture": "宮城",
+      "period": "87",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013827",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013827",
+        "method": "two_distinct_sites_agree",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013827",
+          "https://www.winticket.jp/keirin/cyclist/013827",
+          "https://www.chariloto.com/keirin_athletes/13827"
+        ],
+        "note": "2026-11-23 JST KEIRIN.JP cached full official profile updated 2026-07-25, secondary WINTICKET and another athlete/news profile. Four fixed fields match after whitespace/prefecture normalization; cache/search indexed vs live retrieval distinguished. Independently generated upstream not proven. Google Sheet row 422 G:K saved and reread."
       }
     }
   ],
