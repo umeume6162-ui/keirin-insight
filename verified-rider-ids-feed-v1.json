@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "131名、氏名/府県/期別/登録番号の2サイト原文一致。台帳既存行へ証拠追記し再読込。",
+  "verificationNote": "133選手の4項目について異なる2サイトの公開原文に一致。元台帳2行の参照・再読込済み。",
   "summary": {
-    "rows": 131
+    "rows": 133
   },
   "riders": [
     {
@@ -3149,6 +3149,54 @@
           "https://www.winticket.jp/keirin/cyclist/014126"
         ],
         "note": "2026-11-22 JST、KEIRIN.JP公式PC原文（表示更新日2026-09-05）とWINTICKET原文をweb.open全文取得。氏名高谷 敏史・府県青森・期別91・登録番号014126の4項目一致。出典1 https://www.keirin.jp/pc/racerprofile?snum=014126 出典2 https://www.winticket.jp/keirin/cyclist/014126。保存キャッシュ本文の閲覧であり現在値のライブ成績保証ではない。元A:F保持。"
+      }
+    },
+    {
+      "id": "013723",
+      "name": "高谷進太郎",
+      "prefecture": "三重",
+      "period": "85",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013723",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013723",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013723",
+          "https://www.winticket.jp/keirin/cyclist/013723"
+        ],
+        "note": "取得確認2026-11-22 JST。KEIRIN.JP公式PCプロフィール（表示更新2026-10-24）https://keirin.jp/pc/racerprofile?snum=013723 とWINTICKET全文 https://www.winticket.jp/keirin/cyclist/013723 を直接閲覧。氏名=高谷進太郎／府県=三重／期別=85／登録番号=013723の4項目が両サイトで一致。元データは公開時点のキャッシュ原文、現在の競走得点を保証しない。元台帳A:F不変。"
+      }
+    },
+    {
+      "id": "013883",
+      "name": "高津 晃治",
+      "prefecture": "岡山",
+      "period": "87",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013883",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013883",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013883",
+          "https://www.winticket.jp/keirin/cyclist/013883"
+        ],
+        "note": "取得確認2026-11-22 JST。KEIRIN.JP公式PCプロフィール（表示更新2026-10-27）https://keirin.jp/pc/racerprofile?snum=013883 とWINTICKET全文 https://www.winticket.jp/keirin/cyclist/013883 を直接閲覧。氏名=高津 晃治／府県=岡山／期別=87／登録番号=013883の4項目が両サイトで一致。元データは公開時点のキャッシュ原文、現在の競走得点を保証しない。元台帳A:F不変。"
       }
     }
   ],
