@@ -1,0 +1,22 @@
+{
+  "schema": "ki-ledger-status-v1",
+  "snapshotDate": "2026-11-22",
+  "source": "選手ID照合台帳",
+  "mode": "manual-read-only-snapshot",
+  "total": 1445,
+  "states": [
+    {
+      "label": "公式照合済",
+      "count": 233
+    },
+    {
+      "label": "照合済",
+      "count": 16
+    },
+    {
+      "label": "未照合",
+      "count": 1196
+    }
+  ],
+  "note": "台帳の記載状態の集計。独立照合監査・正式公開の承認件数ではない。個人別データを含まない。"
+}
