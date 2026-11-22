@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "81選手の必要4項目は異なる2掲載元で一致。既存78人保持、古城英之・古川宗行・古川尚耶追加。",
+  "verificationNote": "必要4項目2サイト一致84選手。既存81人保持、古川大輔・戸ノ下太郎・戸田康平を追加。",
   "summary": {
-    "rows": 81
+    "rows": 84
   },
   "riders": [
     {
@@ -1949,6 +1949,78 @@
           "https://www.winticket.jp/keirin/cyclist/014221"
         ],
         "note": "2026-11-22取得の公開キャッシュ本文2掲載元。KEIRIN.JP原文更新2026-08-07。氏名・府県・期別・6桁登録番号をそれぞれ確認。選手ID照合台帳322行。"
+      }
+    },
+    {
+      "id": "014780",
+      "name": "古川　大輔",
+      "prefecture": "広島",
+      "period": "99",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014780",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014780",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014780",
+          "https://www.winticket.jp/keirin/cyclist/014780"
+        ],
+        "note": "2026-11-22 KEIRIN.JP 2026年08月06日掲載更新資料とWINTICKETのプロフィール原文キャッシュを比較。6桁登録番号・氏名・府県・期別の4項目一致。ライブ取得とは区別。選手ID照合台帳323行。"
+      }
+    },
+    {
+      "id": "013027",
+      "name": "戸ノ下　太郎",
+      "prefecture": "千葉",
+      "period": "76",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013027",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013027",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013027",
+          "https://www.winticket.jp/keirin/cyclist/013027"
+        ],
+        "note": "2026-11-22 KEIRIN.JP 2026年08月09日掲載更新資料とWINTICKETのプロフィール原文キャッシュを比較。6桁登録番号・氏名・府県・期別の4項目一致。ライブ取得とは区別。選手ID照合台帳324行。"
+      }
+    },
+    {
+      "id": "014885",
+      "name": "戸田　康平",
+      "prefecture": "香川",
+      "period": "101",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014885",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014885",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014885",
+          "https://www.winticket.jp/keirin/cyclist/014885"
+        ],
+        "note": "2026-11-22 KEIRIN.JP 2026年08月09日掲載更新資料とWINTICKETのプロフィール原文キャッシュを比較。6桁登録番号・氏名・府県・期別の4項目一致。ライブ取得とは区別。選手ID照合台帳325行。"
       }
     }
   ],
