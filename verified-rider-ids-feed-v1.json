@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "異なる2掲載元の4項目一致93人。五味田奈穂・後田康成・後藤大輝を追加。",
+  "verificationNote": "96選手の氏名・府県・期別・6桁登録番号が異なる2つの掲載元で一致。旧93人保持、新規後藤悠・後藤祐貴・光岡義洋。",
   "summary": {
-    "rows": 93
+    "rows": 96
   },
   "riders": [
     {
@@ -2237,6 +2237,78 @@
           "https://www.winticket.jp/keirin/cyclist/015649"
         ],
         "note": "2026-11-22公開キャッシュ資料を閲覧。KEIRIN.JPプロフィール本文最終更新2026-07-17とWINTICKETの別元プロフィール本文の4項目、氏名・府県・期別・登録番号一致。キャッシュでありライブ情報と区別。元台帳334行。"
+      }
+    },
+    {
+      "id": "015325",
+      "name": "後藤　悠",
+      "prefecture": "岩手",
+      "period": "115",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015325",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015325",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015325",
+          "https://www.winticket.jp/keirin/cyclist/015325"
+        ],
+        "note": "2026-11-22に本文公開キャッシュを読み取り。公式掲載時点2026-04-05。KEIRIN.JPおよびWINTICKETの氏名・府県・期別・6桁登録番号一致。ライブ取得ではない。台帳335行。"
+      }
+    },
+    {
+      "id": "014951",
+      "name": "後藤　祐貴",
+      "prefecture": "兵庫",
+      "period": "103",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014951",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014951",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014951",
+          "https://www.winticket.jp/keirin/cyclist/014951"
+        ],
+        "note": "2026-11-22に本文公開キャッシュを読み取り。公式掲載時点2026-08-06。KEIRIN.JPおよびWINTICKETの氏名・府県・期別・6桁登録番号一致。ライブ取得ではない。台帳336行。"
+      }
+    },
+    {
+      "id": "012827",
+      "name": "光岡　義洋",
+      "prefecture": "愛知",
+      "period": "73",
+      "source": "https://keirin.jp/pc/racerprofile?snum=012827",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=012827",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=012827",
+          "https://www.winticket.jp/keirin/cyclist/012827"
+        ],
+        "note": "2026-11-22に本文公開キャッシュを読み取り。公式掲載時点2026-08-06。KEIRIN.JPおよびWINTICKETの氏名・府県・期別・6桁登録番号一致。ライブ取得ではない。台帳337行。"
       }
     }
   ],
