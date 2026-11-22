@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "145名の選手登録番号・氏名・府県・期別を公式KEIRIN.JPと別媒体の原文で照合済み（黒滝はnetkeirin）。元台帳386〜388行を再読込済み。",
+  "verificationNote": "148名の氏名・府県・期別・登録番号の固定4項目についてKEIRIN.JP公式とWINTICKET個別原文で一致。元選手台帳389-391行へ証拠保存し再読込済み。",
   "summary": {
-    "rows": 145
+    "rows": 148
   },
   "riders": [
     {
@@ -3485,6 +3485,78 @@
           "https://www.winticket.jp/keirin/cyclist/015246"
         ],
         "note": "2026-11-23 JST：KEIRIN.JP個別プロフィールhttps://www.keirin.jp/pc/racerprofile?snum=015246（プロフィール表示更新2026-11-13）とhttps://www.winticket.jp/keirin/cyclist/015246の全文直接取得。氏名黒沢 征治・府県埼玉・期別113・登録番号015246の固定4項目一致。黒滝大翔はWINTICKET原文が403のためnetkeirin原文を採用（WINTICKET成功と誤記しない）。変動得点・級班を登録番号の認定に流用しない。A:F原本維持。"
+      }
+    },
+    {
+      "id": "015309",
+      "name": "黒沢 夢姫",
+      "prefecture": "埼玉",
+      "period": "114",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015309",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015309",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015309",
+          "https://www.winticket.jp/keirin/cyclist/015309"
+        ],
+        "note": "取得日2026-11-23 JST。KEIRIN.JP公式公開原文 https://www.keirin.jp/pc/racerprofile?snum=015309（プロフィール原文更新日2026-09-11）およびWINTICKET全文 https://www.winticket.jp/keirin/cyclist/015309 をweb.openで直接閲覧。名前黒沢 夢姫、府県埼玉、期別114期、登録番号015309の固定4項目一致。掲載時点の変動得点・級班はID照合の対象外。元A:Fを保持。"
+      }
+    },
+    {
+      "id": "012795",
+      "name": "黒田 充",
+      "prefecture": "栃木",
+      "period": "73",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=012795",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=012795",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=012795",
+          "https://www.winticket.jp/keirin/cyclist/012795"
+        ],
+        "note": "取得日2026-11-23 JST。KEIRIN.JP公式公開原文 https://www.keirin.jp/pc/racerprofile?snum=012795（プロフィール原文更新日2026-09-19）およびWINTICKET全文 https://www.winticket.jp/keirin/cyclist/012795 をweb.openで直接閲覧。名前黒田 充、府県栃木、期別73期、登録番号012795の固定4項目一致。掲載時点の変動得点・級班はID照合の対象外。元A:Fを保持。"
+      }
+    },
+    {
+      "id": "014613",
+      "name": "黒田 淳",
+      "prefecture": "岡山",
+      "period": "97",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014613",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014613",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014613",
+          "https://www.winticket.jp/keirin/cyclist/014613"
+        ],
+        "note": "取得日2026-11-23 JST。KEIRIN.JP公式公開原文 https://www.keirin.jp/pc/racerprofile?snum=014613（プロフィール原文更新日2026-11-04）およびWINTICKET全文 https://www.winticket.jp/keirin/cyclist/014613 をweb.openで直接閲覧。名前黒田 淳、府県岡山、期別97期、登録番号014613の固定4項目一致。掲載時点の変動得点・級班はID照合の対象外。元A:Fを保持。"
       }
     }
   ],
