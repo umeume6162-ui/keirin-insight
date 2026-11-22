@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "142選手の氏名・府県・期別・登録番号をKEIRIN.JPとWINTICKETの原文で一致照合。元台帳383-385行へ保存後再読込。",
+  "verificationNote": "145名の選手登録番号・氏名・府県・期別を公式KEIRIN.JPと別媒体の原文で照合済み（黒滝はnetkeirin）。元台帳386〜388行を再読込済み。",
   "summary": {
-    "rows": 142
+    "rows": 145
   },
   "riders": [
     {
@@ -3413,6 +3413,78 @@
           "https://www.winticket.jp/keirin/cyclist/011341"
         ],
         "note": "2026-11-23 JST web.open原文全文を二媒体確認。KEIRIN.JPプロフィール更新2026-10-24、https://keirin.jp/pc/racerprofile?snum=011341 とWINTICKET https://www.winticket.jp/keirin/cyclist/011341。氏名黒崎 直行／府県栃木／57期／6桁登録番号011341の4項目一致。現在得点・次期級班など変動欄はID照合とは分離。A:F原本維持、未確認のレース結果を流用せず。"
+      }
+    },
+    {
+      "id": "015730",
+      "name": "黒瀬浩太郎",
+      "prefecture": "広島",
+      "period": "123",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015730",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015730",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015730",
+          "https://www.winticket.jp/keirin/cyclist/015730"
+        ],
+        "note": "2026-11-23 JST：KEIRIN.JP個別プロフィールhttps://www.keirin.jp/pc/racerprofile?snum=015730（プロフィール表示更新2026-11-13）とhttps://www.winticket.jp/keirin/cyclist/015730の全文直接取得。氏名黒瀬浩太郎・府県広島・期別123・登録番号015730の固定4項目一致。黒滝大翔はWINTICKET原文が403のためnetkeirin原文を採用（WINTICKET成功と誤記しない）。変動得点・級班を登録番号の認定に流用しない。A:F原本維持。"
+      }
+    },
+    {
+      "id": "015419",
+      "name": "黒滝 大翔",
+      "prefecture": "茨城",
+      "period": "117",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015419",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015419",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015419",
+          "https://keirin.netkeiba.com/db/profile/?id=15419"
+        ],
+        "note": "2026-11-23 JST：KEIRIN.JP個別プロフィールhttps://www.keirin.jp/pc/racerprofile?snum=015419（プロフィール表示更新2026-11-13）とhttps://keirin.netkeiba.com/db/profile/?id=15419の全文直接取得。氏名黒滝 大翔・府県茨城・期別117・登録番号015419の固定4項目一致。黒滝大翔はWINTICKET原文が403のためnetkeirin原文を採用（WINTICKET成功と誤記しない）。変動得点・級班を登録番号の認定に流用しない。A:F原本維持。"
+      }
+    },
+    {
+      "id": "015246",
+      "name": "黒沢 征治",
+      "prefecture": "埼玉",
+      "period": "113",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015246",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015246",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015246",
+          "https://www.winticket.jp/keirin/cyclist/015246"
+        ],
+        "note": "2026-11-23 JST：KEIRIN.JP個別プロフィールhttps://www.keirin.jp/pc/racerprofile?snum=015246（プロフィール表示更新2026-11-13）とhttps://www.winticket.jp/keirin/cyclist/015246の全文直接取得。氏名黒沢 征治・府県埼玉・期別113・登録番号015246の固定4項目一致。黒滝大翔はWINTICKET原文が403のためnetkeirin原文を採用（WINTICKET成功と誤記しない）。変動得点・級班を登録番号の認定に流用しない。A:F原本維持。"
       }
     }
   ],
