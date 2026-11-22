@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "139選手の氏名・府県・期別・登録番号を二媒体の原文で照合。元台帳381/382行へ証拠追記・再読込。",
+  "verificationNote": "142選手の氏名・府県・期別・登録番号をKEIRIN.JPとWINTICKETの原文で一致照合。元台帳383-385行へ保存後再読込。",
   "summary": {
-    "rows": 139
+    "rows": 142
   },
   "riders": [
     {
@@ -3341,6 +3341,78 @@
           "https://www.winticket.jp/keirin/cyclist/013070"
         ],
         "note": "2026-11-22 JST web.openでKEIRIN.JP公式の選手プロフィール（原文更新日2026-11-18）とWINTICKET個別プロフィール全文を取得。氏名高木 和仁、府県福岡、期別76、登録番号013070の4項目が2掲載元で一致。参照：https://www.keirin.jp/pc/racerprofile?snum=013070 ／ https://www.winticket.jp/keirin/cyclist/013070。期別・ID固定。級班・得点は履歴/掲載時点情報として別扱い。A:F原本は変更しない。"
+      }
+    },
+    {
+      "id": "015809",
+      "name": "高野 信元",
+      "prefecture": "愛知",
+      "period": "125",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015809",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015809",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015809",
+          "https://www.winticket.jp/keirin/cyclist/015809"
+        ],
+        "note": "2026-11-23 JST web.open原文全文を二媒体確認。KEIRIN.JPプロフィール更新2026-10-19、https://keirin.jp/pc/racerprofile?snum=015809 とWINTICKET https://www.winticket.jp/keirin/cyclist/015809。氏名高野 信元／府県愛知／125期／6桁登録番号015809の4項目一致。現在得点・次期級班など変動欄はID照合とは分離。A:F原本維持、未確認のレース結果を流用せず。"
+      }
+    },
+    {
+      "id": "013448",
+      "name": "合志 正臣",
+      "prefecture": "熊本",
+      "period": "81",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013448",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013448",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013448",
+          "https://www.winticket.jp/keirin/cyclist/013448"
+        ],
+        "note": "2026-11-23 JST web.open原文全文を二媒体確認。KEIRIN.JPプロフィール更新2026-11-14、https://keirin.jp/pc/racerprofile?snum=013448 とWINTICKET https://www.winticket.jp/keirin/cyclist/013448。氏名合志 正臣／府県熊本／81期／6桁登録番号013448の4項目一致。現在得点・次期級班など変動欄はID照合とは分離。A:F原本維持、未確認のレース結果を流用せず。"
+      }
+    },
+    {
+      "id": "011341",
+      "name": "黒崎 直行",
+      "prefecture": "栃木",
+      "period": "57",
+      "source": "https://keirin.jp/pc/racerprofile?snum=011341",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=011341",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=011341",
+          "https://www.winticket.jp/keirin/cyclist/011341"
+        ],
+        "note": "2026-11-23 JST web.open原文全文を二媒体確認。KEIRIN.JPプロフィール更新2026-10-24、https://keirin.jp/pc/racerprofile?snum=011341 とWINTICKET https://www.winticket.jp/keirin/cyclist/011341。氏名黒崎 直行／府県栃木／57期／6桁登録番号011341の4項目一致。現在得点・次期級班など変動欄はID照合とは分離。A:F原本維持、未確認のレース結果を流用せず。"
       }
     }
   ],
