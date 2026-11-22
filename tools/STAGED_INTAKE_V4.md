@@ -25,3 +25,11 @@
 - Record the observed failure, reproducible inputs and logs, affected scope, root cause (or explicitly unresolved status), and remediation in the authorized shared workflow. If repair is blocked, report the blocker and keep affected operations on hold.
 - Apply a reviewed fix and regression tests, assess historical impact, then retry the affected operation and verify persisted fields by readback. Resume normal affected work only after verification; never bypass approval, provenance, or publication gates.
 - Share fixes and regression criteria across manual and automatic execution. Record the policy/code revision and verification outcomes. Preserve existing task roles, schedules, and synchronization-only write boundaries.
+
+## Delivery and continuity priority
+
+- The primary objective is accumulating usable race and rider data, completing established verification and approval, synchronizing eligible results to KEIRIN INSIGHT, and conducting research. Governance and maintenance support that objective rather than replacing it.
+- Reuse existing implemented and tested workflows. A chat migration is not a reason to reset criteria, rebuild completed functionality, or introduce new approval requirements. Preserve historical data and existing compatibility.
+- Isolate defects to their affected operations; prioritize repair while allowing unaffected collection, verification, and synchronization to continue under existing safeguards.
+- Move completed, independently approved and publication-eligible records through the existing synchronization contract promptly. Report any blocked transition and its actual reason; never equate pending intake with completed approval.
+- Prioritize verified data throughput and usable research outputs over repetitive status reports or speculative redesign. Do not weaken established evidence, approval, or publication requirements.
