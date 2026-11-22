@@ -4,7 +4,7 @@
 <body><main><nav aria-label="研究ナビ"><a href="./index.html">ホーム</a><a href="./research-hub.html">研究状況</a><a href="./comparison-races.html">既存比較</a><a href="./race-index-live.html">結果検索</a></nav><p class="meta">KEIRIN INSIGHT / SOURCE-FIRST RESEARCH</p><h1>ネット起点・再構築レース</h1><section class="panel"><strong>研究候補（正式公開データとは別）</strong><p>ネット上の出走表・結果・予想ラインを収集して作成した、正式PASS前の研究用候補です。結果や並びの表示があっても、2独立原資料の全必須項目合格、正式公開、AI学習への採用を意味しません。</p><small>掲載元の同一上流転載、欠車・例外着順、未掲載上がりなどは個別に保留します。</small></section><p id="summary" class="meta">研究候補を確認中…</p><div id="cards"></div><p class="meta">読み込み失敗時は候補のJSON原本をGitHubで確認してください。公開用の検証済みフィードはここでは変更しません。</p></main>
 <script>
 const BASE='./tools/reconstruction-candidates/';
-const names=['2026-11-20_42_1','2026-11-20_42_2','2026-11-20_42_3','2026-11-20_42_4','2026-11-20_42_5','2026-11-20_42_6','2026-11-20_42_7','2026-11-20_42_8','2026-11-20_42_9'];
+const names=['2026-11-20_42_1','2026-11-20_42_2','2026-11-20_42_3','2026-11-20_42_4','2026-11-20_42_5','2026-11-20_42_6','2026-11-20_42_7','2026-11-20_42_8','2026-11-20_42_9','2026-11-20_22_1'];
 const el=document.getElementById('cards');const summary=document.getElementById('summary');
 const mk=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=String(txt);return n;};
 function link(text,url){const a=mk('a','',text);a.href=url;return a;}
