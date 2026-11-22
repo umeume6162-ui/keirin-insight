@@ -1,10 +1,10 @@
 {
   "schema": "ki-official-rider-ids-v1",
-  "snapshotDate": "2026-11-22",
+  "snapshotDate": "2026-11-23",
   "sourceTab": "KI｜手動照合受付",
   "verificationNote": "148名の氏名・府県・期別・登録番号の固定4項目についてKEIRIN.JP公式とWINTICKET個別原文で一致。元選手台帳389-391行へ証拠保存し再読込済み。",
   "summary": {
-    "rows": 148
+    "rows": 150
   },
   "riders": [
     {
@@ -3557,6 +3557,54 @@
           "https://www.winticket.jp/keirin/cyclist/014613"
         ],
         "note": "取得日2026-11-23 JST。KEIRIN.JP公式公開原文 https://www.keirin.jp/pc/racerprofile?snum=014613（プロフィール原文更新日2026-11-04）およびWINTICKET全文 https://www.winticket.jp/keirin/cyclist/014613 をweb.openで直接閲覧。名前黒田 淳、府県岡山、期別97期、登録番号014613の固定4項目一致。掲載時点の変動得点・級班はID照合の対象外。元A:Fを保持。"
+      }
+    },
+    {
+      "id": "013142",
+      "name": "黒田 大介",
+      "prefecture": "愛媛",
+      "period": "77",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013142",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013142",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013142",
+          "https://www.winticket.jp/keirin/cyclist/013142"
+        ],
+        "note": "2026-11-23: source profiles opened as cached web pages; KEIRIN.JP updated 2026-07-24, WINTICKET page update unknown. Four permanent identity fields matched. Not live acquisition, upstream source independence unproven. Ledger row392 read-back verified."
+      }
+    },
+    {
+      "id": "015795",
+      "name": "今井 希",
+      "prefecture": "埼玉",
+      "period": "125",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015795",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015795",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015795",
+          "https://www.winticket.jp/keirin/cyclist/015795"
+        ],
+        "note": "2026-11-23: source profiles opened as cached web pages; KEIRIN.JP updated 2026-05-25, WINTICKET last content time unknown. Four permanent identity fields matched. Grade update difference does not affect fixed ID fields. Not live acquisition, upstream source independence unproven. Ledger row393 read-back verified."
       }
     }
   ],
