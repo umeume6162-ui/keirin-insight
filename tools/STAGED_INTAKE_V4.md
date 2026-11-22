@@ -18,3 +18,10 @@
 - Share source performance observations, verified research findings, pending targets and failures across both execution paths using the existing authorized ledgers and repository workflow. Read the latest shared state at the start of every run; update it after verified work. Do not treat an earlier chat report as evidence.
 - Changes to research criteria must be recorded in this common policy (or a referenced versioned rule set), reviewed, and applied prospectively by both paths. Do not silently regrade historical evidence. Report revision mismatches and stop affected writes until reconciled.
 - Report acquired, saved, readback-verified, independently approved and published counts separately. A failed write or unavailable source must not inflate any count. Preserve existing task roles and schedules, and the V3.2 synchronization contract; the synchronization-only task must not perform collection or intake writes.
+
+## Defect-first maintenance (manual and automatic)
+
+- When a defect, failed write/readback, unexpected exclusion, inconsistent count, or synchronization fault occurs, prioritize diagnosis and repair over new collection or feature work. Stop affected operations; do not silently skip the fault or inflate progress. Preserve original records and evidence.
+- Record the observed failure, reproducible inputs and logs, affected scope, root cause (or explicitly unresolved status), and remediation in the authorized shared workflow. If repair is blocked, report the blocker and keep affected operations on hold.
+- Apply a reviewed fix and regression tests, assess historical impact, then retry the affected operation and verify persisted fields by readback. Resume normal affected work only after verification; never bypass approval, provenance, or publication gates.
+- Share fixes and regression criteria across manual and automatic execution. Record the policy/code revision and verification outcomes. Preserve existing task roles, schedules, and synchronization-only write boundaries.
