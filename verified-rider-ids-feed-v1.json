@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "必要4項目の2サイト一致確認済みの24選手を掲載。既存21件に加倉正義・河端朋之・岩元叶馬を追加し重複検査。",
+  "verificationNote": "必要4項目の2サイト一致確認済み30選手。既存24件を維持し未照合6件を救済、重複なし。",
   "summary": {
-    "rows": 24
+    "rows": 30
   },
   "riders": [
     {
@@ -581,6 +581,150 @@
           "https://www.winticket.jp/keirin/cyclist/015820"
         ],
         "note": "KEIRIN.JP と WINTICKET のプロフィールの4必須項目一致。級班・競走得点など時点差項目は今回のID照合に含めない。"
+      }
+    },
+    {
+      "id": "015899",
+      "name": "加藤 駿",
+      "prefecture": "愛知",
+      "period": "127",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015899",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015899",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015899",
+          "https://www.winticket.jp/keirin/cyclist/015899"
+        ],
+        "note": "KEIRIN.JP・WINTICKETの公開選手プロフィールで氏名・府県・期別・登録番号の全4項目を比較し一致。元台帳の未照合項目を手動救済。"
+      }
+    },
+    {
+      "id": "015898",
+      "name": "岩原 健馬",
+      "prefecture": "愛知",
+      "period": "127",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015898",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015898",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015898",
+          "https://www.winticket.jp/keirin/cyclist/015898"
+        ],
+        "note": "KEIRIN.JP・WINTICKETの公開選手プロフィールで氏名・府県・期別・登録番号の全4項目を比較し一致。元台帳の未照合項目を手動救済。"
+      }
+    },
+    {
+      "id": "015689",
+      "name": "菊地 圭",
+      "prefecture": "宮城",
+      "period": "123",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015689",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015689",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015689",
+          "https://www.winticket.jp/keirin/cyclist/015689"
+        ],
+        "note": "KEIRIN.JP・WINTICKETの公開選手プロフィールで氏名・府県・期別・登録番号の全4項目を比較し一致。元台帳の未照合項目を手動救済。"
+      }
+    },
+    {
+      "id": "015988",
+      "name": "鴨下 佳朋",
+      "prefecture": "愛知",
+      "period": "129",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015988",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015988",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015988",
+          "https://www.winticket.jp/keirin/cyclist/015988"
+        ],
+        "note": "KEIRIN.JP・WINTICKETの公開選手プロフィールで氏名・府県・期別・登録番号の全4項目を比較し一致。元台帳の未照合項目を手動救済。"
+      }
+    },
+    {
+      "id": "015880",
+      "name": "吉岡 優太",
+      "prefecture": "茨城",
+      "period": "127",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015880",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015880",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015880",
+          "https://www.winticket.jp/keirin/cyclist/015880"
+        ],
+        "note": "KEIRIN.JP・WINTICKETの公開選手プロフィールで氏名・府県・期別・登録番号の全4項目を比較し一致。元台帳の未照合項目を手動救済。"
+      }
+    },
+    {
+      "id": "016003",
+      "name": "吉岡 竜太",
+      "prefecture": "広島",
+      "period": "129",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=016003",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=016003",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=016003",
+          "https://www.winticket.jp/keirin/cyclist/016003"
+        ],
+        "note": "KEIRIN.JP・WINTICKETの公開選手プロフィールで氏名・府県・期別・登録番号の全4項目を比較し一致。元台帳の未照合項目を手動救済。"
       }
     }
   ],
