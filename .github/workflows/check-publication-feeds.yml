@@ -10,6 +10,8 @@ on:
       - 'tools/check_publication_completeness.cjs'
       - 'tools/reconcile_race_entries.cjs'
       - 'tools/reconcile_reconstructed_race.cjs'
+      - 'tools/test_audit_official_primary_candidate.cjs'
+      - 'tools/audit_official_primary_candidate.cjs'
       - 'tools/test_reconcile_reconstructed_race.cjs'
       - 'tools/reconstruction-candidates/**'
       - 'tools/audit_formal_race_readiness.cjs'
@@ -23,6 +25,8 @@ on:
       - 'comparison-races-v1.json'
       - 'tools/check_publication_completeness.cjs'
       - 'tools/reconcile_reconstructed_race.cjs'
+      - 'tools/test_audit_official_primary_candidate.cjs'
+      - 'tools/audit_official_primary_candidate.cjs'
       - 'tools/test_reconcile_reconstructed_race.cjs'
       - 'tools/reconstruction-candidates/**'
       - '.github/workflows/check-publication-feeds.yml'
@@ -42,6 +46,8 @@ jobs:
           node-version: '22'
       - name: Test source-first entry/result exception reconciliation
         run: node tools/test_reconcile_reconstructed_race.cjs
+      - name: Test official-primary evidence comparison (no implicit PASS)
+        run: node tools/test_audit_official_primary_candidate.cjs
       - name: Run missing-rider reconciliation tests
         run: node tools/reconcile_race_entries.cjs
       - name: Audit formal race readiness (read-only)
