@@ -22,7 +22,7 @@
     "legacyComparison": 6,
     "totalRaces": 18,
     "totalRiderRows": 126,
-    "sourceFirstMissingOriginalEntries": 4,
+    "sourceFirstMissingOriginalEntries": 0,
     "sourceFirstNumericLapMissing": 1,
     "sourceFirstSBConflict": 1,
     "racesWithExceptionStatuses": 2,
@@ -55,20 +55,21 @@
         "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010001/?pageType=result",
         "https://keirin.tokyo-sports.co.jp/list/race/20261119_32063"
       ],
-      "originalEntriesStructured": 0,
+      "originalEntriesStructured": 7,
       "missingLapCars": [],
       "rawSBConflicts": [
         2
       ],
       "blockers": [
-        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
-        "FINISH_RAW_FIELD_LEGACY_NOT_STRUCTURED",
         "SB_SOURCE_DISCREPANCY_2",
         "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
         "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
         "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
       ],
-      "publicationPassed": false
+      "publicationPassed": false,
+      "originalEntrySourceUrl": "https://www.chariloto.com/keirin/athletes/2026-11-20/42/1",
+      "originalEntryCrossCheckedJST": "2026-11-23",
+      "originalCardResultCarSetMatches": true
     },
     {
       "raceKey": "2026-11-20|42|2",
@@ -86,17 +87,18 @@
         "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010002/?pageType=result",
         "https://keirin.tokyo-sports.co.jp/list/race/20261119_32060"
       ],
-      "originalEntriesStructured": 0,
+      "originalEntriesStructured": 7,
       "missingLapCars": [],
       "rawSBConflicts": [],
       "blockers": [
-        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
-        "FINISH_RAW_FIELD_LEGACY_NOT_STRUCTURED",
         "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
         "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
         "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
       ],
-      "publicationPassed": false
+      "publicationPassed": false,
+      "originalEntrySourceUrl": "https://www.chariloto.com/keirin/athletes/2026-11-20/42/2/?odds=1",
+      "originalEntryCrossCheckedJST": "2026-11-23",
+      "originalCardResultCarSetMatches": true
     },
     {
       "raceKey": "2026-11-20|42|3",
@@ -114,20 +116,21 @@
         "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010003/?pageType=result",
         "https://keirin.tokyo-sports.co.jp/list/race/20261119_32059"
       ],
-      "originalEntriesStructured": 0,
+      "originalEntriesStructured": 7,
       "missingLapCars": [
         7
       ],
       "rawSBConflicts": [],
       "blockers": [
-        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
-        "FINISH_RAW_FIELD_LEGACY_NOT_STRUCTURED",
         "NUMERIC_FINISHER_LAP_MISSING_7",
         "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
         "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
         "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
       ],
-      "publicationPassed": false
+      "publicationPassed": false,
+      "originalEntrySourceUrl": "https://www.chariloto.com/keirin/athletes/2026-11-20/42/3/?odds=1",
+      "originalEntryCrossCheckedJST": "2026-11-23",
+      "originalCardResultCarSetMatches": true
     },
     {
       "raceKey": "2026-11-20|42|4",
@@ -154,16 +157,18 @@
         "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010004/?pageType=showResult",
         "https://keirin.tokyo-sports.co.jp/list/race/20261119_32052"
       ],
-      "originalEntriesStructured": 0,
+      "originalEntriesStructured": 7,
       "missingLapCars": [],
       "rawSBConflicts": [],
       "blockers": [
-        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
         "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
         "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
         "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
       ],
-      "publicationPassed": false
+      "publicationPassed": false,
+      "originalEntrySourceUrl": "https://www.keirin-mobile.jp/New/races/20261120/42/04/",
+      "originalEntryCrossCheckedJST": "2026-11-23",
+      "originalCardResultCarSetMatches": true
     },
     {
       "raceKey": "2026-11-20|42|5",
@@ -543,5 +548,11 @@
       ],
       "publicationPassed": false
     }
+  ],
+  "updatedDateJST": "2026-11-23",
+  "notesAfterRemediation": [
+    "Original roster + finishRaw 1R-4R extracted and checked against dated independent archived pre-race cards, not official amended final start lists.",
+    "Nagoya 1R SB conflict (#2), Nagoya 3R missing seventh rider lap, plus universal organizer original/result-source qualifications remain unresolved.",
+    "Original research result rows and historic six comparison cases retained; no formal result promotion."
   ]
 }
