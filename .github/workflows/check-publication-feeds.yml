@@ -9,6 +9,9 @@ on:
       - 'comparison-races-v1.json'
       - 'tools/check_publication_completeness.cjs'
       - 'tools/reconcile_race_entries.cjs'
+      - 'tools/reconcile_reconstructed_race.cjs'
+      - 'tools/test_reconcile_reconstructed_race.cjs'
+      - 'tools/reconstruction-candidates/**'
       - 'tools/audit_formal_race_readiness.cjs'
       - '.github/workflows/check-publication-feeds.yml'
   pull_request:
@@ -19,6 +22,9 @@ on:
       - 'verified-line-snapshots-feed-v1.json'
       - 'comparison-races-v1.json'
       - 'tools/check_publication_completeness.cjs'
+      - 'tools/reconcile_reconstructed_race.cjs'
+      - 'tools/test_reconcile_reconstructed_race.cjs'
+      - 'tools/reconstruction-candidates/**'
       - '.github/workflows/check-publication-feeds.yml'
   workflow_dispatch:
 
@@ -34,6 +40,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Test source-first entry/result exception reconciliation
+        run: node tools/test_reconcile_reconstructed_race.cjs
       - name: Run missing-rider reconciliation tests
         run: node tools/reconcile_race_entries.cjs
       - name: Audit formal race readiness (read-only)
