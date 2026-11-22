@@ -1,0 +1,240 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-11-20|42|8",
+  "createdDateJST": "2026-11-22",
+  "race": {
+    "date": "2026-11-20",
+    "venue": "名古屋",
+    "venueCode": "42",
+    "raceNo": 8,
+    "grade": "F2",
+    "class": "A級特予選",
+    "expectedEntrants": 7,
+    "startTimeLocal": "23:00"
+  },
+  "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
+  "method": "Race chosen from archived original full result and independent dated pre-race card without reliance on legacy V99. Direct web.open full Kdreams and Chariloto published results and Tokyo Sports pre-race original.",
+  "payout": "NOT_COLLECTED_OPTIONAL",
+  "originalEntries": [
+    {
+      "car": 1,
+      "name": "伊藤 京介",
+      "sourceStatus": "TOKYO_SPORTS_AND_KDREAMS_ARCHIVED_PRE_RACE_CARD_MATCH"
+    },
+    {
+      "car": 2,
+      "name": "宮司 周郎",
+      "sourceStatus": "TOKYO_SPORTS_AND_KDREAMS_ARCHIVED_PRE_RACE_CARD_MATCH"
+    },
+    {
+      "car": 3,
+      "name": "根藤 浩二",
+      "sourceStatus": "TOKYO_SPORTS_AND_KDREAMS_ARCHIVED_PRE_RACE_CARD_MATCH"
+    },
+    {
+      "car": 4,
+      "name": "北野 良栄",
+      "sourceStatus": "TOKYO_SPORTS_AND_KDREAMS_ARCHIVED_PRE_RACE_CARD_MATCH"
+    },
+    {
+      "car": 5,
+      "name": "小川 将人",
+      "sourceStatus": "TOKYO_SPORTS_AND_KDREAMS_ARCHIVED_PRE_RACE_CARD_MATCH"
+    },
+    {
+      "car": 6,
+      "name": "松根 真",
+      "sourceStatus": "TOKYO_SPORTS_AND_KDREAMS_ARCHIVED_PRE_RACE_CARD_MATCH"
+    },
+    {
+      "car": 7,
+      "name": "佐藤 明",
+      "sourceStatus": "TOKYO_SPORTS_AND_KDREAMS_ARCHIVED_PRE_RACE_CARD_MATCH"
+    }
+  ],
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      1,
+      2,
+      5,
+      4,
+      6,
+      3,
+      7
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 7,
+    "nonNumericResultRows": 0,
+    "confirmedWithdrawals": [],
+    "revisedStartCardSource": null,
+    "confirmedStarterCount": null,
+    "note": "No missing result car; final organizer scratch/amended card is not independently confirmed"
+  },
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [
+      [
+        1,
+        2,
+        5
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "sourceUrls": [
+      "https://keirin.tokyo-sports.co.jp/list/race/20261119_32045",
+      "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010008/?pageType=result"
+    ],
+    "evidence": "Tokyo Sports rider comments: 2 follows 1, 5 Chubu third (display text says 関東３番手; conflict noted), 7 follows 3, 6 follows 4. Published lineup rendering 1-2-5/3-7/4-6.",
+    "sourceStatus": "TWO_DISPLAYED_PRE_RACE_GROUPS_AGREE_BUT_ONE_COMMENT_REGION_MISMATCH",
+    "commentDiscrepancy": "Tokyo Sports car 5 comment excerpt says 関東３番手 despite 1三重 and 2愛知; group position 1-2-5 is consistent on both displayed lineup forecasts. Preserve discrepancy without silent editorial correction.",
+    "note": "Published predicted lines, not actual lap-by-lap running formation."
+  },
+  "results": [
+    {
+      "finishRaw": "1",
+      "finish": 1,
+      "car": 1,
+      "name": "伊藤 京介",
+      "prefecture": "三重",
+      "period": 129,
+      "grade": "A2",
+      "lapSeconds": 11.6,
+      "marginRaw": "",
+      "winningMethodRaw": "逃げ",
+      "sbRaw": "B",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    },
+    {
+      "finishRaw": "2",
+      "finish": 2,
+      "car": 2,
+      "name": "宮司 周郎",
+      "prefecture": "愛知",
+      "period": 82,
+      "grade": "A1",
+      "lapSeconds": 11.6,
+      "marginRaw": "3/4車身",
+      "winningMethodRaw": "マーク",
+      "sbRaw": "S",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    },
+    {
+      "finishRaw": "3",
+      "finish": 3,
+      "car": 5,
+      "name": "小川 将人",
+      "prefecture": "愛知",
+      "period": 75,
+      "grade": "A2",
+      "lapSeconds": 11.6,
+      "marginRaw": "1車身1/2",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    },
+    {
+      "finishRaw": "4",
+      "finish": 4,
+      "car": 4,
+      "name": "北野 良栄",
+      "prefecture": "茨城",
+      "period": 95,
+      "grade": "A2",
+      "lapSeconds": 11.4,
+      "marginRaw": "3/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    },
+    {
+      "finishRaw": "5",
+      "finish": 5,
+      "car": 6,
+      "name": "松根 真",
+      "prefecture": "東京",
+      "period": 90,
+      "grade": "A2",
+      "lapSeconds": 11.3,
+      "marginRaw": "1車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    },
+    {
+      "finishRaw": "6",
+      "finish": 6,
+      "car": 3,
+      "name": "根藤 浩二",
+      "prefecture": "千葉",
+      "period": 95,
+      "grade": "A2",
+      "lapSeconds": 11.2,
+      "marginRaw": "1車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    },
+    {
+      "finishRaw": "7",
+      "finish": 7,
+      "car": 7,
+      "name": "佐藤 明",
+      "prefecture": "静岡",
+      "period": 77,
+      "grade": "A2",
+      "lapSeconds": 11.8,
+      "marginRaw": "7車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    }
+  ],
+  "resultUrls": [
+    "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010008/?pageType=result",
+    "https://www.chariloto.com/keirin/results/42/2026-11-20"
+  ],
+  "sourceAudit": {
+    "retrievalDateJST": "2026-11-22",
+    "method": "web.open full original-provider pages",
+    "resultPages": "Kdreams result table 7 cars and Chariloto dated result 8R, all lap/margin/rank, winner and marker displayed agree",
+    "preRacePages": "Tokyo Sports dated 2026-11-19 8R seven-car card and Kdreams predicted line",
+    "upstreamOrigin": "Kdreams page credits lineup provider 中部競輪; two result-display websites may reuse upstream data. Independence unproven.",
+    "licensing": "Only compact factual field transcription, no copyrighted editorial passages copied."
+  },
+  "fieldVerification": {
+    "sevenOriginalEntries": "TOKYO_SPORTS_AND_KDREAMS_MATCH",
+    "sevenResultCarAndRank": "KDREAMS_AND_CHARILOTO_DISPLAY_MATCH",
+    "marginLapSBAndMethod": "KDREAMS_AND_CHARILOTO_DISPLAY_MATCH",
+    "forecastLine": "PUBLISHED_GROUPS_MATCH_BUT_RIDER_COMMENT_GEOGRAPHY_ANOMALY",
+    "sourceIndependence": "NOT_YET_QUALIFIED",
+    "publicationGate": "PENDING_TWO_INDEPENDENT_UPSTREAM_ORIGINALS_AND_COMMENT_ANOMALY"
+  },
+  "remainingToPass": [
+    "Resolve or properly qualify source #5 comment region label, not needed to reassign lineup based solely on geography",
+    "Verify independent upstream originating source of all mandatory results and forecast lineup, distinct hostnames insufficient",
+    "Require approved race-result and line cross-feed validation before formal PASS."
+  ]
+}
