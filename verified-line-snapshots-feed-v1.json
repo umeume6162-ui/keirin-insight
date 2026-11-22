@@ -4,8 +4,8 @@
   "sourceTab": "VERIFIED publication",
   "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence.",
   "summary": {
-    "races": 3,
-    "rider_rows": 21
+    "races": 4,
+    "rider_rows": 28
   },
   "races": [
     {
@@ -355,6 +355,122 @@
             4,
             5,
             6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-05|75|1",
+      "key": "2026-10-05|75|1",
+      "date": "2026-10-05",
+      "track": "松山",
+      "trackCode": "75",
+      "race": 1,
+      "size": 7,
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+          "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005.html"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ]
+      },
+      "forecastGroups": [
+        [
+          1,
+          7,
+          3
+        ],
+        [
+          6
+        ],
+        [
+          2,
+          4,
+          5
+        ]
+      ],
+      "riders": [
+        {
+          "number": 5,
+          "name": "三住 博昭",
+          "prefecture": "神奈",
+          "period": "61",
+          "line": [
+            2,
+            4,
+            5
+          ]
+        },
+        {
+          "number": 4,
+          "name": "法月 成祐",
+          "prefecture": "神奈",
+          "period": "77",
+          "line": [
+            2,
+            4,
+            5
+          ]
+        },
+        {
+          "number": 3,
+          "name": "足達 重満",
+          "prefecture": "長崎",
+          "period": "80",
+          "line": [
+            1,
+            7,
+            3
+          ]
+        },
+        {
+          "number": 2,
+          "name": "戸塚 涼介",
+          "prefecture": "埼玉",
+          "period": "111",
+          "line": [
+            2,
+            4,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "宮崎 康司",
+          "prefecture": "香川",
+          "period": "94",
+          "line": [
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "乾 庄平",
+          "prefecture": "滋賀",
+          "period": "95",
+          "line": [
+            1,
+            7,
+            3
+          ]
+        },
+        {
+          "number": 1,
+          "name": "土生 智徳",
+          "prefecture": "大阪",
+          "period": "127",
+          "line": [
+            1,
+            7,
+            3
           ]
         }
       ]
