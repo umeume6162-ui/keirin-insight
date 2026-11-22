@@ -1,0 +1,547 @@
+{
+  "schema": "ki-acquired-18-race-manual-evidence-audit-v1",
+  "dateJST": "2026-11-23",
+  "evidence": "Existing GitHub source-first JSON files and existing six-race comparison feed were each independently reopened and inspected; missing flags are based on source record content only, not inference about live official-site original",
+  "sourcePaths": [
+    "tools/reconstruction-candidates/2026-11-20_42_1.research.json",
+    "tools/reconstruction-candidates/2026-11-20_42_2.research.json",
+    "tools/reconstruction-candidates/2026-11-20_42_3.research.json",
+    "tools/reconstruction-candidates/2026-11-20_42_4.research.json",
+    "tools/reconstruction-candidates/2026-11-20_42_5.research.json",
+    "tools/reconstruction-candidates/2026-11-20_42_6.research.json",
+    "tools/reconstruction-candidates/2026-11-20_42_7.research.json",
+    "tools/reconstruction-candidates/2026-11-20_42_8.research.json",
+    "tools/reconstruction-candidates/2026-11-20_42_9.research.json",
+    "tools/reconstruction-candidates/2026-11-20_22_1.research.json",
+    "tools/reconstruction-candidates/2026-11-20_22_2.research.json",
+    "tools/reconstruction-candidates/2026-11-20_22_3.research.json",
+    "comparison-races-v1.json"
+  ],
+  "summary": {
+    "sourceFirst": 12,
+    "legacyComparison": 6,
+    "totalRaces": 18,
+    "totalRiderRows": 126,
+    "sourceFirstMissingOriginalEntries": 4,
+    "sourceFirstNumericLapMissing": 1,
+    "sourceFirstSBConflict": 1,
+    "racesWithExceptionStatuses": 2,
+    "officialResultsCaptured": 0,
+    "formalPass": 0
+  },
+  "remarks": [
+    "Field-by-field audit is structural plus stored evidence and does not claim new official data retrieval.",
+    "Original source provenance and validity of source pair remain unproven; no public result feed writes.",
+    "A blank lap for a ranked finisher and incomplete S/B are distinct blockers; exception result rows never infer a numeric finishing place.",
+    "Old research files may omit originalEntries or finishRaw despite narrative source coverage; reconstruct schema from source pages before any approval.",
+    "Potential primary source: official race organizer published dated results PDF, e.g. Beppu keirin host publicly holds other dates' result PDFs; target event original not located."
+  ],
+  "races": [
+    {
+      "raceKey": "2026-11-20|42|1",
+      "kind": "source-first",
+      "venue": "名古屋",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin-autorace.nikkan-gendai.com/Keirin/Result?date=20261120&placeCode=42&raceNo=1",
+        "https://keirin.kdreams.jp/nagoya/raceresult/42202611200100/?l-id=l-ti-cmsi_default_yesterdayResult_nagoya",
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010001/?pageType=result",
+        "https://www.chariloto.com/keirin/results/42/2026-11-20"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010001/?pageType=result",
+        "https://keirin.tokyo-sports.co.jp/list/race/20261119_32063"
+      ],
+      "originalEntriesStructured": 0,
+      "missingLapCars": [],
+      "rawSBConflicts": [
+        2
+      ],
+      "blockers": [
+        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
+        "FINISH_RAW_FIELD_LEGACY_NOT_STRUCTURED",
+        "SB_SOURCE_DISCREPANCY_2",
+        "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-11-20|42|2",
+      "kind": "source-first",
+      "venue": "名古屋",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010002/?pageType=result",
+        "https://www.chariloto.com/keirin/results/42/2026-11-20"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010002/?pageType=result",
+        "https://keirin.tokyo-sports.co.jp/list/race/20261119_32060"
+      ],
+      "originalEntriesStructured": 0,
+      "missingLapCars": [],
+      "rawSBConflicts": [],
+      "blockers": [
+        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
+        "FINISH_RAW_FIELD_LEGACY_NOT_STRUCTURED",
+        "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-11-20|42|3",
+      "kind": "source-first",
+      "venue": "名古屋",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010003/?pageType=result",
+        "https://www.chariloto.com/keirin/results/42/2026-11-20"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010003/?pageType=result",
+        "https://keirin.tokyo-sports.co.jp/list/race/20261119_32059"
+      ],
+      "originalEntriesStructured": 0,
+      "missingLapCars": [
+        7
+      ],
+      "rawSBConflicts": [],
+      "blockers": [
+        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
+        "FINISH_RAW_FIELD_LEGACY_NOT_STRUCTURED",
+        "NUMERIC_FINISHER_LAP_MISSING_7",
+        "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-11-20|42|4",
+      "kind": "source-first",
+      "venue": "名古屋",
+      "rows": 7,
+      "numericRanks": 5,
+      "nonnumericStatusCars": [
+        {
+          "car": 3,
+          "raw": "落"
+        },
+        {
+          "car": 4,
+          "raw": "失"
+        }
+      ],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010004/?pageType=showResult",
+        "https://www.chariloto.com/keirin/results/42/2026-11-20"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010004/?pageType=showResult",
+        "https://keirin.tokyo-sports.co.jp/list/race/20261119_32052"
+      ],
+      "originalEntriesStructured": 0,
+      "missingLapCars": [],
+      "rawSBConflicts": [],
+      "blockers": [
+        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
+        "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-11-20|42|5",
+      "kind": "source-first",
+      "venue": "名古屋",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010005/?pageType=result",
+        "https://www.chariloto.com/keirin/results/42/2026-11-20"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010005/?pageType=result",
+        "https://keirin.tokyo-sports.co.jp/list/race/20261119_32051"
+      ],
+      "originalEntriesStructured": 7,
+      "missingLapCars": [],
+      "rawSBConflicts": [],
+      "blockers": [
+        "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-11-20|42|6",
+      "kind": "source-first",
+      "venue": "名古屋",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010006/?pageType=result",
+        "https://www.chariloto.com/keirin/results/42/2026-11-20"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010006/?pageType=result",
+        "https://keirin.tokyo-sports.co.jp/list/race/20261119_32047"
+      ],
+      "originalEntriesStructured": 7,
+      "missingLapCars": [],
+      "rawSBConflicts": [],
+      "blockers": [
+        "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-11-20|42|7",
+      "kind": "source-first",
+      "venue": "名古屋",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010007/?pageType=result",
+        "https://www.chariloto.com/keirin/results/42/2026-11-20"
+      ],
+      "forecastSources": [
+        "https://keirin.tokyo-sports.co.jp/list/race/20261119_32046",
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010007/?pageType=result"
+      ],
+      "originalEntriesStructured": 7,
+      "missingLapCars": [],
+      "rawSBConflicts": [],
+      "blockers": [
+        "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-11-20|42|8",
+      "kind": "source-first",
+      "venue": "名古屋",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010008/?pageType=result",
+        "https://www.chariloto.com/keirin/results/42/2026-11-20"
+      ],
+      "forecastSources": [
+        "https://keirin.tokyo-sports.co.jp/list/race/20261119_32045",
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010008/?pageType=result"
+      ],
+      "originalEntriesStructured": 7,
+      "missingLapCars": [],
+      "rawSBConflicts": [],
+      "blockers": [
+        "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-11-20|42|9",
+      "kind": "source-first",
+      "venue": "名古屋",
+      "rows": 7,
+      "numericRanks": 5,
+      "nonnumericStatusCars": [
+        {
+          "car": 3,
+          "raw": "落"
+        },
+        {
+          "car": 6,
+          "raw": "失"
+        }
+      ],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010009/?pageType=showResult",
+        "https://www.chariloto.com/keirin/results/42/2026-11-20"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010009/?pageType=showResult",
+        "https://keirin.tokyo-sports.co.jp/list/race/20261119_32044"
+      ],
+      "originalEntriesStructured": 7,
+      "missingLapCars": [],
+      "rawSBConflicts": [],
+      "blockers": [
+        "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-11-20|22|1",
+      "kind": "source-first",
+      "venue": "前橋",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.kdreams.jp/maebashi/racedetail/2220261120010001/?pageType=result",
+        "https://keirin.netkeiba.com/race/result/?race_id=202611202201&rf=yoso_detail_keirin"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/maebashi/racedetail/2220261120010001/?pageType=result",
+        "https://keirinhex.jp/races/20261120/012220261120/"
+      ],
+      "originalEntriesStructured": 7,
+      "missingLapCars": [],
+      "rawSBConflicts": [],
+      "blockers": [
+        "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-11-20|22|2",
+      "kind": "source-first",
+      "venue": "前橋",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.kdreams.jp/maebashi/racedetail/2220261120010002/?pageType=result",
+        "https://keirin.netkeiba.com/race/result/?race_id=202611202202"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/maebashi/racedetail/2220261120010002/?pageType=result",
+        "https://keirinhex.jp/races/20261120/022220261120/"
+      ],
+      "originalEntriesStructured": 7,
+      "missingLapCars": [],
+      "rawSBConflicts": [],
+      "blockers": [
+        "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-11-20|22|3",
+      "kind": "source-first",
+      "venue": "前橋",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.kdreams.jp/maebashi/racedetail/2220261120010003/?pageType=result",
+        "https://keirin.netkeiba.com/race/result/?race_id=202611202203"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/maebashi/racedetail/2220261120010003/?pageType=result",
+        "https://keirinhex.jp/races/20261120/032220261120/"
+      ],
+      "originalEntriesStructured": 7,
+      "missingLapCars": [],
+      "rawSBConflicts": [],
+      "blockers": [
+        "OFFICIAL_AMENDED_RACECARD_NOT_CAPTURED",
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-10-05|75|1",
+      "kind": "legacy-comparison",
+      "venue": "松山",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+        "https://keirin.netkeiba.com/race/result/?race_id=202610057501&rf=yoso_klist",
+        "https://keirin.kdreams.jp/matsuyama/raceresult/75202610040200/?l-id=l-pc-srri-srri-raceinfo_kaisai_detail_info_nav_btn",
+        "https://www.chariloto.com/keirin/results/75/2026-10-05"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005.html"
+      ],
+      "originalEntriesStructured": 0,
+      "blockers": [
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED",
+        "PER_RIDER_FIELD_EVIDENCE_NOT_STRUCTURED",
+        "RESULT_OBSERVATION_DATE_UNSTRUCTURED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-10-05|75|2",
+      "kind": "legacy-comparison",
+      "venue": "松山",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.netkeiba.com/race/result/?race_id=202610057502",
+        "https://www.chariloto.com/keirin/results/75/2026-10-05"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020002/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_2.html"
+      ],
+      "originalEntriesStructured": 0,
+      "blockers": [
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED",
+        "PER_RIDER_FIELD_EVIDENCE_NOT_STRUCTURED",
+        "RESULT_OBSERVATION_DATE_UNSTRUCTURED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-10-05|75|3",
+      "kind": "legacy-comparison",
+      "venue": "松山",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020003/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "https://www.chariloto.com/keirin/results/75/2026-10-05"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020003/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_3.html"
+      ],
+      "originalEntriesStructured": 0,
+      "blockers": [
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED",
+        "PER_RIDER_FIELD_EVIDENCE_NOT_STRUCTURED",
+        "RESULT_OBSERVATION_DATE_UNSTRUCTURED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-10-05|75|4",
+      "kind": "legacy-comparison",
+      "venue": "松山",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.netkeiba.com/race/result/?race_id=202610057504&rf=speciallist",
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020004/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "https://www.chariloto.com/keirin/results/75/2026-10-05"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020004/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_4.html"
+      ],
+      "originalEntriesStructured": 0,
+      "blockers": [
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED",
+        "PER_RIDER_FIELD_EVIDENCE_NOT_STRUCTURED",
+        "RESULT_OBSERVATION_DATE_UNSTRUCTURED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-10-05|75|5",
+      "kind": "legacy-comparison",
+      "venue": "松山",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.netkeiba.com/race/result/?race_id=202610057505&rf=yoso_detail_keirin",
+        "https://www.chariloto.com/keirin/results/75/2026-10-05"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020005/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_5.html"
+      ],
+      "originalEntriesStructured": 0,
+      "blockers": [
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED",
+        "PER_RIDER_FIELD_EVIDENCE_NOT_STRUCTURED",
+        "RESULT_OBSERVATION_DATE_UNSTRUCTURED"
+      ],
+      "publicationPassed": false
+    },
+    {
+      "raceKey": "2026-10-05|75|6",
+      "kind": "legacy-comparison",
+      "venue": "松山",
+      "rows": 7,
+      "numericRanks": 7,
+      "nonnumericStatusCars": [],
+      "carCountUnique": 7,
+      "sourceResultUrls": [
+        "https://keirin.netkeiba.com/race/result/?race_id=202610057506&rf=courselist",
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020006/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "https://www.chariloto.com/keirin/results/75/2026-10-05"
+      ],
+      "forecastSources": [
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020006/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_6.html"
+      ],
+      "originalEntriesStructured": 0,
+      "blockers": [
+        "OFFICIAL_RESULT_PRIMARY_NOT_CAPTURED",
+        "ORIGINAL_ENTRY_CARD_NOT_STRUCTURED",
+        "INDEPENDENT_ORIGIN_OR_APPROVED_ALTERNATIVE_NOT_QUALIFIED",
+        "PER_RIDER_FIELD_EVIDENCE_NOT_STRUCTURED",
+        "RESULT_OBSERVATION_DATE_UNSTRUCTURED"
+      ],
+      "publicationPassed": false
+    }
+  ]
+}
