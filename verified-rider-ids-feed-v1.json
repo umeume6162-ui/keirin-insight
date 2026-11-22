@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "公開キャッシュの異なる2プロフィール元で必須4項目が一致した90選手。既存87人を維持し五十嵐綾・五十嵐力・五日市誠を追加。",
+  "verificationNote": "異なる2掲載元の4項目一致93人。五味田奈穂・後田康成・後藤大輝を追加。",
   "summary": {
-    "rows": 90
+    "rows": 93
   },
   "riders": [
     {
@@ -2165,6 +2165,78 @@
           "https://www.winticket.jp/keirin/cyclist/013982"
         ],
         "note": "2026-11-22、KEIRIN.JP公開原文（原資料更新2026-08-10）とWINTICKETの公開プロフィール本文を照合し氏名・府県・期別・6桁登録番号一致。古いキャッシュ閲覧はライブ取得と区別。元台帳331行G:K。"
+      }
+    },
+    {
+      "id": "015760",
+      "name": "五味田　奈穂",
+      "prefecture": "千葉",
+      "period": "124",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015760",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015760",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015760",
+          "https://www.winticket.jp/keirin/cyclist/015760"
+        ],
+        "note": "2026-11-22公開キャッシュ資料を閲覧。KEIRIN.JPプロフィール本文最終更新2026-01-01とWINTICKETの別元プロフィール本文の4項目、氏名・府県・期別・登録番号一致。キャッシュでありライブ情報と区別。元台帳332行。"
+      }
+    },
+    {
+      "id": "012997",
+      "name": "後田　康成",
+      "prefecture": "長崎",
+      "period": "75",
+      "source": "https://keirin.jp/pc/racerprofile?snum=012997",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=012997",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=012997",
+          "https://www.winticket.jp/keirin/cyclist/012997"
+        ],
+        "note": "2026-11-22公開キャッシュ資料を閲覧。KEIRIN.JPプロフィール本文最終更新2026-08-02とWINTICKETの別元プロフィール本文の4項目、氏名・府県・期別・登録番号一致。キャッシュでありライブ情報と区別。元台帳333行。"
+      }
+    },
+    {
+      "id": "015649",
+      "name": "後藤　大輝",
+      "prefecture": "福岡",
+      "period": "121",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015649",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015649",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015649",
+          "https://www.winticket.jp/keirin/cyclist/015649"
+        ],
+        "note": "2026-11-22公開キャッシュ資料を閲覧。KEIRIN.JPプロフィール本文最終更新2026-07-17とWINTICKETの別元プロフィール本文の4項目、氏名・府県・期別・登録番号一致。キャッシュでありライブ情報と区別。元台帳334行。"
       }
     }
   ],
