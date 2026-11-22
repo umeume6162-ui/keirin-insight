@@ -1,0 +1,238 @@
+{
+  "schema": "ki-legacy-race-full-field-recheck-v1",
+  "dateJST": "2026-11-23",
+  "raceKey": "2026-10-05|75|1",
+  "originalLegacySource": "comparison-races-v1.json",
+  "manualLedgerReference": "V99選手結果蓄積!A4723:W4729",
+  "transcriptionSourceSites": [
+    {
+      "organization": "Chariloto",
+      "url": "https://www.chariloto.com/keirin/results/75/2026-10-05",
+      "usedFields": [
+        "all seven finish/order",
+        "car",
+        "name",
+        "prefecture/period",
+        "lap",
+        "margin",
+        "method",
+        "S/B"
+      ],
+      "observed": "full page original display re-opened 2026-11-23"
+    },
+    {
+      "organization": "netkeirin",
+      "url": "https://keirin.netkeiba.com/race/result/?race_id=202610057501",
+      "usedFields": [
+        "all seven finish/order",
+        "car",
+        "name",
+        "lap",
+        "margin",
+        "method",
+        "S/B"
+      ],
+      "observed": "full race result original page re-opened 2026-11-23"
+    },
+    {
+      "organization": "Kdreams",
+      "url": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020001/?pageType=showResult",
+      "usedFields": [
+        "original entry names",
+        "result first seven ranks and timing",
+        "forecast"
+      ],
+      "observed": "full race detail original page re-opened 2026-11-23"
+    }
+  ],
+  "normalizedMethods": {
+    "差": "差し",
+    "逃": "逃げ",
+    "ク": "マーク"
+  },
+  "sourceTranscribedRows": [
+    {
+      "finish": 1,
+      "car": 5,
+      "name": "三住博昭",
+      "lapSeconds": 12.4,
+      "marginRaw": "",
+      "winningMethodRaw": "差し",
+      "sbRaw": ""
+    },
+    {
+      "finish": 2,
+      "car": 4,
+      "name": "法月成祐",
+      "lapSeconds": 12.6,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "差し",
+      "sbRaw": ""
+    },
+    {
+      "finish": 3,
+      "car": 3,
+      "name": "足達重満",
+      "lapSeconds": 12.3,
+      "marginRaw": "1車輪",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 4,
+      "car": 2,
+      "name": "戸塚涼介",
+      "lapSeconds": 12.8,
+      "marginRaw": "微差",
+      "winningMethodRaw": "",
+      "sbRaw": "SB"
+    },
+    {
+      "finish": 5,
+      "car": 6,
+      "name": "宮崎康司",
+      "lapSeconds": 12.2,
+      "marginRaw": "1車輪",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 6,
+      "car": 7,
+      "name": "乾庄平",
+      "lapSeconds": 12.2,
+      "marginRaw": "1車身",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 7,
+      "car": 1,
+      "name": "土生智徳",
+      "lapSeconds": 15.6,
+      "marginRaw": "大差",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    }
+  ],
+  "perRiderCheck": [
+    {
+      "car": 5,
+      "rank": 1,
+      "fieldsChecked": [
+        "finish",
+        "name",
+        "lastLap",
+        "margin",
+        "winningMethod",
+        "startBack"
+      ],
+      "matchesLegacy": true
+    },
+    {
+      "car": 4,
+      "rank": 2,
+      "fieldsChecked": [
+        "finish",
+        "name",
+        "lastLap",
+        "margin",
+        "winningMethod",
+        "startBack"
+      ],
+      "matchesLegacy": true
+    },
+    {
+      "car": 3,
+      "rank": 3,
+      "fieldsChecked": [
+        "finish",
+        "name",
+        "lastLap",
+        "margin",
+        "winningMethod",
+        "startBack"
+      ],
+      "matchesLegacy": true
+    },
+    {
+      "car": 2,
+      "rank": 4,
+      "fieldsChecked": [
+        "finish",
+        "name",
+        "lastLap",
+        "margin",
+        "winningMethod",
+        "startBack"
+      ],
+      "matchesLegacy": true
+    },
+    {
+      "car": 6,
+      "rank": 5,
+      "fieldsChecked": [
+        "finish",
+        "name",
+        "lastLap",
+        "margin",
+        "winningMethod",
+        "startBack"
+      ],
+      "matchesLegacy": true
+    },
+    {
+      "car": 7,
+      "rank": 6,
+      "fieldsChecked": [
+        "finish",
+        "name",
+        "lastLap",
+        "margin",
+        "winningMethod",
+        "startBack"
+      ],
+      "matchesLegacy": true
+    },
+    {
+      "car": 1,
+      "rank": 7,
+      "fieldsChecked": [
+        "finish",
+        "name",
+        "lastLap",
+        "margin",
+        "winningMethod",
+        "startBack"
+      ],
+      "matchesLegacy": true
+    }
+  ],
+  "mismatches": [],
+  "summary": {
+    "riderRows": 7,
+    "normalizedComparisons": 42,
+    "discrepancies": 0,
+    "matchedAll": true
+  },
+  "sourceOriginProvenance": "Exact original competition-results upstream data lineage per publisher remains unproven",
+  "officialFullResult": "NOT_DIRECTLY_OBTAINED",
+  "preRaceLine": [
+    [
+      1,
+      7,
+      3
+    ],
+    [
+      6
+    ],
+    [
+      2,
+      4,
+      5
+    ]
+  ],
+  "preRaceLineConfirmation": "Two published sites in legacy evidence; source generator independence not established",
+  "publicationStatus": "RESEARCH_EVIDENCE_RECHECKED_NOT_OFFICIAL_PASS",
+  "note": "Only compact race facts derived from original text; no redistribution of full original publisher page. Legacy payout limitation remains optional and is not a blocker."
+}
