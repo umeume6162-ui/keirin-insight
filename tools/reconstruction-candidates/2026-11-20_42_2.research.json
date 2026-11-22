@@ -53,7 +53,8 @@
       "winningMethodRaw": "差し",
       "sbRaw": "",
       "exceptionRaw": "",
-      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS",
+      "finishRaw": "1"
     },
     {
       "finish": 2,
@@ -67,7 +68,8 @@
       "winningMethodRaw": "差し",
       "sbRaw": "S",
       "exceptionRaw": "",
-      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS",
+      "finishRaw": "2"
     },
     {
       "finish": 3,
@@ -81,7 +83,8 @@
       "winningMethodRaw": "",
       "sbRaw": "",
       "exceptionRaw": "",
-      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS",
+      "finishRaw": "3"
     },
     {
       "finish": 4,
@@ -95,7 +98,8 @@
       "winningMethodRaw": "",
       "sbRaw": "B",
       "exceptionRaw": "",
-      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS",
+      "finishRaw": "4"
     },
     {
       "finish": 5,
@@ -109,7 +113,8 @@
       "winningMethodRaw": "",
       "sbRaw": "",
       "exceptionRaw": "",
-      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS",
+      "finishRaw": "5"
     },
     {
       "finish": 6,
@@ -123,7 +128,8 @@
       "winningMethodRaw": "",
       "sbRaw": "",
       "exceptionRaw": "",
-      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS",
+      "finishRaw": "6"
     },
     {
       "finish": 7,
@@ -137,7 +143,8 @@
       "winningMethodRaw": "",
       "sbRaw": "",
       "exceptionRaw": "",
-      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS",
+      "finishRaw": "7"
     }
   ],
   "resultUrls": [
@@ -174,5 +181,90 @@
     "Verify existing official 7/9-rider cross-feed schema and published provenance fields before release",
     "Do not label as formal PASS based on mere two domain names"
   ],
-  "notes": "Entire 7 rider table reconstructed from fresh network sources; not an official published PASS; payout intentionally optional."
+  "notes": "Entire 7 rider table reconstructed from fresh network sources; not an official published PASS; payout intentionally optional.",
+  "originalEntries": [
+    {
+      "car": 1,
+      "name": "織茂雄一郎",
+      "prefecture": "山梨",
+      "period": 125,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 2,
+      "name": "本間 慎吾",
+      "prefecture": "新潟",
+      "period": 91,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 3,
+      "name": "花田 雄飛",
+      "prefecture": "愛知",
+      "period": 127,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 4,
+      "name": "吉川 誠",
+      "prefecture": "神奈",
+      "period": 86,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 5,
+      "name": "水野 悟志",
+      "prefecture": "静岡",
+      "period": 94,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 6,
+      "name": "柴田 昌樹",
+      "prefecture": "愛知",
+      "period": 79,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 7,
+      "name": "中野 彰人",
+      "prefecture": "和歌",
+      "period": 93,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    }
+  ],
+  "originalEntrySourceAudit": {
+    "checkedDateJST": "2026-11-23",
+    "url": "https://www.chariloto.com/keirin/athletes/2026-11-20/42/2/?odds=1",
+    "secondaryUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261119_32060",
+    "status": "CAR_NAME_AND_PERIOD_COMPARISON_TO_DATED_PRE_RACE_DISPLAY",
+    "limitations": "Original source/card entries were checked at original archived pages. This is not independently obtained organizer's final amended startcard, nor evidence of official race-result status."
+  },
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      4,
+      1,
+      2,
+      3,
+      5,
+      6,
+      7
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 7,
+    "nonNumericResultRows": 0,
+    "confirmedWithdrawals": [],
+    "revisedStartCardSource": null,
+    "confirmedStarterCount": null,
+    "sourceStatus": "ORIGINAL_PRE_RACE_ROSTER_CONFIRMED; OFFICIAL_AMENDED_CARD_NOT_OBTAINED"
+  }
 }
