@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "本人識別4項目を2サイトで照合した56人。既存53人維持、新規3人を追加。",
+  "verificationNote": "2026-11-22 必須4項目を2独立サイトで確認した59人。既存56人維持、栗山和樹・栗田万生・桑原大志を追加。",
   "summary": {
-    "rows": 56
+    "rows": 59
   },
   "riders": [
     {
@@ -1349,6 +1349,78 @@
           "https://www.winticket.jp/keirin/cyclist/014944"
         ],
         "note": "KEIRIN.JPとWINTICKETのプロフィールで氏名・府県・期別・6桁登録番号の4項目一致を実確認。時点依存の級班等は照合対象外。"
+      }
+    },
+    {
+      "id": "015815",
+      "name": "栗山 和樹",
+      "prefecture": "岐阜",
+      "period": "125",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015815",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015815",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015815",
+          "https://www.winticket.jp/keirin/cyclist/015815"
+        ],
+        "note": "KEIRIN.JPとWINTICKETの本人プロフィールに氏名・府県・期別・登録番号が一致。元台帳未照合を救済。"
+      }
+    },
+    {
+      "id": "015181",
+      "name": "栗田 万生",
+      "prefecture": "千葉",
+      "period": "111",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015181",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015181",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015181",
+          "https://www.winticket.jp/keirin/cyclist/015181"
+        ],
+        "note": "KEIRIN.JPとWINTICKETの本人プロフィールに氏名・府県・期別・登録番号が一致。元台帳未照合を救済。"
+      }
+    },
+    {
+      "id": "013355",
+      "name": "桑原 大志",
+      "prefecture": "山口",
+      "period": "80",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013355",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013355",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013355",
+          "https://www.winticket.jp/keirin/cyclist/013355"
+        ],
+        "note": "KEIRIN.JPとWINTICKETの本人プロフィールに氏名・府県・期別・登録番号が一致。元台帳未照合を救済。"
       }
     }
   ],
