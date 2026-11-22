@@ -23,12 +23,48 @@ def person(n,p,t):
 def key(d,t,r): return (d,str(t),int(r))
 def digest(obj):
     return hashlib.sha256(json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest()
+def verify_observed(record,kind,e):
+    """Compare recorded source observations, not merely a verification flag."""
+    facts=e.get("observedFacts")
+    need(isinstance(facts,dict),"observed facts must contain source values")
+    fields={
+        "rider":("name","prefecture","period","id"),
+        "race":("date","track","track_code","race","grade","size"),
+        "result":("name","prefecture","period","date","track","trackCode","race","number","finishRaw","riderClass"),
+    }
+    if kind=="line":
+        # Official results alone do not prove the actual racing formation.
+        need(e.get("formationEvidence")=="official_actual_formation","actual formation evidence required")
+        required=("date","track","race","riders")
+    else:
+        required=fields[kind]
+    for f in required:
+        need(f in record and f in facts,"missing observed field: "+f)
+        if f=="riders":
+            need(facts[f]==record[f],"formation observations mismatch")
+        else:
+            need(norm(facts[f])==norm(record[f]),"official observed value mismatch: "+f)
+    if kind=="result":
+        for f in ("winningMethod","startBackRaw","lastLapRaw"):
+            if norm(record.get(f)):
+                need(f in facts and norm(facts[f])==norm(record[f]),"optional result value unverified: "+f)
+    stamp=e.get("retrievedAt")
+    need(isinstance(stamp,str),"retrieval timestamp missing")
+    try:
+        t=datetime.datetime.fromisoformat(stamp.replace("Z","+00:00"))
+        need(t.tzinfo is not None,"retrieval timestamp timezone missing")
+    except (ValueError,TypeError):
+        raise ValueError("invalid retrieval timestamp")
+    need(t.date()<=datetime.date.fromisoformat(e["reviewedDate"]),"review precedes source retrieval")
+    need(bool(norm(e.get("evidenceNote"))),"source evidence note missing")
+
 def review(record,kind,k,evidence):
     v=record.get("officialVerification",{})
     need(v.get("status")=="verified" and official(v.get("source")) and day(record.get("verifiedDate")),f"{kind}: verification metadata missing: {k}")
     e=evidence.get((kind,k))
     need(e is not None and e.get("status")=="approved" and e.get("recordSha256")==digest(record),f"{kind}: independent review missing or content changed: {k}")
     need(e.get("source")==v.get("source") and day(e.get("reviewedDate")) and bool(e.get("reviewer")) and bool(e.get("observedFacts")),f"{kind}: review evidence incomplete: {k}")
+    verify_observed(record,kind,e)
 def validate(data, reviews):
     a,b,i,l=data
     for j,s in zip(data,("ki-public-results-index-v1","ki-rider-results-v1","ki-official-rider-ids-v1","ki-line-snapshots-v1")):
@@ -60,6 +96,8 @@ def validate(data, reviews):
         need(all(p) and re.fullmatch(r"\d+",p[2]) and norm(x["finishRaw"]) and norm(x["riderClass"]) and official(x["sourceUrl"]) and x["track"]==races[k]["track"],"invalid result row")
         e=ev.get(("result","|".join(map(str,(*k,n)))))
         need(e and e.get("status")=="approved" and e.get("recordSha256")==digest(x) and official(e.get("source")) and day(e.get("reviewedDate")) and e.get("reviewer") and e.get("observedFacts"),"result row review missing")
+        need(e.get("source")==x["sourceUrl"],"result evidence source mismatch")
+        verify_observed(x,"result",e)
         groups[k][n]=x; participants.add(p)
     for k,x in races.items(): need(len(groups[k])==x["size"],"race field size mismatch")
     lineids=set()
