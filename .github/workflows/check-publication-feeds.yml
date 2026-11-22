@@ -1,0 +1,36 @@
+name: Check publication feed integrity
+on:
+  push:
+    paths:
+      - 'verified-rider-ids-feed-v1.json'
+      - 'verified-results-feed-v1.json'
+      - 'verified-rider-results-feed-v1.json'
+      - 'verified-line-snapshots-feed-v1.json'
+      - 'comparison-races-v1.json'
+      - 'tools/check_publication_completeness.cjs'
+      - '.github/workflows/check-publication-feeds.yml'
+  pull_request:
+    paths:
+      - 'verified-rider-ids-feed-v1.json'
+      - 'verified-results-feed-v1.json'
+      - 'verified-rider-results-feed-v1.json'
+      - 'verified-line-snapshots-feed-v1.json'
+      - 'comparison-races-v1.json'
+      - 'tools/check_publication_completeness.cjs'
+      - '.github/workflows/check-publication-feeds.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate published feeds and two-source evidence metadata
+        run: node tools/check_publication_completeness.cjs
