@@ -52,7 +52,9 @@
       "winningMethodRaw": "逃げ",
       "sbRaw": "B",
       "sbDiscrepancy": "Nikkan Gendai original B, Kdreams original SB (unresolved).",
-      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB",
+      "finishRaw": "1",
+      "exceptionRaw": ""
     },
     {
       "finish": 2,
@@ -65,7 +67,9 @@
       "marginRaw": "1/2車身",
       "winningMethodRaw": "マーク",
       "sbRaw": "",
-      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB",
+      "finishRaw": "2",
+      "exceptionRaw": ""
     },
     {
       "finish": 3,
@@ -78,7 +82,9 @@
       "marginRaw": "1車身",
       "winningMethodRaw": null,
       "sbRaw": null,
-      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB",
+      "finishRaw": "3",
+      "exceptionRaw": ""
     },
     {
       "finish": 4,
@@ -91,7 +97,9 @@
       "marginRaw": "3/4車身",
       "winningMethodRaw": null,
       "sbRaw": null,
-      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB",
+      "finishRaw": "4",
+      "exceptionRaw": ""
     },
     {
       "finish": 5,
@@ -104,7 +112,9 @@
       "marginRaw": "1車身1/2",
       "winningMethodRaw": null,
       "sbRaw": null,
-      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB",
+      "finishRaw": "5",
+      "exceptionRaw": ""
     },
     {
       "finish": 6,
@@ -117,7 +127,9 @@
       "marginRaw": "1/8車輪",
       "winningMethodRaw": null,
       "sbRaw": null,
-      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB",
+      "finishRaw": "6",
+      "exceptionRaw": ""
     },
     {
       "finish": 7,
@@ -130,7 +142,9 @@
       "marginRaw": "5車身",
       "winningMethodRaw": null,
       "sbRaw": null,
-      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB"
+      "sourceStatus": "TWO_DIRECT_ORIGINAL_RESULT_BODIES_AGREE_EXCEPT_WINNER_SB",
+      "finishRaw": "7",
+      "exceptionRaw": ""
     }
   ],
   "resultUrls": [
@@ -191,5 +205,91 @@
     "fullComparison": "7/7 result rows align in rank, car number, normalized names, margins, lap times and winning-method display; winner S/B conflicts.",
     "retrievalDateJST": "2026-11-22",
     "publicationDecision": "PENDING_NO_FORMAL_PASS"
+  },
+  "originalEntries": [
+    {
+      "car": 1,
+      "name": "大本隆也",
+      "prefecture": "神奈川",
+      "period": 127,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 2,
+      "name": "児玉東次郎",
+      "prefecture": "岐阜",
+      "period": 129,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 3,
+      "name": "眞原健一",
+      "prefecture": "神奈川",
+      "period": 69,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 4,
+      "name": "藤田晃英",
+      "prefecture": "千葉",
+      "period": 76,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 5,
+      "name": "三浦綾",
+      "prefecture": "宮城",
+      "period": 105,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 6,
+      "name": "岡田大門",
+      "prefecture": "愛知",
+      "period": 87,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 7,
+      "name": "加美山隆行",
+      "prefecture": "宮城",
+      "period": 92,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    }
+  ],
+  "originalEntrySourceAudit": {
+    "checkedDateJST": "2026-11-23",
+    "url": "https://www.chariloto.com/keirin/athletes/2026-11-20/42/1",
+    "secondaryUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261119_32063",
+    "status": "CAR_NAME_AND_PERIOD_COMPARISON_TO_DATED_PRE_RACE_DISPLAY",
+    "limitations": "Original source/card entries were checked at original archived pages. This is not independently obtained organizer's final amended startcard, nor evidence of official race-result status."
+  },
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      2,
+      6,
+      5,
+      4,
+      3,
+      7,
+      1
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 7,
+    "nonNumericResultRows": 0,
+    "confirmedWithdrawals": [],
+    "revisedStartCardSource": null,
+    "confirmedStarterCount": null,
+    "sourceStatus": "ORIGINAL_PRE_RACE_ROSTER_CONFIRMED; OFFICIAL_AMENDED_CARD_NOT_OBTAINED",
+    "sbConflictPersisted": "Car 2 Kodama: Nikkan Gendai B, Kdreams SB; neither overwritten. A single canonical SB value remains PENDING."
   }
 }
