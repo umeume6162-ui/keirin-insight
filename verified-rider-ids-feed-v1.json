@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "110人：氏名・府県・期別・6桁登録番号の4項目を少なくとも2つの独立掲載元本文で照合。前回107人保持。",
+  "verificationNote": "113選手の氏名・府県・期別・6桁登録番号を別掲載元2原文で照合済み。旧110件保持、新規3件。",
   "summary": {
-    "rows": 110
+    "rows": 113
   },
   "riders": [
     {
@@ -2645,6 +2645,78 @@
           "https://www.winticket.jp/keirin/cyclist/014475"
         ],
         "note": "2026-11-22 JSTに過去キャッシュ本文から氏名・府県・期別・登録番号照合。KEIRIN.JP公式2026-07-30更新版とWINTICKET全文が一致。福井競輪場の独自選手一覧でも登録番号・期別を確認。台帳352行。ライブ2026-11-22データを意味しない。"
+      }
+    },
+    {
+      "id": "014833",
+      "name": "高久保　雄介",
+      "prefecture": "京都",
+      "period": "100",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014833",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014833",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014833",
+          "https://keirin.netkeiba.com/keirinmatome/detail.html?no=3036"
+        ],
+        "note": "2026-11-22 JSTに独立2掲載元の保存キャッシュ本文を開いて4項目一致。KEIRIN.JP公式プロフィール2026-05-20更新本文とnetkeirin競輪まとめ2022-05-12掲載全文で氏名・京都・100期・014833一致。元台帳353行A:F不変。"
+      }
+    },
+    {
+      "id": "014133",
+      "name": "高橋　紀史",
+      "prefecture": "佐賀",
+      "period": "91",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014133",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014133",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014133",
+          "https://www.winticket.jp/keirin/cyclist/014133"
+        ],
+        "note": "2026-11-22 JSTに独立2掲載元の保存キャッシュ本文を開いて4項目一致。KEIRIN.JP公式2026-08-09更新本文とWINTICKETプロフィール全文で氏名・佐賀・91期・014133一致。元台帳354行A:F不変。"
+      }
+    },
+    {
+      "id": "014720",
+      "name": "高橋　広大",
+      "prefecture": "埼玉",
+      "period": "99",
+      "source": "https://www.yen-joy.net/racer/data/014720/1",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.yen-joy.net/racer/data/014720/1",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.yen-joy.net/racer/data/014720/1",
+          "https://www.winticket.jp/keirin/cyclist/014720"
+        ],
+        "note": "2026-11-22 JSTに独立2掲載元の保存キャッシュ本文を開いて4項目一致。日刊プロスポーツ新聞社エンジョイの選手原文とWINTICKETプロフィール全文で氏名・埼玉・99期・014720一致。公式PC本文はcache missで独立原文として計上せず。元台帳355行A:F不変。"
       }
     }
   ],
