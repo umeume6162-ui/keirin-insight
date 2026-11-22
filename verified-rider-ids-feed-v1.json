@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付",
   "verificationNote": "148名の氏名・府県・期別・登録番号の固定4項目についてKEIRIN.JP公式とWINTICKET個別原文で一致。元選手台帳389-391行へ証拠保存し再読込済み。",
   "summary": {
-    "rows": 154
+    "rows": 156
   },
   "riders": [
     {
@@ -3701,6 +3701,54 @@
           "https://www.winticket.jp/keirin/cyclist/015378"
         ],
         "note": "2026-11-23: cached web.open of KEIRIN.JP official and WINTICKET complete profiles; four permanent identity fields match after whitespace/prefecture suffix normalization. Official profile displayed update 2026-08-07; WINTICKET document update unknown. Upstream origin independence unknown, not live-retrieved. Google Sheet original row 397 G:K save/readback verified."
+      }
+    },
+    {
+      "id": "014380",
+      "name": "根田 空史",
+      "prefecture": "千葉",
+      "period": "94",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014380",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014380",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014380",
+          "https://www.winticket.jp/keirin/cyclist/014380"
+        ],
+        "note": "2026-11-23 JST: two complete cached profile texts directly opened (KEIRIN.JP last updated 2026-07-03; WINTICKET text update unknown). Full name, prefecture, period, six-digit ID match after normalization. Not a live source retrieval or proven independent upstream generators. Sheet row 398 G:K write/readback confirmed."
+      }
+    },
+    {
+      "id": "014459",
+      "name": "根藤 浩二",
+      "prefecture": "千葉",
+      "period": "95",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014459",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014459",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014459",
+          "https://www.winticket.jp/keirin/cyclist/014459"
+        ],
+        "note": "2026-11-23 JST: two complete cached profile texts directly opened (KEIRIN.JP last updated 2026-07-25; WINTICKET text update unknown). Full name, prefecture, period, six-digit ID match after normalization. Not a live source retrieval or proven independent upstream generators. Sheet row 399 G:K write/readback confirmed."
       }
     }
   ],
