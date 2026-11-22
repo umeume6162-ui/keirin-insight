@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "必要4項目を2サイトで確認した12選手を掲載。旧データの再照合・重複を避け、未合格選手から追加。",
+  "verificationNote": "必要4項目を2サイトで確認した16選手を掲載。原台帳を維持し、既存合格を重複登録しない。",
   "summary": {
-    "rows": 12
+    "rows": 16
   },
   "riders": [
     {
@@ -293,6 +293,102 @@
           "https://www.winticket.jp/keirin/cyclist/013212"
         ],
         "note": "既存選手ID照合台帳の4項目とKEIRIN.JP・WINTICKET公開プロフィールの4項目が一致。合格済み元台帳を維持。"
+      }
+    },
+    {
+      "id": "014371",
+      "name": "岡 光良",
+      "prefecture": "埼玉",
+      "period": "94",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014371",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014371",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014371",
+          "https://www.winticket.jp/keirin/cyclist/014371"
+        ],
+        "note": "KEIRIN.JPとWINTICKETの公開プロフィールで氏名・府県・期別・登録番号の必要4項目一致。既存台帳の照合済みデータを使用。"
+      }
+    },
+    {
+      "id": "014257",
+      "name": "岡崎 克政",
+      "prefecture": "岡山",
+      "period": "92",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014257",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014257",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014257",
+          "https://www.winticket.jp/keirin/cyclist/014257"
+        ],
+        "note": "KEIRIN.JPとWINTICKETの公開プロフィールで氏名・府県・期別・登録番号の必要4項目一致。既存台帳の照合済みデータを使用。"
+      }
+    },
+    {
+      "id": "013861",
+      "name": "岡田 大門",
+      "prefecture": "愛知",
+      "period": "87",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013861",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013861",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013861",
+          "https://www.winticket.jp/keirin/cyclist/013861"
+        ],
+        "note": "KEIRIN.JPとWINTICKETの公開プロフィールで氏名・府県・期別・登録番号の必要4項目一致。既存台帳の照合済みデータを使用。"
+      }
+    },
+    {
+      "id": "015430",
+      "name": "岡田 亮太",
+      "prefecture": "東京",
+      "period": "117",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015430",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015430",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015430",
+          "https://www.winticket.jp/keirin/cyclist/015430"
+        ],
+        "note": "KEIRIN.JPとWINTICKETの公開プロフィールで氏名・府県・期別・登録番号の必要4項目一致。既存台帳の照合済みデータを使用。"
       }
     }
   ],
