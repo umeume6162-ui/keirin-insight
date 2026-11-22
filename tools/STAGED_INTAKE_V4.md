@@ -60,3 +60,10 @@ The current requested work is four concurrent, mutually supporting workstreams. 
 4. **System construction and improvements**: improve GAS, Sheets, GitHub code, website navigation, audit/verification speed and field-specific source selection only where it advances the preceding three workstreams. Retain working components, regression-test changes, and synchronize documented improvements.
 
 Execution order: process eligible verified records toward the website promptly, keep rider/result verification moving in parallel and fix blockers in their affected paths. Automated tasks remain the primary recurring engine; interactive manual work supplements them with shared criteria and deduplication. Every handover should identify the latest real backlog, completed work, active blockers and next safe actions in these four workstreams. This is a scope clarification, not a new verification threshold or permission to bypass existing publication safeguards.
+
+## Current automation assignment (2026-11-22 JST)
+
+- Rider verification: existing enabled task `6b00c3b741048191aeb0c35bc78b0cbf` (hourly).
+- Race-result verification and system improvements: existing enabled task `Automation_13d5a6020c5c8191a22bc87d7d4ea008` (twice daily). The fourth workstream shares this task because the plan's five-active-task limit prevents creating a separate system-improvement automation.
+- Ledger/site synchronization: existing enabled task `Automation_6fb0a5dac1a8819193d7618928e6013f` (hourly). Preserve its current sync-only write boundaries.
+- These are parallel scheduled responsibilities, not a claim that tasks are executing continuously or that a site write or data collection succeeded. Verify actual run logs and stored results before asserting progress. Do not disable unrelated JRA automations to create capacity. Revisit assignment if task capacity or needs change.
