@@ -1,0 +1,247 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-11-20|42|5",
+  "createdDateJST": "2026-11-22",
+  "race": {
+    "date": "2026-11-20",
+    "venue": "名古屋",
+    "venueCode": "42",
+    "raceNo": 5,
+    "grade": "F2",
+    "class": "A級特予選",
+    "expectedEntrants": 7,
+    "startTimeLocal": "22:00"
+  },
+  "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
+  "payout": "NOT_COLLECTED_OPTIONAL",
+  "originalEntries": [
+    {
+      "car": 1,
+      "name": "森田康嗣",
+      "sourceStatus": "PRE_RACE_CARD_LISTED"
+    },
+    {
+      "car": 2,
+      "name": "保科千春",
+      "sourceStatus": "PRE_RACE_CARD_LISTED"
+    },
+    {
+      "car": 3,
+      "name": "篠塚光一",
+      "sourceStatus": "PRE_RACE_CARD_LISTED"
+    },
+    {
+      "car": 4,
+      "name": "大川栄二",
+      "sourceStatus": "PRE_RACE_CARD_LISTED"
+    },
+    {
+      "car": 5,
+      "name": "伊藤歩登",
+      "sourceStatus": "PRE_RACE_CARD_LISTED"
+    },
+    {
+      "car": 6,
+      "name": "山口茂",
+      "sourceStatus": "PRE_RACE_CARD_LISTED"
+    },
+    {
+      "car": 7,
+      "name": "亀谷隆一",
+      "sourceStatus": "PRE_RACE_CARD_LISTED"
+    }
+  ],
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 7,
+    "nonNumericResultRows": 0,
+    "confirmedWithdrawals": [],
+    "confirmedStarterCount": null,
+    "confirmedStarterCountReason": "Numeric finishers definitely 7; separate revised official start card has not been obtained, so an independently attested official start count is not claimed.",
+    "sourceStatus": "ENTRY_AND_RESULTS_CAR_SETS_AGREE_TWO_RESULT_PUBLISHERS; NO_WITHDRAWAL_OBSERVED_NOT_OFFICIAL_CANCELLATION_AUDIT"
+  },
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [
+      [
+        1,
+        2,
+        6
+      ],
+      [
+        5,
+        3,
+        4
+      ],
+      [
+        7
+      ]
+    ],
+    "note": "East/North 1-2-6, Kinki 5-3-4, solo 7; Kdreams and Tokyo Sports role comments. Not observed race-time formation.",
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010005/?pageType=result",
+      "https://keirin.tokyo-sports.co.jp/list/race/20261119_32051"
+    ],
+    "status": "PUBLISHER_LINE_AND_DATED_PRE_RACE_COMMENTS_AGREE_UPSTREAM_NOT_AUDITED"
+  },
+  "results": [
+    {
+      "finishRaw": "1",
+      "finish": 1,
+      "car": 2,
+      "name": "保科千春",
+      "prefecture": "宮城",
+      "period": 100,
+      "grade": "A1",
+      "lapSeconds": 12.2,
+      "marginRaw": "",
+      "winningMethodRaw": "差し",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_DISPLAYED_FIELDS"
+    },
+    {
+      "finishRaw": "2",
+      "finish": 2,
+      "car": 1,
+      "name": "森田康嗣",
+      "prefecture": "北海",
+      "period": 89,
+      "grade": "A2",
+      "lapSeconds": 12.4,
+      "marginRaw": "3/4車輪",
+      "winningMethodRaw": "逃げ",
+      "sbRaw": "SB",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_DISPLAYED_FIELDS"
+    },
+    {
+      "finishRaw": "3",
+      "finish": 3,
+      "car": 3,
+      "name": "篠塚光一",
+      "prefecture": "兵庫",
+      "period": 90,
+      "grade": "A1",
+      "lapSeconds": 12.2,
+      "marginRaw": "1車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_DISPLAYED_FIELDS"
+    },
+    {
+      "finishRaw": "4",
+      "finish": 4,
+      "car": 4,
+      "name": "大川栄二",
+      "prefecture": "和歌",
+      "period": 70,
+      "grade": "A2",
+      "lapSeconds": 12.3,
+      "marginRaw": "2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_DISPLAYED_FIELDS"
+    },
+    {
+      "finishRaw": "5",
+      "finish": 5,
+      "car": 7,
+      "name": "亀谷隆一",
+      "prefecture": "神奈",
+      "period": 92,
+      "grade": "A2",
+      "lapSeconds": 12.3,
+      "marginRaw": "1車身1/2",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_DISPLAYED_FIELDS"
+    },
+    {
+      "finishRaw": "6",
+      "finish": 6,
+      "car": 5,
+      "name": "伊藤歩登",
+      "prefecture": "兵庫",
+      "period": 113,
+      "grade": "A2",
+      "lapSeconds": 12.7,
+      "marginRaw": "2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_DISPLAYED_FIELDS"
+    },
+    {
+      "finishRaw": "7",
+      "finish": 7,
+      "car": 6,
+      "name": "山口茂",
+      "prefecture": "福島",
+      "period": 98,
+      "grade": "A2",
+      "lapSeconds": 12.9,
+      "marginRaw": "2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_DISPLAYED_FIELDS"
+    }
+  ],
+  "resultUrls": [
+    "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010005/?pageType=result",
+    "https://www.chariloto.com/keirin/results/42/2026-11-20"
+  ],
+  "sourceAudit": {
+    "retrievalDateJST": "2026-11-22",
+    "retrievalMethod": "web.open original full text",
+    "resultSources": [
+      "Kdreams 2026-11-20 5R detailed 7-row result",
+      "Chariloto 2026-11-20 Nagoya dated result 7-row section"
+    ],
+    "preRaceSources": [
+      "Tokyo Sports original 2026-11-19 card for 2026-11-20",
+      "Keirin Net @ Navi NEXT direct 5R seven-car pre-race card",
+      "Kdreams published forecast"
+    ],
+    "newAccessFinding": "https://www.keirin-mobile.jp/New/races/20261120/42/05/ directly provides 7-car original-style racecard unlike an inaccessible legacy URL; explicitly labels its listed values as official-publication data, so original feed independence not established.",
+    "upstreamIndependence": "Unproven even if domains differ",
+    "sourceTimestamp": "Race 2026-11-20, Tokyo Sports pre-race dated 2026-11-19",
+    "licensing": "Structured race facts only; no wholesale proprietary journalism copied."
+  },
+  "fieldVerification": {
+    "resultSevenCars": "TWO_RESULT_PUBLISHERS_MATCH",
+    "allSevenLapAndMargin": "TWO_RESULT_PUBLISHERS_MATCH",
+    "rankAndExceptions": "ALL_SEVEN_NUMERIC_FINISHES_MATCH; NO_EXCEPTIONS_IN_DISPLAY",
+    "entryRoster": "TOKYO_SPORTS_AND_NEXT_AND_KDREAMS_MATCH",
+    "preRaceFormation": "KDREAMS_AND_TOKYO_SPORTS_ROLE_COMMENTS_MATCH",
+    "independentOrigination": "UNPROVEN",
+    "formalPublication": "PENDING_INDEPENDENT_ORIGINAL_QUALIFICATION"
+  },
+  "remainingToPass": [
+    "Qualify independent original upstream for each mandatory results and pre-race lines field, not merely two republishers",
+    "Confirm original/revised racecard cancellation notices if any conflict appears",
+    "Pass formal verified feed mapping and technical publish guard before release"
+  ]
+}
