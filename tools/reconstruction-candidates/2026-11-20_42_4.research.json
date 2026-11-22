@@ -184,5 +184,90 @@
     "Map two exception rows and five numeric finishers to existing full result/line publication feeds with regression tests",
     "Only if complete two-original mandatory-field agreement then PASS/publish"
   ],
-  "notes": "Source-first reconstruction including all 7 initial entrants, five numeric ranks and two nonnumeric statuses. Not a new official published race."
+  "notes": "Source-first reconstruction including all 7 initial entrants, five numeric ranks and two nonnumeric statuses. Not a new official published race.",
+  "originalEntries": [
+    {
+      "car": 1,
+      "name": "高橋奏多",
+      "prefecture": "大阪",
+      "period": 129,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 2,
+      "name": "及川裕奨",
+      "prefecture": "岩手",
+      "period": 86,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 3,
+      "name": "猪野泰介",
+      "prefecture": "山形",
+      "period": 111,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 4,
+      "name": "石貞有基",
+      "prefecture": "兵庫",
+      "period": 100,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 5,
+      "name": "山崎寛巳",
+      "prefecture": "新潟",
+      "period": 93,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 6,
+      "name": "志村正洋",
+      "prefecture": "神奈川",
+      "period": 77,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    },
+    {
+      "car": 7,
+      "name": "長谷川辰徳",
+      "prefecture": "埼玉",
+      "period": 89,
+      "sourceStatus": "PRE_RACE_ORIGINAL_CARD_ROSTER_CROSS_CHECKED_2026_11_23"
+    }
+  ],
+  "originalEntrySourceAudit": {
+    "checkedDateJST": "2026-11-23",
+    "url": "https://www.keirin-mobile.jp/New/races/20261120/42/04/",
+    "secondaryUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261119_32052",
+    "status": "CAR_NAME_AND_PERIOD_COMPARISON_TO_DATED_PRE_RACE_DISPLAY",
+    "limitations": "Original source/card entries were checked at original archived pages. This is not independently obtained organizer's final amended startcard, nor evidence of official race-result status."
+  },
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      1,
+      2,
+      6,
+      7,
+      5,
+      3,
+      4
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 5,
+    "nonNumericResultRows": 2,
+    "confirmedWithdrawals": [],
+    "revisedStartCardSource": null,
+    "confirmedStarterCount": null,
+    "sourceStatus": "ORIGINAL_PRE_RACE_ROSTER_CONFIRMED; OFFICIAL_AMENDED_CARD_NOT_OBTAINED"
+  }
 }
