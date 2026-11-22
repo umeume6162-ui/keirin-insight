@@ -37,6 +37,7 @@ function check(r) {
    if(new Set(entryCars).size!==entryCars.length)add(errors,'duplicate entry cars');
    if(entryCars.some(x=>!numeric(x)))add(errors,'invalid entry car');
    if(entryCars.length!==count)add(warnings,'entry card count differs from expected; amended racecard required');
+   if(entries.length>0&&entries.every(x=>/RECOVERED_FROM_SAVED_V99_RESULT_ROWS|V99_SAVED_RESULTS_IDENTITY_NOT_INDEPENDENT|V99_SAVED_RESULT|HISTORICAL_RESULT/i.test(String(x.sourceStatus||''))))add(warnings,'RESULT_DERIVED_ENTRIES_ONLY: saved finisher identities do not prove an independent original start card');
    for(const c of cs)if(!entryCars.includes(c))add(errors,'result car not found in entry card '+c);
    for(const c of entryCars)if(!cs.has(c))add(warnings,'ENTRY_ONLY_CAR '+c+': check revised racecard, official withdrawal/欠車, and exception results');
  }else add(warnings,'MISSING_ORIGINAL_ENTRY_CARD: do not assume entrants=starters');
