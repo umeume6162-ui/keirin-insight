@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付",
   "verificationNote": "148名の氏名・府県・期別・登録番号の固定4項目についてKEIRIN.JP公式とWINTICKET個別原文で一致。元選手台帳389-391行へ証拠保存し再読込済み。",
   "summary": {
-    "rows": 150
+    "rows": 152
   },
   "riders": [
     {
@@ -3605,6 +3605,54 @@
           "https://www.winticket.jp/keirin/cyclist/015795"
         ],
         "note": "2026-11-23: source profiles opened as cached web pages; KEIRIN.JP updated 2026-05-25, WINTICKET last content time unknown. Four permanent identity fields matched. Grade update difference does not affect fixed ID fields. Not live acquisition, upstream source independence unproven. Ledger row393 read-back verified."
+      }
+    },
+    {
+      "id": "015250",
+      "name": "今井 聡",
+      "prefecture": "東京",
+      "period": "113",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015250",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015250",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015250",
+          "https://www.winticket.jp/keirin/cyclist/015250"
+        ],
+        "note": "2026-11-23 cached web.open original published profiles; four fixed fields match on KEIRIN.JP and WINTICKET, KEIRIN.JP profile date 2026-05-31. Upstream generation independence unproven; do not imply live retrieval. Ledger original row 394 read-back successful."
+      }
+    },
+    {
+      "id": "015198",
+      "name": "今村麟太郎",
+      "prefecture": "高知",
+      "period": "111",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015198",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015198",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015198",
+          "https://www.winticket.jp/keirin/cyclist/015198"
+        ],
+        "note": "2026-11-23 cached web.open original published profiles; four fixed fields match on KEIRIN.JP and WINTICKET, KEIRIN.JP profile date 2026-07-29. Upstream generation independence unproven; do not imply live retrieval. Ledger original row 395 read-back successful."
       }
     }
   ],
