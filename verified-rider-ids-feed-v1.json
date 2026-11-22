@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "選手ID必要4項目2サイト一致の21選手。既存16件を維持し5件追加。元選手台帳は保持。",
+  "verificationNote": "必要4項目の2サイト一致確認済みの24選手を掲載。既存21件に加倉正義・河端朋之・岩元叶馬を追加し重複検査。",
   "summary": {
-    "rows": 21
+    "rows": 24
   },
   "riders": [
     {
@@ -509,6 +509,78 @@
           "https://www.winticket.jp/keirin/cyclist/014809"
         ],
         "note": "KEIRIN.JP と WINTICKET のプロフィール記載の氏名・府県・期別・登録番号4項目が一致。級班や年齢など時点依存情報は今回の必須照合対象外。"
+      }
+    },
+    {
+      "id": "012478",
+      "name": "加倉 正義",
+      "prefecture": "福岡",
+      "period": "68",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=012478",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=012478",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=012478",
+          "https://www.winticket.jp/keirin/cyclist/012478"
+        ],
+        "note": "KEIRIN.JP と WINTICKET のプロフィールの4必須項目一致。級班・競走得点など時点差項目は今回のID照合に含めない。"
+      }
+    },
+    {
+      "id": "014484",
+      "name": "河端 朋之",
+      "prefecture": "岡山",
+      "period": "95",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014484",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014484",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014484",
+          "https://www.winticket.jp/keirin/cyclist/014484"
+        ],
+        "note": "KEIRIN.JP と WINTICKET のプロフィールの4必須項目一致。級班・競走得点など時点差項目は今回のID照合に含めない。"
+      }
+    },
+    {
+      "id": "015820",
+      "name": "岩元 叶馬",
+      "prefecture": "富山",
+      "period": "125",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015820",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015820",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015820",
+          "https://www.winticket.jp/keirin/cyclist/015820"
+        ],
+        "note": "KEIRIN.JP と WINTICKET のプロフィールの4必須項目一致。級班・競走得点など時点差項目は今回のID照合に含めない。"
       }
     }
   ],
