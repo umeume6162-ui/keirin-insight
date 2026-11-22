@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "135選手の氏名・府県・期別・登録番号の4項目を別原文掲載元2サイトで照合。元台帳既存2行の原本保持・証拠追加と再読込を確認。",
+  "verificationNote": "137名の氏名・府県・期別・登録番号について2サイト原文一致。高尾剛文・高峰賢治を元台帳の既存2行に反映・再読込済み。",
   "summary": {
-    "rows": 135
+    "rows": 137
   },
   "riders": [
     {
@@ -3245,6 +3245,54 @@
           "https://www.winticket.jp/keirin/cyclist/014489"
         ],
         "note": "2026-11-22 JST：KEIRIN.JPの原文（掲載更新2026-08-06）とWINTICKETの個別選手原文を直接閲覧し、氏名・府県・期別・6桁登録番号の4項目を一致確認：高鍋 邦彰/福岡/95期/014489。原文URL https://keirin.jp/sp/racerprofile?snum=014489 ／ https://www.winticket.jp/keirin/cyclist/014489。原資料はキャッシュされた公開内容で、現時点の最新成績の証明ではない。A:F原本維持。"
+      }
+    },
+    {
+      "id": "012319",
+      "name": "高尾 剛文",
+      "prefecture": "福岡",
+      "period": "66",
+      "source": "https://keirin.jp/pc/racerprofile?snum=012319",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=012319",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=012319",
+          "https://www.winticket.jp/keirin/cyclist/012319"
+        ],
+        "note": "2026-11-22 JSTの照合：KEIRIN.JP公式PC選手プロフィール（サイト掲載更新2026-10-15）とWINTICKET個別選手プロフィール原文を直接閲覧し、氏名=高尾 剛文、府県=福岡、期別=66期、6桁登録番号=012319の4項目一致。出典1 https://keirin.jp/pc/racerprofile?snum=012319 出典2 https://www.winticket.jp/keirin/cyclist/012319。原文はウェブ取得時のキャッシュ/掲載内容でありライブ成績を保証しない。既存A:F列不変。"
+      }
+    },
+    {
+      "id": "012809",
+      "name": "高峰 賢治",
+      "prefecture": "山梨",
+      "period": "73",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=012809",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=012809",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=012809",
+          "https://www.winticket.jp/keirin/cyclist/012809"
+        ],
+        "note": "2026-11-22 JSTの照合：KEIRIN.JP公式PC選手プロフィール（サイト掲載更新2026-10-27）とWINTICKET個別選手プロフィール原文を直接閲覧し、氏名=高峰 賢治、府県=山梨、期別=73期、6桁登録番号=012809の4項目一致。出典1 https://www.keirin.jp/pc/racerprofile?snum=012809 出典2 https://www.winticket.jp/keirin/cyclist/012809。原文はウェブ取得時のキャッシュ/掲載内容でありライブ成績を保証しない。既存A:F列不変。"
       }
     }
   ],
