@@ -1,0 +1,267 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-11-20|42|9",
+  "createdDateJST": "2026-11-22",
+  "race": {
+    "date": "2026-11-20",
+    "venue": "名古屋",
+    "venueCode": "42",
+    "raceNo": 9,
+    "grade": "F2",
+    "class": "A級初日特選",
+    "expectedEntrants": 7,
+    "startTimeLocal": "23:20"
+  },
+  "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
+  "payout": "NOT_COLLECTED_OPTIONAL",
+  "method": "Source-first seven-entrant reconciliation using dated Tokyo Sports and Kdreams pre-race cards, full Kdreams and Chariloto result original pages, plus Keirin Net @ Navi NEXT as third display. Five numeric finishers and 2 nonnumeric statuses, NOT five starters.",
+  "originalEntries": [
+    {
+      "car": 1,
+      "name": "内山 雅貴",
+      "prefecture": "静岡",
+      "period": 113,
+      "sourceStatus": "TOKYO_SPORTS_KDREAMS_AND_NEXT_SEVEN_CAR_ORIGINAL_RACECARD"
+    },
+    {
+      "car": 2,
+      "name": "片桐 善也",
+      "prefecture": "新潟",
+      "period": 117,
+      "sourceStatus": "TOKYO_SPORTS_KDREAMS_AND_NEXT_SEVEN_CAR_ORIGINAL_RACECARD"
+    },
+    {
+      "car": 3,
+      "name": "川口 直人",
+      "prefecture": "神奈",
+      "period": 84,
+      "sourceStatus": "TOKYO_SPORTS_KDREAMS_AND_NEXT_SEVEN_CAR_ORIGINAL_RACECARD"
+    },
+    {
+      "car": 4,
+      "name": "中村 弘之輔",
+      "prefecture": "北海",
+      "period": 109,
+      "sourceStatus": "TOKYO_SPORTS_KDREAMS_AND_NEXT_SEVEN_CAR_ORIGINAL_RACECARD"
+    },
+    {
+      "car": 5,
+      "name": "小嶋 敬二",
+      "prefecture": "石川",
+      "period": 74,
+      "sourceStatus": "TOKYO_SPORTS_KDREAMS_AND_NEXT_SEVEN_CAR_ORIGINAL_RACECARD"
+    },
+    {
+      "car": 6,
+      "name": "篠原 忍",
+      "prefecture": "愛知",
+      "period": 91,
+      "sourceStatus": "TOKYO_SPORTS_KDREAMS_AND_NEXT_SEVEN_CAR_ORIGINAL_RACECARD"
+    },
+    {
+      "car": 7,
+      "name": "西村 豊",
+      "prefecture": "三重",
+      "period": 84,
+      "sourceStatus": "TOKYO_SPORTS_KDREAMS_AND_NEXT_SEVEN_CAR_ORIGINAL_RACECARD"
+    }
+  ],
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      1,
+      2,
+      5,
+      4,
+      7,
+      3,
+      6
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 5,
+    "nonNumericResultRows": 2,
+    "confirmedWithdrawals": [],
+    "revisedStartCardSource": null,
+    "confirmedStarterCount": null,
+    "note": "Seven original entrants have matching result rows. Two exception statuses are recorded as original '落' and '失', never synthesized as numeric ranks. Official amended pre-start list not fetched."
+  },
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [
+      [
+        1,
+        3
+      ],
+      [
+        5,
+        6,
+        7
+      ],
+      [
+        2
+      ],
+      [
+        4
+      ]
+    ],
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010009/?pageType=showResult",
+      "https://keirin.tokyo-sports.co.jp/list/race/20261119_32044"
+    ],
+    "roleEvidence": "1 self-drive, 3 follows 1; 5 self-drive, 6 follows 5, 7 follows 5/6 as Chubu third; 2 solo self-drive, 4 solo. Original forecast displayed order varies and is not itself a group separator.",
+    "upstreamSourceStatus": "TWO_PUBLISHERS_FORECAST_SAME_GROUPS_BUT_SOURCE_ORIGINATION_NOT_QUALIFIED",
+    "note": "Pre-race published forecast, not actual in-race formation."
+  },
+  "results": [
+    {
+      "car": 1,
+      "name": "内山 雅貴",
+      "prefecture": "静岡",
+      "period": 113,
+      "grade": "A1",
+      "finishRaw": "1",
+      "finish": 1,
+      "lapSeconds": 11.7,
+      "marginRaw": "",
+      "winningMethodRaw": "捲くり",
+      "sbRaw": "S",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    },
+    {
+      "car": 2,
+      "name": "片桐 善也",
+      "prefecture": "新潟",
+      "period": 117,
+      "grade": "A1",
+      "finishRaw": "2",
+      "finish": 2,
+      "lapSeconds": 11.8,
+      "marginRaw": "3/4車身",
+      "winningMethodRaw": "逃げ",
+      "sbRaw": "B",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    },
+    {
+      "car": 5,
+      "name": "小嶋 敬二",
+      "prefecture": "石川",
+      "period": 74,
+      "grade": "A1",
+      "finishRaw": "3",
+      "finish": 3,
+      "lapSeconds": 11.7,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    },
+    {
+      "car": 4,
+      "name": "中村 弘之輔",
+      "prefecture": "北海",
+      "period": 109,
+      "grade": "A1",
+      "finishRaw": "4",
+      "finish": 4,
+      "lapSeconds": 11.5,
+      "marginRaw": "4車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    },
+    {
+      "car": 7,
+      "name": "西村 豊",
+      "prefecture": "三重",
+      "period": 84,
+      "grade": "A1",
+      "finishRaw": "5",
+      "finish": 5,
+      "lapSeconds": 12.1,
+      "marginRaw": "8車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    },
+    {
+      "car": 3,
+      "name": "川口 直人",
+      "prefecture": "神奈",
+      "period": 84,
+      "grade": "A1",
+      "finishRaw": "落",
+      "finish": null,
+      "lapSeconds": null,
+      "marginRaw": "",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "落",
+      "exceptionCategory": "FALL_STATUS_SOURCE_WORDING_ONLY",
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    },
+    {
+      "car": 6,
+      "name": "篠原 忍",
+      "prefecture": "愛知",
+      "period": 91,
+      "grade": "A1",
+      "finishRaw": "失",
+      "finish": null,
+      "lapSeconds": null,
+      "marginRaw": "",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "失",
+      "exceptionCategory": "DISQUALIFICATION_SOURCE_WORDING_ONLY",
+      "sourceStatus": "KDREAMS_AND_CHARILOTO_PUBLISHED_RESULT_FIELDS_MATCH"
+    }
+  ],
+  "resultUrls": [
+    "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010009/?pageType=showResult",
+    "https://www.chariloto.com/keirin/results/42/2026-11-20"
+  ],
+  "sourceAudit": {
+    "retrievalDateJST": "2026-11-22",
+    "method": "web.open full original page",
+    "Kdreams": "2026-11-20 9R full original result display lines 1156-1162, including original statuses 落 for #3 and 失 for #6",
+    "Chariloto": "2026-11-20 Nagoya 9R full result lines 379-385, all 7 names and same two status labels",
+    "TokyoSports": "2026-11-19 original racecard with race time, 7 entrants, rider commentary and position-specific statements",
+    "KeirinNetNext": "https://www.keirin-mobile.jp/New/races/20261120/42/09/ 7 original entrants but only 5 placed in its summary; shows #3 and #6 with '—' rather than accident/disqualification labels. This is lossy display, not evidence of absent riders.",
+    "upstreamIndependence": "Different publishers may use a common originated results feed; qualification of independent primary origins remains open.",
+    "rights": "Only structured public facts, not original editorial content"
+  },
+  "fieldVerification": {
+    "entryCarSet": "TOKYO_SPORTS_AND_KDREAMS_AND_NEXT_MATCH_SEVEN_CARS",
+    "fiveNumericRanks": "KDREAMS_AND_CHARILOTO_MATCH",
+    "fallAndDisqualification": "KDREAMS_AND_CHARILOTO_MATCH_ORIGINAL_LABELS",
+    "allDisplayedLapsMarginsAndSB": "KDREAMS_AND_CHARILOTO_MATCH_FOR_FIVE_NUMERIC_ROWS",
+    "preRaceLine": "KDREAMS_AND_TOKYO_SPORTS_COMMENTS_GROUPS_MATCH",
+    "secondarySummaryLoss": "KEIRIN_NET_NEXT_EXCEPTIONS_SHOWN_AS_DASHES_UNSUITABLE_AS_FULL_EXCEPTION_AUTHORITY",
+    "independentOrigin": "NOT_PROVEN",
+    "publicationGate": "RESEARCH_ONLY_PENDING_ORIGIN_AND_FORMAL_MAPPING"
+  },
+  "remainingToPass": [
+    "Confirm independent originating records of result status and prediction line; two display domains alone do not establish two qualifying originals",
+    "Check official amended original card and any organizer incident status where needed for source-label qualification",
+    "Map '落' and '失' through formal exception enums preserving raw fields, then run strict publication guard without inferring ranks"
+  ],
+  "notes": "Numerically ranked 5, two separate exceptions. No missing car in result source; secondary lossy summary must be overridden by original full 7-row provider, not treated as 2 withdrawals."
+}
