@@ -47,14 +47,14 @@ for(const r of races.races){
  assert.deepEqual(nums.slice().sort((a,b)=>a-b),formed.slice().sort((a,b)=>a-b));
  // Numeric places and non-finishing statuses are different data types. Never fill in
  // a missing placing simply to make the expected rider count match.
- const ranks=r.finishers.filter(x=>/^\\d+$/.test(String(x.finish||''))).map(x=>Number(x.finish));
+ const ranks=r.finishers.filter(x=>/^\d+$/.test(String(x.finish||''))).map(x=>Number(x.finish));
  assert.equal(new Set(ranks).size,ranks.length,'duplicate numeric finish');
  assert.ok(ranks.every(n=>n>=1&&n<=r.finishers.length),'finish outside field');
  const statusValues=new Set(['欠車','取消','失格','落車棄権','途中棄権','棄権']);
  for(const x of r.finishers){
    assert.ok(x.name&&x.prefecture&&x.period&&x.riderClass,'missing rider identity');
    assert.ok('margin' in x&&'winningMethod' in x&&'startBack' in x&&'exception' in x,'missing comparison column');
-   if(/^\\d+$/.test(String(x.finish||''))){assert.ok(x.lastLap,'missing numeric finisher lap')}
+   if(/^\d+$/.test(String(x.finish||''))){assert.ok(x.lastLap,'missing numeric finisher lap')}
    else{
      assert.ok(statusValues.has(String(x.finish)),'unverified or ambiguous finish status');
      assert.equal(x.exception,x.finish,'exception status mismatch');
