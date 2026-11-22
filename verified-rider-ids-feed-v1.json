@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "107選手の氏名・府県・期別・6桁登録番号を独立した2掲載元の本文で一致確認。既存104人保存、新規荒川ひかり・荒澤貴史・香川雄介。",
+  "verificationNote": "110人：氏名・府県・期別・6桁登録番号の4項目を少なくとも2つの独立掲載元本文で照合。前回107人保持。",
   "summary": {
-    "rows": 107
+    "rows": 110
   },
   "riders": [
     {
@@ -2573,6 +2573,78 @@
           "https://www.winticket.jp/keirin/cyclist/013059"
         ],
         "note": "2026-11-22 KEIRIN.JP公式プロフィール全文（元資料更新2026-08-01）とWINTICKETプロフィール全文を取得、氏名・府県・期別・6桁登録番号の4項目一致。取得は過去キャッシュでライブ時点ではない。元台帳349行。"
+      }
+    },
+    {
+      "id": "015277",
+      "name": "高井　流星",
+      "prefecture": "岡山",
+      "period": "113",
+      "source": "https://www.yen-joy.net/racer/data/015277/3",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.yen-joy.net/racer/data/015277/3",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.yen-joy.net/racer/data/015277/3",
+          "https://www.winticket.jp/keirin/cyclist/015277"
+        ],
+        "note": "2026-11-22 JSTに過去キャッシュ本文から氏名・府県・期別・登録番号照合。日刊プロスポーツ新聞社エンジョイ（2026-06-30掲載版）とWINTICKETの独立全文を確認。公式KEIRIN.JP全文はcache missなので公式二サイト一致とは記載しない。台帳350行。ライブ2026-11-22データを意味しない。"
+      }
+    },
+    {
+      "id": "014059",
+      "name": "高塩　讓次",
+      "prefecture": "栃木",
+      "period": "90",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014059",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014059",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014059",
+          "https://www.winticket.jp/keirin/cyclist/014059"
+        ],
+        "note": "2026-11-22 JSTに過去キャッシュ本文から氏名・府県・期別・登録番号照合。KEIRIN.JP公式元ページ2026-08-08更新版とWINTICKET全文が一致。台帳351行。ライブ2026-11-22データを意味しない。"
+      }
+    },
+    {
+      "id": "014475",
+      "name": "高間　悠平",
+      "prefecture": "福井",
+      "period": "95",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014475",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014475",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014475",
+          "https://www.winticket.jp/keirin/cyclist/014475"
+        ],
+        "note": "2026-11-22 JSTに過去キャッシュ本文から氏名・府県・期別・登録番号照合。KEIRIN.JP公式2026-07-30更新版とWINTICKET全文が一致。福井競輪場の独自選手一覧でも登録番号・期別を確認。台帳352行。ライブ2026-11-22データを意味しない。"
       }
     }
   ],
