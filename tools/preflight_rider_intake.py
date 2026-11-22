@@ -43,3 +43,24 @@ def preflight(original, candidate, auto, manual):
         else: issues.extend(rec["issues"])
     issues=list(dict.fromkeys(issues))
     return {"eligible":not issues,"issues":issues,"publicationAllowed":False}
+
+def from_rider_ledger_row(row):
+    """Convert an actual 選手ID照合台帳 A:K row to preflight's four fields.
+
+    Ledger schema is A:name, B:prefecture, C:period, D:result count,
+    E:first date, F:last date, G:registration. NEVER compare D to period.
+    """
+    if not isinstance(row,list) or len(row)<7:
+        raise ValueError("INVALID_LEDGER_ROW")
+    def safe(v):
+        return v if isinstance(v,str) else ("" if v is None else str(v))
+    return [safe(row[0]),safe(row[1]),safe(row[2]),safe(row[6])]
+
+
+def preflight_ledger_row(ledger_row,candidate,auto,manual):
+    """Audit a candidate using the actual original ledger A:K schema."""
+    try:
+        original=from_rider_ledger_row(ledger_row)
+    except ValueError:
+        return {"eligible":False,"issues":["INVALID_LEDGER_ROW"],"publicationAllowed":False}
+    return preflight(original,candidate,auto,manual)
