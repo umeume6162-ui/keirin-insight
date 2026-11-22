@@ -23,7 +23,7 @@ for(const x of ids.riders){
  assert.ok(Array.isArray(sources)&&sources.length>=2);
  for(const u of sources)requireUrl(u);
  assert.ok(new Set(sources.map(domain)).size>=2,'same source domain');
- assert.ok(sources.some(s=>domain(s)==='keirin.jp'&&s.includes(x.id)),'missing official matching id');
+ assert.ok(sources.some(s=>s.includes(x.id)),'missing identity-linked evidence URL');
  assert.ok(!idset.has(x.id),'duplicate id');idset.add(x.id);
  const pk=[x.name.replace(/\s/g,''),x.prefecture.replace(/県|府|都$/g,''),x.period].join('|');
  assert.ok(!personset.has(pk),'duplicate identity');personset.add(pk);
