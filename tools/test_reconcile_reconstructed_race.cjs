@@ -42,6 +42,16 @@ assert.equal(r8.numericFinishers,7);
 assert.deepEqual(r8.missingFromResult,[]);
 assert.equal(r8.publicationPassed,false);
 assert.equal(r8.officialStartersKnown,false);
+// Nagoya 9R: 7 original entries, 5 placed results, and exactly two original exception statuses.
+const r9=check(load(9));
+assert.equal(r9.raceKey,'2026-11-20|42|9');
+assert.equal(r9.structuralOk,true,JSON.stringify(r9.errors));
+assert.equal(r9.documentedResultRows,7);
+assert.equal(r9.numericFinishers,5);
+assert.deepEqual(r9.nonNumericResultRows.map(x=>[x.car,x.status]),[[3,'落'],[6,'失']]);
+assert.deepEqual(r9.missingFromResult,[]);
+assert.equal(r9.publicationPassed,false);
+assert.equal(r9.officialStartersKnown,false);
 // Five numeric places plus fall/disqualification must be retained without ranking the exceptions.
 const r4=check(load(4));
 assert.equal(r4.structuralOk,true,JSON.stringify(r4.errors));
@@ -62,4 +72,4 @@ assert.equal(missing.publicationPassed,false);
 const duplicate=load(5);
 duplicate.results[1].car=duplicate.results[0].car;
 assert.equal(check(duplicate).structuralOk,false);
-console.log('source-first race reconciliation tests passed (6 authentic candidates + missing/duplicate regression cases)');
+console.log('source-first race reconciliation tests passed (7 authentic candidates + missing/duplicate regression cases)');
