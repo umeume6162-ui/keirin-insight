@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付",
   "verificationNote": "148名の氏名・府県・期別・登録番号の固定4項目についてKEIRIN.JP公式とWINTICKET個別原文で一致。元選手台帳389-391行へ証拠保存し再読込済み。",
   "summary": {
-    "rows": 164
+    "rows": 166
   },
   "riders": [
     {
@@ -3944,6 +3944,56 @@
           "https://www.chariloto.com/keirin_athletes/13006"
         ],
         "note": "2026-11-23 JST full cached official KEIRIN.JP profile (shown update 2026-06-06) and full cached Chariloto athlete page; name, prefecture, period and registration ID identical. Not live retrieval; independent generation upstream unproven. Ledger row 407 confirmed readback."
+      }
+    },
+    {
+      "id": "015239",
+      "name": "佐々木堅次",
+      "prefecture": "福島",
+      "period": "113",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015239",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015239",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015239",
+          "https://www.winticket.jp/keirin/cyclist/015239",
+          "https://www.oddspark.com/keirin/PlayerDetail.do?playerCd=015239"
+        ],
+        "note": "2026-11-23: KEIRIN.JP full cached page (update 2026-08-03) matched identity fields on other providers/venue rider listing; some second-source retrieval through search-index excerpts. Distinct-site content agreement, upstream generation not audited; no additional primary-original requirement. Sheet row 408 write and readback confirmed."
+      }
+    },
+    {
+      "id": "013668",
+      "name": "佐々木孝司",
+      "prefecture": "青森",
+      "period": "84",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013668",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013668",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013668",
+          "https://aomorikeirin.com/player/",
+          "https://keirin.netkeiba.com/race/course/player.html?jyo_cd=12"
+        ],
+        "note": "2026-11-23: KEIRIN.JP full cached page (update 2026-07-25) matched identity fields on other providers/venue rider listing; some second-source retrieval through search-index excerpts. Distinct-site content agreement, upstream generation not audited; no additional primary-original requirement. Sheet row 409 write and readback confirmed."
       }
     }
   ],
