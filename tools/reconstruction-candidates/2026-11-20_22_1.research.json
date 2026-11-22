@@ -1,0 +1,258 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-11-20|22|1",
+  "createdDateJST": "2026-11-22",
+  "race": {
+    "date": "2026-11-20",
+    "venue": "前橋",
+    "venueCode": "22",
+    "raceNo": 1,
+    "grade": "F2",
+    "event": "ニッカン・コム杯",
+    "class": "A級チャレンジ予選",
+    "expectedEntrants": 7,
+    "startTimeLocal": "20:50"
+  },
+  "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
+  "payout": "NOT_COLLECTED_OPTIONAL",
+  "method": "Independent of legacy V99: archived dated Tokyo Sports original racecard, Kdreams results/forecast, netkeirin full seven-row results, KEIRIN HEX pre-race strategy. Field-specific reconciliation of all original cars. Different visible site domains do not alone qualify two independent original producers.",
+  "originalEntries": [
+    {
+      "car": 1,
+      "name": "佐藤 和典",
+      "prefecture": "神奈川",
+      "period": 70,
+      "sourceStatus": "TOKYO_SPORTS_ARCHIVED_RACECARD_AND_KDREAMS_ORIGINAL_ENTRY_MATCH"
+    },
+    {
+      "car": 2,
+      "name": "十文字 悠真",
+      "prefecture": "福島",
+      "period": 127,
+      "sourceStatus": "TOKYO_SPORTS_ARCHIVED_RACECARD_AND_KDREAMS_ORIGINAL_ENTRY_MATCH"
+    },
+    {
+      "car": 3,
+      "name": "山崎 功也",
+      "prefecture": "宮城",
+      "period": 95,
+      "sourceStatus": "TOKYO_SPORTS_ARCHIVED_RACECARD_AND_KDREAMS_ORIGINAL_ENTRY_MATCH"
+    },
+    {
+      "car": 4,
+      "name": "鶴 健志",
+      "prefecture": "福岡",
+      "period": 129,
+      "sourceStatus": "TOKYO_SPORTS_ARCHIVED_RACECARD_AND_KDREAMS_ORIGINAL_ENTRY_MATCH"
+    },
+    {
+      "car": 5,
+      "name": "吉田 昌弘",
+      "prefecture": "埼玉",
+      "period": 97,
+      "sourceStatus": "TOKYO_SPORTS_ARCHIVED_RACECARD_AND_KDREAMS_ORIGINAL_ENTRY_MATCH"
+    },
+    {
+      "car": 6,
+      "name": "倉岡 慎太郎",
+      "prefecture": "熊本",
+      "period": 59,
+      "sourceStatus": "TOKYO_SPORTS_ARCHIVED_RACECARD_AND_KDREAMS_ORIGINAL_ENTRY_MATCH"
+    },
+    {
+      "car": 7,
+      "name": "長崎 達也",
+      "prefecture": "神奈川",
+      "period": 89,
+      "sourceStatus": "TOKYO_SPORTS_ARCHIVED_RACECARD_AND_KDREAMS_ORIGINAL_ENTRY_MATCH"
+    }
+  ],
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      2,
+      3,
+      1,
+      5,
+      7,
+      4,
+      6
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 7,
+    "nonNumericResultRows": 0,
+    "confirmedWithdrawals": [],
+    "revisedStartCardSource": null,
+    "confirmedStarterCount": null,
+    "note": "Archived pre-race 7 entries and 7 numbered finishers coincide, but organizer amended final start list not independently audited. No inferred nonstarter."
+  },
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [
+      [
+        2,
+        3,
+        1,
+        5
+      ],
+      [
+        4,
+        6,
+        7
+      ]
+    ],
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/maebashi/racedetail/2220261120010001/?pageType=result",
+      "https://keirinhex.jp/races/20261120/012220261120/"
+    ],
+    "publicationAttribution": "Kdreams explicitly lists 並び提供：アオケイ; HEX presents its own pre-race prediction published previous evening 2026-11-19 19:20. Origination independence beyond this is not fully qualified.",
+    "note": "Pre-race forecast lines only. HEX explicitly says not actual road position; do not treat as observed formation."
+  },
+  "results": [
+    {
+      "car": 2,
+      "name": "十文字 悠真",
+      "prefecture": "福島",
+      "period": 127,
+      "grade": "A3",
+      "finishRaw": "1",
+      "finish": 1,
+      "lapSeconds": 10.2,
+      "marginRaw": "",
+      "winningMethodRaw": "逃",
+      "sbRaw": "SB",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_RESULTS_PUBLISHERS_DISPLAY_SAME_7_RESULTS"
+    },
+    {
+      "car": 3,
+      "name": "山崎 功也",
+      "prefecture": "宮城",
+      "period": 95,
+      "grade": "A3",
+      "finishRaw": "2",
+      "finish": 2,
+      "lapSeconds": 10.1,
+      "marginRaw": "3/4車輪",
+      "winningMethodRaw": "ク",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_RESULTS_PUBLISHERS_DISPLAY_SAME_7_RESULTS"
+    },
+    {
+      "car": 1,
+      "name": "佐藤 和典",
+      "prefecture": "神奈川",
+      "period": 70,
+      "grade": "A3",
+      "finishRaw": "3",
+      "finish": 3,
+      "lapSeconds": 10.1,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_RESULTS_PUBLISHERS_DISPLAY_SAME_7_RESULTS"
+    },
+    {
+      "car": 5,
+      "name": "吉田 昌弘",
+      "prefecture": "埼玉",
+      "period": 97,
+      "grade": "A3",
+      "finishRaw": "4",
+      "finish": 4,
+      "lapSeconds": 10,
+      "marginRaw": "1車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_RESULTS_PUBLISHERS_DISPLAY_SAME_7_RESULTS"
+    },
+    {
+      "car": 7,
+      "name": "長崎 達也",
+      "prefecture": "神奈川",
+      "period": 89,
+      "grade": "A3",
+      "finishRaw": "5",
+      "finish": 5,
+      "lapSeconds": 10,
+      "marginRaw": "2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_RESULTS_PUBLISHERS_DISPLAY_SAME_7_RESULTS"
+    },
+    {
+      "car": 4,
+      "name": "鶴 健志",
+      "prefecture": "福岡",
+      "period": 129,
+      "grade": "A3",
+      "finishRaw": "6",
+      "finish": 6,
+      "lapSeconds": 10.3,
+      "marginRaw": "2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_RESULTS_PUBLISHERS_DISPLAY_SAME_7_RESULTS"
+    },
+    {
+      "car": 6,
+      "name": "倉岡 慎太郎",
+      "prefecture": "熊本",
+      "period": 59,
+      "grade": "A3",
+      "finishRaw": "7",
+      "finish": 7,
+      "lapSeconds": 10.3,
+      "marginRaw": "1/2車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "KDREAMS_AND_NETKEIRIN_RESULTS_PUBLISHERS_DISPLAY_SAME_7_RESULTS"
+    }
+  ],
+  "resultUrls": [
+    "https://keirin.kdreams.jp/maebashi/racedetail/2220261120010001/?pageType=result",
+    "https://keirin.netkeiba.com/race/result/?race_id=202611202201&rf=yoso_detail_keirin"
+  ],
+  "sourceAudit": {
+    "retrievedDateJST": "2026-11-22",
+    "retrievalMethod": "web.open full published race results and original pre-race entries",
+    "dateSource": "Tokyo Sports 2026-11-19 published for 2026-11-20 race; HEX pre-race 2026-11-19",
+    "resultKdreams": "All seven result rows in full detail with times and margins, data on Kdreams display",
+    "resultNetkeirin": "Independent webpage domain netkeirin seven-result table, matched rank/car/name/lap/margin/method/SB",
+    "lineKdreams": "Kdreams predicted line 2-3-1-5 / 4-6-7 with credit アオケイ",
+    "lineHEX": "HEX independent editorial forecast line 2-3-1-5 / 4-6-7 and explicit pre-race prediction time",
+    "preRaceCard": "https://keirin.tokyo-sports.co.jp/list/race/20261119_32101",
+    "sourceIndependence": "Upstream result data creators not established independent; no formal two-source PASS yet",
+    "sourceDisclosure": "netkeirin warns to compare with organizer statement; this has not been completed",
+    "license": "Structured factual values only; no wholesale editorial original text"
+  },
+  "fieldVerification": {
+    "sevenEntries": "TOKYO_SPORTS_AND_KDREAMS_PRE_RACE_CARDS_AGREE",
+    "sevenRankCar": "KDREAMS_AND_NETKEIRIN_DISPLAY_AGREE",
+    "sevenLapsAndMargins": "KDREAMS_AND_NETKEIRIN_DISPLAY_AGREE",
+    "winningMethodAndSB": "DISPLAY_AGREE_WITH_NORMALIZATION 逃=逃 and ク=マーク",
+    "preRaceLine": "KDREAMS_AND_HEX_PUBLISH_TWO_SAME_FORECAST_GROUPS_ORIGIN_REVIEW_PENDING",
+    "independentOrigin": "NOT_PROVEN",
+    "formalPass": "RESEARCH_ONLY_PENDING_ORIGIN_AUDIT_AND_FINAL_START_CARD"
+  },
+  "remainingToPass": [
+    "Verify true independence of result record origin and required prediction line source origins rather than distinct domains",
+    "Confirm organizer original final racecard and incidents or justified applicability status",
+    "Run full verified race and line feed publication guard after full mandatory evidence qualifies"
+  ],
+  "notes": "New race at Maebashi venue 22 outside prior Nagoya venue 42; researcher-only PENDING."
+}
