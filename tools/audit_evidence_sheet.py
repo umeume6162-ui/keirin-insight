@@ -14,8 +14,9 @@ def norm(x):
     return "".join(x.split())
 def person(name,pref,period):
     p=norm(pref)
-    p={"神奈川":"神奈","北海道":"北海","和歌山":"和歌"}.get(p,p)
-    return (norm(name),p,norm(period))
+    p={"東京都":"東京","大阪府":"大阪","京都府":"京都","北海道":"北海","神奈川県":"神奈","神奈川":"神奈","和歌山県":"和歌","和歌山":"和歌"}.get(p,p)
+    if p.endswith("県"):p=p[:-1]
+    return (norm(name),p,norm(period).removesuffix("期"))
 def source_ok(url,number):
     try:
         u=urlsplit(url)
@@ -40,6 +41,11 @@ def audit(rows):
         if r[14] not in ("MATCH_CANDIDATE","REJECTED","ERROR","PENDING"):issues.append("INVALID_STATUS")
         if r[15]!=POLICY:issues.append("POLICY_RECHECK_REQUIRED")
         if r[16]!="PENDING":issues.append("UNSUPPORTED_APPROVAL")
+        # All retained evidence, including pending/cached/rejected rows, contributes
+        # to collision detection. Missing fields never create an artificial key.
+        if all(r[k].strip() for k in (4,5,6)):
+            p=person(*r[4:7]);people[p].append(item)
+        if re.fullmatch(r"[0-9]{6}",r[10]):numbers[r[10]].append(item)
         if r[14]!="MATCH_CANDIDATE":
             item["state"]="HELD";continue
         if not all(r[k].strip() for k in (2,3,4,5,6,7,8,9,10,11,12)):issues.append("MISSING_EVIDENCE")
@@ -51,8 +57,9 @@ def audit(rows):
         if not re.fullmatch(r"[0-9]{6}",r[10]) or not source_ok(r[11],r[10]):issues.append("INVALID_PROFILE")
         p=person(*r[7:10])
         if p!=person(*r[4:7]):issues.append("IDENTITY_MISMATCH")
-        people[p].append(item)
-        numbers[r[10]].append(item)
+        # Index a different observed person too, preventing conflicting identities.
+        if all(r[k].strip() for k in (7,8,9)) and (not all(r[k].strip() for k in (4,5,6)) or p!=person(*r[4:7])):
+            people[p].append(item)
     for groups,reason in ((ids,"DUPLICATE_RECORD_ID"),(people,"REPEATED_PERSON"),(numbers,"REPEATED_REGISTRATION")):
         for group in groups.values():
             if len(group)>1:
