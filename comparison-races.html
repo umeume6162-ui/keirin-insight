@@ -109,8 +109,8 @@ d.append(body);shell.append(d);return shell
 let activeRaces=[];
 function addOptions(id,values){const sel=$(id);for(const name of [...new Set(values.filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b),"ja"))){const option=el("option",name);option.value=name;sel.append(option)}}
 function filterAndRender(){
- const term=$("raceSearch").value.trim().replace(/\\s+/g,"").toLowerCase(),track=$("trackFilter").value,grade=$("classFilter").value;
- const matches=activeRaces.filter(r=>(!track||r.track===track)&&(!grade||r.className===grade)&&(!term||[r.track,r.date,r.race+"R",r.key,r.className,...r.finishers.map(x=>x.name)].join("").replace(/\\s+/g,"").toLowerCase().includes(term)));
+ const term=$("raceSearch").value.trim().replace(/\s+/g,"").toLowerCase(),track=$("trackFilter").value,grade=$("classFilter").value;
+ const matches=activeRaces.filter(r=>(!track||r.track===track)&&(!grade||r.className===grade)&&(!term||[r.track,r.date,r.race+"R",r.key,r.className,...r.finishers.map(x=>x.name)].join("").replace(/\s+/g,"").toLowerCase().includes(term)));
  $("races").replaceChildren();
  for(const r of matches)$("races").append(render(r));
  $("filterStats").textContent="研究記録 "+matches.length+" / "+activeRaces.length+" レース · "+matches.reduce((n,r)=>n+r.finishers.length,0)+"選手結果";
