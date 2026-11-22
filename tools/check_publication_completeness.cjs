@@ -110,7 +110,7 @@ for(const race of official.races){
  for(const rider of line.riders){
   const row=riderRows.find(x=>Number(x[fieldIndex.number])===Number(rider.number));
   assert.ok(row,'missing linked rider row');
-  assert.equal(String(row[fieldIndex.name]).replace(/\\s/g,''),String(rider.name).replace(/\\s/g,''));
+  assert.equal(String(row[fieldIndex.name]).replace(/\s/g,''),String(rider.name).replace(/\s/g,''));
   assert.equal(String(row[fieldIndex.period]),String(rider.period));
   assert.ok(Array.isArray(rider.line)&&rider.line.some(n=>Number(n)===Number(rider.number)));
   assert.ok(line.forecastGroups.some(g=>JSON.stringify(g)===JSON.stringify(rider.line)),'line group not corroborated');
