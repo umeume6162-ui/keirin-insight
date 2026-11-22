@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "2サイトで氏名・府県・期別・登録番号が一致した66選手。既存63人保持、月森亮輔・原真司・原大智を追加。",
+  "verificationNote": "2サイト掲載プロフィールの4必須項目一致69選手。既存66人維持、原司・原清孝・原誠宏を追加。",
   "summary": {
-    "rows": 66
+    "rows": 69
   },
   "riders": [
     {
@@ -1589,6 +1589,78 @@
           "https://www.winticket.jp/keirin/cyclist/015418"
         ],
         "note": "氏名・府県・期別・登録番号をKEIRIN.JPとWINTICKET掲載で照合。元台帳310行。原大智のKEIRIN.JP本文直接openはキャッシュ取得失敗のため検索結果掲載の4項目を確認。"
+      }
+    },
+    {
+      "id": "012626",
+      "name": "原　司",
+      "prefecture": "佐賀",
+      "period": "70",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=012626",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=012626",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=012626",
+          "https://www.winticket.jp/keirin/cyclist/012626"
+        ],
+        "note": "KEIRIN.JPとWINTICKETの掲載プロフィール4項目一致。取得は公開キャッシュ資料、リアルタイム確認ではない。選手ID照合台帳306行既存レコードを更新。原誠宏の一方資料の更新は2024/11/11、登録番号等の永続識別情報を照合。"
+      }
+    },
+    {
+      "id": "014652",
+      "name": "原　清孝",
+      "prefecture": "沖縄",
+      "period": "98",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014652",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014652",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014652",
+          "https://www.winticket.jp/keirin/cyclist/014652"
+        ],
+        "note": "KEIRIN.JPとWINTICKETの掲載プロフィール4項目一致。取得は公開キャッシュ資料、リアルタイム確認ではない。選手ID照合台帳308行既存レコードを更新。原誠宏の一方資料の更新は2024/11/11、登録番号等の永続識別情報を照合。"
+      }
+    },
+    {
+      "id": "014188",
+      "name": "原　誠宏",
+      "prefecture": "香川",
+      "period": "91",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014188",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014188",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014188",
+          "https://www.winticket.jp/keirin/cyclist/014188"
+        ],
+        "note": "KEIRIN.JPとWINTICKETの掲載プロフィール4項目一致。取得は公開キャッシュ資料、リアルタイム確認ではない。選手ID照合台帳309行既存レコードを更新。原誠宏の一方資料の更新は2024/11/11、登録番号等の永続識別情報を照合。"
       }
     }
   ],
