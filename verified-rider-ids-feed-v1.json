@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付",
   "verificationNote": "148名の氏名・府県・期別・登録番号の固定4項目についてKEIRIN.JP公式とWINTICKET個別原文で一致。元選手台帳389-391行へ証拠保存し再読込済み。",
   "summary": {
-    "rows": 166
+    "rows": 168
   },
   "riders": [
     {
@@ -3994,6 +3994,54 @@
           "https://keirin.netkeiba.com/race/course/player.html?jyo_cd=12"
         ],
         "note": "2026-11-23: KEIRIN.JP full cached page (update 2026-07-25) matched identity fields on other providers/venue rider listing; some second-source retrieval through search-index excerpts. Distinct-site content agreement, upstream generation not audited; no additional primary-original requirement. Sheet row 409 write and readback confirmed."
+      }
+    },
+    {
+      "id": "013748",
+      "name": "佐々木省司",
+      "prefecture": "青森",
+      "period": "86",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013748",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013748",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013748",
+          "https://aomorikeirin.com/player/"
+        ],
+        "note": "2026-11-23 JST KEIRIN.JP cached full profile updated 2026-07-31; second separate provider https://aomorikeirin.com/player/ confirms name/prefecture/period/registration. Not live external capture and upstream generation is not proven; Google Sheet row 410 readback confirmed."
+      }
+    },
+    {
+      "id": "013295",
+      "name": "佐々木則幸",
+      "prefecture": "高知",
+      "period": "79",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013295",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013295",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013295",
+          "https://www.winticket.jp/keirin/cyclist/013295"
+        ],
+        "note": "2026-11-23 JST KEIRIN.JP cached full profile updated 2026-01-26; second separate provider https://www.winticket.jp/keirin/cyclist/013295 confirms name/prefecture/period/registration. Not live external capture and upstream generation is not proven; Google Sheet row 411 readback confirmed."
       }
     }
   ],
