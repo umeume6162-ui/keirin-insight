@@ -1,1 +1,83 @@
-{"schema":"ki-public-results-index-v1","origin_sheet":"VERIFIED publication","source_snapshot_date":"2026-11-22","latest_race_date":"","official_result_independent_audit":"no_verified_records","notes":"Verified-only publication. No records independently verified for publication yet.","summary":{"races":0,"rider_rows":0,"by_grade":{"A1/A2":0,"A3":0,"S級":0,"ガールズ":0}},"races":[],"publicationPolicy":"ki-verified-only-v1"}
+{
+  "schema": "ki-public-results-index-v1",
+  "origin_sheet": "VERIFIED publication",
+  "source_snapshot_date": "2026-11-23",
+  "latest_race_date": "2026-10-05",
+  "official_result_independent_audit": "two_qualifying_publishers_all_fields_agree",
+  "notes": "Two qualified publisher result sources and two publisher forecast sources agree for full seven-car race. Third primary source not required.",
+  "summary": {
+    "races": 1,
+    "rider_rows": 7,
+    "by_grade": {
+      "A1/A2": 0,
+      "A3": 0,
+      "S級": 1,
+      "ガールズ": 0
+    }
+  },
+  "races": [
+    {
+      "key": "2026-10-05|75|11",
+      "date": "2026-10-05",
+      "track": "松山",
+      "track_code": "75",
+      "race": 11,
+      "size": 7,
+      "grade": "S級",
+      "non_numeric": 0,
+      "className": "S級準決勝",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+          "https://keirin.netkeiba.com/race/result/?race_id=202610057511&rf=speciallist"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "margin",
+          "lastLap",
+          "winningMethod",
+          "startBack",
+          "exception"
+        ]
+      },
+      "preRaceFormation": {
+        "groups": [
+          [
+            4,
+            2
+          ],
+          [
+            1
+          ],
+          [
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            7
+          ]
+        ],
+        "sourceUrls": [
+          "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+          "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_11.html",
+          "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020011/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
+        ],
+        "verifiedDate": "2026-11-23"
+      },
+      "sourceEvidenceFile": "tools/reconstruction-candidates/2026-10-05_75_11.research.json"
+    }
+  ],
+  "publicationPolicy": "ki-verified-only-v1"
+}
