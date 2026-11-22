@@ -47,7 +47,22 @@ def audit(rows):
             p=person(*r[4:7]);people[p].append(item)
         if re.fullmatch(r"[0-9]{6}",r[10]):numbers[r[10]].append(item)
         if r[14]!="MATCH_CANDIDATE":
-            item["state"]="HELD";continue
+            item["state"]="HELD"
+            # A cached profile is evidence, not an independently verified match.
+            # Return explicit follow-up reasons without changing retained data.
+            if r[3]=="cached_official_profile":
+                item["followUp"]=["DIRECT_OFFICIAL_PROFILE_REQUIRED","INDEPENDENT_REVIEW_REQUIRED"]
+                if not all(r[k].strip() for k in (2,7,8,9,10,11,12,13)):
+                    issues.append("MISSING_CACHED_EVIDENCE")
+                if not re.fullmatch(r"[0-9]{6}",r[10]) or not source_ok(r[11],r[10]):
+                    issues.append("INVALID_CACHED_PROFILE")
+                if person(*r[4:7])!=person(*r[7:10]):
+                    issues.append("CACHED_IDENTITY_MISMATCH")
+                try:
+                    d=datetime.datetime.fromisoformat(r[2])
+                    if d.utcoffset()!=datetime.timedelta(hours=9):raise ValueError()
+                except ValueError:issues.append("INVALID_CACHED_JST")
+            continue
         if not all(r[k].strip() for k in (2,3,4,5,6,7,8,9,10,11,12)):issues.append("MISSING_EVIDENCE")
         try:
             d=datetime.datetime.fromisoformat(r[2])
