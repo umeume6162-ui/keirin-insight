@@ -1,0 +1,188 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-11-20|42|4",
+  "race": {
+    "date": "2026-11-20",
+    "venue": "名古屋",
+    "venueCode": "42",
+    "raceNo": 4,
+    "grade": "F2",
+    "class": "A級チャレンジ予選",
+    "expectedEntrants": 7,
+    "startTimeLocal": "21:40"
+  },
+  "createdDateJST": "2026-11-22",
+  "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
+  "method": "Source-first archived original result and pre-race card; preserve five ranked finishers plus two distinct non-numeric statuses. Does NOT infer seven numeric finishers.",
+  "payout": "NOT_COLLECTED_OPTIONAL",
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [
+      [
+        1,
+        4
+      ],
+      [
+        3,
+        2,
+        6
+      ],
+      [
+        5,
+        7
+      ]
+    ],
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010004/?pageType=showResult",
+      "https://keirin.tokyo-sports.co.jp/list/race/20261119_32052"
+    ],
+    "sourceState": "PUBLISHER_FORECAST_AND_DATED_PRE_RACE_COMMENTS_MATCH_ORIGINALITY_UNCONFIRMED",
+    "note": "1→4, 3→2→6, 5→7 predicted groups, not actual formation, based on original line and role comments."
+  },
+  "results": [
+    {
+      "finishRaw": "1",
+      "finish": 1,
+      "car": 1,
+      "name": "高橋奏多",
+      "prefecture": "大阪",
+      "period": 129,
+      "grade": "A3",
+      "lapSeconds": 12.2,
+      "marginRaw": "",
+      "winningMethodRaw": "捲くり",
+      "sbRaw": "SB",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceEvidence": "Kdreams and Chariloto direct original publications for this dated race, provenance independence unproven"
+    },
+    {
+      "finishRaw": "2",
+      "finish": 2,
+      "car": 2,
+      "name": "及川裕奨",
+      "prefecture": "岩手",
+      "period": 86,
+      "grade": "A3",
+      "lapSeconds": 12.1,
+      "marginRaw": "1車身",
+      "winningMethodRaw": "差し",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceEvidence": "Kdreams and Chariloto direct original publications for this dated race, provenance independence unproven"
+    },
+    {
+      "finishRaw": "3",
+      "finish": 3,
+      "car": 6,
+      "name": "志村正洋",
+      "prefecture": "神奈川",
+      "period": 77,
+      "grade": "A3",
+      "lapSeconds": 12.2,
+      "marginRaw": "2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceEvidence": "Kdreams and Chariloto direct original publications for this dated race, provenance independence unproven"
+    },
+    {
+      "finishRaw": "4",
+      "finish": 4,
+      "car": 7,
+      "name": "長谷川辰徳",
+      "prefecture": "埼玉",
+      "period": 89,
+      "grade": "A3",
+      "lapSeconds": 12.2,
+      "marginRaw": "2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceEvidence": "Kdreams and Chariloto direct original publications for this dated race, provenance independence unproven"
+    },
+    {
+      "finishRaw": "5",
+      "finish": 5,
+      "car": 5,
+      "name": "山崎寛巳",
+      "prefecture": "新潟",
+      "period": 93,
+      "grade": "A3",
+      "lapSeconds": 12.4,
+      "marginRaw": "3/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceEvidence": "Kdreams and Chariloto direct original publications for this dated race, provenance independence unproven"
+    },
+    {
+      "finishRaw": "落",
+      "finish": null,
+      "car": 3,
+      "name": "猪野泰介",
+      "prefecture": "山形",
+      "period": 111,
+      "grade": "A3",
+      "lapSeconds": null,
+      "marginRaw": "",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "落",
+      "exceptionCategory": "FALL_STATUS_SOURCE_WORDING_ONLY",
+      "sourceEvidence": "Kdreams and Chariloto direct original publications for this dated race, provenance independence unproven"
+    },
+    {
+      "finishRaw": "失",
+      "finish": null,
+      "car": 4,
+      "name": "石貞有基",
+      "prefecture": "兵庫",
+      "period": 100,
+      "grade": "A3",
+      "lapSeconds": null,
+      "marginRaw": "",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "失",
+      "exceptionCategory": "DISQUALIFICATION_SOURCE_WORDING_ONLY",
+      "sourceEvidence": "Kdreams and Chariloto direct original publications for this dated race, provenance independence unproven"
+    }
+  ],
+  "resultUrls": [
+    "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010004/?pageType=showResult",
+    "https://www.chariloto.com/keirin/results/42/2026-11-20"
+  ],
+  "fieldVerification": {
+    "resultCarSet": "TWO_RESULT_PUBLISHERS_MATCH_SEVEN_CARS",
+    "fiveNumericFinishers": "TWO_RESULT_PUBLISHERS_MATCH",
+    "twoExceptionalStatusRows": "TWO_RESULT_PUBLISHERS_MATCH_ORIGINAL_FALL_AND_DISQUALIFIED_WORDING",
+    "numericLap": "BOTH_RESULTS_SUPPLY_FIVE_NUMERIC_LAPS; BOTH_NONNUMERIC_ROWS_BLANK",
+    "predictedFormation": "PUBLISHER_FORECAST_AND_TOKYO_SPORTS_PRE_RACE_COMMENTS_MATCH_GROUPS",
+    "upstreamIndependence": "PENDING_NOT_PROVEN",
+    "publicationGate": "PENDING_SOURCE_ORIGIN_INDEPENDENCE_AND_SCHEMA_EXCEPTION_MAPPING"
+  },
+  "sourceIntegrity": {
+    "retrievedDateJST": "2026-11-22",
+    "retrievalMethod": "web.open full body",
+    "originalResultUrls": [
+      "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010004/?pageType=showResult",
+      "https://www.chariloto.com/keirin/results/42/2026-11-20"
+    ],
+    "preRaceComments": "https://keirin.tokyo-sports.co.jp/list/race/20261119_32052",
+    "confirmedFact": "5 numeric finish statuses and 2 explicit source exception rows (落 #3, 失 #4); not seven numeric finishers; both sources retain 7 distinct entrant cars",
+    "sourceIndependence": "Distinct website publication ≠ proven distinct generating origin; no verified PASS without upstream qualification",
+    "copyright": "Structured facts only, no copying proprietary editorial content"
+  },
+  "remainingToPass": [
+    "Qualify truly independent origination of every required results and pre-race formation field",
+    "Check formal definitions of nonnumeric '落' and '失' and approved exception vocabulary; retain original without inventing fall DNF subtype",
+    "Map two exception rows and five numeric finishers to existing full result/line publication feeds with regression tests",
+    "Only if complete two-original mandatory-field agreement then PASS/publish"
+  ],
+  "notes": "Source-first reconstruction including all 7 initial entrants, five numeric ranks and two nonnumeric statuses. Not a new official published race."
+}
