@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "121選手の氏名・府県・期別・登録番号が異なる2掲載元の原文で一致。前回119件を維持し、2選手の原本・台帳照合を追加。",
+  "verificationNote": "124選手の4項目2サイト原文一致を記録。従来121件を維持し、新規3名を追加。",
   "summary": {
-    "rows": 121
+    "rows": 124
   },
   "riders": [
     {
@@ -2910,6 +2910,78 @@
         "note": "2026-11-22：KEIRIN.JP PC 2026-09-29 profile and WINTICKET full original body read. 4 identity fields matched. Sheet row363 readback verified; historical cache not live."
       },
       "verifiedDate": "2026-11-22"
+    },
+    {
+      "id": "013927",
+      "name": "高橋 由記",
+      "prefecture": "群馬",
+      "period": "88",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013927",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013927",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013927",
+          "https://www.winticket.jp/keirin/cyclist/013927"
+        ],
+        "note": "2026-11-22 JST KEIRIN.JP公式PC原文（掲載更新 2026-10-09）とWINTICKET選手プロフィール原文を直接閲覧。氏名=高橋 由記・府県=群馬・期別=88期・6桁登録番号=013927の4項目一致。出典1 https://www.keirin.jp/pc/racerprofile?snum=013927 ／出典2 https://www.winticket.jp/keirin/cyclist/013927。原文取得は保存キャッシュ本文でありライブ時点の競走得点・級班を保証しない。原本A:F不変。"
+      }
+    },
+    {
+      "id": "013985",
+      "name": "高橋 陽介",
+      "prefecture": "青森",
+      "period": "89",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013985",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013985",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013985",
+          "https://www.winticket.jp/keirin/cyclist/013985"
+        ],
+        "note": "2026-11-22 JST KEIRIN.JP公式PC原文（掲載更新 2026-09-03）とWINTICKET選手プロフィール原文を直接閲覧。氏名=高橋 陽介・府県=青森・期別=89期・6桁登録番号=013985の4項目一致。出典1 https://www.keirin.jp/pc/racerprofile?snum=013985 ／出典2 https://www.winticket.jp/keirin/cyclist/013985。原文取得は保存キャッシュ本文でありライブ時点の競走得点・級班を保証しない。原本A:F不変。"
+      }
+    },
+    {
+      "id": "014168",
+      "name": "高橋 和也",
+      "prefecture": "愛知",
+      "period": "91",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014168",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014168",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014168",
+          "https://www.winticket.jp/keirin/cyclist/014168"
+        ],
+        "note": "2026-11-22 JST KEIRIN.JP公式PC原文（掲載更新 2026-11-13）とWINTICKET選手プロフィール原文を直接閲覧。氏名=高橋 和也・府県=愛知・期別=91期・6桁登録番号=014168の4項目一致。出典1 https://www.keirin.jp/pc/racerprofile?snum=014168 ／出典2 https://www.winticket.jp/keirin/cyclist/014168。原文取得は保存キャッシュ本文でありライブ時点の競走得点・級班を保証しない。原本A:F不変。"
+      }
     }
   ],
   "publicationPolicy": "ki-verified-only-v1"
