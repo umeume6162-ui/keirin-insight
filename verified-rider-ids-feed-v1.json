@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "99人、2独立掲載元における氏名・府県・期別・6桁登録番号の4項目一致。既存96人維持。",
+  "verificationNote": "102選手の氏名・府県・期別・6桁登録番号が独立した2掲載元で一致。旧99人保持、新規幸田望夢・江本博明・溝口葵。",
   "summary": {
-    "rows": 99
+    "rows": 102
   },
   "riders": [
     {
@@ -2381,6 +2381,78 @@
           "https://www.winticket.jp/keirin/cyclist/013601"
         ],
         "note": "2026-11-22に公表キャッシュ原文直接開封、KEIRIN.JP元資料2026-08-09更新とWINTICKETプロフィールの氏名・府県・期別・登録番号が一致。ライブ現時点情報と区別。台帳340行。"
+      }
+    },
+    {
+      "id": "015340",
+      "name": "幸田　望夢",
+      "prefecture": "栃木",
+      "period": "115",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015340",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015340",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015340",
+          "https://www.winticket.jp/keirin/cyclist/015340"
+        ],
+        "note": "2026-11-22公開キャッシュ本文でKEIRIN.JP（本文版2026-07-30）とWINTICKETを直接確認。氏名・府県・期別・6桁登録番号一致。資料はライブではなく過去キャッシュ。台帳341行。"
+      }
+    },
+    {
+      "id": "014079",
+      "name": "江本　博明",
+      "prefecture": "千葉",
+      "period": "90",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014079",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014079",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014079",
+          "https://www.winticket.jp/keirin/cyclist/014079"
+        ],
+        "note": "2026-11-22公開キャッシュ本文でKEIRIN.JP（本文版2026-07-19）とWINTICKETを直接確認。氏名・府県・期別・6桁登録番号一致。資料はライブではなく過去キャッシュ。台帳342行。"
+      }
+    },
+    {
+      "id": "015462",
+      "name": "溝口　葵",
+      "prefecture": "三重",
+      "period": "117",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015462",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015462",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015462",
+          "https://www.winticket.jp/keirin/cyclist/015462"
+        ],
+        "note": "2026-11-22公開キャッシュ本文でKEIRIN.JP（本文版2026-07-19）とWINTICKETを直接確認。氏名・府県・期別・6桁登録番号一致。資料はライブではなく過去キャッシュ。台帳343行。"
       }
     }
   ],
