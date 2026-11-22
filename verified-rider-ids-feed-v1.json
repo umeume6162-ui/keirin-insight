@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "KEIRIN.JPとWINTICKETで4必須項目が一致した75選手。既存72人保持、原田亮太・原田翔真・原田研太朗追加。",
+  "verificationNote": "4必須項目と独立2サイト一致78人。既存75件保持。新規3件 古屋琢晶・古賀勝大・古閑良介。",
   "summary": {
-    "rows": 75
+    "rows": 78
   },
   "riders": [
     {
@@ -1805,6 +1805,78 @@
           "https://www.winticket.jp/keirin/cyclist/014682"
         ],
         "note": "KEIRIN.JPとWINTICKETのプロフィール原文4項目一致。KEIRIN.JP掲載資料更新2026-07-30。2026-11-22閲覧、原本A:F不変、選手ID照合台帳316行。"
+      }
+    },
+    {
+      "id": "014077",
+      "name": "古屋　琢晶",
+      "prefecture": "山梨",
+      "period": "90",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014077",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014077",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014077",
+          "https://www.winticket.jp/keirin/cyclist/014077"
+        ],
+        "note": "KEIRIN.JP本文2026/07/31更新＋WINTICKET本文。氏名・府県・期別・6桁登録番号一致。選手ID照合台帳317行。"
+      }
+    },
+    {
+      "id": "015365",
+      "name": "古賀　勝大",
+      "prefecture": "和歌山",
+      "period": "115",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015365",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015365",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015365",
+          "https://www.winticket.jp/keirin/cyclist/015365"
+        ],
+        "note": "KEIRIN.JP検索取得（公式URL直接openはキャッシュミス）＋WINTICKET本文。氏名・府県・期別・6桁登録番号一致。選手ID照合台帳318行。"
+      }
+    },
+    {
+      "id": "012847",
+      "name": "古閑　良介",
+      "prefecture": "福岡",
+      "period": "73",
+      "source": "https://keirin.jp/pc/racerprofile?snum=012847",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=012847",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=012847",
+          "https://www.winticket.jp/keirin/cyclist/012847"
+        ],
+        "note": "KEIRIN.JP本文2026/07/28更新＋WINTICKET本文。氏名・府県・期別・6桁登録番号一致。選手ID照合台帳319行。"
       }
     }
   ],
