@@ -168,7 +168,7 @@ def construct_lines(values, date):
         if len(raw)>15: raise ValueError('Unexpected line snapshot columns')
         v=[cleaned(x) for x in raw]+['']*(15-len(raw))
         rid,day,track,race,grade,num,name,pref,period,line,role,finish,status,captured,source=v
-        if not re.fullmatch(r'20\d{6}\d{4}',rid) or not re.fullmatch(r'20\d\d-\d\d-\d\d',day) or not race.isdigit() or not 1<=int(race)<=12 or not num.isdigit() or not 1<=int(num)<=7 or not all([track,grade,name,pref,period,line,role,captured,source]):
+        if not re.fullmatch(r'20\d{6}\d{4}',rid) or not re.fullmatch(r'20\d\d-\d\d-\d\d',day) or not race.isdigit() or not 1<=int(race)<=12 or not num.isdigit() or not 1<=int(num)<=7 or not all([track,grade,name,line,role,captured,source]):
             raise ValueError('Invalid line snapshot row '+rid)
         if not source.startswith('https://'): raise ValueError('Invalid line source '+rid)
         if captured[:10]>day: raise ValueError('Snapshot captured after race date '+rid)
@@ -180,7 +180,7 @@ def construct_lines(values, date):
         if role!=expected: raise ValueError('Line position mismatch '+rid)
         r=grouped.setdefault(rid,dict(id=rid,date=day,track=track,race=int(race),grade=grade,captured=captured,source=source,riders=[]))
         if (r['date'],r['track'],r['race'],r['grade'],r['captured'],r['source'])!=(day,track,int(race),grade,captured,source): raise ValueError('Snapshot metadata conflict '+rid)
-        r['riders'].append(dict(number=int(num),name=name,prefecture=pref,period=period,line=members,position=role,finishRaw=finish,resultStatus=status))
+        r['riders'].append(dict(number=int(num),name=name,prefecture=pref,period=period,line=members,position=role,identityComplete=bool(pref and period),finishRaw=finish,resultStatus=status))
     for rid,r in grouped.items():
         rr=r['riders']
         if sorted(x['number'] for x in rr)!=list(range(1,8)): raise ValueError('Incomplete or duplicate seven-rider snapshot '+rid)
