@@ -12,7 +12,7 @@ class DualIntakeTests(unittest.TestCase):
         r=audit_streams([HEADERS,row()],[HEADERS])
         self.assertIn("WRONG_INTAKE_STREAM",r["records"][0]["issues"])
     def test_cached_pending(self):
-        a=row();a[14]="PENDING";a[3]="cached_official_profile"
+        a=row();a[14]="PENDING";a[3]="cached_official_profile";a[13]="SYNTHETIC CACHE REFERENCE ONLY"
         r=audit_streams([HEADERS],[HEADERS,[],a])
         self.assertEqual(r["counts"],{"HELD":1})
         self.assertEqual(r["records"][0]["sourceRow"],3)
@@ -24,7 +24,12 @@ class DualIntakeTests(unittest.TestCase):
     def test_header_failure(self):
         with self.assertRaises(ValueError):audit_streams([HEADERS],[["wrong"]])
     def test_pending_cross_stream_collision(self):
-        a=row();a[14]="PENDING";a[3]="cached_official_profile"
+        a=row();a[14]="PENDING";a[3]="cached_official_profile";a[13]="SYNTHETIC CACHE REFERENCE ONLY"
         r=audit_streams([HEADERS,row("AUTO-1","AUTO")],[HEADERS,a])
         self.assertEqual(r["counts"],{"QUARANTINED":2})
+    def test_cached_missing_reference_quarantined(self):
+        a=row();a[14]="PENDING";a[3]="cached_official_profile";a[13]=""
+        r=audit_streams([HEADERS],[HEADERS,a])
+        self.assertEqual(r["counts"],{"QUARANTINED":1})
+        self.assertIn("MISSING_CACHED_EVIDENCE",r["records"][0]["issues"])
 if __name__=="__main__":unittest.main()
