@@ -3,14 +3,147 @@
   "publicationPolicy": "research-comparison-separate-from-verified",
   "sourceSheet": "KI｜レース結果手動照合",
   "sourceSpreadsheet": "https://docs.google.com/spreadsheets/d/1gCe5q5STYH0T8XKqxJbVawB0Cl8TPsCISFJiRUdA02M/edit#gid=2101100506",
-  "notes": "全7車の必要結果項目と発走前の並びが2サイトで一致した5レースを研究用掲載。松山5Rは出走表・予想ページから並び1-6／2-4／7-3-5を追加照合。実走隊列、主催者原本・払戻の未確認項目は区別。",
+  "notes": "必要な全7車結果項目と2サイト一致の発走前並びがそろった6レースを研究用掲載。出走表から松山1Rを追加（1-7-3／6／2-4-5）。払戻等の未照合は明示し元台帳で保持。",
   "summary": {
-    "races": 5,
-    "finishers": 35,
-    "formations": 5,
+    "races": 6,
+    "finishers": 42,
+    "formations": 6,
     "formationPending": 0
   },
   "races": [
+    {
+      "key": "2026-10-05|75|1",
+      "date": "2026-10-05",
+      "track": "松山",
+      "trackCode": "75",
+      "race": 1,
+      "grade": "F1",
+      "className": "A2",
+      "sourceReceiptId": "RACE-MANUAL-V4-20261122T160429-75-1",
+      "sourceReceiptState": "PENDING",
+      "independentApproval": "PENDING",
+      "resultAgreement": "all_required_comparison_fields_two_sites_agree",
+      "resultComparison": "7選手の氏名・着順・車番・上り・着差・決まり手・SBが既存台帳とチャリロト・netkeirinで正規化後一致。Kドリームスは全車番着順一致。",
+      "resultLimitations": "チャリロト取得資料の払戻組み合わせが着順と不整合。払戻保留。主催者公式原文・供給元独立性未確認。",
+      "resultSourceUrl": "https://www.chariloto.com/keirin/results/75/2026-10-05",
+      "formation": {
+        "type": "pre_race_published_prediction",
+        "state": "two_site_agreement_recorded",
+        "groups": [
+          [
+            1,
+            7,
+            3
+          ],
+          [
+            6
+          ],
+          [
+            2,
+            4,
+            5
+          ]
+        ],
+        "sources": [
+          "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+          "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005.html"
+        ]
+      },
+      "finishers": [
+        {
+          "finish": "1",
+          "number": 5,
+          "name": "三住 博昭",
+          "prefecture": "神奈",
+          "period": "61",
+          "riderClass": "A2",
+          "margin": "",
+          "lastLap": "12.4",
+          "winningMethod": "差し",
+          "startBack": "",
+          "exception": ""
+        },
+        {
+          "finish": "2",
+          "number": 4,
+          "name": "法月 成祐",
+          "prefecture": "神奈",
+          "period": "77",
+          "riderClass": "A1",
+          "margin": "1/2車身",
+          "lastLap": "12.6",
+          "winningMethod": "差し",
+          "startBack": "",
+          "exception": ""
+        },
+        {
+          "finish": "3",
+          "number": 3,
+          "name": "足達 重満",
+          "prefecture": "長崎",
+          "period": "80",
+          "riderClass": "A2",
+          "margin": "1 車輪",
+          "lastLap": "12.3",
+          "winningMethod": "",
+          "startBack": "",
+          "exception": ""
+        },
+        {
+          "finish": "4",
+          "number": 2,
+          "name": "戸塚 涼介",
+          "prefecture": "埼玉",
+          "period": "111",
+          "riderClass": "A2",
+          "margin": "微差",
+          "lastLap": "12.8",
+          "winningMethod": "",
+          "startBack": "S B",
+          "exception": ""
+        },
+        {
+          "finish": "5",
+          "number": 6,
+          "name": "宮崎 康司",
+          "prefecture": "香川",
+          "period": "94",
+          "riderClass": "A2",
+          "margin": "1 車輪",
+          "lastLap": "12.2",
+          "winningMethod": "",
+          "startBack": "",
+          "exception": ""
+        },
+        {
+          "finish": "6",
+          "number": 7,
+          "name": "乾 庄平",
+          "prefecture": "滋賀",
+          "period": "95",
+          "riderClass": "A2",
+          "margin": "1 車身",
+          "lastLap": "12.2",
+          "winningMethod": "",
+          "startBack": "",
+          "exception": ""
+        },
+        {
+          "finish": "7",
+          "number": 1,
+          "name": "土生 智徳",
+          "prefecture": "大阪",
+          "period": "127",
+          "riderClass": "A2",
+          "margin": "大差",
+          "lastLap": "15.6",
+          "winningMethod": "",
+          "startBack": "",
+          "exception": ""
+        }
+      ],
+      "provenance": "元台帳7車結果の複数サイト照合記録を再利用。発走前並びはKドリームスとオッズパークの2026-10-05松山1Rの資料で一致。払戻不整合は元台帳に保留。正式結果フィードとは別。"
+    },
     {
       "key": "2026-10-05|75|2",
       "date": "2026-10-05",
