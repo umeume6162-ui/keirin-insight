@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "127選手の氏名・府県・期別・登録番号が2掲載元原文で一致。前回124名を維持し3名新規追加。",
+  "verificationNote": "129選手の4項目を別掲載元2原文で照合。127→129、2選手を元台帳へ追記・再読込。",
   "summary": {
-    "rows": 127
+    "rows": 129
   },
   "riders": [
     {
@@ -3053,6 +3053,54 @@
           "https://www.winticket.jp/keirin/cyclist/013741"
         ],
         "note": "2026-11-22 JST：KEIRIN.JP PC選手原文（掲載更新2026-11-02）とWINTICKET選手プロフィール全文を直接確認。氏名=高原 仁志、府県=徳島、期別=85期、登録番号=013741 の4項目が2掲載元で一致。出典1 https://keirin.jp/pc/racerprofile?snum=013741 出典2 https://www.winticket.jp/keirin/cyclist/013741。公式原文は保存・索引時点、現在値/ライブ競走得点と混同しない。元A:Fは維持。"
+      }
+    },
+    {
+      "id": "015762",
+      "name": "高橋美沙紀",
+      "prefecture": "愛知",
+      "period": "124",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015762",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015762",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015762",
+          "https://www.winticket.jp/keirin/cyclist/015762"
+        ],
+        "note": "2026-11-22 JST、KEIRIN.JP公式プロフィール全文（原本掲載更新2026-11-05）・WINTICKETプロフィール全文を直接取得し、氏名「高橋美沙紀」、府県愛知、期別124期、登録番号015762が4項目一致。出典1 https://www.keirin.jp/pc/racerprofile?snum=015762 / 出典2 https://www.winticket.jp/keirin/cyclist/015762。過去掲載キャッシュ本文の取得であり最新成績のライブ保証ではない。元A:Fを変更しない。"
+      }
+    },
+    {
+      "id": "014622",
+      "name": "高市 訓但",
+      "prefecture": "愛媛",
+      "period": "97",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014622",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014622",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014622",
+          "https://www.winticket.jp/keirin/cyclist/014622"
+        ],
+        "note": "2026-11-22 JST、KEIRIN.JP公式プロフィール全文（原本掲載更新2026-11-04）・WINTICKETプロフィール全文を直接取得し、氏名「高市 訓但」、府県愛媛、期別97期、登録番号014622が4項目一致。出典1 https://keirin.jp/pc/racerprofile?snum=014622 / 出典2 https://www.winticket.jp/keirin/cyclist/014622。過去掲載キャッシュ本文の取得であり最新成績のライブ保証ではない。元A:Fを変更しない。"
       }
     }
   ],
