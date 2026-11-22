@@ -10,7 +10,7 @@ def fixture():
     rider={"id":"000001","name":"TEST ONLY","prefecture":"TEST","period":"99","source":source,"verifiedDate":"2026-01-01","officialVerification":{"status":"verified","source":source,"fields":["name","prefecture","period","id"]}}
     i={"schema":"ki-official-rider-ids-v1","publicationPolicy":POLICY,"summary":{"rows":1},"riders":[rider]}
     l={"schema":"ki-line-snapshots-v1","publicationPolicy":POLICY,"summary":{"races":0,"rider_rows":0},"races":[]}
-    e={"kind":"rider","key":"000001","status":"approved","recordSha256":digest(rider),"source":source,"reviewedDate":"2026-01-01","reviewer":"SYNTHETIC TEST","observedFacts":{"testOnly":True}}
+    e={"kind":"rider","key":"000001","status":"approved","recordSha256":digest(rider),"source":source,"reviewedDate":"2026-01-01","reviewer":"SYNTHETIC TEST","observedFacts":{k:rider[k] for k in ("name","prefecture","period","id")},"retrievedAt":"2026-01-01T09:00:00+09:00","evidenceNote":"Synthetic fixture only"}
     return [a,b,i,l],[e]
 
 class ReleaseTests(unittest.TestCase):
@@ -33,6 +33,18 @@ class ReleaseTests(unittest.TestCase):
         with self.assertRaises(ValueError): validate(d,e)
     def test_mixed_generation(self):
         d,e=fixture(); d[1]["snapshotDate"]="2026-01-02"
+        with self.assertRaises(ValueError): validate(d,e)
+    def test_observed_value_mismatch(self):
+        d,e=fixture(); e[0]["observedFacts"]["prefecture"]="OTHER"
+        with self.assertRaises(ValueError): validate(d,e)
+    def test_missing_observed_field(self):
+        d,e=fixture(); del e[0]["observedFacts"]["period"]
+        with self.assertRaises(ValueError): validate(d,e)
+    def test_missing_timezone(self):
+        d,e=fixture(); e[0]["retrievedAt"]="2026-01-01T09:00:00"
+        with self.assertRaises(ValueError): validate(d,e)
+    def test_review_precedes_retrieval(self):
+        d,e=fixture(); e[0]["retrievedAt"]="2026-01-02T09:00:00+09:00"
         with self.assertRaises(ValueError): validate(d,e)
     def test_summary_mismatch(self):
         d,e=fixture(); d[2]["summary"]["rows"]=2
