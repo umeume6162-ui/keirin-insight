@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "必要4項目を2サイトで確認した16選手を掲載。原台帳を維持し、既存合格を重複登録しない。",
+  "verificationNote": "選手ID必要4項目2サイト一致の21選手。既存16件を維持し5件追加。元選手台帳は保持。",
   "summary": {
-    "rows": 16
+    "rows": 21
   },
   "riders": [
     {
@@ -389,6 +389,126 @@
           "https://www.winticket.jp/keirin/cyclist/015430"
         ],
         "note": "KEIRIN.JPとWINTICKETの公開プロフィールで氏名・府県・期別・登録番号の必要4項目一致。既存台帳の照合済みデータを使用。"
+      }
+    },
+    {
+      "id": "012261",
+      "name": "岡部 芳幸",
+      "prefecture": "福島",
+      "period": "66",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=012261",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=012261",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=012261",
+          "https://www.winticket.jp/keirin/cyclist/012261"
+        ],
+        "note": "KEIRIN.JP と WINTICKET のプロフィール記載の氏名・府県・期別・登録番号4項目が一致。級班や年齢など時点依存情報は今回の必須照合対象外。"
+      }
+    },
+    {
+      "id": "015791",
+      "name": "岡部 陸斗",
+      "prefecture": "栃木",
+      "period": "125",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015791",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015791",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015791",
+          "https://www.winticket.jp/keirin/cyclist/015791"
+        ],
+        "note": "KEIRIN.JP と WINTICKET のプロフィール記載の氏名・府県・期別・登録番号4項目が一致。級班や年齢など時点依存情報は今回の必須照合対象外。"
+      }
+    },
+    {
+      "id": "014996",
+      "name": "岡本 総",
+      "prefecture": "愛知",
+      "period": "105",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014996",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014996",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014996",
+          "https://www.winticket.jp/keirin/cyclist/014996"
+        ],
+        "note": "KEIRIN.JP と WINTICKET のプロフィール記載の氏名・府県・期別・登録番号4項目が一致。級班や年齢など時点依存情報は今回の必須照合対象外。"
+      }
+    },
+    {
+      "id": "013990",
+      "name": "荻原 尚人",
+      "prefecture": "宮城",
+      "period": "89",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013990",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013990",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013990",
+          "https://www.winticket.jp/keirin/cyclist/013990"
+        ],
+        "note": "KEIRIN.JP と WINTICKET のプロフィール記載の氏名・府県・期別・登録番号4項目が一致。級班や年齢など時点依存情報は今回の必須照合対象外。"
+      }
+    },
+    {
+      "id": "014809",
+      "name": "恩田 淳平",
+      "prefecture": "群馬",
+      "period": "100",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014809",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014809",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014809",
+          "https://www.winticket.jp/keirin/cyclist/014809"
+        ],
+        "note": "KEIRIN.JP と WINTICKET のプロフィール記載の氏名・府県・期別・登録番号4項目が一致。級班や年齢など時点依存情報は今回の必須照合対象外。"
       }
     }
   ],
