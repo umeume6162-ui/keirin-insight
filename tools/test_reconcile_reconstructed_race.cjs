@@ -79,6 +79,16 @@ assert.equal(maebashi3.numericFinishers,7);
 assert.deepEqual(maebashi3.missingFromResult,[]);
 assert.equal(maebashi3.officialStartersKnown,false);
 assert.equal(maebashi3.publicationPassed,false);
+// Recovered 2026-10-05 Matsuyama 7R: historical source rows, seven cars, but predicted formation and primary evidence still unverified.
+const matsuyama7=check(JSON.parse(fs.readFileSync(path.join(base,'2026-10-05_75_7.research.json'),'utf8')));
+assert.equal(matsuyama7.raceKey,'2026-10-05|75|7');
+assert.equal(matsuyama7.structuralOk,true,JSON.stringify(matsuyama7.errors));
+assert.equal(matsuyama7.documentedResultRows,7);
+assert.equal(matsuyama7.numericFinishers,7);
+assert.deepEqual(matsuyama7.missingFromResult,[]);
+assert.equal(matsuyama7.publicationPassed,false);
+assert.equal(matsuyama7.officialStartersKnown,false);
+assert.ok(matsuyama7.warnings.some(w=>w.includes('pre-race formation does not cover entire original card')));
 // Five numeric places plus fall/disqualification must be retained without ranking the exceptions.
 const r4=check(load(4));
 assert.equal(r4.structuralOk,true,JSON.stringify(r4.errors));
