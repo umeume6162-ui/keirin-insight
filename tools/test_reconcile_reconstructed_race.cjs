@@ -24,6 +24,15 @@ assert.equal(r6.numericFinishers,7);
 assert.deepEqual(r6.missingFromResult,[]);
 assert.equal(r6.publicationPassed,false);
 assert.equal(r6.officialStartersKnown,false);
+// Newly saved 7R: seven original entrants, seven numeric results, and full pre-race line coverage.
+const r7=check(load(7));
+assert.equal(r7.raceKey,'2026-11-20|42|7');
+assert.equal(r7.structuralOk,true,JSON.stringify(r7.errors));
+assert.equal(r7.documentedResultRows,7);
+assert.equal(r7.numericFinishers,7);
+assert.equal(r7.missingFromResult.length,0);
+assert.equal(r7.publicationPassed,false);
+assert.equal(r7.officialStartersKnown,false);
 // Five numeric places plus fall/disqualification must be retained without ranking the exceptions.
 const r4=check(load(4));
 assert.equal(r4.structuralOk,true,JSON.stringify(r4.errors));
@@ -44,4 +53,4 @@ assert.equal(missing.publicationPassed,false);
 const duplicate=load(5);
 duplicate.results[1].car=duplicate.results[0].car;
 assert.equal(check(duplicate).structuralOk,false);
-console.log('source-first race reconciliation tests passed (4 authentic candidates + missing/duplicate regression cases)');
+console.log('source-first race reconciliation tests passed (5 authentic candidates + missing/duplicate regression cases)');
