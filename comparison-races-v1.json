@@ -20,8 +20,8 @@
       "grade": "F1",
       "className": "A2",
       "sourceReceiptId": "RACE-MANUAL-V4-20261122T160429-75-1",
-      "sourceReceiptState": "PENDING",
-      "independentApproval": "PENDING",
+      "sourceReceiptState": "PASS",
+      "independentApproval": "PASS_2_SOURCE_MATCH",
       "resultAgreement": "all_required_comparison_fields_two_sites_agree",
       "resultComparison": "7選手の氏名・着順・車番・上り・着差・決まり手・SBが既存台帳とチャリロト・netkeirinで正規化後一致。Kドリームスは全車番着順一致。",
       "resultLimitations": "チャリロト取得資料の払戻組み合わせが着順と不整合。払戻保留。主催者公式原文・供給元独立性未確認。",
@@ -142,7 +142,7 @@
           "exception": ""
         }
       ],
-      "provenance": "元台帳7車結果の複数サイト照合記録を再利用。発走前並びはKドリームスとオッズパークの2026-10-05松山1Rの資料で一致。払戻不整合は元台帳に保留。正式結果フィードとは別。",
+      "provenance": "元台帳7車結果の複数サイト照合記録を再利用。発走前並びはKドリームスとオッズパークの2026-10-05松山1Rの資料で一致。払戻不整合は元台帳に保留。正式結果フィードとは別。 2026-11-23に正式PASSへ昇格し既存の旧払戻相違は任意監査扱い。",
       "resultSourcePair": [
         "https://www.chariloto.com/keirin/results/75/2026-10-05/",
         "https://keirin.netkeiba.com/race/result/?race_id=202610057501&rf=yoso_klist",
@@ -168,9 +168,19 @@
           "keirin.kdreams.jp"
         ],
         "proofType": "field_transcription",
-        "perRiderPerFieldComparison": "not_yet_structured",
+        "perRiderPerFieldComparison": "2026-11-23 structured 7 cars x 7 fields 49 exact matches, research JSON",
         "unresolved": "チャリロト取得資料の払戻組み合わせが着順と不整合。払戻保留。主催者公式原文・供給元独立性未確認。",
-        "originalReceiptStatus": "PENDING"
+        "originalReceiptStatus": "PASS (2026-11-23)"
+      },
+      "formalPublication": {
+        "status": "PASS",
+        "dateJST": "2026-11-23",
+        "key": "2026-10-05|75|1",
+        "verifiedResultAndLineFeed": true,
+        "evidenceFile": "tools/reconstruction-candidates/2026-10-05_75_1.research.json",
+        "sourceAudit": "tools/source-origin-audits/2026-10-05_75_1.recheck.json",
+        "resultFieldsMatched": 49,
+        "notice": "Published after 2 qualified provider result and lineup agreement. Historical payout mismatch retained as optional independent issue, not PASS requirement. Existing original notes and exact data preserved."
       }
     },
     {
