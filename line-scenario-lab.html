@@ -65,7 +65,7 @@ function render(){
  h+='<details><summary>ライン構成パターン</summary>'+table(['人数構成','集計R','同一ライン2人以上3着内'],[...patterns].map(([k,b])=>[k,b.valid,pct(b.both,b.valid)]))+'</details>';
  }
  el('kiLineStats').innerHTML=h;
- el('kiLineRecords').innerHTML=chosen.length?chosen.map(e=>'<details><summary>'+esc(e.s.date+' '+e.s.track+' '+e.s.race+'R／'+e.status)+'</summary><p>'+esc(e.groups?.map(g=>g.join('-')).join(' / ')||'形式不成立')+'</p><p class="note">'+esc('取得記録：'+e.s.captured+'／出典：'+e.s.source)+'</p>'+(e.pairs?table(['車番','事前位置','着順'],e.pairs.map(x=>[x.n,x.role,x.rank??'非数値'])):'')+'</details>').join(''):'<p>対象なし</p>';
+ el('kiLineRecords').innerHTML=chosen.length?chosen.map(e=>'<details><summary>'+esc(e.s.date+' '+e.s.track+' '+e.s.race+'R／'+e.status)+'</summary><p>'+esc(e.groups?.map(g=>g.join('-')).join(' / ')||'形式不成立')+'</p><p class="note">'+esc('取得記録：'+e.s.captured+'／取得元は管理用台帳に保管')+'</p>'+(e.pairs?table(['車番','事前位置','着順'],e.pairs.map(x=>[x.n,x.role,x.rank??'非数値'])):'')+'</details>').join(''):'<p>対象なし</p>';
 }
 async function load(){
  if(busy)return;busy=true;el('kiLineReload').disabled=true;el('kiLineStatus').textContent='確認中…';
