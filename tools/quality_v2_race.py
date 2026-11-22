@@ -1,6 +1,7 @@
 """V2 race result comparison. Structural candidates only; not source authentication."""
 from datetime import date
 from quality_v2 import source, norm
+from finish_integrity import validate_finishes
 import re
 
 def race_key(v):
@@ -25,6 +26,7 @@ def core(obs):
         if not name or not finish or not status: raise ValueError("missing required result")
         if finish not in ("失格","欠場","棄権","落車","中止") and not re.fullmatch(r"[1-9]",finish): raise ValueError("invalid finish")
         cars[car]=(name,finish,status)
+    validate_finishes([v[1] for v in cars.values()],size)
     return key,grade,size,tuple(sorted(cars.items()))
 
 def classify_race(observations):
