@@ -1,0 +1,281 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-10-05|84|1",
+  "createdDateJST": "2026-11-23",
+  "race": {
+    "date": "2026-10-05",
+    "venue": "武雄",
+    "venueCode": "84",
+    "raceNo": 1,
+    "grade": "F2",
+    "class": "A級一般",
+    "expectedEntrants": 7
+  },
+  "status": "RECONSTRUCTED_PARTIAL_RESULT_FIELD_MATCH_REMAINING_FIELDS_PENDING",
+  "payout": "NOT_REQUIRED_OPTIONAL",
+  "method": "Recovered archived Chariloto V99 and separate archived Keirin-mobile full seven-rider transcription; 7 riders x 5 stored result fields (finish/car/name/lap/method)=35/35 match. Kdreams and netkeirin search index confirm finish order. Remaining margin and SB are not in archived mobile transcription; must use qualified second full-result provider before all-result PASS. Pre-race complete forecast groups remain unconfirmed.",
+  "originalEntries": [
+    {
+      "car": 1,
+      "name": "太田 将成",
+      "prefecture": "宮城",
+      "period": 113,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 2,
+      "name": "十文字菊雄",
+      "prefecture": "福島",
+      "period": 75,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 5,
+      "name": "田川 辰二",
+      "prefecture": "熊本",
+      "period": 72,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 7,
+      "name": "田村 裕也",
+      "prefecture": "徳島",
+      "period": 113,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 4,
+      "name": "山中 崇弘",
+      "prefecture": "高知",
+      "period": 113,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 3,
+      "name": "下野 義城",
+      "prefecture": "愛媛",
+      "period": 115,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 6,
+      "name": "高田 真幸",
+      "prefecture": "福岡",
+      "period": 83,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    }
+  ],
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      1,
+      2,
+      5,
+      7,
+      4,
+      3,
+      6
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 7,
+    "nonNumericResultRows": 0,
+    "revisedStartCardSource": null,
+    "confirmedStarterCount": null,
+    "note": "Entrants reconstructed from result rows do not independently prove pre-race roster; all seven observed finishers."
+  },
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [],
+    "sourceUrls": [
+      "https://sp.oddspark.com/keirin/yosou/takeo/2026/1005.html",
+      "https://keirin.kdreams.jp/takeo/racedetail/8420261003030001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
+    ],
+    "state": "TWO_SOURCE_COMPLETE_ORDERED_GROUPS_NOT_CONFIRMED",
+    "note": "Public indexed rider comments show 1->2 pairing; need full seven-car group boundaries from both publications, cannot infer."
+  },
+  "results": [
+    {
+      "car": 1,
+      "name": "太田 将成",
+      "prefecture": "宮城",
+      "period": 113,
+      "grade": "A2",
+      "finishRaw": "1",
+      "finish": 1,
+      "lapSeconds": 12.4,
+      "marginRaw": "",
+      "winningMethodRaw": "差し",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_KEIRIN_MOBILE_FIVE_FIELDS_MATCH"
+    },
+    {
+      "car": 2,
+      "name": "十文字菊雄",
+      "prefecture": "福島",
+      "period": 75,
+      "grade": "A1",
+      "finishRaw": "2",
+      "finish": 2,
+      "lapSeconds": 12.3,
+      "marginRaw": "1/4車輪",
+      "winningMethodRaw": "マーク",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_KEIRIN_MOBILE_FIVE_FIELDS_MATCH"
+    },
+    {
+      "car": 5,
+      "name": "田川 辰二",
+      "prefecture": "熊本",
+      "period": 72,
+      "grade": "A2",
+      "finishRaw": "3",
+      "finish": 3,
+      "lapSeconds": 12.1,
+      "marginRaw": "1/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_KEIRIN_MOBILE_FIVE_FIELDS_MATCH"
+    },
+    {
+      "car": 7,
+      "name": "田村 裕也",
+      "prefecture": "徳島",
+      "period": 113,
+      "grade": "A2",
+      "finishRaw": "4",
+      "finish": 4,
+      "lapSeconds": 12.5,
+      "marginRaw": "1/8車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "S B",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_KEIRIN_MOBILE_FIVE_FIELDS_MATCH"
+    },
+    {
+      "car": 4,
+      "name": "山中 崇弘",
+      "prefecture": "高知",
+      "period": 113,
+      "grade": "A2",
+      "finishRaw": "5",
+      "finish": 5,
+      "lapSeconds": 12.2,
+      "marginRaw": "1/2車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_KEIRIN_MOBILE_FIVE_FIELDS_MATCH"
+    },
+    {
+      "car": 3,
+      "name": "下野 義城",
+      "prefecture": "愛媛",
+      "period": 115,
+      "grade": "A2",
+      "finishRaw": "6",
+      "finish": 6,
+      "lapSeconds": 12.4,
+      "marginRaw": "1車身1/2",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_KEIRIN_MOBILE_FIVE_FIELDS_MATCH"
+    },
+    {
+      "car": 6,
+      "name": "高田 真幸",
+      "prefecture": "福岡",
+      "period": 83,
+      "grade": "A1",
+      "finishRaw": "7",
+      "finish": 7,
+      "lapSeconds": 13.3,
+      "marginRaw": "大差",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_KEIRIN_MOBILE_FIVE_FIELDS_MATCH"
+    }
+  ],
+  "fieldVerification": {
+    "resultFields": {
+      "status": "TWO_SAVED_SOURCE_FIVE_FIELDS_MATCH",
+      "comparedFields": [
+        "finish",
+        "car",
+        "name",
+        "lastLap",
+        "winningMethod"
+      ],
+      "fieldComparisons": 35,
+      "differences": 0,
+      "sources": [
+        "https://www.chariloto.com/keirin/results/84/2026-10-05",
+        "https://www.keirin-mobile.jp/New/races/20261005/84/01/"
+      ],
+      "missingSecondSourceForFields": [
+        "margin",
+        "startBack"
+      ],
+      "publishedDirectFullPageThisTurn": false
+    },
+    "forecastLine": {
+      "status": "PENDING_FULL_GROUPS",
+      "requiredCompleteGroups": true
+    }
+  },
+  "sources": [
+    {
+      "url": "https://www.chariloto.com/keirin/results/84/2026-10-05",
+      "role": "saved V99 seven-rider results incl margin and SB",
+      "retrieval": "archive"
+    },
+    {
+      "url": "https://www.keirin-mobile.jp/New/races/20261005/84/01/",
+      "role": "saved separate seven-rider five-field original transcription",
+      "retrieval": "archive"
+    },
+    {
+      "url": "https://keirin.netkeiba.com/race/result/?race_id=202610058401",
+      "role": "independently published full result indexed snippet",
+      "retrieval": "fresh search-index; direct open cache miss"
+    },
+    {
+      "url": "https://keirin.kdreams.jp/takeo/raceresult/84202610030300/",
+      "role": "seven-rider placing order",
+      "retrieval": "fresh search-index; direct open cache miss"
+    }
+  ],
+  "audit": {
+    "savedReceiptReference": "KI｜レース結果手動照合!A17:U17",
+    "savedV99Reference": "V99選手結果蓄積!A4807:W4813",
+    "archivedResultFieldsCompared": 35,
+    "archivedResultFieldDifferences": 0,
+    "fullRaceAndLineVerified": false,
+    "publicationPass": false,
+    "blockers": [
+      "MARGIN_SECOND_SOURCE_ALL_7_PENDING",
+      "START_BACK_SECOND_SOURCE_ALL_7_PENDING",
+      "PRE_RACE_LINE_GROUPS_TWO_SOURCES_PENDING"
+    ],
+    "note": "Preserve confirmed 35 field comparisons. No third official approval or payout required; missing full evidence only."
+  }
+}
