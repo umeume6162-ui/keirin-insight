@@ -7,7 +7,7 @@ const research=JSON.parse(fs.readFileSync('comparison-races-v1.json','utf8'));
 const official=JSON.parse(fs.readFileSync('verified-results-feed-v1.json','utf8'));
 const rows=JSON.parse(fs.readFileSync('verified-rider-results-feed-v1.json','utf8'));
 const lines=JSON.parse(fs.readFileSync('verified-line-snapshots-feed-v1.json','utf8'));
-const host=u=>{try{return new URL(u).hostname.replace(/^www\\./,'')}catch{return ''}};
+const host=u=>{try{return new URL(u).hostname.replace(/^www\./,'')}catch{return ''}};
 const requiredResultFields=['finish','number','name','prefecture','period','riderClass','margin','lastLap','winningMethod','startBack','exception'];
 const audits=research.races.map(r=>{
  const missing=[];
@@ -22,7 +22,7 @@ const audits=research.races.map(r=>{
  // A generic comparison sentence is not per-field two-provider evidence.
  if(!r.resultEvidenceByField||!Array.isArray(r.resultEvidenceByField)||r.resultEvidenceByField.length!==expected)
   missing.push('per-rider/per-required-result-field two-provider source evidence');
- if(!r.officialVerification?.source||!/^https:\/\/(?:www\\.)?keirin\\.jp\//.test(r.officialVerification.source))
+ if(!r.officialVerification?.source||!/^https:\/\/(?:www\.)?keirin\.jp\//.test(r.officialVerification.source))
   missing.push('official-source receipt/reference for formal race index');
  if(!r.officialVerification?.verifiedDate)missing.push('race verification timestamp');
  return {key:r.key,entered:finishers.length,forecast:r.formation?.groups?.map(g=>g.join('-')).join(' / '),status:missing.length?'NEEDS_SOURCE_EVIDENCE':'READY_FOR_SCHEMA_MAPPING',missing};
