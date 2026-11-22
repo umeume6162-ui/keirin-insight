@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "必要4項目の2サイト一致を満たす既存7選手を反映。受付PENDINGは独立承認を意味せず、余分な承認条件を課さない。",
+  "verificationNote": "全4項目を2サイトで比較した選手を掲載。既存7件に奥村諭志・横関裕樹・横田政直の3件を追加。重複登録なし。",
   "summary": {
-    "rows": 7
+    "rows": 10
   },
   "riders": [
     {
@@ -173,6 +173,78 @@
           "https://www.winticket.jp/keirin/cyclist/012669"
         ],
         "note": "手動受付に必要4項目の2サイト一致記録。追加の独立承認は不要。元受付ID：MANUAL-V4-20261122T163137-012669"
+      }
+    },
+    {
+      "id": "015191",
+      "name": "奥村 諭志",
+      "prefecture": "岡山",
+      "period": "111",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015191",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015191",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015191",
+          "https://www.winticket.jp/keirin/cyclist/015191"
+        ],
+        "note": "既存選手台帳の氏名・府県・期別・登録番号をKEIRIN.JPおよびWINTICKETの各プロフィールと比較し4項目一致。既存元台帳は維持。"
+      }
+    },
+    {
+      "id": "014754",
+      "name": "横関 裕樹",
+      "prefecture": "岐阜",
+      "period": "99",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014754",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014754",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014754",
+          "https://www.winticket.jp/keirin/cyclist/014754"
+        ],
+        "note": "既存選手台帳の氏名・府県・期別・登録番号をKEIRIN.JPおよびWINTICKETの各プロフィールと比較し4項目一致。既存元台帳は維持。"
+      }
+    },
+    {
+      "id": "014931",
+      "name": "横田 政直",
+      "prefecture": "群馬",
+      "period": "103",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014931",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014931",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014931",
+          "https://www.winticket.jp/keirin/cyclist/014931"
+        ],
+        "note": "既存選手台帳の氏名・府県・期別・登録番号をKEIRIN.JPおよびWINTICKETの各プロフィールと比較し4項目一致。既存元台帳は維持。"
       }
     }
   ],
