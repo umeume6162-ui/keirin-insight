@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "異なる2掲載元の原文本文を直接取得して必須4項目一致した104選手。既存102人保持。",
+  "verificationNote": "107選手の氏名・府県・期別・6桁登録番号を独立した2掲載元の本文で一致確認。既存104人保存、新規荒川ひかり・荒澤貴史・香川雄介。",
   "summary": {
-    "rows": 104
+    "rows": 107
   },
   "riders": [
     {
@@ -2501,6 +2501,78 @@
           "https://www.winticket.jp/keirin/cyclist/015696"
         ],
         "note": "KEIRIN.JP SPページ(キャッシュ更新2026-07-26)およびWINTICKETプロフィールの本文を2026-11-22直接取得。氏名・府県・期別・6桁登録番号の4項目全て一致。原文ライブ更新ではなくアーカイブ時点。選手ID照合台帳346行。"
+      }
+    },
+    {
+      "id": "015135",
+      "name": "荒川ひかり",
+      "prefecture": "茨城",
+      "period": "110",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015135",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015135",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015135",
+          "https://www.winticket.jp/keirin/cyclist/015135"
+        ],
+        "note": "2026-11-22 KEIRIN.JP公式プロフィール全文（元資料更新2026-08-02）とWINTICKETプロフィール全文を取得、氏名・府県・期別・6桁登録番号の4項目一致。取得は過去キャッシュでライブ時点ではない。元台帳347行。"
+      }
+    },
+    {
+      "id": "013669",
+      "name": "荒澤　貴史",
+      "prefecture": "北海道",
+      "period": "85",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013669",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013669",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013669",
+          "https://www.winticket.jp/keirin/cyclist/013669"
+        ],
+        "note": "2026-11-22 KEIRIN.JP公式プロフィール全文（元資料更新2026-05-18）とWINTICKETプロフィール全文を取得、氏名・府県・期別・6桁登録番号の4項目一致。公式北海道と台帳北海は同じ府県の略記。取得は過去キャッシュでライブ時点ではない。元台帳348行。"
+      }
+    },
+    {
+      "id": "013059",
+      "name": "香川　雄介",
+      "prefecture": "香川",
+      "period": "76",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013059",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013059",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013059",
+          "https://www.winticket.jp/keirin/cyclist/013059"
+        ],
+        "note": "2026-11-22 KEIRIN.JP公式プロフィール全文（元資料更新2026-08-01）とWINTICKETプロフィール全文を取得、氏名・府県・期別・6桁登録番号の4項目一致。取得は過去キャッシュでライブ時点ではない。元台帳349行。"
       }
     }
   ],
