@@ -39,6 +39,18 @@ summary{cursor:pointer;font-weight:750;font-size:18px}details .inner{padding:9px
 .detail-table td,.detail-table th{font-size:13px}
 .review-note{border-left:3px solid #78aabb;padding-left:12px;margin:14px 0}
 @media(max-width:370px){.line-result-card{padding:12px 9px}.line-result-card .formation{gap:7px}.line-result-card .car{min-width:29px;height:33px;font-size:18px}.race-table th,.race-table td{padding:10px 3px}}
+
+/* Original KI research navigation: expandable across venues, not a fixed Matsuyama shortlist */
+.ki-eyebrow{color:var(--mint);font-size:12px;letter-spacing:.19em;font-weight:850}
+.ki-search{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,140px);gap:10px;padding:14px;background:#0d202e;border:1px solid #477467;border-radius:15px;margin:18px 0}
+.ki-search label{font-size:12px;font-weight:700;color:#c1d3de;display:flex;flex-direction:column;gap:6px}
+.ki-search input,.ki-search select{min-height:44px;width:100%;border:1px solid #547a88;color:#f5fffd;background:#091925;border-radius:9px;padding:9px;font:inherit}
+.ki-search input:focus-visible,.ki-search select:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.ki-search .wide{grid-column:1/-1}
+.ki-stats{display:flex;gap:12px;flex-wrap:wrap;align-items:center;color:#cde0e9;font-size:13px}
+.ki-stats strong{font-size:20px;color:var(--mint);font-variant-numeric:tabular-nums}
+.ki-empty{background:var(--card);border-radius:12px;padding:22px;text-align:center}
+@media(max-width:370px){.ki-search{grid-template-columns:1fr}}
 </style></head><body><main>
 <nav aria-label="サイト内移動"><a href="./index.html">ホーム</a><a href="./race-index-live.html">公式確認済み結果</a><a href="./rider-records-live.html">選手研究</a><a href="./line-scenario-lab.html">ライン研究</a><a href="./research-hub.html">データ管理</a></nav>
 <p style="color:var(--mint);letter-spacing:.14em;font-weight:800">KEIRIN INSIGHT / RESEARCH</p>
@@ -46,6 +58,7 @@ summary{cursor:pointer;font-weight:750;font-size:18px}details .inner{padding:9px
 <p class="note">既存の全車結果・事前の並びの比較記録を表示します。項目別の独立証拠が未完成のレースは正式公開済みとは扱いません。</p>
 <p class="label">研究用の照合記録・正式結果とは別</p>
 <p>これは研究用の比較記録です。正式公開フィードとは別であり、照合証拠の欠損は各レースに明示します。事前の並び予想は実際の走行隊列とは異なります。</p>
+<section class="ki-search" aria-label="研究レースの絞り込み"><label class="wide">開催日・競輪場・R・選手名で検索<input id="raceSearch" type="search" placeholder="例：松山 5R / 2026-10-05 / 選手名" autocomplete="off"></label><label>競輪場<select id="trackFilter"><option value="">全競輪場</option></select></label><label>級班<select id="classFilter"><option value="">全級班</option></select></label><div id="filterStats" class="ki-stats wide" aria-live="polite"></div></section>
 <p id="status" role="status">研究用データを確認中…</p>
 <div id="races"></div>
 <p class="note">照合資料と元掲載情報は管理用台帳に保存しています。未確認項目は正式公開済みとして扱いません。</p>
@@ -89,11 +102,42 @@ else body.append(el("p","展開未検証。着順と事前ラインから捲り�
 body.append(el("p","結果の比較証拠は管理用台帳に保存しています。","note"));
 body.append(el("p","正式公開用の項目別証拠は追加確認が必要です。","note"));
 
-body.append(el("p","受付ID："+r.sourceReceiptId+"／受付状態："+r.sourceReceiptState,"note"));
+body.append(el("p","公開区分：研究資料（正式結果フィードには未収録）","note"));
 d.append(body);shell.append(d);return shell
 }
 
-async function load(){try{const resp=await fetch("./comparison-races-v1.json",{cache:"no-store"});if(!resp.ok)throw Error("HTTP "+resp.status);const data=await resp.json();if(data.schema!=="ki-comparison-races-v1"||data.publicationPolicy!=="research-comparison-separate-from-verified"||!Array.isArray(data.races))throw Error("研究用配信形式不一致");const keys=new Set();for(const r of data.races){if(!Array.isArray(r.finishers)||!Array.isArray(r.formation.groups)||!Array.isArray(r.formation.sources)||r.finishers.length!==7&&r.finishers.length!==9||keys.has(r.key))throw Error("結果の整合性不成立");const nums=r.finishers.map(x=>Number(x.number));const formed=r.formation.groups.flat().map(Number);if(!r.resultComparison||!r.resultComparison.includes("一致"))throw Error("全車結果の二サイト比較記録が不足");if(new Set(nums).size!==nums.length)throw Error("車番重複");if(r.formation.state==="two_site_agreement_recorded"&&(formed.length!==nums.length||nums.slice().sort((a,b)=>a-b).join()!==formed.slice().sort((a,b)=>a-b).join()))throw Error("ライン・車番の不一致");if(r.formation.state!=="two_site_agreement_recorded")throw Error("未照合の並びは掲載不可");keys.add(r.key)}$("status").textContent="並び照合済み掲載："+data.races.length+"レース／全車結果："+data.races.reduce((n,r)=>n+r.finishers.length,0)+"行（公式承認済み件数とは別）";if(data.races.length===0)$("races").append(el("p","現在、全必要項目が2サイト一致したレースはありません。未合格の記録は元台帳に保持しています。","note"));for(const race of data.races)$("races").append(render(race));}catch(e){$("status").textContent="研究用データを表示できません："+e.message}}
+let activeRaces=[];
+function addOptions(id,values){const sel=$(id);for(const name of [...new Set(values.filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b),"ja"))){const option=el("option",name);option.value=name;sel.append(option)}}
+function filterAndRender(){
+ const term=$("raceSearch").value.trim().replace(/\\s+/g,"").toLowerCase(),track=$("trackFilter").value,grade=$("classFilter").value;
+ const matches=activeRaces.filter(r=>(!track||r.track===track)&&(!grade||r.className===grade)&&(!term||[r.track,r.date,r.race+"R",r.key,r.className,...r.finishers.map(x=>x.name)].join("").replace(/\\s+/g,"").toLowerCase().includes(term)));
+ $("races").replaceChildren();
+ for(const r of matches)$("races").append(render(r));
+ $("filterStats").textContent="研究記録 "+matches.length+" / "+activeRaces.length+" レース · "+matches.reduce((n,r)=>n+r.finishers.length,0)+"選手結果";
+ if(!matches.length)$("races").append(el("p","該当する研究レースはありません。","ki-empty"));
+}
+async function load(){try{
+ const resp=await fetch("./comparison-races-v1.json",{cache:"no-store"});
+ if(!resp.ok)throw Error("HTTP "+resp.status);
+ const data=await resp.json();
+ if(data.schema!=="ki-comparison-races-v1"||data.publicationPolicy!=="research-comparison-separate-from-verified"||!Array.isArray(data.races))throw Error("研究用配信形式不一致");
+ const keys=new Set();
+ for(const r of data.races){
+  if(!Array.isArray(r.finishers)||!r.formation||!Array.isArray(r.formation.groups)||!Array.isArray(r.formation.sources)||![7,9].includes(r.finishers.length)||keys.has(r.key))throw Error("研究用結果の整合性不成立");
+  const nums=r.finishers.map(x=>Number(x.number)),formed=r.formation.groups.flat().map(Number);
+  if(!r.resultComparison||!r.resultComparison.includes("一致"))throw Error("既存の結果比較記録が不足");
+  if(new Set(nums).size!==nums.length)throw Error("車番重複");
+  if(r.formation.state!=="two_site_agreement_recorded"||formed.length!==nums.length||nums.slice().sort((a,b)=>a-b).join()!==formed.slice().sort((a,b)=>a-b).join())throw Error("事前並びの車番整合が不足");
+  keys.add(r.key);
+ }
+ activeRaces=data.races;
+ addOptions("trackFilter",activeRaces.map(r=>r.track));addOptions("classFilter",activeRaces.map(r=>r.className));
+ $("status").textContent="研究用の全車結果・事前並び比較記録。正式公開の合格レース数ではありません。";
+ filterAndRender();
+ }catch(e){$("status").textContent="研究用データを表示できません："+e.message}
+}
+for(const id of ["raceSearch","trackFilter","classFilter"])$(id).addEventListener(id==="raceSearch"?"input":"change",filterAndRender);
+
 load();
 })();
 </script></body></html>
