@@ -1,6 +1,6 @@
 {
   "schema": "ki-collection-status-v1",
-  "snapshotDate": "2026-11-22",
+  "snapshotDate": "2026-11-23",
   "mode": "manual-read-only-snapshot",
   "collection": {
     "source": "V100収集状態台帳",
