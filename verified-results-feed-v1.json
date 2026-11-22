@@ -6,10 +6,10 @@
   "official_result_independent_audit": "two_qualifying_publishers_all_fields_agree",
   "notes": "Two qualified publisher result sources and two publisher forecast sources agree for full seven-car race. Third primary source not required.",
   "summary": {
-    "races": 2,
-    "rider_rows": 14,
+    "races": 3,
+    "rider_rows": 21,
     "by_grade": {
-      "A1/A2": 0,
+      "A1/A2": 1,
       "A3": 0,
       "S級": 2,
       "ガールズ": 0
@@ -140,6 +140,71 @@
         "basisNote": "K-Dreams and Oddspark published full ordered groups; label not attributed to full rider comments"
       },
       "sourceEvidenceFile": "tools/reconstruction-candidates/2026-10-05_75_12.research.json"
+    },
+    {
+      "key": "2026-10-05|84|1",
+      "date": "2026-10-05",
+      "track": "武雄",
+      "track_code": "84",
+      "race": 1,
+      "size": 7,
+      "grade": "A1/A2",
+      "non_numeric": 0,
+      "className": "A級一般",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.chariloto.com/keirin/results/84/2026-10-05",
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.chariloto.com/keirin/results/84/2026-10-05",
+          "https://keirin.kdreams.jp/takeo/racedetail/8420261003030001/?kakeshikiType=3renhuku&pageType=odds"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "margin",
+          "lastLap",
+          "winningMethod",
+          "startBack",
+          "exception"
+        ]
+      },
+      "preRaceFormation": {
+        "groups": [
+          [
+            1,
+            2
+          ],
+          [
+            7,
+            3,
+            4,
+            5,
+            6
+          ]
+        ],
+        "sourceUrls": [
+          "https://keirin.kdreams.jp/takeo/racedetail/8420261003030001/?kakeshikiType=3renhuku&pageType=odds",
+          "https://sp.oddspark.com/keirin/yosou/takeo/2026/1005.html"
+        ],
+        "verifiedDate": "2026-11-23",
+        "basis": "rider_comments_and_published_forecast",
+        "label": "選手コメントに基づく事前ライン構成",
+        "basisNote": "K-Dreams published ordered lineup and Oddspark original comments+full forecast both show 1-2 / 7-3-4-5-6"
+      },
+      "weather": {
+        "text": "晴",
+        "windSpeedMps": 1,
+        "sourceUrl": "https://keirin.kdreams.jp/takeo/racedetail/8420261003030001/?kakeshikiType=3renhuku&pageType=odds",
+        "verifiedSourceCount": 1,
+        "optional": true
+      },
+      "sourceEvidenceFile": "tools/reconstruction-candidates/2026-10-05_84_1.research.json"
     }
   ],
   "publicationPolicy": "ki-verified-only-v1"
