@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "133選手の4項目について異なる2サイトの公開原文に一致。元台帳2行の参照・再読込済み。",
+  "verificationNote": "135選手の氏名・府県・期別・登録番号の4項目を別原文掲載元2サイトで照合。元台帳既存2行の原本保持・証拠追加と再読込を確認。",
   "summary": {
-    "rows": 133
+    "rows": 135
   },
   "riders": [
     {
@@ -3197,6 +3197,54 @@
           "https://www.winticket.jp/keirin/cyclist/013883"
         ],
         "note": "取得確認2026-11-22 JST。KEIRIN.JP公式PCプロフィール（表示更新2026-10-27）https://keirin.jp/pc/racerprofile?snum=013883 とWINTICKET全文 https://www.winticket.jp/keirin/cyclist/013883 を直接閲覧。氏名=高津 晃治／府県=岡山／期別=87／登録番号=013883の4項目が両サイトで一致。元データは公開時点のキャッシュ原文、現在の競走得点を保証しない。元台帳A:F不変。"
+      }
+    },
+    {
+      "id": "011935",
+      "name": "高嶋 一朗",
+      "prefecture": "岡山",
+      "period": "62",
+      "source": "https://keirin.jp/pc/racerprofile?snum=011935",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=011935",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=011935",
+          "https://www.winticket.jp/keirin/cyclist/011935"
+        ],
+        "note": "2026-11-22 JST：KEIRIN.JPの原文（掲載更新2026-10-15）とWINTICKETの個別選手原文を直接閲覧し、氏名・府県・期別・6桁登録番号の4項目を一致確認：高嶋 一朗/岡山/62期/011935。原文URL https://keirin.jp/pc/racerprofile?snum=011935 ／ https://www.winticket.jp/keirin/cyclist/011935。原資料はキャッシュされた公開内容で、現時点の最新成績の証明ではない。A:F原本維持。"
+      }
+    },
+    {
+      "id": "014489",
+      "name": "高鍋 邦彰",
+      "prefecture": "福岡",
+      "period": "95",
+      "source": "https://keirin.jp/sp/racerprofile?snum=014489",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=014489",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=014489",
+          "https://www.winticket.jp/keirin/cyclist/014489"
+        ],
+        "note": "2026-11-22 JST：KEIRIN.JPの原文（掲載更新2026-08-06）とWINTICKETの個別選手原文を直接閲覧し、氏名・府県・期別・6桁登録番号の4項目を一致確認：高鍋 邦彰/福岡/95期/014489。原文URL https://keirin.jp/sp/racerprofile?snum=014489 ／ https://www.winticket.jp/keirin/cyclist/014489。原資料はキャッシュされた公開内容で、現時点の最新成績の証明ではない。A:F原本維持。"
       }
     }
   ],
