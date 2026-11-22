@@ -1,0 +1,178 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-11-20|42|2",
+  "race": {
+    "date": "2026-11-20",
+    "venue": "名古屋",
+    "venueCode": "42",
+    "raceNo": 2,
+    "grade": "F2",
+    "class": "A級チャレンジ予選",
+    "expectedEntrants": 7,
+    "startTimeLocal": "21:00"
+  },
+  "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
+  "createdDateJST": "2026-11-22",
+  "payout": "NOT_COLLECTED_OPTIONAL",
+  "method": "Source-first: choose race with accessible full results and date-specific original pre-race lineup, without needing a legacy V99 race receipt. Two directly accessible result publishers and two directly accessible lineup publishers, compare complete roster; upstream independence remains to be established.",
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [
+      [
+        1,
+        2,
+        4
+      ],
+      [
+        3,
+        6,
+        7
+      ],
+      [
+        5
+      ]
+    ],
+    "roleNotes": "leaders 1 and 3; 5 solo (自由・追上)",
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010002/?pageType=result",
+      "https://keirin.tokyo-sports.co.jp/list/race/20261119_32060"
+    ],
+    "sourceStatus": "TWO_DIRECT_PUBLICATION_SITES_MATCH_GROUPS_UPSTREAM_PROVENANCE_UNCONFIRMED",
+    "note": "Pre-race predicted line only, not actual in-race formation."
+  },
+  "results": [
+    {
+      "finish": 1,
+      "car": 4,
+      "name": "吉川 誠",
+      "prefecture": "神奈",
+      "period": 86,
+      "grade": "A3",
+      "lapSeconds": 11.9,
+      "marginRaw": "",
+      "winningMethodRaw": "差し",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+    },
+    {
+      "finish": 2,
+      "car": 1,
+      "name": "織茂雄一郎",
+      "prefecture": "山梨",
+      "period": 125,
+      "grade": "A3",
+      "lapSeconds": 12.2,
+      "marginRaw": "1/2車輪",
+      "winningMethodRaw": "差し",
+      "sbRaw": "S",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+    },
+    {
+      "finish": 3,
+      "car": 2,
+      "name": "本間 慎吾",
+      "prefecture": "新潟",
+      "period": 91,
+      "grade": "A3",
+      "lapSeconds": 12.1,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+    },
+    {
+      "finish": 4,
+      "car": 3,
+      "name": "花田 雄飛",
+      "prefecture": "愛知",
+      "period": 127,
+      "grade": "A3",
+      "lapSeconds": 12.5,
+      "marginRaw": "1車身",
+      "winningMethodRaw": "",
+      "sbRaw": "B",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+    },
+    {
+      "finish": 5,
+      "car": 5,
+      "name": "水野 悟志",
+      "prefecture": "静岡",
+      "period": 94,
+      "grade": "A3",
+      "lapSeconds": 12,
+      "marginRaw": "3/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+    },
+    {
+      "finish": 6,
+      "car": 6,
+      "name": "柴田 昌樹",
+      "prefecture": "愛知",
+      "period": 79,
+      "grade": "A3",
+      "lapSeconds": 12.1,
+      "marginRaw": "3車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+    },
+    {
+      "finish": 7,
+      "car": 7,
+      "name": "中野 彰人",
+      "prefecture": "和歌",
+      "period": 93,
+      "grade": "A3",
+      "lapSeconds": 12.9,
+      "marginRaw": "6車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceStatus": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_ALL_RELEVANT_FIELDS"
+    }
+  ],
+  "resultUrls": [
+    "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010002/?pageType=result",
+    "https://www.chariloto.com/keirin/results/42/2026-11-20"
+  ],
+  "fieldVerification": {
+    "raceIdentity": "TWO_DIRECT_SITES_MATCH",
+    "sevenEntryNamesAndPeriods": "K_DREAMS_AND_TOKYO_SPORTS_PRE_RACE_ENTRY_PROFILES_MATCH",
+    "allSevenFinishCar": "K_DREAMS_AND_CHARILOTO_DIRECT_ORIGINAL_PUBLICATIONS_MATCH",
+    "allSevenMarginAndLap": "K_DREAMS_AND_CHARILOTO_DIRECT_ORIGINAL_PUBLICATIONS_MATCH",
+    "finishWinningMethod": "K_DREAMS_AND_CHARILOTO_DISPLAY_MATCH_INCLUDING_EMPTY_NONWINNERS",
+    "allSevenSB": "K_DREAMS_AND_CHARILOTO_DISPLAY_MATCH",
+    "preRaceLines": "K_DREAMS_AND_TOKYO_SPORTS_GROUP_ORDER_MATCH",
+    "completeIndependentOriginals": "DISTINCT_PUBLISHERS_FOUND_UPSTREAM_ORIGIN_INDEPENDENCE_NOT_PROVEN",
+    "publicationGate": "PENDING_SOURCE_INDEPENDENCE_AND_FORMAL_SCHEMA_QUALIFICATION"
+  },
+  "sourceIntegrity": {
+    "retrievedDateJST": "2026-11-22",
+    "retrievalMethod": "web.open full article/body",
+    "sourcePublicationDates": "2026-11-20 result and racecard; Tokyo Sports card dated 2026-11-19 for next-day 2026-11-20 event",
+    "sourceNotes": "Kdreams result full page 1524 lines; Chariloto dated all-races result page 448 lines; Tokyo Sports archived 2R pre-race racecard 258 lines.",
+    "originalProviderOrigins": "Not proven independent upstream data production; distinct domains are not necessarily independent primary origins.",
+    "evidenceRefs": [
+      "turn523642view3",
+      "turn523642view0",
+      "turn523642view4",
+      "turn523642view1"
+    ],
+    "copyright": "Original texts not republished wholesale, structured race facts transcribed."
+  },
+  "remainingToPass": [
+    "Establish qualified two-origin factual independence of mandatory results and pre-race lineup sources (or replace any same-upstream pair)",
+    "Verify existing official 7/9-rider cross-feed schema and published provenance fields before release",
+    "Do not label as formal PASS based on mere two domain names"
+  ],
+  "notes": "Entire 7 rider table reconstructed from fresh network sources; not an official published PASS; payout intentionally optional."
+}
