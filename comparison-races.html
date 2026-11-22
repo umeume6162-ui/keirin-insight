@@ -48,7 +48,7 @@ summary{cursor:pointer;font-weight:750;font-size:18px}details .inner{padding:9px
 <p>これは研究用の比較記録です。正式公開フィードとは別であり、照合証拠の欠損は各レースに明示します。事前の並び予想は実際の走行隊列とは異なります。</p>
 <p id="status" role="status">研究用データを確認中…</p>
 <div id="races"></div>
-<p class="note">出典：<a href="https://docs.google.com/spreadsheets/d/1gCe5q5STYH0T8XKqxJbVawB0Cl8TPsCISFJiRUdA02M/edit#gid=2101100506">既存手動照合台帳</a>。不一致・未取得の項目は照合完了と扱いません。</p>
+<p class="note">照合資料と元掲載情報は管理用台帳に保存しています。未確認項目は正式公開済みとして扱いません。</p>
 </main><script>
 (()=>{"use strict";
 const $=id=>document.getElementById(id);
@@ -67,7 +67,7 @@ card.append(el("h2","事前の並び予想"));
 if(r.formation?.state==="two_site_agreement_recorded"){
  const groups=el("div",undefined,"formation");for(const grp of r.formation.groups){const group=el("div",undefined,"group");for(const n of grp)group.append(car(n));groups.append(group)}card.append(groups);
  card.append(el("p","各組の左端が先頭。1車組は単騎です。発走前予想であり、実走隊列ではありません。","note"));
- const links=el("div",undefined,"sources");r.formation.sources.forEach((u,i)=>links.append(link(u,"並び出典 "+(i+1))));card.append(links);
+ card.append(el("p","事前ラインの確認資料は管理用台帳に保存しています。","note"));
 }else card.append(el("p","発走前の並びは未確認です。","note"));
 card.append(el("hr"),el("div","確定上位3車（研究記録）","top-label"));
 const ranked=r.finishers.filter(x=>/^[1-3]$/.test(String(x.finish))).sort((a,b)=>Number(a.finish)-Number(b.finish));
@@ -84,11 +84,11 @@ more.append(mt);const wrap=el("div",undefined,"table-wrap"),detail=el("table",un
 ["車番","着差","決まり手","S/B","府県","期別","例外"].forEach(t=>dh.append(el("th",t)));dt.append(dh);detail.append(dt);const db=el("tbody");
 for(const x of r.finishers){const tr=el("tr");[x.number,x.margin||"—",x.winningMethod||"—",x.startBack||"—",x.prefecture||"—",x.period||"—",x.exception||"—"].forEach(v=>tr.append(el("td",v)));db.append(tr)}detail.append(db);wrap.append(detail);more.append(wrap);body.append(more);
 body.append(el("h2","レース展開の検証"));
-if(r.raceCommentary&&r.raceCommentaryEvidence?.length){body.append(el("p",r.raceCommentary,"review-note"));r.raceCommentaryEvidence.forEach((u,i)=>body.append(link(u,"展開根拠 "+(i+1))))}
+if(r.raceCommentary&&r.raceCommentaryEvidence?.length){body.append(el("p",r.raceCommentary,"review-note"));body.append(el("p","展開根拠資料は管理用台帳に保存しています。","note"))}
 else body.append(el("p","展開未検証。着順と事前ラインから捲り・マークなどの実走過程を推定しません。","note"));
-body.append(el("p","保存済みの結果比較："+(r.resultComparison||"記録なし"),"note"));
-body.append(el("p","未確認・相違："+(r.resultLimitations||"記録なし"),"note"));
-if(r.resultSourceUrl)body.append(link(r.resultSourceUrl,"結果の元掲載元"));
+body.append(el("p","結果の比較証拠は管理用台帳に保存しています。","note"));
+body.append(el("p","正式公開用の項目別証拠は追加確認が必要です。","note"));
+
 body.append(el("p","受付ID："+r.sourceReceiptId+"／受付状態："+r.sourceReceiptState,"note"));
 d.append(body);shell.append(d);return shell
 }
