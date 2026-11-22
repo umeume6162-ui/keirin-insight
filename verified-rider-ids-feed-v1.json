@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付",
   "verificationNote": "148名の氏名・府県・期別・登録番号の固定4項目についてKEIRIN.JP公式とWINTICKET個別原文で一致。元選手台帳389-391行へ証拠保存し再読込済み。",
   "summary": {
-    "rows": 170
+    "rows": 172
   },
   "riders": [
     {
@@ -4090,6 +4090,54 @@
           "https://www.chariloto.com/keirin_athletes/15688"
         ],
         "note": "2026-11-23 JST official KEIRIN.JP profile and Chariloto athlete profiles show 4 permanent identity fields matching. Retrieved web indexed content, source-producer independence not established. Ledger row 413 G:K save/readback confirmed."
+      }
+    },
+    {
+      "id": "013532",
+      "name": "佐々木雄一",
+      "prefecture": "福島",
+      "period": "83",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013532",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013532",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013532",
+          "https://www.winticket.jp/keirin/cyclist/013532"
+        ],
+        "note": "2026-11-23 JST KEIRIN.JP cached full profile shown updated 2026-08-02 and full WINTICKET cached profile agree on four permanent identity fields. Not live original retrieval; common upstream unknown. Sheet 414 G:K write/readback passed."
+      }
+    },
+    {
+      "id": "015439",
+      "name": "佐々木眞也",
+      "prefecture": "神奈",
+      "period": "117",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015439",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015439",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015439",
+          "https://www.winticket.jp/keirin/cyclist/015439"
+        ],
+        "note": "2026-11-23 JST KEIRIN.JP cached full profile shown updated 2026-07-16 and full WINTICKET cached profile agree on four permanent identity fields. Not live original retrieval; common upstream unknown. Sheet 415 G:K write/readback passed."
       }
     }
   ],
