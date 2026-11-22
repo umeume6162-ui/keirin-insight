@@ -132,6 +132,19 @@ assert.equal(matsuyama11.fieldVerification.resultFields.status,'TWO_SITES_ARCHIV
 assert.equal(matsuyama11.fieldVerification.forecastLine.status,'PENDING');
 assert.equal(mat11check.publicationPassed,false);
 assert.ok(mat11check.warnings.some(w=>w.includes('pre-race formation does not cover entire original card')));
+// Matsuyama 12R: 2 provider result receipts and complete three-line forecast are formally recorded.
+const matsuyama12=JSON.parse(fs.readFileSync(path.join(base,'2026-10-05_75_12.research.json'),'utf8'));
+const mat12check=check(matsuyama12);
+assert.equal(mat12check.structuralOk,true,JSON.stringify(mat12check.errors));
+assert.equal(mat12check.documentedResultRows,7);
+assert.equal(mat12check.numericFinishers,7);
+assert.deepEqual(mat12check.missingFromResult,[]);
+assert.equal(mat12check.officialStartersKnown,false);
+assert.equal(mat12check.publicationPassed,false,'structural check never self-promotes');
+assert.equal(matsuyama12.audit.publicationPass,true,'formal source record tracks independent business decision');
+assert.equal(matsuyama12.fieldVerification.resultFields.fieldComparisons,49);
+assert.deepEqual(matsuyama12.preRaceFormation.groups,[[1,4,6],[5,2],[3,7]]);
+assert.equal(new Set(matsuyama12.preRaceFormation.groups.flat()).size,7);
 // Five numeric places plus fall/disqualification must be retained without ranking the exceptions.
 const r4=check(load(4));
 assert.equal(r4.structuralOk,true,JSON.stringify(r4.errors));
