@@ -1,0 +1,134 @@
+{
+  "schema": "ki-legacy-race-full-field-recheck-v1",
+  "dateJST": "2026-11-23",
+  "raceKey": "2026-10-05|75|6",
+  "storedSource": "comparison-races-v1.json",
+  "originalReceiptId": "RACE-MANUAL-V4-20261122T163401-75-6",
+  "retrievalClassification": "Existing Google Sheets source field transcription replay; GitHub record is not freshly acquired original result",
+  "sourceEvidence": [
+    {
+      "url": "https://keirin.netkeiba.com/race/result/?race_id=202610057506&rf=courselist",
+      "type": "historical Sheets ledger field transcription",
+      "accessThisTurn": "direct fetch cache miss"
+    },
+    {
+      "url": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020006/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+      "type": "historical Sheets ledger field transcription",
+      "accessThisTurn": "direct fetch cache miss"
+    },
+    {
+      "url": "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+      "type": "historical stored comparison source link",
+      "accessThisTurn": "direct fetch cache miss"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://keirin.netkeiba.com/race/result/?race_id=202610057506&rf=courselist",
+      "retrieval": "prior source transcription in existing spreadsheet, not new site download"
+    }
+  ],
+  "transcribedRows": [
+    {
+      "finish": 1,
+      "car": 2,
+      "name": "磯川勝裕",
+      "lapSeconds": 11.8,
+      "marginRaw": "",
+      "winningMethodRaw": "捲",
+      "sbRaw": ""
+    },
+    {
+      "finish": 2,
+      "car": 7,
+      "name": "大矢将大",
+      "lapSeconds": 11.6,
+      "marginRaw": "1/2車輪",
+      "winningMethodRaw": "ク",
+      "sbRaw": ""
+    },
+    {
+      "finish": 3,
+      "car": 3,
+      "name": "花田将司",
+      "lapSeconds": 11.7,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "S"
+    },
+    {
+      "finish": 4,
+      "car": 5,
+      "name": "城幸弘",
+      "lapSeconds": 11.8,
+      "marginRaw": "1車身",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 5,
+      "car": 6,
+      "name": "栗本尚宗",
+      "lapSeconds": 12.1,
+      "marginRaw": "1車身",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 6,
+      "car": 1,
+      "name": "竹澤浩司",
+      "lapSeconds": 11.9,
+      "marginRaw": "3車身",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 7,
+      "car": 4,
+      "name": "上杉嘉槻",
+      "lapSeconds": 12.9,
+      "marginRaw": "5車身",
+      "winningMethodRaw": "",
+      "sbRaw": "B"
+    }
+  ],
+  "comparisonScope": [
+    "finish",
+    "name",
+    "lap",
+    "margin",
+    "method",
+    "SB"
+  ],
+  "summary": {
+    "rows": 7,
+    "fieldComparisons": 42,
+    "differences": 0,
+    "allMatch": true,
+    "newIndependentExternalObservations": 0
+  },
+  "formation": {
+    "type": "pre_race_published_prediction",
+    "groups": [
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7,
+        5
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "verifiedFromPreviousReceipt": true
+  },
+  "originalOfficialResult": "NOT_DIRECTLY_OBTAINED",
+  "independentUpstreamOrigin": "NOT_PROVEN",
+  "publicationStatus": "RESEARCH_ONLY_PENDING",
+  "note": "This is a replay integrity check of 7 rows x 6 mapped fields from existing V4 intake, not a new 42-field independent source observation or a newly acquired race. Previous full-field historical comparison remains intact. Unconfirmed fields and official-primary origin not promoted. Payouts optional."
+}
