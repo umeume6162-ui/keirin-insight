@@ -1,0 +1,9 @@
+{
+  "schema": "ki-publication-hold-v1",
+  "snapshotDate": "2026-11-22",
+  "kind": "rider",
+  "count": 15,
+  "reason": "独立承認記録・項目別取得証拠を現時点で確認できないため掲載保留。誤情報と断定しない。",
+  "previousContentSha": "b2a46262411763e82c80e2fa7e41fdced941d869",
+  "rawPreserved": true
+}
