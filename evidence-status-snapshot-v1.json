@@ -1,0 +1,10 @@
+{
+  "schema": "ki-evidence-status-v1",
+  "snapshotDate": "2026-11-22",
+  "scope": "rider_identity",
+  "observed": 2,
+  "pendingIndependentReview": 2,
+  "approved": 0,
+  "sourceType": "cached_official_profile",
+  "note": "公式プロフィールの保存内容から本人識別4項目を確認。独立承認なし。最新の級班・現役状態は未確認。"
+}
