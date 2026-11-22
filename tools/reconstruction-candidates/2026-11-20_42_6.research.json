@@ -1,0 +1,246 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-11-20|42|6",
+  "createdDateJST": "2026-11-22",
+  "race": {
+    "date": "2026-11-20",
+    "venue": "名古屋",
+    "venueCode": "42",
+    "raceNo": 6,
+    "grade": "F2",
+    "class": "A級特予選",
+    "expectedEntrants": 7,
+    "startTimeLocal": "22:20"
+  },
+  "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
+  "method": "Source-first result reconstruction using directly read full Kdreams and Chariloto 6R results plus original dated Tokyo Sports pre-race card, not a pre-existing V99 receipt.",
+  "payout": "NOT_COLLECTED_OPTIONAL",
+  "originalEntries": [
+    {
+      "car": 1,
+      "name": "高橋 陽介",
+      "sourceStatus": "TOKYO_SPORTS_PRE_RACE_CARD_AND_KDREAMS_RACECARD_MATCH"
+    },
+    {
+      "car": 2,
+      "name": "大塚 英伸",
+      "sourceStatus": "TOKYO_SPORTS_PRE_RACE_CARD_AND_KDREAMS_RACECARD_MATCH"
+    },
+    {
+      "car": 3,
+      "name": "山本 隼人",
+      "sourceStatus": "TOKYO_SPORTS_PRE_RACE_CARD_AND_KDREAMS_RACECARD_MATCH"
+    },
+    {
+      "car": 4,
+      "name": "丹波 孝佑",
+      "sourceStatus": "TOKYO_SPORTS_PRE_RACE_CARD_AND_KDREAMS_RACECARD_MATCH"
+    },
+    {
+      "car": 5,
+      "name": "梅田 加津也",
+      "sourceStatus": "TOKYO_SPORTS_PRE_RACE_CARD_AND_KDREAMS_RACECARD_MATCH"
+    },
+    {
+      "car": 6,
+      "name": "有賀 高士",
+      "sourceStatus": "TOKYO_SPORTS_PRE_RACE_CARD_AND_KDREAMS_RACECARD_MATCH"
+    },
+    {
+      "car": 7,
+      "name": "吉田 夢希斗",
+      "sourceStatus": "TOKYO_SPORTS_PRE_RACE_CARD_AND_KDREAMS_RACECARD_MATCH"
+    }
+  ],
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      3,
+      4,
+      6,
+      7,
+      1,
+      2,
+      5
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 7,
+    "nonNumericResultRows": 0,
+    "confirmedWithdrawals": [],
+    "confirmedStarterCount": null,
+    "officialAmendedCardStatus": "NOT_OBTAINED; no observed nonnumeric status, do not claim independent official revised-card audit"
+  },
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [
+      [
+        7,
+        1
+      ],
+      [
+        5,
+        2
+      ],
+      [
+        4,
+        3,
+        6
+      ]
+    ],
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010006/?pageType=result",
+      "https://keirin.tokyo-sports.co.jp/list/race/20261119_32047"
+    ],
+    "providerDetail": {
+      "kdreamsForecastAttribution": "中部競輪",
+      "kdreamsReviewAttribution": "アオケイ 神長信之",
+      "tokyoSports": "東スポ新聞原文/選手コメント"
+    },
+    "sourceState": "CROSS_PUBLISHED_DATED_FORECASTS_AGREE_BUT_PROVENANCE_OF_UPSTREAM_ORIGINS_NOT_CERTIFIED",
+    "note": "7-1 / 5-2 / 4-3-6 is published pre-race prediction only, not post-race running order."
+  },
+  "results": [
+    {
+      "finishRaw": "1",
+      "finish": 1,
+      "car": 3,
+      "name": "山本 隼人",
+      "prefecture": "大阪",
+      "period": 111,
+      "grade": "A2",
+      "lapSeconds": 12.8,
+      "marginRaw": "",
+      "winningMethodRaw": "差し",
+      "sbRaw": "S",
+      "exceptionRaw": "",
+      "sourceEvidence": "Direct Kdreams and Chariloto original full published result pages agree on shown fields"
+    },
+    {
+      "finishRaw": "2",
+      "finish": 2,
+      "car": 4,
+      "name": "丹波 孝佑",
+      "prefecture": "大阪",
+      "period": 98,
+      "grade": "A1",
+      "lapSeconds": 13,
+      "marginRaw": "1/4車輪",
+      "winningMethodRaw": "逃げ",
+      "sbRaw": "B",
+      "exceptionRaw": "",
+      "sourceEvidence": "Direct Kdreams and Chariloto original full published result pages agree on shown fields"
+    },
+    {
+      "finishRaw": "3",
+      "finish": 3,
+      "car": 6,
+      "name": "有賀 高士",
+      "prefecture": "石川",
+      "period": 61,
+      "grade": "A2",
+      "lapSeconds": 12.8,
+      "marginRaw": "3/4車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceEvidence": "Direct Kdreams and Chariloto original full published result pages agree on shown fields"
+    },
+    {
+      "finishRaw": "4",
+      "finish": 4,
+      "car": 7,
+      "name": "吉田 夢希斗",
+      "prefecture": "埼玉",
+      "period": 127,
+      "grade": "A2",
+      "lapSeconds": 13,
+      "marginRaw": "3/4車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceEvidence": "Direct Kdreams and Chariloto original full published result pages agree on shown fields"
+    },
+    {
+      "finishRaw": "5",
+      "finish": 5,
+      "car": 1,
+      "name": "高橋 陽介",
+      "prefecture": "青森",
+      "period": 89,
+      "grade": "A1",
+      "lapSeconds": 12.9,
+      "marginRaw": "3/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceEvidence": "Direct Kdreams and Chariloto original full published result pages agree on shown fields"
+    },
+    {
+      "finishRaw": "6",
+      "finish": 6,
+      "car": 2,
+      "name": "大塚 英伸",
+      "prefecture": "静岡",
+      "period": 82,
+      "grade": "A1",
+      "lapSeconds": 12.2,
+      "marginRaw": "2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceEvidence": "Direct Kdreams and Chariloto original full published result pages agree on shown fields"
+    },
+    {
+      "finishRaw": "7",
+      "finish": 7,
+      "car": 5,
+      "name": "梅田 加津也",
+      "prefecture": "神奈川",
+      "period": 119,
+      "grade": "A1",
+      "lapSeconds": 14.1,
+      "marginRaw": "大差",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "sourceEvidence": "Direct Kdreams and Chariloto original full published result pages agree on shown fields"
+    }
+  ],
+  "resultUrls": [
+    "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010006/?pageType=result",
+    "https://www.chariloto.com/keirin/results/42/2026-11-20"
+  ],
+  "sourceAudit": {
+    "retrievalDateJST": "2026-11-22",
+    "method": "web.open full body",
+    "resultKdreams": "Result page rows 1140-1146 all 7 finishers, original displays 1/4車輪 3/4車身 and other margins",
+    "resultChariloto": "Dated results 6R rows 265-271 all 7 finishers",
+    "predictedLineKdreams": "Lineup 7-1 / 5-2 / 4-3-6, published with 並び提供:中部競輪",
+    "predictedLineTokyoSports": "Dated 2026-11-19 racecard: 7自力、1吉田君、5自力、2梅田君、4自力、3丹波さん、6大阪へ",
+    "independentOriginCaution": "Two sites may republish same common provider data; independent original source process remains unproven.",
+    "license": "Structured public facts only; no full copyrighted editorial text reproduced"
+  },
+  "fieldVerification": {
+    "rankCarAndNames": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH",
+    "allSevenMarginsAndLap": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH",
+    "methodAndSB": "TWO_DIRECT_RESULT_PUBLICATIONS_MATCH_DISPLAYED",
+    "originalEntryCarSet": "TOKYO_SPORTS_AND_KDREAMS_MATCH_ALL_1_TO_7",
+    "lineGroupOrder": "TOKYO_SPORTS_AND_KDREAMS_FORECAST_AGREE",
+    "independentOriginalProvenance": "PENDING_SOURCE_ORIGIN_QUALIFICATION",
+    "formalPass": "PENDING_NOT_PUBLISHED"
+  },
+  "remainingToPass": [
+    "Establish independent original factual origin for all required result fields and lineup; distinct domains alone insufficient",
+    "Inspect any official revised racecard/cancellation notices if required by existing intake contract",
+    "Run publishing gate only if all mandatory source evidence and provenance qualifies"
+  ],
+  "notes": "Read-only new research candidate, no override of existing verified result and line feeds."
+}
