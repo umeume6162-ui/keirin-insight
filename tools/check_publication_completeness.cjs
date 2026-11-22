@@ -66,4 +66,55 @@ assert.equal(official.summary.races,official.races.length);
 assert.equal(full.summary.rows,full.rows.length);
 assert.equal(official.summary.rider_rows,full.rows.length);
 assert.equal(lines.summary.races,lines.races.length);
+assert.equal(lines.summary.rider_rows,lines.races.reduce((n,r)=>n+r.riders.length,0));
+assert.equal(full.summary.races,official.summary.races);
+assert.equal(official.summary.rider_rows,full.rows.length);
+const groupsAreValid=groups=>Array.isArray(groups)&&groups.every(g=>Array.isArray(g)&&g.length&&g.every(n=>Number.isInteger(Number(n))));
+const fieldIndex=Object.fromEntries(full.columns.map((k,i)=>[k,i]));
+const raceByKey=new Map(official.races.map(r=>[r.key,r]));
+const verifiedRaceKeys=new Set();
+for(const race of official.races){
+ const key=[race.date,String(race.track_code),Number(race.race)].join('|');
+ assert.equal(race.key,key,'published race key mismatch');
+ assert.ok(!verifiedRaceKeys.has(key),'duplicate published race');verifiedRaceKeys.add(key);
+ assert.ok([7,9].includes(race.size),'verified result size must be 7 or 9');
+ assert.equal(race.officialVerification?.status,'verified');
+ assert.equal(race.officialVerification?.method,'two_distinct_sites_agree');
+ const rs=race.officialVerification.matchingSources||[];
+ assert.ok(new Set(rs.map(domain)).size>=2,'published result needs two sources');
+ rs.forEach(requireUrl);
+ const riderRows=full.rows.filter(row=>[row[fieldIndex.date],String(row[fieldIndex.trackCode]),Number(row[fieldIndex.race])].join('|')===key);
+ assert.equal(riderRows.length,race.size,'published result must contain entire field');
+ const cars=riderRows.map(row=>Number(row[fieldIndex.number]));
+ assert.equal(new Set(cars).size,race.size,'duplicate result car');
+ for(const row of riderRows){
+  assert.equal(row.length,full.columns.length,'result row width');
+  assert.ok(rs.includes(row[fieldIndex.sourceUrl]),'rider result URL not in verified result sources');
+  for(const mandatory of ['name','prefecture','period','finishRaw','riderClass','lastLapRaw']){
+   assert.ok(String(row[fieldIndex[mandatory]]??'').trim(),'missing verified rider field: '+mandatory);
+  }
+ }
+ const line=lines.races.find(x=>x.id===key);
+ assert.ok(line,'verified race requires matched pre-race lineup');
+ assert.equal(line.officialVerification?.status,'verified');
+ assert.equal(line.officialVerification?.method,'two_distinct_sites_agree');
+ const ls=line.officialVerification.matchingSources||[];
+ assert.ok(new Set(ls.map(domain)).size>=2,'lineup needs two sources');ls.forEach(requireUrl);
+ assert.equal(line.riders.length,race.size,'lineup rider count');
+ const lineCars=line.riders.map(x=>Number(x.number));
+ assert.deepEqual(lineCars.slice().sort((a,b)=>a-b),cars.slice().sort((a,b)=>a-b),'lineup/result car mismatch');
+ assert.ok(groupsAreValid(line.forecastGroups),'lineup groups invalid');
+ const grouped=line.forecastGroups.flat().map(Number);
+ assert.equal(new Set(grouped).size,race.size,'lineup duplicate/missing car');
+ assert.deepEqual(grouped.slice().sort((a,b)=>a-b),cars.slice().sort((a,b)=>a-b));
+ for(const rider of line.riders){
+  const row=riderRows.find(x=>Number(x[fieldIndex.number])===Number(rider.number));
+  assert.ok(row,'missing linked rider row');
+  assert.equal(String(row[fieldIndex.name]).replace(/\\s/g,''),String(rider.name).replace(/\\s/g,''));
+  assert.equal(String(row[fieldIndex.period]),String(rider.period));
+  assert.ok(Array.isArray(rider.line)&&rider.line.some(n=>Number(n)===Number(rider.number)));
+  assert.ok(line.forecastGroups.some(g=>JSON.stringify(g)===JSON.stringify(rider.line)),'line group not corroborated');
+ }
+}
+assert.equal(verifiedRaceKeys.size,lines.races.length,'orphan lineup publication');
 console.log('OK: '+ids.riders.length+' rider IDs, '+races.races.length+' research races, '+races.summary.finishers+' finishers; verified official race stream '+official.races.length);
