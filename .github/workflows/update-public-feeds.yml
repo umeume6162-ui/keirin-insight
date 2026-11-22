@@ -30,7 +30,7 @@ jobs:
           fi
       - name: Install Google authentication client
         run: pip install 'google-auth==2.38.0' 'requests==2.32.3'
-      - name: Read Google Sheets and validate result and line feeds
+      - name: Read Google Sheets and validate result, line and rider ID feeds
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/build_feeds.py --root .
@@ -40,11 +40,14 @@ jobs:
           if [ -f line-snapshots-feed-v1.json ]; then
             git add -- line-snapshots-feed-v1.json
           fi
+          if [ -f rider-ids-feed-v1.json ]; then
+            git add -- rider-ids-feed-v1.json
+          fi
           if git diff --cached --quiet; then
             echo 'No JSON changes.'
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Update validated public results and line snapshots'
+          git commit -m 'Update validated public results, line snapshots and rider IDs'
           git push
