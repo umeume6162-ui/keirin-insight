@@ -121,6 +121,17 @@ assert.equal(matsuyama10.publicationPassed,false);
 assert.equal(matsuyama10.officialStartersKnown,false);
 assert.ok(matsuyama10.warnings.some(w=>w.startsWith('RESULT_DERIVED_ENTRIES_ONLY')));
 assert.ok(matsuyama10.warnings.some(w=>w.includes('pre-race formation does not cover entire original card')));
+// Matsuyama 11R: 49 archived result fields match two providers. Line groups remain independently pending.
+const matsuyama11=JSON.parse(fs.readFileSync(path.join(base,'2026-10-05_75_11.research.json'),'utf8'));
+const mat11check=check(matsuyama11);
+assert.equal(mat11check.structuralOk,true,JSON.stringify(mat11check.errors));
+assert.equal(mat11check.documentedResultRows,7);
+assert.equal(mat11check.numericFinishers,7);
+assert.deepEqual(mat11check.missingFromResult,[]);
+assert.equal(matsuyama11.fieldVerification.resultFields.status,'TWO_SITES_ARCHIVED_MATCH');
+assert.equal(matsuyama11.fieldVerification.forecastLine.status,'PENDING');
+assert.equal(mat11check.publicationPassed,false);
+assert.ok(mat11check.warnings.some(w=>w.includes('pre-race formation does not cover entire original card')));
 // Five numeric places plus fall/disqualification must be retained without ranking the exceptions.
 const r4=check(load(4));
 assert.equal(r4.structuralOk,true,JSON.stringify(r4.errors));
