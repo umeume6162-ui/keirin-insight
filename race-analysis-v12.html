@@ -408,7 +408,7 @@ function showSnapshotResearch(){
  if(rr){linked++;if(cutoff&&s.date<cutoff&&rr.every(x=>x.result.grade===selected))eligible.push(rr)}else{pending++;if(s.riders.some(x=>!snapshotIdentityComplete(x)||x.identityComplete===false))incomplete++;}
  if(!rr)continue;
  const groups=[...new Set(s.riders.map(x=>x.line.join('-')))];
- html+='<details><summary style="padding:10px 0;cursor:pointer">'+safe(s.date+' '+s.track+' '+s.race+'R ／ '+(rr?'全員一致':s.riders.some(x=>!snapshotIdentityComplete(x)||x.identityComplete===false)?'本人照合情報不足':'未接続・照合不一致'))+'</summary><p>'+safe('事前並び：'+groups.join(' / '))+'</p><p class="tiny">'+safe('取得：'+s.captured+'／出典：'+s.source)+'</p>';
+ html+='<details><summary style="padding:10px 0;cursor:pointer">'+safe(s.date+' '+s.track+' '+s.race+'R ／ '+(rr?'全員一致':s.riders.some(x=>!snapshotIdentityComplete(x)||x.identityComplete===false)?'本人照合情報不足':'未接続・照合不一致'))+'</summary><p>'+safe('事前並び：'+groups.join(' / '))+'</p><p class="tiny">'+safe('取得：'+s.captured+'／取得元は管理用台帳に保管')+'</p>';
  if(rr){html+='<div class="table"><table style="min-width:380px"><thead><tr><th>車番・選手</th><th>事前位置</th><th>収録着順</th></tr></thead><tbody>';
  for(const {snapshot:x,result:y} of rr){html+='<tr><td>'+safe(x.number+' '+x.name)+'</td><td>'+safe(x.position)+'</td><td>'+safe(y.rank===null?'非数値':y.rank+'着')+'</td></tr>';}
  html+='</tbody></table></div>';}
