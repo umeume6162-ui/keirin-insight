@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "113選手の氏名・府県・期別・6桁登録番号を別掲載元2原文で照合済み。旧110件保持、新規3件。",
+  "verificationNote": "116選手の氏名・府県・期別・6桁登録番号を独立2原文で確認し保存。旧113人維持、新規6名は2回に分けて追加。",
   "summary": {
-    "rows": 113
+    "rows": 116
   },
   "riders": [
     {
@@ -2717,6 +2717,78 @@
           "https://www.winticket.jp/keirin/cyclist/014720"
         ],
         "note": "2026-11-22 JSTに独立2掲載元の保存キャッシュ本文を開いて4項目一致。日刊プロスポーツ新聞社エンジョイの選手原文とWINTICKETプロフィール全文で氏名・埼玉・99期・014720一致。公式PC本文はcache missで独立原文として計上せず。元台帳355行A:F不変。"
+      }
+    },
+    {
+      "id": "013910",
+      "name": "高橋　秀吉",
+      "prefecture": "秋田",
+      "period": "88",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013910",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013910",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013910",
+          "https://www.winticket.jp/keirin/cyclist/013910"
+        ],
+        "note": "2026-11-22 JST 独立2掲載元の歴史的キャッシュ本文を直接読んで照合。KEIRIN.JP公式2026-08-09版とWINTICKET全文の氏名・府県・期別・番号が一致。A:F保持、元台帳356行。"
+      }
+    },
+    {
+      "id": "014026",
+      "name": "高橋　成英",
+      "prefecture": "愛知",
+      "period": "89",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014026",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014026",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014026",
+          "https://nagoyakeirin.com/racer/n-takahashi/"
+        ],
+        "note": "2026-11-22 JST 独立2掲載元の歴史的キャッシュ本文を直接読んで照合。KEIRIN.JP公式2026-07-29版と名古屋競輪場の公式所属選手紹介本文で4項目一致。A:F保持、元台帳357行。"
+      }
+    },
+    {
+      "id": "015157",
+      "name": "高橋　大輝",
+      "prefecture": "秋田",
+      "period": "111",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015157",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015157",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015157",
+          "https://www.winticket.jp/keirin/cyclist/015157"
+        ],
+        "note": "2026-11-22 JST 独立2掲載元の歴史的キャッシュ本文を直接読んで照合。KEIRIN.JP公式2026-08-02版とWINTICKET全文の4項目一致。A:F保持、元台帳359行。"
       }
     }
   ],
