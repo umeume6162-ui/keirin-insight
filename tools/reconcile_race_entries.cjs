@@ -18,9 +18,9 @@ function reconcile(entries, results) {
     const car=Number(r.car);
     if(!map.has(car)||seen.has(car))throw Error('unknown/duplicated result car');
     seen.add(car);
-    if(r.name && r.name.replace(/\\s|　/g,'')!==map.get(car).name.replace(/\\s|　/g,''))throw Error('entry/result identity mismatch');
+    if(r.name && r.name.replace(/\s|　/g,'')!==map.get(car).name.replace(/\s|　/g,''))throw Error('entry/result identity mismatch');
     const finish=String(r.finish??'').trim();
-    if(/^\\d+$/.test(finish)){
+    if(/^\d+$/.test(finish)){
       numeric.push({car,finish:Number(finish),incident:r.incident||null});
     }else if(states.has(finish)){
       const sites=Array.isArray(r.statusSourceDomains)?new Set(r.statusSourceDomains):new Set();
