@@ -1,0 +1,28 @@
+{
+  "schema": "ki-collection-status-v1",
+  "snapshotDate": "2026-11-22",
+  "mode": "manual-read-only-snapshot",
+  "collection": {
+    "source": "V100収集状態台帳",
+    "meetings": 88,
+    "regularRaces": 815,
+    "cancelledRaces": 1,
+    "riderRows": 5825,
+    "independentReviewNotPerformed": 88
+  },
+  "quality": {
+    "source": "AIレース品質監査",
+    "scope": "V99",
+    "races": 751,
+    "provisional": 594,
+    "needsFinishReview": 56,
+    "otherFieldSize": 101
+  },
+  "line": {
+    "source": "AIライン接続監査",
+    "targets": 12,
+    "unconnectedWithFormation": 11,
+    "matchedV99": 0
+  },
+  "note": "台帳記載値の集計。独立公式照合の合格件数ではない。"
+}
