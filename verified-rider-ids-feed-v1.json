@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "4必須項目2サイト一致61選手。既存59選手保持、栗本武典・郡司浩平追加。",
+  "verificationNote": "氏名・府県・期別・登録番号の4項目が2サイト一致した63選手。既存61件維持、桑原亮・穴井利久追加。",
   "summary": {
-    "rows": 61
+    "rows": 63
   },
   "riders": [
     {
@@ -1469,6 +1469,54 @@
           "https://www.winticket.jp/keirin/cyclist/014741"
         ],
         "note": "本人プロフィールの氏名・府県・期別・登録番号をKEIRIN.JPとWINTICKETで確認し全4項目一致。"
+      }
+    },
+    {
+      "id": "014194",
+      "name": "桑原　亮",
+      "prefecture": "福岡",
+      "period": "91",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014194",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014194",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014194",
+          "https://www.winticket.jp/keirin/cyclist/014194"
+        ],
+        "note": "KEIRIN.JP・WINTICKETの表示された4項目が一致。選手ID照合台帳302行を既存行更新。2026-11-22照合（取得可能なキャッシュ本文）。"
+      }
+    },
+    {
+      "id": "012242",
+      "name": "穴井　利久",
+      "prefecture": "福岡",
+      "period": "65",
+      "source": "https://keirin.jp/pc/racerprofile?snum=012242",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=012242",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=012242",
+          "https://www.winticket.jp/keirin/cyclist/012242"
+        ],
+        "note": "KEIRIN.JP・WINTICKETの表示された4項目が一致。選手ID照合台帳304行を既存行更新。2026-11-22照合（取得可能なキャッシュ本文）。"
       }
     }
   ],
