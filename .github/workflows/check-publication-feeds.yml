@@ -8,6 +8,7 @@ on:
       - 'verified-line-snapshots-feed-v1.json'
       - 'comparison-races-v1.json'
       - 'tools/check_publication_completeness.cjs'
+      - 'tools/reconcile_race_entries.cjs'
       - '.github/workflows/check-publication-feeds.yml'
   pull_request:
     paths:
@@ -32,5 +33,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Run missing-rider reconciliation tests
+        run: node tools/reconcile_race_entries.cjs
       - name: Validate published feeds and two-source evidence metadata
         run: node tools/check_publication_completeness.cjs
