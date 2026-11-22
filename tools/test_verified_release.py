@@ -50,4 +50,44 @@ class ReleaseTests(unittest.TestCase):
         d,e=fixture(); d[2]["summary"]["rows"]=2
         with self.assertRaises(ValueError): validate(d,e)
 
+
+class ChangeAuditTests(unittest.TestCase):
+    def setUp(self):
+        from release_change_audit import audit_changes
+        self.audit=audit_changes
+        self.old,self.reviews=fixture()
+        self.new=copy.deepcopy(self.old)
+        self.new[2]["riders"][0]["name"]="TEST CORRECTED"
+        before=self.old[2]["riders"][0]
+        after=self.new[2]["riders"][0]
+        self.e={"kind":"rider","key":before["id"],"action":"correct","beforeSha256":digest(before),"afterSha256":digest(after),"source":before["source"],"reviewedDate":"2026-01-02","reason":"SYNTHETIC TEST","reviewer":"SYNTHETIC TEST"}
+    def test_unchanged(self):
+        self.assertEqual(self.audit(self.old,self.old,[]),[])
+    def test_correct_with_evidence(self):
+        changes=self.audit(self.old,self.new,[self.e])
+        self.assertEqual(len(changes),1)
+        self.assertEqual(changes[0]["action"],"correct")
+        self.assertEqual(changes[0]["before"],self.old[2]["riders"][0])
+        self.assertEqual(changes[0]["after"],self.new[2]["riders"][0])
+    def test_correct_without_evidence(self):
+        with self.assertRaises(ValueError): self.audit(self.old,self.new,[])
+    def test_wrong_hash(self):
+        self.e["afterSha256"]="invalid"
+        with self.assertRaises(ValueError): self.audit(self.old,self.new,[self.e])
+    def test_duplicate_correction(self):
+        with self.assertRaises(ValueError): self.audit(self.old,self.new,[self.e,self.e])
+    def test_unused_correction(self):
+        with self.assertRaises(ValueError): self.audit(self.old,self.old,[self.e])
+    def test_nonofficial_correction(self):
+        self.e["source"]="https://example.com/"
+        with self.assertRaises(ValueError): self.audit(self.old,self.new,[self.e])
+    def test_withdrawal(self):
+        self.new[2]["riders"]=[]; self.new[2]["summary"]["rows"]=0
+        self.e["action"]="withdraw"; self.e["afterSha256"]=None
+        self.assertEqual(self.audit(self.old,self.new,[self.e])[0]["action"],"withdraw")
+        with self.assertRaises(ValueError): self.audit(self.old,self.new,[])
+    def test_addition(self):
+        self.old[2]["riders"]=[]; self.old[2]["summary"]["rows"]=0
+        self.assertEqual(self.audit(self.old,self.new,[])[0]["action"],"add")
+
 if __name__=="__main__": unittest.main()
