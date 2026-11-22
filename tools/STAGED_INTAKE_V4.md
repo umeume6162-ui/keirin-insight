@@ -67,3 +67,9 @@ Execution order: process eligible verified records toward the website promptly, 
 - Race-result verification and system improvements: existing enabled task `Automation_13d5a6020c5c8191a22bc87d7d4ea008` (twice daily). The fourth workstream shares this task because the plan's five-active-task limit prevents creating a separate system-improvement automation.
 - Ledger/site synchronization: existing enabled task `Automation_6fb0a5dac1a8819193d7618928e6013f` (hourly). Preserve its current sync-only write boundaries.
 - These are parallel scheduled responsibilities, not a claim that tasks are executing continuously or that a site write or data collection succeeded. Verify actual run logs and stored results before asserting progress. Do not disable unrelated JRA automations to create capacity. Revisit assignment if task capacity or needs change.
+
+## Implementation note: real rider-ledger column mapping (2026-11-22)
+
+- Defect: an earlier ad hoc comparison treated original ledger columns C/D (period/result count) as prefecture/period. This wrongly excluded matching riders. The actual `選手ID照合台帳` A:K mapping is A=name, B=prefecture, C=period, D=result-count, G=registration number (six-digit string).
+- Added `tools/preflight_rider_intake.py::preflight_ledger_row` and `from_rider_ledger_row` to map these fields explicitly; added four regression tests in `tools/test_preflight_rider_intake.py`. The GitHub Actions workflow `.github/workflows/verify-rider-intake.yml` is configured to run this suite on changes; successful execution has not yet been independently confirmed in this chat.
+- This repair is a field-mapping fix only. It does not change the two-of-three content agreement threshold and does not independently approve, save or publish observations. Existing collection writers must be checked for integration before claiming the bug is fully resolved.
