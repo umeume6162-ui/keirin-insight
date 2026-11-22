@@ -53,6 +53,15 @@ assert.deepEqual(r9.missingFromResult,[]);
 assert.equal(r9.publicationPassed,false);
 assert.equal(r9.officialStartersKnown,false);
 // First race outside Nagoya: seven Maebashi A3 starters on the dated card and seven ranked results.
+// Maebashi 2R: source-origin and third-source S-field omissions never promote research data.
+const maebashi2=check(JSON.parse(fs.readFileSync(path.join(base,'2026-11-20_22_2.research.json'),'utf8')));
+assert.equal(maebashi2.raceKey,'2026-11-20|22|2');
+assert.equal(maebashi2.structuralOk,true,JSON.stringify(maebashi2.errors));
+assert.equal(maebashi2.documentedResultRows,7);
+assert.equal(maebashi2.numericFinishers,7);
+assert.deepEqual(maebashi2.missingFromResult,[]);
+assert.equal(maebashi2.publicationPassed,false);
+assert.equal(maebashi2.officialStartersKnown,false);
 const maebashi=check(JSON.parse(fs.readFileSync(path.join(base,'2026-11-20_22_1.research.json'),'utf8')));
 assert.equal(maebashi.raceKey,'2026-11-20|22|1');
 assert.equal(maebashi.structuralOk,true,JSON.stringify(maebashi.errors));
@@ -81,4 +90,4 @@ assert.equal(missing.publicationPassed,false);
 const duplicate=load(5);
 duplicate.results[1].car=duplicate.results[0].car;
 assert.equal(check(duplicate).structuralOk,false);
-console.log('source-first race reconciliation tests passed (8 authentic candidates + missing/duplicate regression cases)');
+console.log('source-first race reconciliation tests passed (9 authentic candidates + missing/duplicate regression cases)');
