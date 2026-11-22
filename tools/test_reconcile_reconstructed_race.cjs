@@ -52,6 +52,15 @@ assert.deepEqual(r9.nonNumericResultRows.map(x=>[x.car,x.status]),[[3,'落'],[6,
 assert.deepEqual(r9.missingFromResult,[]);
 assert.equal(r9.publicationPassed,false);
 assert.equal(r9.officialStartersKnown,false);
+// First race outside Nagoya: seven Maebashi A3 starters on the dated card and seven ranked results.
+const maebashi=check(JSON.parse(fs.readFileSync(path.join(base,'2026-11-20_22_1.research.json'),'utf8')));
+assert.equal(maebashi.raceKey,'2026-11-20|22|1');
+assert.equal(maebashi.structuralOk,true,JSON.stringify(maebashi.errors));
+assert.equal(maebashi.documentedResultRows,7);
+assert.equal(maebashi.numericFinishers,7);
+assert.deepEqual(maebashi.missingFromResult,[]);
+assert.equal(maebashi.officialStartersKnown,false);
+assert.equal(maebashi.publicationPassed,false);
 // Five numeric places plus fall/disqualification must be retained without ranking the exceptions.
 const r4=check(load(4));
 assert.equal(r4.structuralOk,true,JSON.stringify(r4.errors));
@@ -72,4 +81,4 @@ assert.equal(missing.publicationPassed,false);
 const duplicate=load(5);
 duplicate.results[1].car=duplicate.results[0].car;
 assert.equal(check(duplicate).structuralOk,false);
-console.log('source-first race reconciliation tests passed (7 authentic candidates + missing/duplicate regression cases)');
+console.log('source-first race reconciliation tests passed (8 authentic candidates + missing/duplicate regression cases)');
