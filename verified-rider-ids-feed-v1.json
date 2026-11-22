@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付",
   "verificationNote": "148名の氏名・府県・期別・登録番号の固定4項目についてKEIRIN.JP公式とWINTICKET個別原文で一致。元選手台帳389-391行へ証拠保存し再読込済み。",
   "summary": {
-    "rows": 157
+    "rows": 158
   },
   "riders": [
     {
@@ -3773,6 +3773,31 @@
           "https://www.winticket.jp/keirin/cyclist/013311"
         ],
         "note": "2026-11-23 JST: cached full KEIRIN.JP profile (displayed update 2026-07-28 02:37) and cached full WINTICKET profile agree on 4 permanent identity fields. Not live retrieval; origin independence unproven. Sheet row 400 verified."
+      }
+    },
+    {
+      "id": "015393",
+      "name": "佐々木 綾",
+      "prefecture": "東京",
+      "period": "116",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015393",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015393",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015393",
+          "https://keirin-marche.jp/girlskeirin/players/015393/",
+          "https://www.winticket.jp/keirin/cyclist/015393"
+        ],
+        "note": "2026-11-23 JST cached full official KEIRIN.JP page (update 2026-08-02), JKA Girls Keirin official profile and WINTICKET. Four stable identity fields agree; these are cached pages, not fresh live response; source-feed upstream independence not proven. Google Sheet row 401 read-back verified."
       }
     }
   ],
