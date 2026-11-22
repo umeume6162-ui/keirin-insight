@@ -115,18 +115,27 @@ def validate(data, reviews):
     need(i["summary"]["rows"]==len(ids) and l["summary"]["races"]==len(lineids) and l["summary"]["rider_rows"]==sum(len(x["riders"]) for x in l["races"]),"identity / line summaries mismatch")
     need(a["latest_race_date"]==max((k[0] for k in races),default=""),"latest date mismatch")
 def main():
-    p=argparse.ArgumentParser(); p.add_argument("--input",type=pathlib.Path,required=True); p.add_argument("--reviews",type=pathlib.Path,required=True); p.add_argument("--staging",type=pathlib.Path,required=True); args=p.parse_args()
+    p=argparse.ArgumentParser(); p.add_argument("--input",type=pathlib.Path,required=True); p.add_argument("--reviews",type=pathlib.Path,required=True); p.add_argument("--staging",type=pathlib.Path,required=True); p.add_argument("--previous",type=pathlib.Path,required=True); p.add_argument("--corrections",type=pathlib.Path,required=True); args=p.parse_args()
     filenames=["verified-"+n+"-feed-v1.json" for n in NAMES]
     data=[json.loads((args.input/f).read_text(encoding="utf-8")) for f in filenames]
     reviews=json.loads(args.reviews.read_text(encoding="utf-8"))
     validate(data,reviews)
+    from release_change_audit import audit_changes
+    previous=[json.loads((args.previous/f).read_text(encoding="utf-8")) for f in filenames]
+    corrections=json.loads(args.corrections.read_text(encoding="utf-8"))
+    need(isinstance(corrections,list),"corrections must be a list")
+    changes=audit_changes(previous,data,corrections)
+    previous_hashes={f:digest(j) for f,j in zip(filenames,previous)}
     need(not args.staging.exists(),"staging already exists; never overwrite")
     args.staging.mkdir(parents=True)
     manifest={}
     for f,j in zip(filenames,data):
         raw=(json.dumps(j,ensure_ascii=False,sort_keys=True,separators=(",",":"))+"\n").encode()
         (args.staging/f).write_bytes(raw); manifest[f]=hashlib.sha256(raw).hexdigest()
-    (args.staging/"release-manifest.json").write_text(json.dumps({"policy":POLICY,"sha256":manifest},indent=2),encoding="utf-8")
+    journal_raw=(json.dumps({"schema":"ki-release-changes-v1","previousRecordHashes":previous_hashes,"changes":changes},ensure_ascii=False,sort_keys=True,separators=(",",":"))+"\n").encode()
+    (args.staging/"release-changes.json").write_bytes(journal_raw)
+    manifest["release-changes.json"]=hashlib.sha256(journal_raw).hexdigest()
+    (args.staging/"release-manifest.json").write_text(json.dumps({"policy":POLICY,"sha256":manifest,"previousRecordHashes":previous_hashes,"changeCount":len(changes)},indent=2),encoding="utf-8")
     print("検査合格: staging only; publication not performed")
 if __name__=="__main__":
     try: main()
