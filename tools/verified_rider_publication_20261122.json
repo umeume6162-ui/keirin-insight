@@ -1,0 +1,115 @@
+{
+  "dateJST": "2026-11-22",
+  "publicationTarget": "verified-rider-ids-feed-v1.json",
+  "publicationFeedSha": "5b14f6ae1943dc44c5f99c2f291c22e5966dfc55",
+  "verificationRule": "at_least_two_distinct_sites_agree_on_required_fields",
+  "publishedCount": 7,
+  "notes": "Existing manual candidates matched on four rider identity fields using KEIRIN.JP and WINTICKET. Original intake approval flags remain PENDING; this publication records the two-site content comparison and must be reconciled with the legacy approval workflow. No race results were published.",
+  "riders": [
+    {
+      "id": "014225",
+      "name": "伊藤 亮",
+      "receiptId": "MANUAL-V32-2026-11-22T15:03:51.760+09:00-014225",
+      "receiptDecision": "MATCH_CANDIDATE",
+      "legacyApprovalState": "PENDING",
+      "officialSource": "https://www.keirin.jp/pc/racerprofile?snum=014225",
+      "secondSource": "https://www.winticket.jp/keirin/cyclist/014225",
+      "fields": [
+        "name",
+        "prefecture",
+        "period",
+        "id"
+      ]
+    },
+    {
+      "id": "013371",
+      "name": "足達 重満",
+      "receiptId": "MANUAL-V4-20261122T161050-013371",
+      "receiptDecision": "MATCH_CANDIDATE",
+      "legacyApprovalState": "PENDING",
+      "officialSource": "https://keirin.jp/pc/racerprofile?snum=013371",
+      "secondSource": "https://www.winticket.jp/keirin/cyclist/013371",
+      "fields": [
+        "name",
+        "prefecture",
+        "period",
+        "id"
+      ]
+    },
+    {
+      "id": "015854",
+      "name": "伊澤 茉那",
+      "receiptId": "MANUAL-V32-2026-11-22T15:03:51.760+09:00-015854",
+      "receiptDecision": "MATCH_CANDIDATE",
+      "legacyApprovalState": "PENDING",
+      "officialSource": "https://www.keirin.jp/pc/racerprofile?snum=015854",
+      "secondSource": "https://www.winticket.jp/keirin/cyclist/015854",
+      "fields": [
+        "name",
+        "prefecture",
+        "period",
+        "id"
+      ]
+    },
+    {
+      "id": "013932",
+      "name": "井上 雄三",
+      "receiptId": "MANUAL-V4-20261122T155940-013932",
+      "receiptDecision": "MATCH_CANDIDATE",
+      "legacyApprovalState": "PENDING",
+      "officialSource": "https://www.keirin.jp/pc/racerprofile?snum=013932",
+      "secondSource": "https://www.winticket.jp/keirin/cyclist/013932",
+      "fields": [
+        "name",
+        "prefecture",
+        "period",
+        "id"
+      ]
+    },
+    {
+      "id": "011800",
+      "name": "三住 博昭",
+      "receiptId": "MANUAL-V4-20261122T160429-011800",
+      "receiptDecision": "MATCH_CANDIDATE",
+      "legacyApprovalState": "PENDING",
+      "officialSource": "https://keirin.jp/pc/racerprofile?snum=011800",
+      "secondSource": "https://www.winticket.jp/keirin/cyclist/011800",
+      "fields": [
+        "name",
+        "prefecture",
+        "period",
+        "id"
+      ]
+    },
+    {
+      "id": "015060",
+      "name": "滝本 泰行",
+      "receiptId": "MANUAL-V4-20261122T161512-015060",
+      "receiptDecision": "MATCH_CANDIDATE",
+      "legacyApprovalState": "PENDING",
+      "officialSource": "https://keirin.jp/pc/racerprofile?snum=015060",
+      "secondSource": "https://www.winticket.jp/keirin/cyclist/015060",
+      "fields": [
+        "name",
+        "prefecture",
+        "period",
+        "id"
+      ]
+    },
+    {
+      "id": "012669",
+      "name": "伊藤 正樹",
+      "receiptId": "MANUAL-V4-20261122T163137-012669",
+      "receiptDecision": "MATCH_CANDIDATE",
+      "legacyApprovalState": "PENDING",
+      "officialSource": "https://keirin.jp/pc/racerprofile?snum=012669",
+      "secondSource": "https://www.winticket.jp/keirin/cyclist/012669",
+      "fields": [
+        "name",
+        "prefecture",
+        "period",
+        "id"
+      ]
+    }
+  ]
+}
