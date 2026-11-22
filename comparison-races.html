@@ -19,7 +19,7 @@ summary{cursor:pointer;font-weight:750;font-size:18px}details .inner{padding:9px
 <h1>全着順・並び照合の研究記録</h1>
 <p class="note">過去の手動照合で全車の主要項目が一致した記録と、発走前の並び予想をまとめた閲覧用ページです。</p>
 <p class="label">2サイト一致記録・正式承認待ち</p>
-<p>このページは<strong>公式確認済みの公開データや正式学習用のデータではありません</strong>。原本にある照合内容をそのまま閲覧可能にした研究資料です。事前の並び予想は実際の走行隊列とは異なります。</p>
+<p>このページは<strong>公式確認済みの公開データや正式学習用のデータではありません</strong>。全着順の過去の比較記録を保持し、並びは照合済みと未確認を分けて表示します。原本にある照合内容をそのまま閲覧可能にした研究資料です。事前の並び予想は実際の走行隊列とは異なります。</p>
 <p id="status" role="status">研究用データを確認中…</p>
 <div id="races"></div>
 <p class="note">出典：<a href="https://docs.google.com/spreadsheets/d/1gCe5q5STYH0T8XKqxJbVawB0Cl8TPsCISFJiRUdA02M/edit#gid=2101100506">既存手動照合台帳</a>。不一致・未取得の項目は照合完了と扱いません。</p>
@@ -36,9 +36,11 @@ const title=el("summary",r.date+" "+r.track+r.race+"R（"+r.className+"）");d.a
 const body=el("div",undefined,"inner");
 body.append(el("p","保存済み結果：全"+r.finishers.length+"車の主要項目について2掲載元一致の記録／正式承認："+r.independentApproval,"note"));
 body.append(el("h2","発走前の並び予想"));
+if(r.formation.state==="two_site_agreement_recorded"){
 const f=el("div",undefined,"formation");for(const grp of r.formation.groups){const g=el("div",undefined,"group");for(const n of grp)g.append(car(n));f.append(g)}body.append(f);
-body.append(el("p","ライン先頭は各グループの左端。1車グループは単騎。結果から推測した隊列ではありません。","note"));
+body.append(el("p","2掲載元で並び予想一致。先頭は各組左端、1車組は単騎。実走隊列ではありません。","note"));
 const sites=el("div",undefined,"sources");r.formation.sources.forEach((u,i)=>sites.append(link(u,"並び出典 "+(i+1))));body.append(sites);
+}else{body.append(el("p","並び：未照合。全車の過去の結果照合は保持したまま、並びだけ追加調査の対象です。","note"));}
 body.append(el("h2","全車の着順・詳細"));
 const wrap=el("div",undefined,"table-wrap"),table=el("table"),thead=el("thead"),head=el("tr");
 ["着順","車番","選手名","上がり","着差","決まり手","S/B","例外"].forEach(x=>head.append(el("th",x)));thead.append(head);table.append(thead);
@@ -51,7 +53,7 @@ if(r.resultSourceUrl)body.append(link(r.resultSourceUrl,"結果の元掲載元")
 body.append(el("p","受付ID："+r.sourceReceiptId+"／受付状態："+r.sourceReceiptState,"note"));
 d.append(body);shell.append(d);return shell
 }
-async function load(){try{const resp=await fetch("./comparison-races-v1.json",{cache:"no-store"});if(!resp.ok)throw Error("HTTP "+resp.status);const data=await resp.json();if(data.schema!=="ki-comparison-races-v1"||data.publicationPolicy!=="research-comparison-separate-from-verified"||!Array.isArray(data.races))throw Error("研究用配信形式不一致");const keys=new Set();for(const r of data.races){if(!Array.isArray(r.finishers)||!Array.isArray(r.formation.groups)||!Array.isArray(r.formation.sources)||r.finishers.length!==7&&r.finishers.length!==9||keys.has(r.key))throw Error("結果の整合性不成立");const nums=r.finishers.map(x=>Number(x.number));const formed=r.formation.groups.flat().map(Number);if(new Set(nums).size!==nums.length||formed.length!==nums.length||nums.slice().sort((a,b)=>a-b).join()!==formed.slice().sort((a,b)=>a-b).join())throw Error("ライン・車番の不一致");keys.add(r.key)}$("status").textContent="保存済み照合記録："+data.races.length+"レース／全車結果："+data.races.reduce((n,r)=>n+r.finishers.length,0)+"行（公式承認済み件数とは別）";for(const race of data.races)$("races").append(render(race));}catch(e){$("status").textContent="研究用データを表示できません："+e.message}}
+async function load(){try{const resp=await fetch("./comparison-races-v1.json",{cache:"no-store"});if(!resp.ok)throw Error("HTTP "+resp.status);const data=await resp.json();if(data.schema!=="ki-comparison-races-v1"||data.publicationPolicy!=="research-comparison-separate-from-verified"||!Array.isArray(data.races))throw Error("研究用配信形式不一致");const keys=new Set();for(const r of data.races){if(!Array.isArray(r.finishers)||!Array.isArray(r.formation.groups)||!Array.isArray(r.formation.sources)||r.finishers.length!==7&&r.finishers.length!==9||keys.has(r.key))throw Error("結果の整合性不成立");const nums=r.finishers.map(x=>Number(x.number));const formed=r.formation.groups.flat().map(Number);if(new Set(nums).size!==nums.length)throw Error("車番重複");if(r.formation.state==="two_site_agreement_recorded"&&(formed.length!==nums.length||nums.slice().sort((a,b)=>a-b).join()!==formed.slice().sort((a,b)=>a-b).join()))throw Error("ライン・車番の不一致");if(r.formation.state!=="two_site_agreement_recorded"&&(formed.length||r.formation.sources.length))throw Error("未確認並びの混在");keys.add(r.key)}$("status").textContent="保存済み照合記録："+data.races.length+"レース／全車結果："+data.races.reduce((n,r)=>n+r.finishers.length,0)+"行／並び照合済み："+data.races.filter(r=>r.formation.state==="two_site_agreement_recorded").length+"レース（公式承認済み件数とは別）";for(const race of data.races)$("races").append(render(race));}catch(e){$("status").textContent="研究用データを表示できません："+e.message}}
 load();
 })();
 </script></body></html>
