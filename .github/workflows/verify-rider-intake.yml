@@ -1,0 +1,32 @@
+name: Verify rider intake
+on:
+  push:
+    paths:
+      - 'tools/audit_evidence_sheet.py'
+      - 'tools/audit_dual_intake.py'
+      - 'tools/preflight_rider_intake.py'
+      - 'tools/test_preflight_rider_intake.py'
+      - '.github/workflows/verify-rider-intake.yml'
+  pull_request:
+    paths:
+      - 'tools/audit_evidence_sheet.py'
+      - 'tools/audit_dual_intake.py'
+      - 'tools/preflight_rider_intake.py'
+      - 'tools/test_preflight_rider_intake.py'
+      - '.github/workflows/verify-rider-intake.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run rider preflight regression tests
+        run: python -m unittest discover -s tools -p 'test_preflight_rider_intake.py' -v
