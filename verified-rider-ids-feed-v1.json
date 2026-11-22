@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "102選手の氏名・府県・期別・6桁登録番号が独立した2掲載元で一致。旧99人保持、新規幸田望夢・江本博明・溝口葵。",
+  "verificationNote": "異なる2掲載元の原文本文を直接取得して必須4項目一致した104選手。既存102人保持。",
   "summary": {
-    "rows": 102
+    "rows": 104
   },
   "riders": [
     {
@@ -2453,6 +2453,54 @@
           "https://www.winticket.jp/keirin/cyclist/015462"
         ],
         "note": "2026-11-22公開キャッシュ本文でKEIRIN.JP（本文版2026-07-19）とWINTICKETを直接確認。氏名・府県・期別・6桁登録番号一致。資料はライブではなく過去キャッシュ。台帳343行。"
+      }
+    },
+    {
+      "id": "015615",
+      "name": "荒川　仁",
+      "prefecture": "千葉",
+      "period": "121",
+      "source": "https://keirin.jp/sp/racerprofile?snum=015615",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=015615",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=015615",
+          "https://www.winticket.jp/keirin/cyclist/015615"
+        ],
+        "note": "KEIRIN.JP SPページ(キャッシュ更新2026-08-05)およびWINTICKETプロフィールの本文を2026-11-22直接取得。氏名・府県・期別・6桁登録番号の4項目全て一致。原文ライブ更新ではなくアーカイブ時点。選手ID照合台帳345行。"
+      }
+    },
+    {
+      "id": "015696",
+      "name": "荒川　達郎",
+      "prefecture": "埼玉",
+      "period": "123",
+      "source": "https://keirin.jp/sp/racerprofile?snum=015696",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=015696",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=015696",
+          "https://www.winticket.jp/keirin/cyclist/015696"
+        ],
+        "note": "KEIRIN.JP SPページ(キャッシュ更新2026-07-26)およびWINTICKETプロフィールの本文を2026-11-22直接取得。氏名・府県・期別・6桁登録番号の4項目全て一致。原文ライブ更新ではなくアーカイブ時点。選手ID照合台帳346行。"
       }
     }
   ],
