@@ -9,3 +9,12 @@
 - Prefer new targets and meeting-level comparisons. Preserve old records, avoid duplicate intake, and report verified write/readback counts separately from search results.
 - Do not count an existing race as newly collected merely because it is rechecked.
 - Existing V3.2 synchronization and publication contracts remain unchanged until a reviewed integration is deployed.
+
+## Shared manual/automatic execution contract
+
+- This document is the common policy for manual chat work and automated tasks. Both must read the latest revision before processing; neither may maintain a conflicting private standard. Record the policy revision used in each execution report.
+- Apply identical collection scope (all classes and venues; prioritize A-class seven-rider midnight meetings), source evaluation, field normalization, identity/race keys, evidence grading, missing-data treatment, approval gates and write/readback checks regardless of executor.
+- Keep intake channels distinct for provenance, not quality. Before writing, reconcile both channels against existing records; transfer only evidence with its original provenance and never count a duplicate as new. Recheck conflicts and missing fields under the same rules.
+- Share source performance observations, verified research findings, pending targets and failures across both execution paths using the existing authorized ledgers and repository workflow. Read the latest shared state at the start of every run; update it after verified work. Do not treat an earlier chat report as evidence.
+- Changes to research criteria must be recorded in this common policy (or a referenced versioned rule set), reviewed, and applied prospectively by both paths. Do not silently regrade historical evidence. Report revision mismatches and stop affected writes until reconciled.
+- Report acquired, saved, readback-verified, independently approved and published counts separately. A failed write or unavailable source must not inflate any count. Preserve existing task roles and schedules, and the V3.2 synchronization contract; the synchronization-only task must not perform collection or intake writes.
