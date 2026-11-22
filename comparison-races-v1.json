@@ -3,7 +3,7 @@
   "publicationPolicy": "research-comparison-separate-from-verified",
   "sourceSheet": "KI｜レース結果手動照合",
   "sourceSpreadsheet": "https://docs.google.com/spreadsheets/d/1gCe5q5STYH0T8XKqxJbVawB0Cl8TPsCISFJiRUdA02M/edit#gid=2101100506",
-  "notes": "必要な全7車結果項目と2サイト一致の発走前並びがそろった6レースを研究用掲載。出走表から松山1Rを追加（1-7-3／6／2-4-5）。払戻等の未照合は明示し元台帳で保持。",
+  "notes": "必要な全7車結果項目と2サイト一致の発走前並びがそろった6レースを研究用掲載。出走表から松山1Rを追加（1-7-3／6／2-4-5）。払戻等の未照合は明示し元台帳で保持。 2026-11-22：既存手動照合台帳から結果比較URL・照合項目・原台帳参照を全6レースに対応付け。原本の未取得・項目別根拠未構造化は引き続き明示し、正式公開とは区別。",
   "summary": {
     "races": 6,
     "finishers": 42,
@@ -142,7 +142,36 @@
           "exception": ""
         }
       ],
-      "provenance": "元台帳7車結果の複数サイト照合記録を再利用。発走前並びはKドリームスとオッズパークの2026-10-05松山1Rの資料で一致。払戻不整合は元台帳に保留。正式結果フィードとは別。"
+      "provenance": "元台帳7車結果の複数サイト照合記録を再利用。発走前並びはKドリームスとオッズパークの2026-10-05松山1Rの資料で一致。払戻不整合は元台帳に保留。正式結果フィードとは別。",
+      "resultSourcePair": [
+        "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+        "https://keirin.netkeiba.com/race/result/?race_id=202610057501&rf=yoso_klist",
+        "https://keirin.kdreams.jp/matsuyama/raceresult/75202610040200/?l-id=l-pc-srri-srri-raceinfo_kaisai_detail_info_nav_btn",
+        "https://www.chariloto.com/keirin/results/75/2026-10-05"
+      ],
+      "resultEvidenceMap": {
+        "receiptId": "RACE-MANUAL-V4-20261122T160429-75-1",
+        "originalLedgerReference": "V99選手結果蓄積!A4723:W4729",
+        "comparisonFieldsReported": [
+          "finish",
+          "car",
+          "name",
+          "time",
+          "margin",
+          "tactic",
+          "SB"
+        ],
+        "sourceCount": 4,
+        "sourceDomains": [
+          "chariloto.com",
+          "keirin.netkeiba.com",
+          "keirin.kdreams.jp"
+        ],
+        "proofType": "field_transcription",
+        "perRiderPerFieldComparison": "not_yet_structured",
+        "unresolved": "チャリロト取得資料の払戻組み合わせが着順と不整合。払戻保留。主催者公式原文・供給元独立性未確認。",
+        "originalReceiptStatus": "PENDING"
+      }
     },
     {
       "key": "2026-10-05|75|2",
@@ -279,7 +308,36 @@
           "exception": ""
         }
       ],
-      "provenance": "元台帳の全7車主要項目と予想並びの2サイト一致を再利用。追加独立承認は要求しない。公式主催者の独立原本を取得済みとは主張しない。"
+      "provenance": "元台帳の全7車主要項目と予想並びの2サイト一致を再利用。追加独立承認は要求しない。公式主催者の独立原本を取得済みとは主張しない。",
+      "resultSourcePair": [
+        "https://keirin.netkeiba.com/race/result/?race_id=202610057502",
+        "https://www.chariloto.com/keirin/results/75/2026-10-05"
+      ],
+      "resultEvidenceMap": {
+        "receiptId": "RACE-MANUAL-V4-20261122T160828-75-2",
+        "originalLedgerReference": "V99選手結果蓄積!A4730:W4736",
+        "comparisonFieldsReported": [
+          "finish",
+          "car",
+          "name",
+          "prefecture",
+          "period",
+          "grade",
+          "time",
+          "margin",
+          "tactic",
+          "SB"
+        ],
+        "sourceCount": 2,
+        "sourceDomains": [
+          "keirin.netkeiba.com",
+          "chariloto.com"
+        ],
+        "proofType": "observed_field_transcription",
+        "perRiderPerFieldComparison": "not_yet_structured",
+        "unresolved": "主催者公式結果未取得。チャリロト原本再取得未実施。原本スナップショット未保存。払戻は照合対象外。",
+        "originalReceiptStatus": "PENDING"
+      }
     },
     {
       "key": "2026-10-05|75|3",
@@ -414,7 +472,34 @@
           "exception": ""
         }
       ],
-      "provenance": "元台帳の全7車主要項目と予想並びの2サイト一致を再利用。追加独立承認は要求しない。公式主催者の独立原本を取得済みとは主張しない。"
+      "provenance": "元台帳の全7車主要項目と予想並びの2サイト一致を再利用。追加独立承認は要求しない。公式主催者の独立原本を取得済みとは主張しない。",
+      "resultSourcePair": [
+        "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020003/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "https://www.chariloto.com/keirin/results/75/2026-10-05"
+      ],
+      "resultEvidenceMap": {
+        "receiptId": "RACE-MANUAL-V4-20261122T161050-75-3",
+        "originalLedgerReference": "V99選手結果蓄積!A4737:W4743",
+        "comparisonFieldsReported": [
+          "finish",
+          "car",
+          "name",
+          "margin",
+          "time",
+          "tactic",
+          "SB"
+        ],
+        "sourceCount": 3,
+        "sourceDomains": [
+          "chariloto.com",
+          "keirin.kdreams.jp"
+        ],
+        "proofType": "field_transcription",
+        "perRiderPerFieldComparison": "not_yet_structured",
+        "unresolved": "チャリロト検索資料の払戻は着順と矛盾、保留。主催者原本・供給元独立性未確認。",
+        "originalReceiptStatus": "PENDING"
+      }
     },
     {
       "key": "2026-10-05|75|4",
@@ -547,7 +632,35 @@
           "exception": ""
         }
       ],
-      "provenance": "元台帳の全7車主要項目と予想並びの2サイト一致を再利用。追加独立承認は要求しない。公式主催者の独立原本を取得済みとは主張しない。"
+      "provenance": "元台帳の全7車主要項目と予想並びの2サイト一致を再利用。追加独立承認は要求しない。公式主催者の独立原本を取得済みとは主張しない。",
+      "resultSourcePair": [
+        "https://keirin.netkeiba.com/race/result/?race_id=202610057504&rf=speciallist",
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020004/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "https://www.chariloto.com/keirin/results/75/2026-10-05"
+      ],
+      "resultEvidenceMap": {
+        "receiptId": "RACE-MANUAL-V4-20261122T161512-75-4",
+        "originalLedgerReference": "V99選手結果蓄積!A4744:W4750",
+        "comparisonFieldsReported": [
+          "finish",
+          "car",
+          "name",
+          "margin",
+          "time",
+          "tactic",
+          "SB"
+        ],
+        "sourceCount": 3,
+        "sourceDomains": [
+          "keirin.netkeiba.com",
+          "keirin.kdreams.jp",
+          "chariloto.com"
+        ],
+        "proofType": "field_transcription",
+        "perRiderPerFieldComparison": "not_yet_structured",
+        "unresolved": "主催者公式原文・独立供給元未確認。原文スナップショット未保存。払戻は未照合。",
+        "originalReceiptStatus": "PENDING"
+      }
     },
     {
       "key": "2026-10-05|75|5",
@@ -680,7 +793,33 @@
           "exception": ""
         }
       ],
-      "provenance": "既存結果台帳の全7名主要7項目一致を維持し、2026-11-22に出走表・並び予想からKドリームスとオッズパーク2掲載元の全車ライン順を照合。実走隊列ではない。払戻と主催者公式原本は元の保留記録を維持。"
+      "provenance": "既存結果台帳の全7名主要7項目一致を維持し、2026-11-22に出走表・並び予想からKドリームスとオッズパーク2掲載元の全車ライン順を照合。実走隊列ではない。払戻と主催者公式原本は元の保留記録を維持。",
+      "resultSourcePair": [
+        "https://keirin.netkeiba.com/race/result/?race_id=202610057505&rf=yoso_detail_keirin",
+        "https://www.chariloto.com/keirin/results/75/2026-10-05"
+      ],
+      "resultEvidenceMap": {
+        "receiptId": "RACE-MANUAL-V4-20261122T163137-75-5",
+        "originalLedgerReference": "V99選手結果蓄積!A4751:W4757",
+        "comparisonFieldsReported": [
+          "finish",
+          "car",
+          "name",
+          "margin",
+          "time",
+          "tactic",
+          "SB"
+        ],
+        "sourceCount": 2,
+        "sourceDomains": [
+          "keirin.netkeiba.com",
+          "chariloto.com"
+        ],
+        "proofType": "field_transcription",
+        "perRiderPerFieldComparison": "not_yet_structured",
+        "unresolved": "主催者公式原本・供給元独立性・払戻独立照合未確認",
+        "originalReceiptStatus": "PENDING"
+      }
     },
     {
       "key": "2026-10-05|75|6",
@@ -813,7 +952,35 @@
           "exception": ""
         }
       ],
-      "provenance": "元台帳の全7車主要項目と予想並びの2サイト一致を再利用。追加独立承認は要求しない。公式主催者の独立原本を取得済みとは主張しない。"
+      "provenance": "元台帳の全7車主要項目と予想並びの2サイト一致を再利用。追加独立承認は要求しない。公式主催者の独立原本を取得済みとは主張しない。",
+      "resultSourcePair": [
+        "https://keirin.netkeiba.com/race/result/?race_id=202610057506&rf=courselist",
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020006/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "https://www.chariloto.com/keirin/results/75/2026-10-05"
+      ],
+      "resultEvidenceMap": {
+        "receiptId": "RACE-MANUAL-V4-20261122T163401-75-6",
+        "originalLedgerReference": "V99選手結果蓄積!A4758:W4764",
+        "comparisonFieldsReported": [
+          "finish",
+          "car",
+          "name",
+          "margin",
+          "time",
+          "tactic",
+          "SB"
+        ],
+        "sourceCount": 3,
+        "sourceDomains": [
+          "keirin.netkeiba.com",
+          "keirin.kdreams.jp",
+          "chariloto.com"
+        ],
+        "proofType": "field_transcription",
+        "perRiderPerFieldComparison": "not_yet_structured",
+        "unresolved": "主催者原本、独立供給元、払戻独立照合未確認",
+        "originalReceiptStatus": "PENDING"
+      }
     }
   ]
 }
