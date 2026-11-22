@@ -1,0 +1,258 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-10-05|75|9",
+  "createdDateJST": "2026-11-23",
+  "race": {
+    "date": "2026-10-05",
+    "venue": "松山",
+    "venueCode": "75",
+    "raceNo": 9,
+    "grade": "F1",
+    "class": "S級選抜",
+    "expectedEntrants": 7
+  },
+  "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
+  "payout": "NOT_REQUIRED_OPTIONAL",
+  "method": "Replayed 7 historical result rows from V99 and netkeirin manual field transcription, 49 normalized comparisons all equal. This turn web search independently shows ranked-car list at K-Dreams and a full seven-rider indexed Chariloto table, but full original pages were not fetched and upstream origin remains unknown.",
+  "originalEntries": [
+    {
+      "car": 4,
+      "name": "宮崎 大空",
+      "prefecture": "熊本",
+      "period": 115,
+      "sourceStatus": "V99_SAVED_RESULTS_IDENTITY_NOT_INDEPENDENT_AMENDED_RACECARD"
+    },
+    {
+      "car": 1,
+      "name": "森山 智徳",
+      "prefecture": "熊本",
+      "period": 98,
+      "sourceStatus": "V99_SAVED_RESULTS_IDENTITY_NOT_INDEPENDENT_AMENDED_RACECARD"
+    },
+    {
+      "car": 2,
+      "name": "坂本 修一",
+      "prefecture": "岡山",
+      "period": 99,
+      "sourceStatus": "V99_SAVED_RESULTS_IDENTITY_NOT_INDEPENDENT_AMENDED_RACECARD"
+    },
+    {
+      "car": 5,
+      "name": "三澤 優樹",
+      "prefecture": "福島",
+      "period": 127,
+      "sourceStatus": "V99_SAVED_RESULTS_IDENTITY_NOT_INDEPENDENT_AMENDED_RACECARD"
+    },
+    {
+      "car": 3,
+      "name": "丸山 啓一",
+      "prefecture": "静岡",
+      "period": 74,
+      "sourceStatus": "V99_SAVED_RESULTS_IDENTITY_NOT_INDEPENDENT_AMENDED_RACECARD"
+    },
+    {
+      "car": 7,
+      "name": "山崎 泰己",
+      "prefecture": "岡山",
+      "period": 101,
+      "sourceStatus": "V99_SAVED_RESULTS_IDENTITY_NOT_INDEPENDENT_AMENDED_RACECARD"
+    },
+    {
+      "car": 6,
+      "name": "金成 和幸",
+      "prefecture": "福島",
+      "period": 88,
+      "sourceStatus": "V99_SAVED_RESULTS_IDENTITY_NOT_INDEPENDENT_AMENDED_RACECARD"
+    }
+  ],
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      4,
+      1,
+      2,
+      5,
+      3,
+      7,
+      6
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 7,
+    "nonNumericResultRows": 0,
+    "confirmedWithdrawals": [],
+    "revisedStartCardSource": null,
+    "confirmedStarterCount": null,
+    "note": "Result identities are not a verified pre-start amended entry list. Do not equate this 7-row comparison with certified original starting field."
+  },
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [],
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020009/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+      "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_9.html"
+    ],
+    "state": "GROUPS_NOT_FULLY_VERIFIED",
+    "note": "Search-index snippets confirm 1 Mori->4 Miyazaki and 2 Sakamoto follows Kumamoto group; no complete seven-car segmentation with independent full original pages."
+  },
+  "results": [
+    {
+      "car": 4,
+      "name": "宮崎 大空",
+      "prefecture": "熊本",
+      "period": 115,
+      "grade": "S2",
+      "finishRaw": "1",
+      "finish": 1,
+      "lapSeconds": 11.6,
+      "marginRaw": "",
+      "winningMethodRaw": "差し",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "STORED_V99_VS_SECONDARY_MANUAL_RECEIPT"
+    },
+    {
+      "car": 1,
+      "name": "森山 智徳",
+      "prefecture": "熊本",
+      "period": 98,
+      "grade": "S2",
+      "finishRaw": "2",
+      "finish": 2,
+      "lapSeconds": 11.8,
+      "marginRaw": "1/2車輪",
+      "winningMethodRaw": "逃げ",
+      "sbRaw": "S B",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "STORED_V99_VS_SECONDARY_MANUAL_RECEIPT"
+    },
+    {
+      "car": 2,
+      "name": "坂本 修一",
+      "prefecture": "岡山",
+      "period": 99,
+      "grade": "S2",
+      "finishRaw": "3",
+      "finish": 3,
+      "lapSeconds": 11.6,
+      "marginRaw": "1/2車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "STORED_V99_VS_SECONDARY_MANUAL_RECEIPT"
+    },
+    {
+      "car": 5,
+      "name": "三澤 優樹",
+      "prefecture": "福島",
+      "period": 127,
+      "grade": "S2",
+      "finishRaw": "4",
+      "finish": 4,
+      "lapSeconds": 11.6,
+      "marginRaw": "2 車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "STORED_V99_VS_SECONDARY_MANUAL_RECEIPT"
+    },
+    {
+      "car": 3,
+      "name": "丸山 啓一",
+      "prefecture": "静岡",
+      "period": 74,
+      "grade": "S2",
+      "finishRaw": "5",
+      "finish": 5,
+      "lapSeconds": 11.4,
+      "marginRaw": "1 車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "STORED_V99_VS_SECONDARY_MANUAL_RECEIPT"
+    },
+    {
+      "car": 7,
+      "name": "山崎 泰己",
+      "prefecture": "岡山",
+      "period": 101,
+      "grade": "S2",
+      "finishRaw": "6",
+      "finish": 6,
+      "lapSeconds": 11.6,
+      "marginRaw": "3/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "STORED_V99_VS_SECONDARY_MANUAL_RECEIPT"
+    },
+    {
+      "car": 6,
+      "name": "金成 和幸",
+      "prefecture": "福島",
+      "period": 88,
+      "grade": "S2",
+      "finishRaw": "7",
+      "finish": 7,
+      "lapSeconds": 11.6,
+      "marginRaw": "3/4車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "STORED_V99_VS_SECONDARY_MANUAL_RECEIPT"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+      "retrieval": "previous V99 collection and full indexed results this turn; direct open cache miss",
+      "role": "seven finish records"
+    },
+    {
+      "url": "https://keirin.netkeiba.com/race/result/?race_id=202610057509&rf=yoso_detail_keirin",
+      "retrieval": "previous manual field transcription; search results this turn",
+      "role": "stored seven-rider field comparison"
+    },
+    {
+      "url": "https://keirin.kdreams.jp/matsuyama/raceresult/75202610040200/?l-id=l-ti-cmsi_default_result_matsuyama",
+      "retrieval": "indexed dated list this turn",
+      "role": "rider finish sequence"
+    },
+    {
+      "url": "https://keirin.money-plan.net/daily/20261005/",
+      "retrieval": "index this turn",
+      "role": "top two only"
+    }
+  ],
+  "audit": {
+    "savedReceiptReference": "KI｜レース結果手動照合!A13:U13",
+    "savedV99Reference": "V99選手結果蓄積!A4779:W4785",
+    "archivedResultFieldsCompared": 49,
+    "archivedResultFieldDifferences": 0,
+    "externalFreshFullTextMatched": false,
+    "upstreamIndependentResultsProven": false,
+    "officialPrimaryOriginalCaptured": false,
+    "publicationPass": false,
+    "blocking": [
+      "two independent original result generators not proven",
+      "no complete verified pre-race group coverage",
+      "official-primary result original not obtained",
+      "revised official start list not obtained"
+    ],
+    "note": "Stored historical race already represented in past research inventory; do not double count as fresh collection or formally verified race."
+  }
+}
