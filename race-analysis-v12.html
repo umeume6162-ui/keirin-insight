@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#081827"><title>実戦分析ワークスペース v12.16 | KEIRIN INSIGHT</title>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#081827"><title>実戦分析ワークスペース v12.17 | KEIRIN INSIGHT</title>
 <style>
 :root{color-scheme:dark;--bg:#081827;--pane:#122b3c;--line:#38566a;--txt:#edf8fb;--sub:#b0c8d4;--mint:#8ef0c4;--amber:#ffe1a0}*{box-sizing:border-box}body{background:radial-gradient(ellipse at right top,#16483f 0,transparent 44%),var(--bg);color:var(--txt);margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif}main{max-width:1100px;margin:auto;padding:20px 15px 80px}a{color:var(--mint)}h1{font-size:clamp(26px,5vw,40px);line-height:1.25;margin:15px 0}h2{font-size:20px;margin:0 0 13px}h3{font-size:16px;margin:0 0 8px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.logo{font-weight:900;letter-spacing:.1em}.sub{color:var(--sub)}.panel{background:var(--pane);border:1px solid var(--line);border-radius:16px;padding:17px;margin:16px 0}.notice{border-left:4px solid var(--amber);padding:11px 13px;background:#302d2c;border-radius:9px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px}.field span{font-size:13px;color:var(--sub)}input,select,textarea{width:100%;background:#071d2c;color:var(--txt);border:1px solid #557387;border-radius:9px;padding:11px;font:inherit}textarea{resize:vertical;min-height:80px}input:focus,textarea:focus,select:focus{outline:2px solid var(--mint)}.actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}button{border:0;background:var(--mint);color:#072b21;font-weight:750;border-radius:10px;padding:12px 14px;font:inherit;cursor:pointer}button.alt{background:#274457;color:var(--txt);border:1px solid var(--line)}button:disabled{opacity:.55}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:9px;margin:12px 0}.stat{background:#092234;border:1px solid var(--line);border-radius:11px;padding:10px}.stat b{display:block;font-size:23px}.stat small{color:var(--sub)}.table{width:100%;overflow-x:auto}table{border-collapse:collapse;min-width:720px;width:100%}th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top}th{color:var(--mint);font-size:12px}td small{color:var(--sub)}.tiny{font-size:12px;color:var(--sub)}.good{color:var(--mint)}.warn{color:var(--amber)}.pill{display:inline-block;background:#254455;color:#d9f7ed;padding:3px 7px;border-radius:8px;margin:3px}.footer{color:var(--sub);margin-top:25px;font-size:12px}.hide{display:none}.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}@media(max-width:400px){main{padding:15px 11px 60px}.panel{padding:12px}}
-</style></head><body><main><div class="top"><div class="logo">KEIRIN INSIGHT / V12.16</div><a href="./research-hub.html">研究ホームへ</a></div>
+</style></head><body><main><div class="top"><div class="logo">KEIRIN INSIGHT / V12.17</div><a href="./research-hub.html">研究ホームへ</a></div>
 <h1>A級7車 実戦分析ワークスペース</h1><p class="sub">公開済み成績を比較し、ライン・展開仮説・結果検証を1画面で整理する研究用ツール。オッズによる自動選定は行いません。</p>
 <div class="notice">⚠️ これは予測勝率や車券推奨を出すAIではありません。出走選手・事前並び・展開は利用者の入力情報です。過去の収録着順だけで先行力、ヨコの強さ、実際の切り替えを断定できません。</div>
 <section class="panel"><h2>① レース・出走選手</h2><div class="grid"><label class="field"><span>開催日</span><input id="day" type="date"></label><label class="field"><span>競輪場</span><input id="track" placeholder="例：奈良"></label><label class="field"><span>レース番号</span><select id="race"></select></label><label class="field"><span>級班</span><select id="grade"><option value="A1/A2">A1/A2</option><option value="A3">A3チャレンジ</option></select></label><label class="field"><span>集計する近走数</span><select id="recent"><option>5</option><option selected>10</option><option>20</option></select></label></div>
@@ -28,7 +28,8 @@ const getInput=n=>({name:$('name'+n).value.trim(),pref:$('pref'+n).value.trim(),
  let matches=rows.filter(r=>norm(r.name)===norm(q.name)&&(!q.pref||pref(r.pref)===pref(q.pref))&&(!q.period||period(r.period)===period(q.period)));
  let ids=new Set(matches.map(r=>norm(r.name)+'|'+pref(r.pref)+'|'+period(r.period)));
  if(ids.size>1)return {...empty,ambiguity:true};
- let history=matches.filter(r=>!cutoff||r.date<cutoff).sort((x,y)=>y.date.localeCompare(x.date)||Number(y.race)-Number(x.race));
+ const official=officialRecordFor(q);
+ let history=(official?officialHistory(official.id,rows,officialIds,cutoff):matches.filter(r=>!cutoff||r.date<cutoff)).sort((x,y)=>y.date.localeCompare(x.date)||Number(y.race)-Number(x.race));
  let a=history.filter(r=>r.grade===$('grade').value);
  return {q,all:a,items:a.slice(0,Number($('recent').value)),history,ambiguity:false};
 }
@@ -203,6 +204,25 @@ function showPairResearch(groups){
 }
 
 let officialIds=new Map(),officialIdStatus='未取得';
+
+function installOfficialIdSearch(){
+ const panel=$('kiOfficialIds');if(!panel||$('kiIdSearch'))return;
+ const form=document.createElement('div');form.id='kiIdSearch';form.style.cssText='margin:12px 0;padding:10px;border:1px solid #456273;border-radius:10px';
+ form.innerHTML='<h4>公式登録番号から選手を入力</h4><div class="cols"><input id="kiIdQuery" inputmode="numeric" maxlength="6" placeholder="登録番号6桁"><select id="kiIdCar">'+Array.from({length:7},(_,i)=>'<option value="'+(i+1)+'">'+(i+1)+'番車</option>').join('')+'</select></div><button id="kiIdApply" type="button">登録番号から入力</button><p id="kiIdMessage" class="tiny"></p>';
+ panel.before(form);
+ $('kiIdApply').onclick=()=>{
+ const id=$('kiIdQuery').value.trim(),n=Number($('kiIdCar').value),r=Array.from(officialIds.values()).find(x=>x.id===id);
+ if(!/^[0-9]{6}$/.test(id)||!r){$('kiIdMessage').textContent='6桁の照合済み登録番号が必要です。未収録の番号は入力できません。';return}
+ $('name'+n).value=r.name;$('pref'+n).value=r.prefecture;$('period'+n).value=r.period;
+ $('kiIdMessage').textContent=n+'番車に '+r.name+'（'+r.id+'）を入力しました。';analyze();
+ };
+}
+function officialRecordFor(r){return snapshotIdentityComplete(r)?officialIds.get(snapshotIdentity(r))??null:null}
+function officialHistory(id,sourceRows,map,cutoff){
+ if(!/^[0-9]{6}$/.test(id))return [];
+ return sourceRows.filter(r=>snapshotIdentityComplete(r)&&map.get(snapshotIdentity(r))?.id===id&&(!cutoff||r.date<cutoff));
+}
+
 function makeOfficialIdMap(j){
  if(j.schema!=='ki-official-rider-ids-v1'||!Array.isArray(j.riders))throw Error('ID JSON形式不一致');
  const map=new Map(),ids=new Set();
@@ -217,7 +237,7 @@ async function loadOfficialIds(){
  officialIds=new Map();officialIdStatus='取得中';showOfficialIds();
  try{const res=await fetch('./rider-ids-feed-v1.json',{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);officialIds=makeOfficialIdMap(await res.json());officialIdStatus='取得成功：'+officialIds.size+'人';}
  catch(e){officialIdStatus='未取得（'+e.message+'）';}
- showOfficialIds();
+ showOfficialIds();if(loaded)analyze();
 }
 function showOfficialIds(){
  let panel=$('kiOfficialIds');
@@ -227,10 +247,10 @@ function showOfficialIds(){
  if(loaded&&officialIds.size)h+='<p>'+safe('公開成績の登録番号接続：'+covered+'/'+rows.length+'行')+'</p>';
  for(let n=1;n<=7;n++){
  const q=getInput(n);if(!q.name)continue;
- const r=snapshotIdentityComplete(q)?officialIds.get(snapshotIdentity(q)):null;
+ const r=officialRecordFor(q);
  h+='<p>'+safe(n+'番 '+q.name+'：')+(r?'<a href="'+safe(r.source)+'" target="_blank" rel="noopener noreferrer">'+safe(r.id)+'</a> <small>台帳公式照合済</small>':safe(snapshotIdentityComplete(q)?'台帳一致なし／未取得':'府県・期別の入力が必要'))+'</p>';
  }
- panel.innerHTML=h;
+ panel.innerHTML=h;installOfficialIdSearch();
 }
 
 let lineSnapshots=[],lineFeedStatus='未取得';
@@ -324,7 +344,7 @@ function showSnapshotResearch(){
 function raceMatch(){return races.find(r=>r.date===$('day').value&&r.track===$('track').value.trim()&&String(r.race)===$('race').value&&r.grade===$('grade').value)}
 function lookup(){if(!loaded){$('resultStatus').textContent='公開JSON未取得';return}let race=raceMatch();if(!race){$('resultStatus').textContent='条件に一致する収録レースがありません（未開催・未収録・入力の不一致など）。';return}let rs=rows.filter(x=>x.date===race.date&&x.code===String(race.track_code)&&x.race===String(race.race)&&x.grade===race.grade);let top=rs.filter(x=>x.rank!==null&&x.rank<=3).sort((x,y)=>x.rank-y.rank);if(top.length!==3||top.some(x=>!/^[1-7]$/.test(x.num))){$('resultStatus').textContent='一致するレースはありますが、上位3着の車番を確定できません。';return}for(let i=0;i<3;i++)$('rank'+(i+1)).value=top[i].num;$('resultStatus').textContent='公開JSONの収録結果を入力しました：'+top.map(x=>x.rank+'着 '+x.num+'番 '+x.name).join('／')+'。結果の公式独立照合は未完了。';evaluate()}
 function evaluate(){let g=checkLine(),top=[1,2,3].map(x=>Number($('rank'+x).value));if(top.some(x=>!x)||new Set(top).size!==3){$('resultSummary').textContent='1〜3着の異なる車番を入力してください。';return}if(!g){$('resultSummary').textContent='事前ラインの形式検査が必要です。';return}let record=g.map(x=>({g:x,n:x.filter(y=>top.includes(y)).length}));let solo=record.filter(x=>x.g.length===1&&x.n>0);let max=Math.max(...record.map(x=>x.n));$('resultSummary').innerHTML='<div class="stats">'+stat(top.join(' - '),'入力された上位3着車番')+stat(solo.length,'3着以内の単騎人数')+stat(max,'同一ライン最多3着以内人数')+'</div><p>'+record.map(x=>'<span class="pill">'+x.g.join('-')+'：3着以内 '+x.n+'人</span>').join('')+'</p><p class="tiny">これは事前想定ラインと着順の単純照合です。実際の隊列・牽制・切り替えを証明するものではありません。</p>'}
-function report(){let g=checkLine(),res=[1,2,3].map(n=>$('rank'+n).value||'未入力');const lines=['KEIRIN INSIGHT v12.16 実戦分析・事後検証メモ','開催日：'+($('day').value||'未設定'),'競輪場：'+($('track').value||'未設定')+' '+$('race').value+'R','級班：'+$('grade').value,'公開JSONの取得状況：'+$('dataStatus').textContent,'選手の入力：',...[1,2,3,4,5,6,7].map(n=>{let x=getInput(n),f=findRider(n);let valid=f.items.filter(r=>r.rank!==null);return n+'番 '+(x.name||'未入力')+' '+(x.pref||'')+' '+(x.period||'')+'期　近走収録 '+f.items.length+'件　数値着順 '+valid.length+'件　直近 '+f.items.map(r=>r.rank===null?'未確定':r.rank+'着').join(',')}),'想定ライン：'+(g?g.map(x=>x.join('-')).join(' / '):'形式不備・未確定'),'ライン出典：'+$('lineSource').value,'並び確認：'+$('lineVerify').value,'映像確認：'+$('videoVerify').value,'先行候補：'+$('leader').value,'番手仮説：'+$('second').value,'単騎仮説：'+$('solo').value,'展開仮説：'+$('hypothesis').value,'上位3着（入力）：'+res.join('-'),'事後検証メモ：'+$('review').value,'注意：収録結果は予測勝率ではなく、ヨコ・切り替えは映像未確認なら断定不可。'];$('report').value=lines.join('\n');$('reportStatus').textContent='レポート作成済み。必要ならコピーまたは保存してください。'}
+function report(){let g=checkLine(),res=[1,2,3].map(n=>$('rank'+n).value||'未入力');const lines=['KEIRIN INSIGHT v12.17 実戦分析・事後検証メモ','開催日：'+($('day').value||'未設定'),'競輪場：'+($('track').value||'未設定')+' '+$('race').value+'R','級班：'+$('grade').value,'公開JSONの取得状況：'+$('dataStatus').textContent,'選手の入力：',...[1,2,3,4,5,6,7].map(n=>{let x=getInput(n),f=findRider(n);let valid=f.items.filter(r=>r.rank!==null);return n+'番 '+(x.name||'未入力')+' '+(x.pref||'')+' '+(x.period||'')+'期　近走収録 '+f.items.length+'件　数値着順 '+valid.length+'件　直近 '+f.items.map(r=>r.rank===null?'未確定':r.rank+'着').join(',')}),'想定ライン：'+(g?g.map(x=>x.join('-')).join(' / '):'形式不備・未確定'),'ライン出典：'+$('lineSource').value,'並び確認：'+$('lineVerify').value,'映像確認：'+$('videoVerify').value,'先行候補：'+$('leader').value,'番手仮説：'+$('second').value,'単騎仮説：'+$('solo').value,'展開仮説：'+$('hypothesis').value,'上位3着（入力）：'+res.join('-'),'事後検証メモ：'+$('review').value,'注意：収録結果は予測勝率ではなく、ヨコ・切り替えは映像未確認なら断定不可。'];$('report').value=lines.join('\n');$('reportStatus').textContent='レポート作成済み。必要ならコピーまたは保存してください。'}
 $('analyze').onclick=analyze;$('reload').onclick=()=>{loadData();loadLineSnapshots();loadOfficialIds()};$('checkLine').onclick=checkLine;$('lookup').onclick=lookup;$('evaluate').onclick=evaluate;$('buildReport').onclick=report;$('copyReport').onclick=async()=>{if(!$('report').value)report();try{await navigator.clipboard.writeText($('report').value);$('reportStatus').textContent='コピーしました'}catch(e){$('reportStatus').textContent='コピーできない場合はレポート欄を長押ししてコピーしてください'}};$('downloadReport').onclick=()=>{if(!$('report').value)report();let u=URL.createObjectURL(new Blob([$('report').value],{type:'text/plain;charset=utf-8'}));let a=document.createElement('a');a.href=u;a.download='keirin-insight-v12-'+($('day').value||'memo')+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),5000);$('reportStatus').textContent='保存を開始しました'};$('track').onchange=analyze;$('day').onchange=analyze;$('grade').onchange=analyze;$('recent').onchange=analyze;checkLine();loadData();loadLineSnapshots();loadOfficialIds();
 </script><script>
 (() => {
