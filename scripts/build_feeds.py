@@ -147,6 +147,49 @@ def validate_against_existing(result,rider,root,allow_drop=False):
     if len(now) != len(rider['rows']): raise ValueError('Duplicate full rider rows')
 
 
+LINE_HEADERS=['レースID','開催日','競輪場','R','級班','車番','選手名','府県','期別','事前ライン','事前位置','結果着順','結果照合状態','取得時刻(JST)','参照URL']
+
+def fetch_line_sheet(secret):
+    from google.oauth2 import service_account
+    from google.auth.transport.requests import AuthorizedSession
+    creds=service_account.Credentials.from_service_account_info(json.loads(secret),scopes=['https://www.googleapis.com/auth/spreadsheets.readonly'])
+    session=AuthorizedSession(creds)
+    url='https://sheets.googleapis.com/v4/spreadsheets/'+SHEET_ID+'/values:batchGet'
+    response=session.get(url,params={'ranges':"'AI事前出走スナップ'!A1:O"},timeout=45)
+    response.raise_for_status()
+    return response.json()['valueRanges'][0]['values']
+
+def construct_lines(values, date):
+    if not values or [cleaned(x) for x in values[0]]!=LINE_HEADERS:
+        raise ValueError('Line snapshot header mismatch')
+    grouped={}
+    for raw in values[1:]:
+        if not any(cleaned(x) for x in raw): continue
+        if len(raw)>15: raise ValueError('Unexpected line snapshot columns')
+        v=[cleaned(x) for x in raw]+['']*(15-len(raw))
+        rid,day,track,race,grade,num,name,pref,period,line,role,finish,status,captured,source=v
+        if not re.fullmatch(r'20\d{6}\d{4}',rid) or not re.fullmatch(r'20\d\d-\d\d-\d\d',day) or not race.isdigit() or not 1<=int(race)<=12 or not num.isdigit() or not 1<=int(num)<=7 or not all([track,grade,name,pref,period,line,role,captured,source]):
+            raise ValueError('Invalid line snapshot row '+rid)
+        if not source.startswith('https://'): raise ValueError('Invalid line source '+rid)
+        if captured[:10]>day: raise ValueError('Snapshot captured after race date '+rid)
+        if line=='単騎': members=[int(num)]
+        elif re.fullmatch(r'[1-7](?:-[1-7])*',line): members=list(map(int,line.split('-')))
+        else: raise ValueError('Unknown lineup format '+rid)
+        if int(num) not in members or len(set(members))!=len(members): raise ValueError('Invalid lineup members '+rid)
+        expected='単騎' if len(members)==1 else ('先頭' if members[0]==int(num) else '番手' if members[1]==int(num) else str(members.index(int(num))+1)+'番手')
+        if role!=expected: raise ValueError('Line position mismatch '+rid)
+        r=grouped.setdefault(rid,dict(id=rid,date=day,track=track,race=int(race),grade=grade,captured=captured,source=source,riders=[]))
+        if (r['date'],r['track'],r['race'],r['grade'],r['captured'],r['source'])!=(day,track,int(race),grade,captured,source): raise ValueError('Snapshot metadata conflict '+rid)
+        r['riders'].append(dict(number=int(num),name=name,prefecture=pref,period=period,line=members,position=role,finishRaw=finish,resultStatus=status))
+    for rid,r in grouped.items():
+        rr=r['riders']
+        if sorted(x['number'] for x in rr)!=list(range(1,8)): raise ValueError('Incomplete or duplicate seven-rider snapshot '+rid)
+        by={x['number']:x for x in rr}
+        for x in rr:
+            if any(by[n]['line']!=x['line'] for n in x['line']): raise ValueError('Inconsistent line membership '+rid)
+        r['riders'].sort(key=lambda x:x['number'])
+    return dict(schema='ki-line-snapshots-v1',snapshotDate=date,sourceTab='AI事前出走スナップ',verificationNote='台帳由来の事前並び。発走前取得の独立確認・公式結果との独立照合は未完了。実際の隊列ではない。',summary=dict(races=len(grouped),rider_rows=sum(len(r['riders']) for r in grouped.values())),races=sorted(grouped.values(),key=lambda x:x['id'],reverse=True))
+
 def write_atomic(path, payload):
     data=json.dumps(payload,ensure_ascii=False,separators=(',',':'))+'\n'
     with tempfile.NamedTemporaryFile('w',encoding='utf-8',dir=path.parent,delete=False) as f:
@@ -188,6 +231,19 @@ def main():
     print(f'FEED_AUDIT latest_race_lag_days={lag}')
     if lag>7:
         print(f'WARNING: Latest combined race is {lag} days old; collection freshness needs investigation.',file=sys.stderr)
+    # Optional independent snapshot feed: do not block validated result publishing.
+    if not args.fixtures:
+        try:
+            line_feed=construct_lines(fetch_line_sheet(secret),stamp)
+            baseline=root/'line-snapshots-feed-v1.json'
+            if baseline.exists():
+                old=json.loads(baseline.read_text(encoding='utf-8'))
+                if not {r['id'] for r in old['races']}.issubset({r['id'] for r in line_feed['races']}):
+                    raise ValueError('Previously published line snapshot missing')
+            write_atomic(baseline,line_feed)
+            print(f'LINE_FEED {line_feed["summary"]}')
+        except Exception as e:
+            print(f'WARNING: Line feed unchanged: {e}',file=sys.stderr)
     # Stage both serialized feeds before replacing either baseline.
     # GitHub Actions will only commit if this entire step succeeds.
     index_json=json.dumps(index,ensure_ascii=False,separators=(',',':'))+'\n'
