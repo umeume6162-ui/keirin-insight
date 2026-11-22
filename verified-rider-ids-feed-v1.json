@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "必要4項目2サイト一致72選手。既存69人を保持し原井博斗、原口昌平、原田泰志を追加。",
+  "verificationNote": "KEIRIN.JPとWINTICKETで4必須項目が一致した75選手。既存72人保持、原田亮太・原田翔真・原田研太朗追加。",
   "summary": {
-    "rows": 72
+    "rows": 75
   },
   "riders": [
     {
@@ -1733,6 +1733,78 @@
           "https://www.winticket.jp/keirin/cyclist/014157"
         ],
         "note": "KEIRIN.JP公式原文（2026/08/07更新）＋WINTICKET原文本文。4必須項目一致。既存選手ID照合台帳313行を更新。検索キャッシュと取得本文は別区分。"
+      }
+    },
+    {
+      "id": "015352",
+      "name": "原田　亮太",
+      "prefecture": "千葉",
+      "period": "115",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015352",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015352",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015352",
+          "https://www.winticket.jp/keirin/cyclist/015352"
+        ],
+        "note": "KEIRIN.JPとWINTICKETのプロフィール原文4項目一致。KEIRIN.JP掲載資料更新2026-08-03。2026-11-22閲覧、原本A:F不変、選手ID照合台帳314行。"
+      }
+    },
+    {
+      "id": "015630",
+      "name": "原田　翔真",
+      "prefecture": "和歌山",
+      "period": "121",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015630",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015630",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015630",
+          "https://www.winticket.jp/keirin/cyclist/015630"
+        ],
+        "note": "KEIRIN.JPとWINTICKETのプロフィール原文4項目一致。KEIRIN.JP掲載資料更新2026-07-25。2026-11-22閲覧、原本A:F不変、選手ID照合台帳315行。"
+      }
+    },
+    {
+      "id": "014682",
+      "name": "原田　研太朗",
+      "prefecture": "徳島",
+      "period": "98",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014682",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014682",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014682",
+          "https://www.winticket.jp/keirin/cyclist/014682"
+        ],
+        "note": "KEIRIN.JPとWINTICKETのプロフィール原文4項目一致。KEIRIN.JP掲載資料更新2026-07-30。2026-11-22閲覧、原本A:F不変、選手ID照合台帳316行。"
       }
     }
   ],
