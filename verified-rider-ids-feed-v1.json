@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付",
   "verificationNote": "148名の氏名・府県・期別・登録番号の固定4項目についてKEIRIN.JP公式とWINTICKET個別原文で一致。元選手台帳389-391行へ証拠保存し再読込済み。",
   "summary": {
-    "rows": 162
+    "rows": 164
   },
   "riders": [
     {
@@ -3896,6 +3896,54 @@
           "https://www.chariloto.com/keirin_athletes/14797"
         ],
         "note": "2026-11-23 JST: Official KEIRIN.JP indexed identity content (direct open cache miss), fully opened Chariloto cached profile; yen-joy indexed identity support. Name, prefecture, cohort and six-digit ID agree. Archived/cache/search distinction recorded in sheet row 405. Independent upstream data generation not demonstrated; do not conflate grade/stats."
+      }
+    },
+    {
+      "id": "015147",
+      "name": "佐々木恵理",
+      "prefecture": "愛知",
+      "period": "110",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015147",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015147",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015147",
+          "https://www.chariloto.com/keirin_athletes/15147"
+        ],
+        "note": "2026-11-23 JST full cached official KEIRIN.JP profile (shown update 2026-07-30) and full cached Chariloto athlete page; name, prefecture, period and registration ID identical. Not live retrieval; independent generation upstream unproven. Ledger row 406 confirmed readback."
+      }
+    },
+    {
+      "id": "013006",
+      "name": "佐々木健司",
+      "prefecture": "青森",
+      "period": "76",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013006",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013006",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013006",
+          "https://www.chariloto.com/keirin_athletes/13006"
+        ],
+        "note": "2026-11-23 JST full cached official KEIRIN.JP profile (shown update 2026-06-06) and full cached Chariloto athlete page; name, prefecture, period and registration ID identical. Not live retrieval; independent generation upstream unproven. Ledger row 407 confirmed readback."
       }
     }
   ],
