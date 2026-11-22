@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-23",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "登録番号の固定4項目（氏名・府県・期別・6桁ID）についてKEIRIN.JP公式と別媒体の一致証拠を各選手レコードに保管。現在174件、元台帳のA:Fは維持。証拠取得方式は各レコードを参照。",
+  "verificationNote": "固定4項目（氏名・府県・期別・6桁登録番号）をKEIRIN.JPと別媒体で照合し個別証拠を保存。公開登録176件。取得方法の違いとソースURLは各選手レコードを参照。",
   "summary": {
-    "rows": 174
+    "rows": 176
   },
   "riders": [
     {
@@ -4186,6 +4186,56 @@
           "https://www.winticket.jp/keirin/cyclist/015269"
         ],
         "note": "2026-11-23 JST both cached full KEIRIN.JP (official displayed update 2026-08-01) and WINTICKET athlete pages opened. Four permanent identity fields agree after prefecture suffix and whitespace normalization. Not a fresh live retrieval, upstream generation independence not established. Original sheet row 417 G:K saved/readback verified."
+      }
+    },
+    {
+      "id": "014581",
+      "name": "佐山 俊樹",
+      "prefecture": "埼玉",
+      "period": "97",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014581",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014581",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014581",
+          "https://www.winticket.jp/keirin/cyclist/014581",
+          "https://www.yen-joy.net/racer/data/014581"
+        ],
+        "note": "2026-11-23 cached KEIRIN.JP official displayed updated 2026-07-21, full WINTICKET profile and Nikkan Pro Sports (yen-joy) full identity page: name/prefecture/cohort/six-digit ID agree. Source content not a new live crawl, upstream independent generation not proven. Original Sheet row 418 G:K readback passed."
+      }
+    },
+    {
+      "id": "014719",
+      "name": "佐川 拓也",
+      "prefecture": "福島",
+      "period": "99",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014719",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014719",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014719",
+          "https://www.winticket.jp/keirin/cyclist/014719",
+          "https://www.yen-joy.net/racer/data/014719"
+        ],
+        "note": "2026-11-23 cached KEIRIN.JP official displayed updated 2026-07-20, full WINTICKET profile and Nikkan Pro Sports (yen-joy) full identity page: name/prefecture/cohort/six-digit ID agree. Source content not a new live crawl, upstream independent generation not proven. Original Sheet row 419 G:K readback passed."
       }
     }
   ],
