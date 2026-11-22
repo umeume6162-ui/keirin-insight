@@ -1,0 +1,142 @@
+{
+  "schema": "ki-legacy-race-full-field-recheck-v1",
+  "dateJST": "2026-11-23",
+  "raceKey": "2026-10-05|75|5",
+  "storedSource": "comparison-races-v1.json",
+  "retrievalClassification": "search-index excerpts of dated source pages; not direct live original downloads",
+  "sources": [
+    {
+      "organization": "netkeirin",
+      "url": "https://keirin.netkeiba.com/race/result/?race_id=202610057505",
+      "retrieval": "full seven-row dated table from search-index excerpt; direct open cache miss",
+      "coverage": "7 riders: finish, car, name, prefecture, period, grade, lap, margin, method, SB where published"
+    },
+    {
+      "organization": "日刊プロスポーツ新聞社 エンジョイ",
+      "url": "https://www.yen-joy.net/kaisai/race/result/detail/202610/75/20261004/20261005/5",
+      "retrieval": "dated indexed newspaper result with seven-place ordered names; direct source origin not preserved",
+      "coverage": "seven rank/car/name pairs; lap, margin, SB not cross-verified here"
+    },
+    {
+      "organization": "K-Dreams",
+      "url": "https://keirin.kdreams.jp/matsuyama/raceresult/75202610040200/",
+      "retrieval": "dated meeting-level result-index excerpt",
+      "coverage": "seven rank/car/name pairs and published pre-race predicted formation"
+    }
+  ],
+  "transcribedRows": [
+    {
+      "finish": 1,
+      "car": 7,
+      "name": "齊藤英伊須",
+      "prefecture": "青森",
+      "period": 125,
+      "grade": "A1",
+      "lapSeconds": 11.9,
+      "marginRaw": "",
+      "winningMethodRaw": "捲",
+      "sbRaw": "B"
+    },
+    {
+      "finish": 2,
+      "car": 3,
+      "name": "高橋秀吉",
+      "prefecture": "秋田",
+      "period": 88,
+      "grade": "A1",
+      "lapSeconds": 11.9,
+      "marginRaw": "1車輪",
+      "winningMethodRaw": "ク",
+      "sbRaw": ""
+    },
+    {
+      "finish": 3,
+      "car": 2,
+      "name": "曽我圭佑",
+      "prefecture": "熊本",
+      "period": 113,
+      "grade": "A1",
+      "lapSeconds": 11.7,
+      "marginRaw": "3/4車身",
+      "winningMethodRaw": "",
+      "sbRaw": "S"
+    },
+    {
+      "finish": 4,
+      "car": 4,
+      "name": "池田浩士",
+      "prefecture": "佐賀",
+      "period": 86,
+      "grade": "A2",
+      "lapSeconds": 11.7,
+      "marginRaw": "1車輪",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 5,
+      "car": 5,
+      "name": "黒滝大翔",
+      "prefecture": "茨城",
+      "period": 117,
+      "grade": "A1",
+      "lapSeconds": 11.6,
+      "marginRaw": "1車輪",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 6,
+      "car": 6,
+      "name": "武田良太",
+      "prefecture": "愛媛",
+      "period": 88,
+      "grade": "A2",
+      "lapSeconds": 11.6,
+      "marginRaw": "3/4車身",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    },
+    {
+      "finish": 7,
+      "car": 1,
+      "name": "木村浩宣",
+      "prefecture": "香川",
+      "period": 97,
+      "grade": "A1",
+      "lapSeconds": 11.5,
+      "marginRaw": "1車身1/2",
+      "winningMethodRaw": "",
+      "sbRaw": ""
+    }
+  ],
+  "secondaryRankCarOrder": [
+    7,
+    3,
+    2,
+    4,
+    5,
+    6,
+    1
+  ],
+  "normalization": {
+    "method": {
+      "捲": "捲くり",
+      "ク": "マーク"
+    },
+    "space": "NFKC whitespace normalization",
+    "lap": "numeric comparison"
+  },
+  "summary": {
+    "rows": 7,
+    "fieldComparisons": 63,
+    "differences": 0,
+    "allMatch": true,
+    "secondaryRankCarNamesAgree": true,
+    "secondaryAllFieldsCompared": false
+  },
+  "originalOfficialResult": "NOT_DIRECTLY_OBTAINED",
+  "independentUpstreamOrigin": "NOT_PROVEN",
+  "publicationStatus": "RESEARCH_ONLY_PENDING",
+  "note": "One pre-existing result with source indexed seven-row fields reconfirmed against saved comparison; newspaper and K-Dreams ranked all seven, but no separately generated official original and no 2-site full required-field agreement from this fresh attempt. Historical stored comparison remains preserved; do not count as newly acquired race or formal PASS. Payouts optional."
+}
