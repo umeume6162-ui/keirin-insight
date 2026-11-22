@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "4必須項目と独立2サイト一致78人。既存75件保持。新規3件 古屋琢晶・古賀勝大・古閑良介。",
+  "verificationNote": "81選手の必要4項目は異なる2掲載元で一致。既存78人保持、古城英之・古川宗行・古川尚耶追加。",
   "summary": {
-    "rows": 78
+    "rows": 81
   },
   "riders": [
     {
@@ -1877,6 +1877,78 @@
           "https://www.winticket.jp/keirin/cyclist/012847"
         ],
         "note": "KEIRIN.JP本文2026/07/28更新＋WINTICKET本文。氏名・府県・期別・6桁登録番号一致。選手ID照合台帳319行。"
+      }
+    },
+    {
+      "id": "013216",
+      "name": "古城　英之",
+      "prefecture": "広島",
+      "period": "78",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013216",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013216",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013216",
+          "https://www.winticket.jp/keirin/cyclist/013216"
+        ],
+        "note": "2026-11-22取得の公開キャッシュ本文2掲載元。KEIRIN.JP原文更新2026-07-19。氏名・府県・期別・6桁登録番号をそれぞれ確認。選手ID照合台帳320行。"
+      }
+    },
+    {
+      "id": "014514",
+      "name": "古川　宗行",
+      "prefecture": "東京",
+      "period": "96",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014514",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014514",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014514",
+          "https://www.winticket.jp/keirin/cyclist/014514"
+        ],
+        "note": "2026-11-22取得の公開キャッシュ本文2掲載元。KEIRIN.JP原文更新2026-08-03。氏名・府県・期別・6桁登録番号をそれぞれ確認。選手ID照合台帳321行。"
+      }
+    },
+    {
+      "id": "014221",
+      "name": "古川　尚耶",
+      "prefecture": "栃木",
+      "period": "92",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014221",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014221",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014221",
+          "https://www.winticket.jp/keirin/cyclist/014221"
+        ],
+        "note": "2026-11-22取得の公開キャッシュ本文2掲載元。KEIRIN.JP原文更新2026-08-07。氏名・府県・期別・6桁登録番号をそれぞれ確認。選手ID照合台帳322行。"
       }
     }
   ],
