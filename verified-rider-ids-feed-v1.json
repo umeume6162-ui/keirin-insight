@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "129選手の4項目を別掲載元2原文で照合。127→129、2選手を元台帳へ追記・再読込。",
+  "verificationNote": "131名、氏名/府県/期別/登録番号の2サイト原文一致。台帳既存行へ証拠追記し再読込。",
   "summary": {
-    "rows": 129
+    "rows": 131
   },
   "riders": [
     {
@@ -3101,6 +3101,54 @@
           "https://www.winticket.jp/keirin/cyclist/014622"
         ],
         "note": "2026-11-22 JST、KEIRIN.JP公式プロフィール全文（原本掲載更新2026-11-04）・WINTICKETプロフィール全文を直接取得し、氏名「高市 訓但」、府県愛媛、期別97期、登録番号014622が4項目一致。出典1 https://keirin.jp/pc/racerprofile?snum=014622 / 出典2 https://www.winticket.jp/keirin/cyclist/014622。過去掲載キャッシュ本文の取得であり最新成績のライブ保証ではない。元A:Fを変更しない。"
+      }
+    },
+    {
+      "id": "014334",
+      "name": "高倉 俊宏",
+      "prefecture": "福岡",
+      "period": "93",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014334",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014334",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014334",
+          "https://www.winticket.jp/keirin/cyclist/014334"
+        ],
+        "note": "2026-11-22 JST、KEIRIN.JP公式PC原文（表示更新日2026-10-27）とWINTICKET原文をweb.open全文取得。氏名高倉 俊宏・府県福岡・期別93・登録番号014334の4項目一致。出典1 https://keirin.jp/pc/racerprofile?snum=014334 出典2 https://www.winticket.jp/keirin/cyclist/014334。保存キャッシュ本文の閲覧であり現在値のライブ成績保証ではない。元A:F保持。"
+      }
+    },
+    {
+      "id": "014126",
+      "name": "高谷 敏史",
+      "prefecture": "青森",
+      "period": "91",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014126",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014126",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014126",
+          "https://www.winticket.jp/keirin/cyclist/014126"
+        ],
+        "note": "2026-11-22 JST、KEIRIN.JP公式PC原文（表示更新日2026-09-05）とWINTICKET原文をweb.open全文取得。氏名高谷 敏史・府県青森・期別91・登録番号014126の4項目一致。出典1 https://www.keirin.jp/pc/racerprofile?snum=014126 出典2 https://www.winticket.jp/keirin/cyclist/014126。保存キャッシュ本文の閲覧であり現在値のライブ成績保証ではない。元A:F保持。"
       }
     }
   ],
