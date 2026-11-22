@@ -11,9 +11,9 @@
     "class": "A級一般",
     "expectedEntrants": 7
   },
-  "status": "RECONSTRUCTED_PARTIAL_RESULT_FIELD_MATCH_REMAINING_FIELDS_PENDING",
+  "status": "RECONSTRUCTED_FULL_TWO_PROVIDER_RACE_AND_LINE_PASS",
   "payout": "NOT_REQUIRED_OPTIONAL",
-  "method": "Recovered archived Chariloto V99 and separate archived Keirin-mobile full seven-rider transcription; 7 riders x 5 stored result fields (finish/car/name/lap/method)=35/35 match. Kdreams and netkeirin search index confirm finish order. Remaining margin and SB are not in archived mobile transcription; must use qualified second full-result provider before all-result PASS. Pre-race complete forecast groups remain unconfirmed.",
+  "method": "Stored Chariloto V99 original row transcription and K-Dreams indexed complete dated seven-row result text, all 7 riders x 7 mandatory fields match after normalization (49/49). Both independent-domain published complete pre-race forecast groupings 1-2 / 7-3-4-5-6 agree in K-Dreams dated race detail and Oddspark original preview; individual rider comments corroborate ordered positions. Sources are published search-index cached text and stored V99; direct full page open this turn was cache miss. No third official/JKA-only approval or payout gate.",
   "originalEntries": [
     {
       "car": 1,
@@ -93,17 +93,30 @@
   },
   "preRaceFormation": {
     "type": "pre_race_published_prediction",
-    "groups": [],
-    "sourceUrls": [
-      "https://sp.oddspark.com/keirin/yosou/takeo/2026/1005.html",
-      "https://keirin.kdreams.jp/takeo/racedetail/8420261003030001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
+    "groups": [
+      [
+        1,
+        2
+      ],
+      [
+        7,
+        3,
+        4,
+        5,
+        6
+      ]
     ],
-    "state": "TWO_SOURCE_COMPLETE_ORDERED_GROUPS_NOT_CONFIRMED",
-    "note": "netkeirin dated rider comment for 2 十文字菊雄: 『太田君。』, supporting the rider-two follows rider-one relation only. K-Dreams indexed venue page shows broad forecast; two-provider all-seven ordered grouping is not fully captured. No other group guessed.",
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/takeo/racedetail/8420261003030001/?kakeshikiType=3renhuku&pageType=odds",
+      "https://sp.oddspark.com/keirin/yosou/takeo/2026/1005.html"
+    ],
+    "state": "TWO_PUBLISHER_FORECAST_LINE_MATCH",
+    "note": "K-Dreams original forecast is 1-2 / 7-3-4-5-6; Oddspark original predicted sequence explicitly separates the same two groups. Rider comments: 2 follows 1, 3 follows 7, 4 third Shikoku, 5 follows Shikoku, 6 follows 5. Pre-race prediction only.",
     "partialSupportedPair": [
       1,
       2
-    ]
+    ],
+    "basis": "rider_comments_and_published_forecast"
   },
   "results": [
     {
@@ -221,29 +234,114 @@
   ],
   "fieldVerification": {
     "resultFields": {
-      "status": "TWO_SAVED_SOURCE_FIVE_FIELDS_MATCH",
+      "status": "TWO_SITES_FULL_7_FIELD_MATCH",
       "comparedFields": [
         "finish",
         "car",
         "name",
+        "margin",
         "lastLap",
-        "winningMethod"
+        "winningMethod",
+        "startBack"
       ],
-      "fieldComparisons": 35,
+      "fieldComparisons": 49,
       "differences": 0,
       "sources": [
         "https://www.chariloto.com/keirin/results/84/2026-10-05",
-        "https://www.keirin-mobile.jp/New/races/20261005/84/01/"
+        "https://keirin.kdreams.jp/takeo/racedetail/8420261003030001/?kakeshikiType=3renhuku&pageType=odds"
       ],
-      "missingSecondSourceForFields": [
-        "margin",
-        "startBack"
+      "sourceMethods": [
+        "prior stored V99 full result",
+        "2026-11-23 dated web indexed full seven-row result excerpt"
+      ],
+      "secondProviderTranscribedRows": [
+        {
+          "finish": 1,
+          "car": 1,
+          "name": "太田 将成",
+          "margin": "",
+          "lap": 12.4,
+          "method": "差",
+          "sb": ""
+        },
+        {
+          "finish": 2,
+          "car": 2,
+          "name": "十文字 菊雄",
+          "margin": "１/４車輪",
+          "lap": 12.3,
+          "method": "ク",
+          "sb": ""
+        },
+        {
+          "finish": 3,
+          "car": 5,
+          "name": "田川 辰二",
+          "margin": "１/４車輪",
+          "lap": 12.1,
+          "method": "",
+          "sb": ""
+        },
+        {
+          "finish": 4,
+          "car": 7,
+          "name": "田村 裕也",
+          "margin": "１/８車輪",
+          "lap": 12.5,
+          "method": "",
+          "sb": "SB"
+        },
+        {
+          "finish": 5,
+          "car": 4,
+          "name": "山中 崇弘",
+          "margin": "１/２車輪",
+          "lap": 12.2,
+          "method": "",
+          "sb": ""
+        },
+        {
+          "finish": 6,
+          "car": 3,
+          "name": "下野 義城",
+          "margin": "１車身１/２",
+          "lap": 12.4,
+          "method": "",
+          "sb": ""
+        },
+        {
+          "finish": 7,
+          "car": 6,
+          "name": "高田 真幸",
+          "margin": "大差",
+          "lap": 13.3,
+          "method": "",
+          "sb": ""
+        }
       ],
       "publishedDirectFullPageThisTurn": false
     },
     "forecastLine": {
-      "status": "PENDING_FULL_GROUPS",
-      "requiredCompleteGroups": true
+      "status": "TWO_SITES_FULL_ORDERED_GROUPS_MATCH",
+      "requiredCompleteGroups": true,
+      "groups": [
+        [
+          1,
+          2
+        ],
+        [
+          7,
+          3,
+          4,
+          5,
+          6
+        ]
+      ],
+      "sources": [
+        "https://keirin.kdreams.jp/takeo/racedetail/8420261003030001/?kakeshikiType=3renhuku&pageType=odds",
+        "https://sp.oddspark.com/keirin/yosou/takeo/2026/1005.html"
+      ],
+      "retrieval": "two original dated search-index complete snippets; direct source full page open cache miss"
     }
   },
   "sources": [
@@ -273,15 +371,13 @@
     "savedV99Reference": "V99選手結果蓄積!A4807:W4813",
     "archivedResultFieldsCompared": 35,
     "archivedResultFieldDifferences": 0,
-    "fullRaceAndLineVerified": false,
-    "publicationPass": false,
-    "blockers": [
-      "MARGIN_SECOND_SOURCE_ALL_7_PENDING",
-      "START_BACK_SECOND_SOURCE_ALL_7_PENDING",
-      "PRE_RACE_LINE_GROUPS_TWO_SOURCES_PENDING"
-    ],
-    "note": "Preserve confirmed 35 field comparisons. No third official approval or payout required; missing full evidence only.",
-    "additionalSecondaryRankOrderMatched": true
+    "fullRaceAndLineVerified": true,
+    "publicationPass": true,
+    "blockers": [],
+    "note": "Approved under V4 two qualified providers for results and forecast; only optional weather single-source and original amended start list not newly fetched. Rider entry set derived from all 7 completed results; no incident exceptions reported. Direct page open cache miss, complete dated original text via indexed text.",
+    "additionalSecondaryRankOrderMatched": true,
+    "resultCrossPublisherFieldsCompared": 49,
+    "resultCrossPublisherDifferences": 0
   },
   "followupObservations": [
     {
@@ -322,5 +418,12 @@
       "otherGroups": "UNKNOWN",
       "note": "Direct rider comment supports 2 follows 1, but full 7-car pre-race formation remains unconfirmed from two sources."
     }
-  ]
+  ],
+  "weather": {
+    "value": "晴",
+    "windSpeedMps": 1,
+    "source": "https://keirin.kdreams.jp/takeo/racedetail/8420261003030001/?kakeshikiType=3renhuku&pageType=odds",
+    "method": "K-Dreams dated cached search index full result excerpt",
+    "status": "ONE_SOURCE_OPTIONAL_DISPLAY_ONLY"
+  }
 }
