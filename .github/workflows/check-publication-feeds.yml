@@ -9,6 +9,7 @@ on:
       - 'comparison-races-v1.json'
       - 'tools/check_publication_completeness.cjs'
       - 'tools/reconcile_race_entries.cjs'
+      - 'tools/audit_formal_race_readiness.cjs'
       - '.github/workflows/check-publication-feeds.yml'
   pull_request:
     paths:
@@ -35,5 +36,7 @@ jobs:
           node-version: '22'
       - name: Run missing-rider reconciliation tests
         run: node tools/reconcile_race_entries.cjs
+      - name: Audit formal race readiness (read-only)
+        run: node tools/audit_formal_race_readiness.cjs
       - name: Validate published feeds and two-source evidence metadata
         run: node tools/check_publication_completeness.cjs
