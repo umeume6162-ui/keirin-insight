@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "119選手の氏名・府県・期別・6桁登録番号が異なる2掲載元の公開原文で一致。前回116件維持。",
+  "verificationNote": "121選手の氏名・府県・期別・登録番号が異なる2掲載元の原文で一致。前回119件を維持し、2選手の原本・台帳照合を追加。",
   "summary": {
-    "rows": 119
+    "rows": 121
   },
   "riders": [
     {
@@ -2862,6 +2862,54 @@
         ],
         "note": "2026-11-22 JST KEIRIN.JPの公式プロフィール(2026-07-28更新の原文)とWINTICKETの公開キャッシュ原文を両方直接読み、4項目の氏名・府県・期別・6桁登録番号が一致。ライブ確認ではない。選手ID台帳362行。"
       }
+    },
+    {
+      "id": "016006",
+      "name": "高橋　聖太",
+      "prefecture": "愛媛",
+      "period": "129",
+      "source": "https://keirin.jp/sp/racerprofile?snum=016006",
+      "officialVerification": {
+        "status": "verified",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "source": "https://keirin.jp/sp/racerprofile?snum=016006",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=016006",
+          "https://www.winticket.jp/keirin/cyclist/016006"
+        ],
+        "note": "2026-11-22：KEIRIN.JP mobile 2026-10-03 profile and WINTICKET profile full original body read. 4 identity fields matched. Sheet row358 readback verified; historical cache not live."
+      },
+      "verifiedDate": "2026-11-22"
+    },
+    {
+      "id": "014522",
+      "name": "高橋　佑輔",
+      "prefecture": "神奈",
+      "period": "96",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014522",
+      "officialVerification": {
+        "status": "verified",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014522",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014522",
+          "https://www.winticket.jp/keirin/cyclist/014522"
+        ],
+        "note": "2026-11-22：KEIRIN.JP PC 2026-09-29 profile and WINTICKET full original body read. 4 identity fields matched. Sheet row363 readback verified; historical cache not live."
+      },
+      "verifiedDate": "2026-11-22"
     }
   ],
   "publicationPolicy": "ki-verified-only-v1"
