@@ -1,0 +1,274 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-10-05|75|11",
+  "createdDateJST": "2026-11-23",
+  "race": {
+    "date": "2026-10-05",
+    "venue": "松山",
+    "venueCode": "75",
+    "raceNo": 11,
+    "grade": "F1",
+    "class": "S級準決勝",
+    "expectedEntrants": 7
+  },
+  "status": "RECONSTRUCTED_RESULT_FIELD_AGREEMENT_FORMATION_PENDING_NOT_FORMAL_PASS",
+  "payout": "NOT_REQUIRED_OPTIONAL",
+  "method": "Archived V99 source Chariloto and manually transcribed netkeirin result rows agree 7 riders x finish/car/name/margin/lap/method/SB, 49 normalized field matches. Search-index content from Chariloto and Kdreams reconfirms dated result. No mandatory extra organizer/JKA result approval. Pre-race complete ordered line groups still absent from a qualified two-provider field comparison, therefore full race-and-line publication remains pending.",
+  "originalEntries": [
+    {
+      "car": 4,
+      "name": "酒井 雄多",
+      "prefecture": "福島",
+      "period": 109,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 3,
+      "name": "福永 大智",
+      "prefecture": "大阪",
+      "period": 113,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 2,
+      "name": "中村 浩士",
+      "prefecture": "千葉",
+      "period": 79,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 1,
+      "name": "井上 昌己",
+      "prefecture": "長崎",
+      "period": 86,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 6,
+      "name": "佐藤 健太",
+      "prefecture": "福岡",
+      "period": 101,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 5,
+      "name": "大石 崇晴",
+      "prefecture": "大阪",
+      "period": 109,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 7,
+      "name": "本郷 雄三",
+      "prefecture": "熊本",
+      "period": 99,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    }
+  ],
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      4,
+      3,
+      2,
+      1,
+      6,
+      5,
+      7
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 7,
+    "nonNumericResultRows": 0,
+    "revisedStartCardSource": null,
+    "confirmedStarterCount": null,
+    "note": "Result-row-derived identities are not independently corroborated pre-race amended entry card."
+  },
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [],
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020011/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+      "https://www.chariloto.com/keirin/results/75/2026-10-05/"
+    ],
+    "state": "TWO_SITE_ORDERED_LINE_GROUPS_NOT_MAPPED",
+    "note": "Chariloto published 周回予想 gives a flattened sequence, while Kdreams indexed page gives forecast context; exact group breaks and ordered position pairs are not yet compared and must not be guessed."
+  },
+  "results": [
+    {
+      "car": 4,
+      "name": "酒井 雄多",
+      "prefecture": "福島",
+      "period": 109,
+      "grade": "S1",
+      "finishRaw": "1",
+      "finish": 1,
+      "lapSeconds": 11.4,
+      "marginRaw": "",
+      "winningMethodRaw": "差し",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "TWO_PUBLISHER_STORED_TRANSCRIPTIONS_AGREE_7_REQUIRED_RESULT_FIELDS"
+    },
+    {
+      "car": 3,
+      "name": "福永 大智",
+      "prefecture": "大阪",
+      "period": 113,
+      "grade": "S2",
+      "finishRaw": "2",
+      "finish": 2,
+      "lapSeconds": 11.5,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "逃げ",
+      "sbRaw": "S B",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "TWO_PUBLISHER_STORED_TRANSCRIPTIONS_AGREE_7_REQUIRED_RESULT_FIELDS"
+    },
+    {
+      "car": 2,
+      "name": "中村 浩士",
+      "prefecture": "千葉",
+      "period": 79,
+      "grade": "S2",
+      "finishRaw": "3",
+      "finish": 3,
+      "lapSeconds": 11.4,
+      "marginRaw": "1/8車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "TWO_PUBLISHER_STORED_TRANSCRIPTIONS_AGREE_7_REQUIRED_RESULT_FIELDS"
+    },
+    {
+      "car": 1,
+      "name": "井上 昌己",
+      "prefecture": "長崎",
+      "period": 86,
+      "grade": "S1",
+      "finishRaw": "4",
+      "finish": 4,
+      "lapSeconds": 11.2,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "TWO_PUBLISHER_STORED_TRANSCRIPTIONS_AGREE_7_REQUIRED_RESULT_FIELDS"
+    },
+    {
+      "car": 6,
+      "name": "佐藤 健太",
+      "prefecture": "福岡",
+      "period": 101,
+      "grade": "S2",
+      "finishRaw": "5",
+      "finish": 5,
+      "lapSeconds": 11.1,
+      "marginRaw": "1/2車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "TWO_PUBLISHER_STORED_TRANSCRIPTIONS_AGREE_7_REQUIRED_RESULT_FIELDS"
+    },
+    {
+      "car": 5,
+      "name": "大石 崇晴",
+      "prefecture": "大阪",
+      "period": 109,
+      "grade": "S1",
+      "finishRaw": "6",
+      "finish": 6,
+      "lapSeconds": 10.9,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "TWO_PUBLISHER_STORED_TRANSCRIPTIONS_AGREE_7_REQUIRED_RESULT_FIELDS"
+    },
+    {
+      "car": 7,
+      "name": "本郷 雄三",
+      "prefecture": "熊本",
+      "period": 99,
+      "grade": "S2",
+      "finishRaw": "7",
+      "finish": 7,
+      "lapSeconds": 12.5,
+      "marginRaw": "大差",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "TWO_PUBLISHER_STORED_TRANSCRIPTIONS_AGREE_7_REQUIRED_RESULT_FIELDS"
+    }
+  ],
+  "fieldVerification": {
+    "resultFields": {
+      "status": "TWO_SITES_ARCHIVED_MATCH",
+      "comparedFields": [
+        "finish",
+        "car",
+        "name",
+        "margin",
+        "lapSeconds",
+        "winningMethod",
+        "SB"
+      ],
+      "fieldComparisons": 49,
+      "differences": 0,
+      "sources": [
+        "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+        "https://keirin.netkeiba.com/race/result/?race_id=202610057511&rf=speciallist"
+      ],
+      "publishedDirectFullPageThisTurn": false
+    },
+    "forecastLine": {
+      "status": "PENDING",
+      "requiredCompleteGroups": true
+    }
+  },
+  "sources": [
+    {
+      "url": "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+      "role": "saved V99 seven-row original and indexed complete dated tabular result",
+      "retrieval": "historic store and web fast search index; direct open cache miss"
+    },
+    {
+      "url": "https://keirin.netkeiba.com/race/result/?race_id=202610057511&rf=speciallist",
+      "role": "manual prior 7-row result field transcription",
+      "retrieval": "stored manual receipt in Sheet"
+    },
+    {
+      "url": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020011/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+      "role": "separate published 11R result and predicted lineup",
+      "retrieval": "web indexed result; direct open unexpected status"
+    }
+  ],
+  "audit": {
+    "savedReceiptReference": "KI｜レース結果手動照合!A15:U15",
+    "savedV99Reference": "V99選手結果蓄積!A4793:W4799",
+    "archivedResultFieldsCompared": 49,
+    "archivedResultFieldDifferences": 0,
+    "resultSevenRiderFieldAgreement": true,
+    "fullRaceAndLineVerified": false,
+    "publicationPass": false,
+    "blockers": [
+      "PRE_RACE_LINE_GROUP_BREAKS_NOT_VERIFIED_ON_TWO_SOURCES",
+      "ORIGINAL_AMENDED_START_CARD_NOT_INDEPENDENTLY_CAPTURED_IF_REQUIRED_FOR_EXCEPTION_ASSESSMENT"
+    ],
+    "note": "Do not require third official result or separate independent approval after a complete valid two-site comparison. Do not publish full race+line feed before lineup passes."
+  }
+}
