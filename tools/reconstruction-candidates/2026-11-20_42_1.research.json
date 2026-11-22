@@ -1,0 +1,168 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-11-20|42|1",
+  "race": {
+    "date": "2026-11-20",
+    "venue": "名古屋",
+    "venueCode": "42",
+    "raceNo": 1,
+    "grade": "F2",
+    "class": "A級チャレンジ予選",
+    "expectedEntrants": 7,
+    "meeting": "前検日コメならウィンチケット杯",
+    "startTimeLocal": "20:40"
+  },
+  "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
+  "createdDateJST": "2026-11-22",
+  "method": "Choose a recent race with multiple indexed complete result and archived pre-race sources; reconstruct factual fields from public web-search snippets; direct original page opens failed/cache-missed; do not equate search snippets to original full-body proof.",
+  "payout": "NOT_COLLECTED_OPTIONAL",
+  "preRaceFormation": {
+    "status": "SEARCH_SNIPPETS_TWO_OR_MORE_PUBLISHERS_AGREE_FULL_ORDER_NOT_ORIGINAL_FETCH",
+    "groups": [
+      [
+        1,
+        3,
+        4
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        5,
+        7
+      ]
+    ],
+    "note": "Pre-race predicted line only; not the actual in-race running order.",
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010001/?pageType=odds",
+      "https://keirin.netkeiba.com/race/data/?race_id=202611204201",
+      "https://keirin.tokyo-sports.co.jp/list/race/20261119_32063"
+    ]
+  },
+  "results": [
+    {
+      "finish": 1,
+      "car": 2,
+      "name": "児玉東次郎",
+      "prefecture": "岐阜",
+      "period": 129,
+      "grade": "A3",
+      "lapSeconds": 12.5,
+      "marginRaw": "",
+      "winningMethodRaw": "逃げ",
+      "sbRaw": "B",
+      "sbDiscrepancy": "Kdreams search listing shows SB, Nikkan Gendai snippet shows B; retain both and do not certify S.",
+      "sourceStatus": "SINGLE_SEARCH_SNIPPET_FOR_ALL_FIELDS_MULTIPLE_PROVIDERS_CONFIRM_FINISH"
+    },
+    {
+      "finish": 2,
+      "car": 6,
+      "name": "岡田大門",
+      "prefecture": "愛知",
+      "period": 87,
+      "grade": "A3",
+      "lapSeconds": 12.5,
+      "marginRaw": "1/2車身",
+      "winningMethodRaw": "マーク",
+      "sbRaw": "",
+      "sourceStatus": "SINGLE_SEARCH_SNIPPET_FOR_MARGINS_LAP_AND_METHOD_MULTIPLE_PROVIDERS_CONFIRM_FINISH"
+    },
+    {
+      "finish": 3,
+      "car": 5,
+      "name": "三浦綾",
+      "prefecture": "宮城",
+      "period": 105,
+      "grade": "A3",
+      "lapSeconds": 12.4,
+      "marginRaw": "1車身",
+      "winningMethodRaw": null,
+      "sbRaw": null,
+      "sourceStatus": "SEARCH_SNIPPET_NIKKAN_G_GIVES_TIME_MARGIN_KDREAMS_CONFIRMS_POSITION"
+    },
+    {
+      "finish": 4,
+      "car": 4,
+      "name": "藤田晃英",
+      "prefecture": "千葉",
+      "period": 76,
+      "grade": "A3",
+      "lapSeconds": 12.4,
+      "marginRaw": "3/4車身",
+      "winningMethodRaw": null,
+      "sbRaw": null,
+      "sourceStatus": "SEARCH_SNIPPET_NIKKAN_G_GIVES_TIME_MARGIN_KDREAMS_CONFIRMS_POSITION"
+    },
+    {
+      "finish": 5,
+      "car": 3,
+      "name": "眞原健一",
+      "prefecture": "神奈川",
+      "period": 69,
+      "grade": "A3",
+      "lapSeconds": 12.3,
+      "marginRaw": "1車身1/2",
+      "winningMethodRaw": null,
+      "sbRaw": null,
+      "sourceStatus": "SEARCH_SNIPPET_NIKKAN_G_GIVES_TIME_MARGIN_KDREAMS_CONFIRMS_POSITION"
+    },
+    {
+      "finish": 6,
+      "car": 7,
+      "name": "加美山隆行",
+      "prefecture": "宮城",
+      "period": 92,
+      "grade": "A3",
+      "lapSeconds": 12.5,
+      "marginRaw": "1/8車輪",
+      "winningMethodRaw": null,
+      "sbRaw": null,
+      "sourceStatus": "SEARCH_SNIPPET_NIKKAN_G_GIVES_TIME_MARGIN_KDREAMS_CONFIRMS_POSITION"
+    },
+    {
+      "finish": 7,
+      "car": 1,
+      "name": "大本隆也",
+      "prefecture": "神奈川",
+      "period": 127,
+      "grade": "A3",
+      "lapSeconds": 12.9,
+      "marginRaw": "5車身",
+      "winningMethodRaw": null,
+      "sbRaw": null,
+      "sourceStatus": "SEARCH_SNIPPET_NIKKAN_G_GIVES_TIME_MARGIN_KDREAMS_CONFIRMS_POSITION"
+    }
+  ],
+  "resultUrls": [
+    "https://keirin-autorace.nikkan-gendai.com/Keirin/Result?date=20261120&placeCode=42&raceNo=1",
+    "https://keirin.kdreams.jp/nagoya/raceresult/42202611200100/?l-id=l-ti-cmsi_default_yesterdayResult_nagoya",
+    "https://keirin.kdreams.jp/nagoya/racedetail/4220261120010001/?pageType=result",
+    "https://www.chariloto.com/keirin/results/42/2026-11-20"
+  ],
+  "fieldVerification": {
+    "raceIdentity": "MULTIPLE_SEARCH_LISTINGS",
+    "sevenEntryNamesAndPeriods": "TWO_OR_MORE_SEARCH_LISTINGS",
+    "allSevenFinishCar": "TWO_OR_MORE_SEARCH_LISTINGS",
+    "allSevenMarginAndLap": "ONLY_ONE_FULL_SEARCH_RESULT_EXCERPTS_NOT_TWO_ORIGINALS",
+    "finishWinningMethod": "PARTIAL_FIRST_TWO_ONLY_SEARCH_LISTINGS",
+    "allSevenSB": "UNRESOLVED_CONFLICT_FIRST_FINISH_AND_OTHERS_NOT_INDICATED",
+    "completeIndependentOriginals": "NO_DIRECT_BODY_FETCH_CACHE_MISS",
+    "preRaceLines": "SEARCH_LISTINGS_AGREE_NOT_FULL_ORIGINALS",
+    "publicationGate": "FAIL_RESEARCH_ONLY"
+  },
+  "sourceIntegrity": {
+    "pageOpen": "2026-11-22 attempted web open; cache misses",
+    "indexing": "search engine extracted snippets crawled 2026-11-20 to 2026-11-22",
+    "independentProvenance": "provider organization independence not fully established; do not count mirrored result feeds twice",
+    "copyright": "facts transcribed, no page text or proprietary predictions reproduced"
+  },
+  "remainingToPass": [
+    "Obtain reliable full body or licensed original record of each result field from first provider",
+    "Obtain independent full body or licensed original record of same fields from a second qualified source",
+    "Resolve racewide S/B notation and any mandatory method/exception information per schema",
+    "Reconfirm pre-race lines from independently accessible dated original snapshots",
+    "Map into formal approved result/rider-result/line-snapshot schemas; cross-feed and publish-guard checks"
+  ],
+  "notes": "A coherent *candidate complete seven-finisher table* was assembled, not a prediction and not a passed or live-published result."
+}
