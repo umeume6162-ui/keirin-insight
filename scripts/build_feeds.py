@@ -17,7 +17,7 @@ SHEET_ID = '1gCe5q5STYH0T8XKqxJbVawB0Cl8TPsCISFJiRUdA02M'
 SHEET_NAMES = ['V96複数開催テスト','V97自動収集テスト01','V98自動収集テスト01','V99選手結果蓄積']
 SHEET_NAME = 'V96–V99統合'
 HEADERS = ['開催日','競輪場','場コード','グレード','R','レース級','着順原文','車番','選手名','年齢','府県','期別','選手級班','着差','上り','決まり手','S/B','個人状況','結果分類','正式選手ID','照合状態','出典URL','取得日時']
-RIDER_COLUMNS = ['name','prefecture','period','date','track','trackCode','race','finishRaw','number','riderClass','winningMethod','sourceUrl']
+RIDER_COLUMNS = ['name','prefecture','period','date','track','trackCode','race','finishRaw','number','riderClass','winningMethod','sourceUrl','startBackRaw','lastLapRaw']
 
 
 def fetch_sheet(credentials_json):
@@ -111,8 +111,8 @@ def construct(data, date):
     summary=Counter(x['grade'] for x in races)
     latest=max(x['date'] for x in races)
     result={'schema':'ki-public-results-index-v1','origin_sheet':SHEET_NAME,'source_snapshot_date':date,'latest_race_date':latest,'official_result_independent_audit':'incomplete','notes':'Read-only Google Sheets V96–V99 combined snapshot. Not live prediction data or proof of official validation.','summary':{'races':len(races),'rider_rows':len(data),'by_grade':dict(summary)},'races':races}
-    # Preserve the v10.8 row schema verbatim for existing pages.
-    rider_rows=[[x[k] for k in ['選手名','府県','期別','開催日','競輪場','場コード','R','着順原文','車番','選手級班','決まり手','出典URL']] for x in data]
+    # Preserve legacy column positions; append raw source fields only.
+    rider_rows=[[x[k] for k in ['選手名','府県','期別','開催日','競輪場','場コード','R','着順原文','車番','選手級班','決まり手','出典URL','S/B','上り']] for x in data]
     ident={(x[0].replace(' ', '').replace('　',''),x[1],x[2]) for x in rider_rows}
     rider={'schema':'ki-rider-results-v1','snapshotDate':date,'latestEventDate':latest,'sourceTab':SHEET_NAME,'verificationNote':'収録データの集計。公式結果との全件独立照合未完了。公式選手IDは公開データに含めていない。','columns':RIDER_COLUMNS,'summary':{'rows':len(rider_rows),'riders':len(ident),'races':len(races)},'rows':rider_rows}
     return result,rider
@@ -133,8 +133,14 @@ def validate_against_existing(result,rider,root,allow_drop=False):
             raise ValueError('Newest race date regressed')
     # Existing row identities must remain: append-only auto-publishing.
     prev=json.loads((root/'rider-results-feed-v1.json').read_text(encoding='utf-8'))
+    old_columns=prev['columns']
+    if len(set(old_columns)) != len(old_columns) or any(c not in rider['columns'] for c in old_columns):
+        raise ValueError('Previous feed columns missing or ambiguous')
+    projection=[rider['columns'].index(c) for c in old_columns]
+    if any(len(x)!=len(old_columns) for x in prev['rows']) or any(len(x)!=len(rider['columns']) for x in rider['rows']):
+        raise ValueError('Feed column count mismatch')
     previous={tuple(x) for x in prev['rows']}
-    now={tuple(x) for x in rider['rows']}
+    now={tuple(x[i] for i in projection) for x in rider['rows']}
     if not allow_drop and not previous.issubset(now):
         raise ValueError(f'{len(previous-now)} prior rows changed/disappeared: manual review required')
     # Do not publish invalid or empty track/date or unverified official ID.
