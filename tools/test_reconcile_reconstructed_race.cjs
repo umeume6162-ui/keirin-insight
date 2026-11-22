@@ -159,6 +159,20 @@ assert.equal(takeo1.fieldVerification.resultFields.differences,0);
 assert.deepEqual(takeo1.preRaceFormation.groups,[[1,2],[7,3,4,5,6]]);
 assert.equal(new Set(takeo1.preRaceFormation.groups.flat()).size,7);
 assert.equal(takeo1.fieldVerification.forecastLine.status,'TWO_SITES_FULL_ORDERED_GROUPS_MATCH');
+// Matsuyama 1R: full seven-car two-provider result/forecast validated against prior published receipt and retained payout issue.
+const matsuyama1=JSON.parse(fs.readFileSync(path.join(base,'2026-10-05_75_1.research.json'),'utf8'));
+const mat1=check(matsuyama1);
+assert.equal(mat1.structuralOk,true,JSON.stringify(mat1.errors));
+assert.equal(mat1.documentedResultRows,7);
+assert.equal(mat1.numericFinishers,7);
+assert.deepEqual(mat1.missingFromResult,[]);
+assert.equal(mat1.publicationPassed,false,'structural checks alone cannot independently promote record');
+assert.equal(matsuyama1.audit.publicationPass,true);
+assert.equal(matsuyama1.fieldVerification.resultFields.fieldComparisons,49);
+assert.equal(matsuyama1.fieldVerification.resultFields.differences,0);
+assert.deepEqual(matsuyama1.preRaceFormation.groups,[[1,7,3],[6],[2,4,5]]);
+assert.equal(new Set(matsuyama1.preRaceFormation.groups.flat()).size,7);
+assert.equal(matsuyama1.payout,'OPTIONAL_ORIGINAL_PAYOUT_DIFFERENCE_NOT_PASS_BLOCKER');
 // Five numeric places plus fall/disqualification must be retained without ranking the exceptions.
 const r4=check(load(4));
 assert.equal(r4.structuralOk,true,JSON.stringify(r4.errors));
