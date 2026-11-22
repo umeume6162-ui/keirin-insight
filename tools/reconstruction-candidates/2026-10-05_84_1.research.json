@@ -99,7 +99,11 @@
       "https://keirin.kdreams.jp/takeo/racedetail/8420261003030001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
     ],
     "state": "TWO_SOURCE_COMPLETE_ORDERED_GROUPS_NOT_CONFIRMED",
-    "note": "Public indexed rider comments show 1->2 pairing; need full seven-car group boundaries from both publications, cannot infer."
+    "note": "netkeirin dated rider comment for 2 十文字菊雄: 『太田君。』, supporting the rider-two follows rider-one relation only. K-Dreams indexed venue page shows broad forecast; two-provider all-seven ordered grouping is not fully captured. No other group guessed.",
+    "partialSupportedPair": [
+      1,
+      2
+    ]
   },
   "results": [
     {
@@ -302,6 +306,21 @@
         "full forecast groups"
       ],
       "note": "This observation independently corroborates ordered finishers; does not add seven full-field second-source matches or PASS."
+    },
+    {
+      "dateJST": "2026-11-23",
+      "source": "netkeirin race entry comment",
+      "url": "https://keirin.netkeiba.com/race/entry/?race_id=202610058401&rf=courselist_inmenu",
+      "method": "dated indexed pre-race published rider comment; direct page full fetch not confirmed",
+      "scope": "rider 2 十文字菊雄 pre-race comment only",
+      "verbatim": "太田君。",
+      "confirmedPair": [
+        1,
+        2
+      ],
+      "forecastGroupCompletion": "NOT_PROVEN",
+      "otherGroups": "UNKNOWN",
+      "note": "Direct rider comment supports 2 follows 1, but full 7-car pre-race formation remains unconfirmed from two sources."
     }
   ]
 }
