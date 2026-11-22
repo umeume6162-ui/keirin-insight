@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-22",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "2026-11-22 必須4項目を2独立サイトで確認した59人。既存56人維持、栗山和樹・栗田万生・桑原大志を追加。",
+  "verificationNote": "4必須項目2サイト一致61選手。既存59選手保持、栗本武典・郡司浩平追加。",
   "summary": {
-    "rows": 59
+    "rows": 61
   },
   "riders": [
     {
@@ -1421,6 +1421,54 @@
           "https://www.winticket.jp/keirin/cyclist/013355"
         ],
         "note": "KEIRIN.JPとWINTICKETの本人プロフィールに氏名・府県・期別・登録番号が一致。元台帳未照合を救済。"
+      }
+    },
+    {
+      "id": "015524",
+      "name": "栗本 武典",
+      "prefecture": "千葉",
+      "period": "119",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015524",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015524",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015524",
+          "https://www.winticket.jp/keirin/cyclist/015524"
+        ],
+        "note": "本人プロフィールの氏名・府県・期別・登録番号をKEIRIN.JPとWINTICKETで確認し全4項目一致。"
+      }
+    },
+    {
+      "id": "014741",
+      "name": "郡司 浩平",
+      "prefecture": "神奈",
+      "period": "99",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014741",
+      "verifiedDate": "2026-11-22",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014741",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014741",
+          "https://www.winticket.jp/keirin/cyclist/014741"
+        ],
+        "note": "本人プロフィールの氏名・府県・期別・登録番号をKEIRIN.JPとWINTICKETで確認し全4項目一致。"
       }
     }
   ],
