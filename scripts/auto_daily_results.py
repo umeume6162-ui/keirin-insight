@@ -33,7 +33,7 @@ JST = ZoneInfo("Asia/Tokyo")
 
 # Evidence-scoped source display differences; do not generalize all kanji.
 PREFECTURE_ALIASES = {"神奈": "神奈川", "北海": "北海道", "鹿児": "鹿児島"}
-RIDER_NAME_ALIASES = {"国井裕樹": "國井裕樹"}
+RIDER_NAME_ALIASES = {"国井裕樹": "國井裕樹", "斎藤輝彦": "齋藤輝彦"}
 
 
 def canonical_rider_name(value):
