@@ -149,7 +149,7 @@ def apply(input_data, dry_run=True):
     session, token = remote_client()
     base = "https://sheets.googleapis.com/v4/spreadsheets/" + SHEET_ID + "/values"
     headers = {"Authorization": "Bearer " + token}
-    read_ranges = ["'" + CONFIG[k][0] + "'!A1:O10000" for k in CONFIG]
+    read_ranges = ["'" + CONFIG[k][0] + "'!A1:O" for k in CONFIG]
     resp = session.get(base + ":batchGet", params=[("ranges", x) for x in read_ranges],
                        headers=headers, timeout=40)
     resp.raise_for_status()
