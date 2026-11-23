@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only K-Dreams result observation, currently for proved Tamano first-day URLs.
+"""Read-only K-Dreams result observation using evidence-backed race URLs.
 
 Never grants PASS or writes to Sheets. Requires a separately identified RESULT
 table, a complete racecard identity table, exact race/date and 7/9 car coverage.
@@ -44,13 +44,24 @@ def result_url(day, code, track, race):
             f"61{day.replace('-', '')}0100{int(race):02d}/?pageType=showResult")
 
 def validate_url(url, day, code, track, race):
-    exact = result_url(day, str(code).zfill(2), track, race)
+    """Accept an *observed* K-Dreams race URL for any venue.
+
+    The meeting-start date in the URL may differ from the actual race date;
+    do not manufacture it. The extracted HTML title and complete rider
+    identities are checked separately by extract().
+    """
     parsed = urlsplit(url)
+    code = str(code).zfill(2)
+    match = re.fullmatch(
+        r"/[a-z][a-z0-9-]*/racedetail/(" + re.escape(code)
+        + r"\\d{12}(\\d{2}))/", parsed.path
+    )
     if (parsed.scheme != "https" or parsed.netloc != "keirin.kdreams.jp"
-            or parsed.path != urlsplit(exact).path
+            or parsed.username or parsed.password or parsed.fragment
             or parse_qs(parsed.query) != {"pageType": ["showResult"]}
-            or parsed.username or parsed.password):
+            or match is None or int(match.group(2)) != int(race)):
         raise ValueError("Unverified K-Dreams source URL")
+    date.fromisoformat(day)
 
 def parse_identity(text):
     # The HTML presents "渡口 まりあ 山　口/32/114".
@@ -169,6 +180,19 @@ def self_test():
     day, code, track, race, grade, cars = "2026-11-23", "61", "玉野", 1, "L1", 7
     url = result_url(day, code, track, race)
     assert url.endswith("6120261123010001/?pageType=showResult")
+    # The published URL is evidence: never infer meeting day from race day.
+    another = "https://keirin.kdreams.jp/kurume/racedetail/8320261001010003/?pageType=showResult"
+    validate_url(another, "2026-10-01", "83", "久留米", 3)
+    for bad in (another.replace("0003/", "0004/"),
+                another.replace("keirin.kdreams.jp", "evil.example"),
+                another + "&other=1"):
+        try:
+            validate_url(bad, "2026-10-01", "83", "久留米", 3)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("Unsafe/wrong-R discovered URL accepted")
+
     head = "<title>玉野競輪 レース詳細 | 1R | 2026年11月23日</title>"
     ehead = "<tr>" + "".join("<th>" + x + "</th>" for x in
         ("予 想", "車 番", "選手名 府県/年齢/期別", "級 班", "直近4ヶ月の成績")) + "</tr>"
