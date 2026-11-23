@@ -62,6 +62,19 @@
 .race-stat-table td:last-child,.race-stat-table th:last-child{text-align:right}
 .race-stat-table .time-cell{font-variant-numeric:tabular-nums}
 .source-caption{font-size:12px;color:var(--muted);line-height:1.55}
+.rider-entry-card{border:1px solid #345367;background:#0b2231;border-radius:12px;padding:10px;margin:8px 0}
+.rider-entry-top{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:9px}
+.rider-entry-name{font-size:14px;font-weight:800;min-width:0;overflow-wrap:anywhere}
+.rider-entry-sub{display:block;font-size:11px;color:var(--muted);font-weight:500}
+.rider-entry-score{text-align:right;font-size:17px;color:var(--mint);font-weight:800;font-variant-numeric:tabular-nums}
+.rider-entry-score small{display:block;font-size:10px;color:var(--muted);font-weight:500}
+.rider-entry-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:10px}
+.rider-entry-metrics div{background:#142d3b;border-radius:8px;text-align:center;padding:5px 2px;min-width:0}
+.rider-entry-metrics small{display:block;font-size:10px;color:var(--muted)}
+.rider-entry-metrics strong{font-size:12px;font-variant-numeric:tabular-nums}
+.rider-entry-extra{margin-top:7px;padding:7px 0 0;border-top:1px solid #31546a;font-size:12px;color:#cbdce5}
+.rider-entry-extra summary{cursor:pointer;color:var(--mint);font-weight:700}
+.rider-entry-extra p{margin:6px 0 1px}
 .race-detail-more{margin-top:12px;border-top:1px solid #365266;padding-top:8px}
 .race-detail-more summary{min-height:40px!important;padding:8px 0!important;color:var(--mint);font-size:13px;display:list-item!important}
 .race-detail-more summary::after{content:none!important}
@@ -219,6 +232,53 @@ function topThree(results){
  if(found.some(a=>a.length!==1))return null;
  return found.map(a=>Number(a[0].number));
 }
+function riderEntryList(entries,race){
+ const wrapper=node("div");
+ const sourced=race.riderStatsSource;
+ const complete=Boolean(sourced&&sourced.status==="single_source_unverified"&&
+   entries.length>=7&&entries.every(e=>e.riderStats));
+ wrapper.append(node("p",complete?"選手の競走成績（出典付き）":"選手情報・競走成績","section-subtitle"));
+ for(const entry of entries){
+  const data=complete?entry.riderStats:null;
+  const card=node("div",undefined,"rider-entry-card");
+  const header=node("div",undefined,"rider-entry-top");
+  header.append(badge(entry.number));
+  const identity=node("div",undefined,"rider-entry-name");
+  identity.append(node("span",entry.name));
+  identity.append(node("small",(entry.prefecture||"—")+"／"+(entry.period||"—")+"期"+
+      (data?"／"+data.style:""),"rider-entry-sub"));
+  header.append(identity);
+  const score=node("div",data?data.score:"—","rider-entry-score");
+  score.append(node("small","競走得点"));header.append(score);card.append(header);
+  if(data){
+   const metrics=node("div",undefined,"rider-entry-metrics");
+   const blocks=[
+    ["S/B",data.s+" / "+data.b],
+    ["勝率",data.winRate],
+    ["2連対率",data.top2Rate],
+    ["3連対率",data.top3Rate]
+   ];
+   blocks.forEach(([label,value])=>{const cell=node("div");cell.append(node("small",label),node("strong",value));metrics.append(cell)});
+   card.append(metrics);
+   const more=node("details",undefined,"rider-entry-extra");
+   more.append(node("summary","H・決まり手回数などを表示"));
+   more.append(node("p","H "+data.h+" ／ 逃 "+data.escape+" ／ 捲 "+data.sprint+
+        " ／ 差 "+data.difference+" ／ マーク "+data.mark));
+   more.append(node("p","1着 "+data.first+" ／ 2着 "+data.second+
+        " ／ 3着 "+data.third+" ／ 着外 "+data.other));
+   card.append(more);
+  }
+  wrapper.append(card);
+ }
+ if(complete){
+  wrapper.append(node("p","集計期間："+sourced.period+"／取得："+sourced.capturedAt+
+    "。単一掲載元の統計値であり、正式な独立照合PASSではありません。","source-caption"));
+  const link=node("a","選手成績の掲載元を確認");
+  link.href=sourced.url;link.rel="noopener noreferrer";link.target="_blank";
+  wrapper.append(link);
+ }else wrapper.append(node("p","競走得点・S/B・勝率・連対率は未取得または全車照合待ちです。","source-caption"));
+ return wrapper;
+}
 function buildRace(r){
  const details=node("details",undefined,"race-card"),summary=node("summary");
  const entries=Array.isArray(r.entries)?r.entries:[],results=Array.isArray(r.results)?r.results:[];
@@ -257,8 +317,7 @@ function buildRace(r){
   body.append(linePanel(r,entries));
   const extra=node("details",undefined,"race-detail-more");
   extra.append(node("summary","出走選手・競走データを表示"));
-  extra.append(table(["車番","選手名","府県・期別"],entries.map(p=>[p.number,p.name,(p.prefecture||"—")+"／"+(p.period||"—")+"期"])));
-  extra.append(node("p","競走得点・S/B・勝率・2連対率・3連対率・近走成績は、データ取得・照合が完了した項目から追加します。","source-caption"));
+  extra.append(riderEntryList(entries,r));
   body.append(extra);
  }else body.append(node("p","事前出走表・ライン：未収録","source-caption"));
  if(results.length){
