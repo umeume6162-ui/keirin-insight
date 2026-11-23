@@ -32,8 +32,8 @@ def fetch_sheets():
     url = "https://sheets.googleapis.com/v4/spreadsheets/" + SHEET_ID + "/values:batchGet"
     params = [("ranges", "'AI事前出走スナップ'!A1:O250"),
               ("ranges", "'V99選手結果蓄積'!A1:W10000"),
-              ("ranges", "'KI｜日次出走表'!A1:O10000"),
-              ("ranges", "'KI｜日次結果'!A1:O10000")]
+              ("ranges", "'KI｜日次出走表'!A1:O"),
+              ("ranges", "'KI｜日次結果'!A1:O")]
     response = requests.get(url, params=params, headers={"Authorization": "Bearer " + creds.token}, timeout=50)
     response.raise_for_status()
     values = response.json().get("valueRanges", [])
