@@ -435,6 +435,15 @@ jobs:
                    for (phase, reason), count in sorted(holds.items())]
           rows += ["", "| Suggested review lane | Races |", "|---|---:|"]
           rows += [f"| {lane} | {count} |" for lane, count in sorted(lanes.items())]
+          if report.get("partialExisting"):
+              rows += ["", "| Stored-result review | Missing cars | Duplicate cars | Identity mismatch |",
+                       "|---|---|---|---|"]
+              for item in report["partialExisting"][:10]:
+                  def cell(name):
+                      values = item.get(name, [])
+                      return ",".join(map(str, values)) if values else "—"
+                  rows.append(f"| {item['raceKey']} | {cell('missingCarNumbers')} | "
+                              f"{cell('duplicateCarNumbers')} | {cell('identityMismatchCars')} |")
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as out:
               out.write("\n".join(rows) + "\n")
           PY
