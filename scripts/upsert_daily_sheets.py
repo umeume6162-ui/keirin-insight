@@ -169,9 +169,17 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--input", required=True)
     p.add_argument("--apply", action="store_true", help="Write to Sheets; default is dry run")
+    p.add_argument("--validate-only", action="store_true", help="Validate input without credentials or network")
     args = p.parse_args()
     data = json.loads(Path(args.input).read_text(encoding="utf-8"))
-    print(json.dumps(apply(data, dry_run=not args.apply), ensure_ascii=False))
+    if args.validate_only:
+        if args.apply:
+            raise ValueError("--validate-only cannot be used with --apply")
+        normalized = prepare(data)
+        print(json.dumps({"status":"VALID","entries":len(normalized["entries"]),
+                          "results":len(normalized["results"])}, ensure_ascii=False))
+    else:
+        print(json.dumps(apply(data, dry_run=not args.apply), ensure_ascii=False))
 if __name__ == "__main__":
     try:
         main()
