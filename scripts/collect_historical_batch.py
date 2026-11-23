@@ -13,7 +13,7 @@ import sys
 from datetime import date
 from pathlib import Path
 
-from collect_historical_pair import collect
+from collect_historical_pair import collect, collect_auto
 from result_hold_diagnostics import classify_result_hold, review_route
 from compare_race_results import compare
 
@@ -101,9 +101,14 @@ def run(plan, output):
             processed.append({"raceKey": key, "status": "EXISTING_FILE_CONFLICT_REVIEW"})
             continue
         try:
-            data = collect(row["date"], str(row["trackCode"]), row["track"],
-                           row["race"], row["className"], row["expectedCars"],
-                           row.get("leftUrl"), row.get("rightUrl"))
+            args = (row["date"], str(row["trackCode"]), row["track"],
+                    row["race"], row["className"], row["expectedCars"])
+            # User-specified historic URLs preserve the original pinned pair.
+            # Otherwise use the same source-neutral pool as daily result intake.
+            if row.get("leftUrl") or row.get("rightUrl"):
+                data = collect(*args, row.get("leftUrl"), row.get("rightUrl"))
+            else:
+                data = collect_auto(*args)
             data["batchMeta"] = {"schema": "ki-historical-candidate-batch-v1", "specHash": spec_sha}
             if data["comparison"]["raceKey"] != key or data["comparison"]["formalPass"] is not False:
                 raise ValueError("Candidate comparison identity or PASS boundary mismatch")
@@ -157,23 +162,35 @@ def self_test():
     valid = {"observations": [a, b],
              "comparison": compare({"observations": [a, b]})}
     with TemporaryDirectory() as directory:
-        with patch.object(sys.modules[__name__], "collect", return_value=valid):
+        with patch.object(sys.modules[__name__], "collect_auto", return_value=valid) as pooled:
             first = run({"races": [demo]}, directory)
+            pooled.assert_called_once_with(demo["date"], demo["trackCode"],
+                                           demo["track"], demo["race"],
+                                           demo["className"], demo["expectedCars"])
             assert first["results"][0]["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
             assert first["results"][0]["secondSourceId"] == "b"
             assert first["results"][0]["alternateSourceUsed"] is False
-        with patch.object(sys.modules[__name__], "collect", side_effect=AssertionError("unnecessary fetch")):
+        with patch.object(sys.modules[__name__], "collect_auto", side_effect=AssertionError("unnecessary fetch")):
             repeat = run({"races": [demo]}, directory)
             assert repeat["results"][0]["status"] == "SKIPPED_EXISTING_CANDIDATE"
         p = Path(directory) / "2026-09-10_27_2.json"
         candidate = json.loads(p.read_text(encoding="utf-8"))
         candidate["observations"][0]["results"][0]["finish"] = "2"
         store(p, candidate)
-        with patch.object(sys.modules[__name__], "collect", side_effect=AssertionError("must not overwrite")):
+        with patch.object(sys.modules[__name__], "collect_auto", side_effect=AssertionError("must not overwrite")):
             corrupted = run({"races": [demo]}, directory)
             assert corrupted["results"][0]["status"] == "EXISTING_FILE_CONFLICT_REVIEW"
 
-    print("SELF_TEST_OK: bounded historical candidate plan, identity, duplicates, metadata")
+    # A pinned publication pair must never be silently replaced by a pool.
+    with TemporaryDirectory() as directory:
+        pinned = {**demo, "leftUrl": "https://one.example/r",
+                  "rightUrl": "https://two.example/r"}
+        with (patch.object(sys.modules[__name__], "collect", return_value=valid) as fixed,
+              patch.object(sys.modules[__name__], "collect_auto",
+                           side_effect=AssertionError("unexpected source pool"))):
+            run({"races": [pinned]}, directory)
+            fixed.assert_called_once()
+    print("SELF_TEST_OK: bounded historical candidate plan, source-neutral fallback, pinned pair and duplicates")
 
 
 def main():
