@@ -404,6 +404,9 @@ jobs:
                   not isinstance(report.get("results"), list)):
               raise ValueError("Invalid/unexpected daily intake report; do not mark success")
           statuses = collections.Counter(r.get("status", "UNKNOWN") for r in report["results"])
+          holds = collections.Counter((r.get("failurePhase", "UNSPECIFIED"),
+                                       r.get("reasonCode", "UNCLASSIFIED"))
+                                      for r in report["results"] if not r.get("saved") and r.get("reasonCode"))
           rows = [
               "## Daily two-source result intake",
               f"- Pending eligible races: {report['eligibleTotal']}",
@@ -417,6 +420,9 @@ jobs:
               "|---|---:|",
           ]
           rows += [f"| {key} | {count} |" for key, count in sorted(statuses.items())]
+          rows += ["", "| Failure phase / reason | Races |", "|---|---:|"]
+          rows += [f"| {phase} / {reason} | {count} |"
+                   for (phase, reason), count in sorted(holds.items())]
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as out:
               out.write("\n".join(rows) + "\n")
           PY
