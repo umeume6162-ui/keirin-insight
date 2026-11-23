@@ -167,8 +167,12 @@ def candidate(key, rows, collect_fn=collect):
                             capturedAt=capture))
     if len(payload) != len(rows):
         raise ValueError("Incomplete pair result")
+    second_source = observation["observations"][1]["sourceId"]
+    if second_source not in ("chariloto-day-results", "lotoplace-day-results"):
+        raise ValueError("Unexpected second result source")
     return {"entries": [], "results": payload,
-            "sourceNote": "Content matched on two sites, upstream independence not verified"}
+            "sourceNote": ("Content matched on two sites, upstream independence not verified; "
+                           "secondSourceId=" + second_source)}
 
 
 
@@ -212,6 +216,10 @@ def process(entries, results, start, end, limit=4, write=False,
         phase = "COLLECT_COMPARE"
         try:
             data = candidate(key, rows, collect_fn=collect_fn)
+            second_source = data["sourceNote"].rsplit("secondSourceId=", 1)[-1]
+            if second_source in ("chariloto-day-results", "lotoplace-day-results"):
+                item["secondSourceId"] = second_source
+                item["alternateSourceUsed"] = second_source == "lotoplace-day-results"
             phase = "SHEETS_DRY_RUN"
             dry = apply_fn(data, dry_run=True)
             result_delta = dry["summary"]["results"]
@@ -285,6 +293,15 @@ def self_test():
                       apply_fn=pretend_apply)
     assert summary["results"][0]["status"] == "DRY_RUN_TWO_SOURCES_MATCH" and calls == [True]
     assert (summary["eligibleTotal"], summary["eligibleExamined"], summary["eligibleDeferred"], summary["savedCount"]) == (1, 1, 0, 0)
+    assert summary["results"][0]["secondSourceId"] == "chariloto-day-results"
+    assert summary["results"][0]["alternateSourceUsed"] is False
+    alternate = {"observations": [left, dict(right, sourceId="lotoplace-day-results",
+                                           sourceUrl="https://www.lotoplace.jp/keirin/results/26/2026-11-23/")],
+                 "comparison": compare({"observations": [left, dict(right, sourceId="lotoplace-day-results",
+                                           sourceUrl="https://www.lotoplace.jp/keirin/results/26/2026-11-23/")]})}
+    alt_report = process(records, [], start, start, collect_fn=lambda *a: alternate,
+                         apply_fn=pretend_apply)
+    assert alt_report["results"][0]["alternateSourceUsed"] is True
     broken = [list(x) for x in records]
     broken[0][6] = "別人"
     summary = process(broken, [], start, start, collect_fn=lambda *a: actual,
