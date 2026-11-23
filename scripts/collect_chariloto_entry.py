@@ -94,8 +94,18 @@ def main():
         html=Path(args.html_fixture).read_text(encoding="utf-8")
     else:
         import requests
-        r=requests.get(url,headers={"User-Agent":"KEIRIN-INSIGHT-Research/1.0 (one race read-only test)"},
-                       timeout=20)
+        from urllib.robotparser import RobotFileParser
+        agent="KEIRIN-INSIGHT-Research/1.0 (one race read-only test)"
+        robots=requests.get("https://www.chariloto.com/robots.txt",timeout=15,
+                            headers={"User-Agent":agent})
+        if robots.status_code == 200:
+            parser=RobotFileParser()
+            parser.parse(robots.text.splitlines())
+            if not parser.can_fetch(agent,url):
+                raise ValueError("Source robots policy disallows requested path")
+        elif robots.status_code not in (404,410):
+            raise ValueError("Could not establish source robots permissions")
+        r=requests.get(url,headers={"User-Agent":agent},timeout=20)
         r.raise_for_status()
         if len(r.content)>3_000_000:
             raise ValueError("source too large")
