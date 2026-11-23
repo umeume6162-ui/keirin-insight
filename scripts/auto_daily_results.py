@@ -11,6 +11,7 @@ import argparse
 import json
 import re
 import sys
+import time
 import unicodedata
 from collections import defaultdict
 from datetime import datetime, timedelta
@@ -154,13 +155,19 @@ def select_rotating_races(eligible, limit, now=None):
 
 
 def process(entries, results, start, end, limit=4, write=False,
-            collect_fn=collect, apply_fn=apply):
+            collect_fn=collect, apply_fn=apply, max_seconds=720,
+            monotonic_fn=time.monotonic):
     if not 1 <= limit <= 20:
         raise ValueError("limit must be 1..20")
+    if not 60 <= max_seconds <= 1800:
+        raise ValueError("max_seconds must be 60..1800")
+    started = monotonic_fn()
     eligible = eligible_races(entries, results, start, end)
     selected = select_rotating_races(eligible, limit)
     reports = []
     for key, rows in selected:
+        if monotonic_fn() - started >= max_seconds:
+            break
         item = {"raceKey": key, "saved": False}
         try:
             data = candidate(key, rows, collect_fn=collect_fn)
@@ -185,8 +192,9 @@ def process(entries, results, start, end, limit=4, write=False,
                         errorType=type(exc).__name__)
         reports.append(item)
     return {"schema": "ki-daily-result-intake-v1", "formalPass": False,
-            "eligibleTotal": len(eligible), "eligibleExamined": len(selected),
-            "eligibleDeferred": len(eligible) - len(selected),
+            "eligibleTotal": len(eligible), "eligibleExamined": len(reports),
+            "eligibleDeferred": len(eligible) - len(reports),
+            "timeBudgetExceeded": len(reports) < len(selected),
             "savedCount": sum(bool(r["saved"]) for r in reports),
             "results": reports}
 
@@ -237,6 +245,11 @@ def self_test():
     assert all(1 <= len(batch) <= 4 for batch in batches)
     assert len({k for batch in batches for k, _ in batch}) == 13
     assert select_rotating_races([], 4) == []
+    exhausted = process(records, [], start, start, collect_fn=lambda *a: actual,
+                        apply_fn=pretend_apply, max_seconds=60,
+                        monotonic_fn=iter((0, 61)).__next__)
+    assert exhausted["eligibleExamined"] == 0 and exhausted["eligibleDeferred"] == 1
+    assert exhausted["timeBudgetExceeded"] and exhausted["savedCount"] == 0
     assert [k for k, _ in select_rotating_races(rotation, 4, day0)] == [
         k for k, _ in select_rotating_races(rotation, 4, day0)]
     print("SELF_TEST_OK: seven-car two-source result intake, identity guard and duplicate skip")
@@ -248,6 +261,7 @@ def main():
     p.add_argument("--apply", action="store_true")
     p.add_argument("--date", help="Optional exact event date YYYY-MM-DD")
     p.add_argument("--max-races", type=int, default=4)
+    p.add_argument("--max-seconds", type=int, default=720)
     args = p.parse_args()
     if args.self_test:
         self_test()
@@ -261,7 +275,8 @@ def main():
     else:
         start, end = today - timedelta(days=1), today
     entries, results = read_existing()
-    report = process(entries, results, start, end, limit=args.max_races, write=args.apply)
+    report = process(entries, results, start, end, limit=args.max_races,
+                     write=args.apply, max_seconds=args.max_seconds)
     print(json.dumps(report, ensure_ascii=False))
 
 
