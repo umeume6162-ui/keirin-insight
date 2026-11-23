@@ -424,6 +424,12 @@ jobs:
                                       for r in report["results"] if r.get("reviewRoute"))
           stages = collections.Counter(r.get("sourceStage") for r in report["results"]
                                        if r.get("sourceStage"))
+          # Publish only finite source/outcome codes, never source HTML or raw errors.
+          source_attempts = collections.Counter(
+              (attempt.get("source"), attempt.get("status"), attempt.get("reasonCode", "—"))
+              for item in report["results"]
+              for attempt in item.get("sourceAttempts", [])
+              if isinstance(attempt, dict))
           rows = [
               "## Daily two-source result intake",
               f"- Pending eligible races: {report['eligibleTotal']}",
@@ -463,6 +469,11 @@ jobs:
                             item.get("reviewRoute") or "UNCLASSIFIED"]
                   if all(re.fullmatch(r"[A-Z0-9_]+", str(v)) for v in values[1:]):
                       rows.append("| " + " | ".join(values) + " |")
+          if source_attempts:
+              rows += ["", "| Result source | Outcome | Reason code | Races |",
+                       "|---|---|---|---:|"]
+              rows += [f"| {src} | {status} | {reason} | {count} |"
+                       for (src, status, reason), count in sorted(source_attempts.items())]
           if report.get("partialExisting"):
               rows += ["", "| Stored-result review | Missing cars | Duplicate cars | Identity mismatch |",
                        "|---|---|---|---|"]
