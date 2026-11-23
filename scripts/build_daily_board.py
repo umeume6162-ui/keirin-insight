@@ -31,11 +31,13 @@ def fetch_sheets():
     creds.refresh(google.auth.transport.requests.Request())
     url = "https://sheets.googleapis.com/v4/spreadsheets/" + SHEET_ID + "/values:batchGet"
     params = [("ranges", "'AI事前出走スナップ'!A1:O250"),
-              ("ranges", "'V99選手結果蓄積'!A1:W10000")]
+              ("ranges", "'V99選手結果蓄積'!A1:W10000"),
+              ("ranges", "'KI｜日次出走表'!A1:O10000"),
+              ("ranges", "'KI｜日次結果'!A1:O10000")]
     response = requests.get(url, params=params, headers={"Authorization": "Bearer " + creds.token}, timeout=50)
     response.raise_for_status()
     values = response.json().get("valueRanges", [])
-    if len(values) != 2:
+    if len(values) != 4:
         raise RuntimeError("Google Sheets did not return both source ranges")
     return [x.get("values", []) for x in values]
 
@@ -113,6 +115,68 @@ def build(entry_values, result_values, today):
             "summary": {"races": len(races), "entries": sum(len(x["entries"]) for x in races),
                         "resultRows": sum(len(x["results"]) for x in races)}}
 
+def merge_new(board, entry_values, result_values, today):
+    """Prefer fresh intake tabs for the same race, while retaining legacy archive only as fallback.
+
+    Fresh results do not invent missing pre-race entries and do not get marked PASS.
+    """
+    if not entry_values or not result_values:
+        raise ValueError("Daily intake tabs absent")
+    if entry_values[0] != ["開催日","場コード","競輪場","R","級班","車番","選手名","府県","期別",
+                            "発走前ライン","元URL","取得日時JST","収集状態","レースキー","ソースID"]:
+        raise ValueError("Daily entry sheet header changed")
+    if result_values[0] != ["開催日","場コード","競輪場","R","級班","車番","選手名","府県","期別",
+                             "着順原文","決まり手","個人状況・例外","元URL","取得日時JST","レースキー"]:
+        raise ValueError("Daily result sheet header changed")
+    by_key = {race["key"]: race for race in board["races"]}
+    start = today - timedelta(days=2)
+    end = today + timedelta(days=2)
+    kinds = (("entries", entry_values[1:]), ("results", result_values[1:]))
+    for kind, rows in kinds:
+        latest = board["sourceLatest"][kind] or ""
+        for row in rows:
+            r = [clean(x) for x in row] + [""] * max(0, 15 - len(row))
+            if not parse_date(r[0]) or not r[1] or not r[2] or not r[3].isdigit():
+                continue
+            latest = max(latest, r[0])
+            day = datetime.strptime(r[0], "%Y-%m-%d").date()
+            if not start <= day <= end or not r[5].isdigit() or not 1 <= int(r[5]) <= 9:
+                continue
+            key = f"{r[0]}|{r[2]}|{int(r[3])}"
+            item = by_key.setdefault(key, {"key":key, "date":r[0], "track":r[2],
+                "race":int(r[3]), "className":r[4], "entries":[], "results":[],
+                "status":"entry_only", "entrySource":"KI｜日次出走表",
+                "resultSource":"KI｜日次結果"})
+            if kind == "entries":
+                item["entrySource"] = "KI｜日次出走表"
+                values = {"number":int(r[5]),"name":r[6],"prefecture":r[7] or None,
+                          "period":r[8] or None,"preRaceLine":r[9] or None,
+                          "position":None,"capturedAt":r[11] or None,
+                          "sourceUrl":r[10] or None}
+            else:
+                item["resultSource"] = "KI｜日次結果"
+                values = {"number":int(r[5]),"name":r[6],"prefecture":r[7] or None,
+                          "period":r[8] or None,"finish":r[9],
+                          "method":r[10] or None,"exception":r[11] or None,
+                          "sourceUrl":r[12] or None}
+            # A race may have historical rows from legacy source: replace individual car.
+            old = item[kind]
+            item[kind] = [x for x in old if x["number"] != int(r[5])]
+            item[kind].append(values)
+        board["sourceLatest"][kind] = latest or None
+    for race in by_key.values():
+        race["entries"].sort(key=lambda x:x["number"])
+        race["results"].sort(key=lambda x:int(x["finish"]) if str(x["finish"]).isdigit() else 99)
+        nums=[x["number"] for x in race["results"]]
+        race["status"] = ("results_recorded" if len(nums) in (7,9) and len(nums)==len(set(nums))
+                          else "results_partial" if nums else "entry_only")
+        race["expectedCount"] = len(race["entries"]) or len(nums)
+    board["races"] = sorted(by_key.values(), key=lambda x:(x["date"],x["track"],x["race"]))
+    board["summary"]={"races":len(board["races"]),
+        "entries":sum(len(x["entries"]) for x in board["races"]),
+        "resultRows":sum(len(x["results"]) for x in board["races"])}
+    return board
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--entries-fixture", help="JSON array-of-rows for local testing")
@@ -126,9 +190,11 @@ def main():
     if args.entries_fixture:
         entries = json.loads(Path(args.entries_fixture).read_text(encoding="utf8"))
         results = json.loads(Path(args.results_fixture).read_text(encoding="utf8"))
+        fresh_entries = [list(["開催日","場コード","競輪場","R","級班","車番","選手名","府県","期別","発走前ライン","元URL","取得日時JST","収集状態","レースキー","ソースID"])]
+        fresh_results = [list(["開催日","場コード","競輪場","R","級班","車番","選手名","府県","期別","着順原文","決まり手","個人状況・例外","元URL","取得日時JST","レースキー"])]
     else:
-        entries, results = fetch_sheets()
-    out = build(entries, results, today)
+        entries, results, fresh_entries, fresh_results = fetch_sheets()
+    out = merge_new(build(entries, results, today), fresh_entries, fresh_results, today)
     # No clock timestamp: reruns on unchanged source and date do not create commits.
     content = json.dumps(out, ensure_ascii=False, indent=2) + "\n"
     target = Path(args.out)
