@@ -34,6 +34,11 @@ on:
         description: 'Optional individual racecard URL; leave blank to discover venue racecards'
         required: false
         type: string
+      verify_writer:
+        description: 'Verify writer access without changing race rows'
+        required: false
+        default: false
+        type: boolean
       apply_intake:
         description: 'Write validated racecard to daily entry tab (requires Sheets editor permission)'
         required: false
@@ -135,6 +140,23 @@ jobs:
           if actual != expected:
               sys.exit("Credential identity mismatches approved editor; no write")
           print("SERVICE_ACCOUNT_IDENTITY_MATCH; email and credential withheld")
+          PY
+          python scripts/upsert_daily_sheets.py --verify-write-access
+      - name: Manually verify Sheets writer without adding race rows
+        if: github.event_name == 'workflow_dispatch' && inputs.verify_writer
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python - <<'PY'
+          import json, os, sys
+          expected = "keirin-insight-sheets-reader@possible-helix-433523-q9.iam.gserviceaccount.com"
+          try:
+              actual = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"])["client_email"]
+          except (KeyError, ValueError, TypeError):
+              sys.exit("Credential missing or malformed; no write")
+          if actual != expected:
+              sys.exit("Credential identity mismatches approved editor; no write")
+          print("SERVICE_ACCOUNT_IDENTITY_MATCH (credential withheld)")
           PY
           python scripts/upsert_daily_sheets.py --verify-write-access
       - name: Verify private Sheets service-account identity before write
