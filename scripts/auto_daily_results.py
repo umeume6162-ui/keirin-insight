@@ -20,7 +20,7 @@ from zoneinfo import ZoneInfo
 import requests
 
 from collect_historical_pair import collect
-from result_hold_diagnostics import classify_result_hold
+from result_hold_diagnostics import classify_result_hold, review_route
 from compare_race_results import normalized_name, canonical_method
 from upsert_daily_sheets import (
     SHEET_ID, HEADERS, CONFIG, apply, remote_client
@@ -234,7 +234,8 @@ def process(entries, results, start, end, limit=4, write=False,
             item.update(status="SOURCE_OR_IDENTITY_REVIEW_NO_WRITE",
                         errorType=type(exc).__name__,
                         failurePhase=phase,
-                        reasonCode=classify_result_hold(exc, phase))
+                        reasonCode=classify_result_hold(exc, phase),
+                        reviewRoute=review_route(classify_result_hold(exc, phase)))
         reports.append(item)
     return {"schema": "ki-daily-result-intake-v1", "formalPass": False,
             "eligibleTotal": len(eligible), "eligibleExamined": len(reports),
@@ -292,6 +293,7 @@ def self_test():
     assert calls == [True]
     assert summary["results"][0]["failurePhase"] == "COLLECT_COMPARE"
     assert summary["results"][0]["reasonCode"] == "ENTRY_RIDER_IDENTITY_MISMATCH"
+    assert summary["results"][0]["reviewRoute"] == "RIDER_OR_CLASS_EVIDENCE_REVIEW"
     assert classify_result_hold(ValueError("Rider class conflicts with requested race class"), "COLLECT_COMPARE") == "SOURCE_RIDER_CLASS_MISMATCH"
     assert classify_result_hold(ValueError("Unexpected Sheet response"), "SHEETS_DRY_RUN") == "SHEETS_OTHER_ERROR"
     assert eligible_races(records, [[""] * 14 + ["2026-11-23|26|1"]], start, start) == []
