@@ -1,11 +1,5 @@
 name: Update daily race board
 on:
-  push:
-    paths:
-      - 'scripts/collect_chariloto_entry.py'
-      - 'scripts/upsert_daily_sheets.py'
-      - 'scripts/build_daily_board.py'
-      - '.github/workflows/update-daily-board.yml'
   workflow_dispatch:
   schedule:
     # UTC corresponds to JST 07:10, 12:10, 17:10, 22:10.
