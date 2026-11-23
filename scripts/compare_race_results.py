@@ -168,8 +168,10 @@ def self_test():
         "https://source-b.example/r", "b")
     assert compare({"observations": [a, b]})["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
     b["results"][0]["finish"] = "2"
+    b["results"][1]["finish"] = "1"
     assert compare({"observations": [a, b]})["status"] == "SOURCE_CONFLICT_REVIEW_REQUIRED"
     b["results"][0]["finish"] = "1"
+    b["results"][1]["finish"] = "2"
     b["results"].pop()
     try:
         compare({"observations": [a, b]})
