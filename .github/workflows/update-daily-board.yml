@@ -105,6 +105,16 @@ on:
         required: false
         default: ''
         type: string
+      retry_track_code:
+        description: 'Optional exact 2-digit track code, requires retry_result_date and retry_race'
+        required: false
+        default: ''
+        type: string
+      retry_race:
+        description: 'Optional exact race number 1..12, requires retry_track_code'
+        required: false
+        default: ''
+        type: string
   schedule:
     # Explicit [refresh-daily-feed] main push rebuilds only the daily viewer feed from Sheets.
     # One-time daily viewer refresh after first verified two-site content-matched result intake.
@@ -421,6 +431,8 @@ jobs:
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           RETRY_RESULT_DATE: ${{ inputs.retry_result_date }}
+          RETRY_TRACK_CODE: ${{ inputs.retry_track_code }}
+          RETRY_RACE: ${{ inputs.retry_race }}
         run: |
           set -o pipefail
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "$RETRY_RESULT_DATE" ]; then
@@ -428,7 +440,15 @@ jobs:
               echo "::error::Invalid retry_result_date; no result writes"
               exit 1
             fi
-            python scripts/auto_daily_results.py --apply --date "$RETRY_RESULT_DATE" --max-races 12 --max-seconds 720 | tee /tmp/ki-daily-result-intake.json
+            if [ -n "$RETRY_TRACK_CODE" ] || [ -n "$RETRY_RACE" ]; then
+              if ! [[ "$RETRY_TRACK_CODE" =~ ^[0-9][0-9]$ && "$RETRY_RACE" =~ ^([1-9]|1[0-2])$ ]]; then
+                echo "::error::Both valid retry_track_code and retry_race required"
+                exit 1
+              fi
+              python scripts/auto_daily_results.py --apply --date "$RETRY_RESULT_DATE" --track-code "$RETRY_TRACK_CODE" --race "$RETRY_RACE" --max-races 1 --max-seconds 720 | tee /tmp/ki-daily-result-intake.json
+            else
+              python scripts/auto_daily_results.py --apply --date "$RETRY_RESULT_DATE" --max-races 12 --max-seconds 720 | tee /tmp/ki-daily-result-intake.json
+            fi
           else
             python scripts/auto_daily_results.py --apply --max-races 12 --max-seconds 720 --lookback-days 7 | tee /tmp/ki-daily-result-intake.json
           fi
