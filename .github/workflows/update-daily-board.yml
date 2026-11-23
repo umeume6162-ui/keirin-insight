@@ -85,11 +85,11 @@ jobs:
           d, code, track, race, url = values
           try:
               date.fromisoformat(d)
-              assert re.fullmatch(r'20\\d{2}-\\d{2}-\\d{2}', d)
+              assert re.fullmatch(r'20\d{2}-\d{2}-\d{2}', d)
               assert code.isdigit() and 1 <= int(code) <= 99
               assert track.strip()
               assert race.isdigit() and 1 <= int(race) <= 12
-              assert re.fullmatch(r'https://keirin\\.tokyo-sports\\.co\\.jp/list/race/[^\\s]+',url)
+              assert re.fullmatch(r'https://keirin\.tokyo-sports\.co\.jp/list/race/[^\s]+',url)
           except (ValueError, AssertionError):
               sys.exit('Invalid manual racecard inputs; no intake')
           PY
