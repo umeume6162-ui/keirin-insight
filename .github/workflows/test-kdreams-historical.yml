@@ -68,4 +68,11 @@ jobs:
                   print('HISTORICAL_KDREAMS_OBSERVED',key,len(obs['observation']['results']))
               except Exception as exc:
                   print('HISTORICAL_KDREAMS_HOLD',key,type(exc).__name__,str(exc)[:120])
+                  if 'html' in locals() and 'Race date/venue not found' in str(exc):
+                      from bs4 import BeautifulSoup
+                      page=BeautifulSoup(html,'html.parser')
+                      print('KD_TITLE_DIAGNOSTIC',key,
+                            (page.title.get_text(' ',strip=True) if page.title else 'NO_TITLE')[:150],
+                            'H1',[(x.get_text(' ',strip=True))[:60] for x in page.select('h1')[:2]])
+                  html=None
           PY
