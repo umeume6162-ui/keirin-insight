@@ -414,6 +414,8 @@ def self_test():
     # Production-shape regression: Tamano A1/A2 races have mixed rider
     # grades, yet every rider must retain their own grade in the result row.
     mixed = [list(r) for r in records]
+    for row in mixed:
+        row[4] = "A2"
     for i in (1, 3, 5):
         mixed[i][4] = "A1"
     assert len(eligible_races(mixed, [], start := datetime.strptime(
