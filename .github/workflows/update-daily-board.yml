@@ -5,6 +5,7 @@ on:
       - 'scripts/collect_chariloto_entry.py'
       - 'scripts/probe_daily_source.py'
       - 'scripts/collect_tospo_entry.py'
+      - 'scripts/discover_tospo_races.py'
       - 'scripts/upsert_daily_sheets.py'
       - 'scripts/build_daily_board.py'
       - '.github/workflows/update-daily-board.yml'
@@ -27,7 +28,7 @@ on:
         required: false
         type: string
       source_url:
-        description: 'Public Tokyo Sports racecard URL'
+        description: 'Optional individual racecard URL; leave blank to discover venue racecards'
         required: false
         type: string
       apply_intake:
@@ -65,7 +66,7 @@ jobs:
         run: pip install 'google-auth==2.38.0' 'requests==2.32.3' 'beautifulsoup4==4.14.2'
       - name: Check daily intake script syntax
         run: |
-          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py
+          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py
           python scripts/collect_chariloto_entry.py --self-test
           python scripts/collect_tospo_entry.py --self-test
           python scripts/build_daily_board.py --self-test
@@ -105,8 +106,18 @@ jobs:
           python scripts/collect_tospo_entry.py --date "$RACE_DATE" --track-code "$TRACK_CODE" --track "$TRACK_NAME" --race "$RACE_NUMBER" --url "$SOURCE_URL" --out /tmp/ki-manual-racecard.json
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --validate-only
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json
+      - name: Discover and validate venue racecards (manual preview)
+        if: github.event_name == 'workflow_dispatch' && inputs.source_url == '' && inputs.race_date != '' && inputs.track_name != '' && inputs.track_code != ''
+        env:
+          RACE_DATE: ${{ inputs.race_date }}
+          TRACK_CODE: ${{ inputs.track_code }}
+          TRACK_NAME: ${{ inputs.track_name }}
+        run: |
+          python scripts/discover_tospo_races.py --date "$RACE_DATE" --track-code "$TRACK_CODE" --track "$TRACK_NAME" --out /tmp/ki-manual-racecard.json
+          python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --validate-only
+          python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json
       - name: Save validated manual racecard to daily intake tab
-        if: github.event_name == 'workflow_dispatch' && inputs.source_url != '' && inputs.apply_intake
+        if: github.event_name == 'workflow_dispatch' && inputs.apply_intake && (inputs.source_url != '' || (inputs.race_date != '' && inputs.track_name != '' && inputs.track_code != ''))
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --apply
