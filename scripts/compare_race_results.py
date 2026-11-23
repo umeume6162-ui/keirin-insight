@@ -193,15 +193,24 @@ def self_test():
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--input")
+    p.add_argument("--left", help="One collected source observation JSON")
+    p.add_argument("--right", help="Different collected source observation JSON")
     p.add_argument("--out")
     p.add_argument("--self-test", action="store_true")
     args = p.parse_args()
     if args.self_test:
         self_test()
         return
-    if not args.input:
-        p.error("--input required")
-    payload = json.loads(Path(args.input).read_text(encoding="utf-8"))
+    if args.input and (args.left or args.right):
+        p.error("Use either --input or --left and --right")
+    if args.input:
+        payload = json.loads(Path(args.input).read_text(encoding="utf-8"))
+    elif args.left and args.right:
+        payload = {"observations": [
+            json.loads(Path(args.left).read_text(encoding="utf-8")),
+            json.loads(Path(args.right).read_text(encoding="utf-8"))]}
+    else:
+        p.error("--input or both --left and --right required")
     result = compare(payload)
     serialized = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
     if args.out:
