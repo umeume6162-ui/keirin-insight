@@ -102,6 +102,27 @@ def eligible_races(entries, results, start, end):
     return eligible
 
 
+
+def partial_existing_results(entries, results, start, end):
+    """Report incomplete/duplicate stored results; never overwrite them automatically."""
+    available = dict(eligible_races(entries, [], start, end))
+    by_key = defaultdict(list)
+    for row in results:
+        if len(row) > 14:
+            key = clean(row[14])
+            if key in available:
+                by_key[key].append(row)
+    findings = []
+    for key, stored in sorted(by_key.items()):
+        expected = {str(i) for i in range(1, len(available[key]) + 1)}
+        numbers = [clean(row[5]) if len(row) > 5 else "" for row in stored]
+        if len(numbers) != len(expected) or set(numbers) != expected:
+            findings.append({"raceKey": key, "expectedCars": len(expected),
+                             "storedRows": len(stored),
+                             "status": "PARTIAL_OR_DUPLICATE_STORED_RESULTS_REVIEW"})
+    return findings
+
+
 def candidate(key, rows, collect_fn=collect):
     day, code, race = key.split("|")
     track, cls = clean(rows[0][2]), clean(rows[0][4])
@@ -163,6 +184,7 @@ def process(entries, results, start, end, limit=4, write=False,
         raise ValueError("max_seconds must be 60..1800")
     started = monotonic_fn()
     eligible = eligible_races(entries, results, start, end)
+    incomplete_stored = partial_existing_results(entries, results, start, end)
     selected = select_rotating_races(eligible, limit)
     reports = []
     for key, rows in selected:
@@ -196,6 +218,8 @@ def process(entries, results, start, end, limit=4, write=False,
             "eligibleDeferred": len(eligible) - len(reports),
             "timeBudgetExceeded": len(reports) < len(selected),
             "savedCount": sum(bool(r["saved"]) for r in reports),
+            "partialExistingCount": len(incomplete_stored),
+            "partialExisting": incomplete_stored,
             "results": reports}
 
 
@@ -244,6 +268,17 @@ def self_test():
     assert summary["results"][0]["status"] == "SOURCE_OR_IDENTITY_REVIEW_NO_WRITE"
     assert calls == [True]
     assert eligible_races(records, [[""] * 14 + ["2026-11-23|26|1"]], start, start) == []
+    partial_rows = [list(x) + [""] * (15 - len(x)) for x in records[:3]]
+    for row in partial_rows:
+        row[14] = "2026-11-23|26|1"
+    flags = partial_existing_results(records, partial_rows, start, start)
+    assert len(flags) == 1 and flags[0]["expectedCars"] == 7
+    assert flags[0]["storedRows"] == 3
+    assert partial_existing_results(records, partial_rows + partial_rows, start, start)[0]["storedRows"] == 6
+    full_rows = [list(x) + [""] * (15 - len(x)) for x in records]
+    for row in full_rows:
+        row[14] = "2026-11-23|26|1"
+    assert partial_existing_results(records, full_rows, start, start) == []
     # Repeated source failures at the start of the backlog must not starve later races.
     rotation = [(f"race-{i}", []) for i in range(13)]
     day0 = datetime(2026, 11, 23, 7, 10, tzinfo=JST)
