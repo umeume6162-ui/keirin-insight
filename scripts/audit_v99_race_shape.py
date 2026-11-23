@@ -119,23 +119,27 @@ def meeting_coverage(v99_rows, v100_rows, cancelled_rows):
 
 
 
-def live_rows():
+def live_tables():
     from upsert_daily_sheets import SHEET_ID, remote_client
     session, token = remote_client()
     base = "https://sheets.googleapis.com/v4/spreadsheets/" + SHEET_ID + "/values/"
-    all_rows = []
-    for lo in range(1, 10001, 1000):
-        hi = min(lo + 999, 10000)
-        range_id = f"'V99選手結果蓄積'!A{lo}:R{hi}"
-        response = session.get(base + range_id,
-                               headers={"Authorization": "Bearer " + token},
-                               timeout=40)
-        response.raise_for_status()
-        values = response.json().get("values", [])
-        all_rows.extend(values)
-        if len(values) < hi - lo + 1:
-            break
-    return all_rows
+    def scan(name, upper):
+        result = []
+        for lo in range(1, upper + 1, 1000):
+            hi = min(lo + 999, upper)
+            target_range = f"'{name}'!A{lo}:R{hi}"
+            response = session.get(base + target_range,
+                                   headers={"Authorization": "Bearer " + token},
+                                   timeout=40)
+            response.raise_for_status()
+            values = response.json().get("values", [])
+            result.extend(values)
+            if len(values) < hi - lo + 1:
+                break
+        return result
+    return (scan("V99選手結果蓄積", 10000),
+            scan("V100収集状態台帳", 1000),
+            scan("V99中止レース台帳", 1000))
 
 
 def self_test():
@@ -184,7 +188,11 @@ def main():
         return self_test()
     if not args.live:
         p.error("Specify --self-test or --live")
-    print(json.dumps(audit(live_rows()), ensure_ascii=False))
+    v99_rows, v100_rows, cancelled_rows = live_tables()
+    report = audit(v99_rows)
+    report["crossLedgerCoverage"] = meeting_coverage(v99_rows, v100_rows,
+                                                      cancelled_rows)
+    print(json.dumps(report, ensure_ascii=False))
 
 
 if __name__ == "__main__":
