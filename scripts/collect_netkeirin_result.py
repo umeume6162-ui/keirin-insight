@@ -142,17 +142,9 @@ def extract(html, event_date, code, track, race, class_name, expected_cars, url)
 
 def fetch(url):
     import requests
-    from urllib.robotparser import RobotFileParser
+    from result_robots import require_robots_access
     agent = "KEIRIN-INSIGHT-Research/1.0 (one public result read-only)"
-    robots = requests.get("https://keirin.netkeiba.com/robots.txt",
-                          headers={"User-Agent": agent}, timeout=15)
-    if robots.status_code == 200:
-        parser = RobotFileParser()
-        parser.parse(robots.text.splitlines())
-        if not parser.can_fetch(agent, url):
-            raise ValueError("Robots rules prohibit this page")
-    elif robots.status_code not in (404, 410):
-        raise ValueError("Unable to confirm robots access; no fetch")
+    require_robots_access(url, "keirin.netkeiba.com", agent)
     response = requests.get(url, headers={"User-Agent": agent}, timeout=20)
     response.raise_for_status()
     if len(response.content) > 3_000_000:
