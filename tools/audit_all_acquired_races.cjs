@@ -53,9 +53,22 @@ function inspectLegacy(r){
 }
 function auditAll(sourceFirst,comparison){
  const races=sourceFirst.map(inspectSourceFirst).concat(comparison.races.map(inspectLegacy));
- const keys=races.map(x=>x.key);
- if(new Set(keys).size!==keys.length)throw Error('DUPLICATE_RACE_KEYS across research sources');
- return{schema:'ki-all-acquired-race-evidence-audit-v1',publicationDecision:'NO_PASS_OR_FEED_WRITE',summary:{sourceFirst:sourceFirst.length,legacyComparisons:comparison.races.length,allRaces:races.length,resultRows:races.reduce((n,r)=>n+r.documentedRows,0),withNonnumericExceptions:races.filter(x=>x.exceptionRows?.length).length,sourceFirstWithoutStructuredOriginalEntry:sourceFirst.filter(r=>!r.originalEntries?.length).length,formalPass:0},races};
+ const original=new Map(),linkedEvidencePairs=[];
+ for(const r of sourceFirst.concat(comparison.races)){
+  const key=r.raceKey||r.key;
+  if(!original.has(key)){original.set(key,r);continue}
+  const previous=original.get(key);
+  const first=previous.raceKey?previous:r.raceKey?r:null;
+  const legacy=previous.finishers?previous:r.finishers?r:null;
+  // Only allow one formal PASS evidenced research JSON + one legacy receipt for the same race.
+  // All other duplicated source-first or legacy keys remain a hard error.
+  if(!first||!legacy||first.audit?.publicationPass!==true||legacy.formalPublication?.status!=='PASS'||legacy.formalPublication.key!==key||!Array.isArray(first.results)||!Array.isArray(legacy.finishers))throw Error('DUPLICATE_RACE_KEYS across research sources');
+  const firstByCar=new Map(first.results.map(x=>[Number(x.car),[String(x.finishRaw??x.finish),norm(x.name)]]));
+  const consistent=first.results.length===legacy.finishers.length&&firstByCar.size===first.results.length&&legacy.finishers.every(x=>{const value=firstByCar.get(Number(x.number));return value&&value[0]===String(x.finish)&&value[1]===norm(x.name)});
+  if(!consistent)throw Error('DUPLICATE_RACE_KEYS conflicting rider rows');
+  linkedEvidencePairs.push({key,types:['source_first','legacy_comparison'],proof:'formal publication and matching seven/nine original car/finish/name records',countAsNewRace:false});
+ }
+ return{schema:'ki-all-acquired-race-evidence-audit-v1',publicationDecision:'NO_PASS_OR_FEED_WRITE',summary:{sourceFirst:sourceFirst.length,legacyComparisons:comparison.races.length,allRaces:original.size,evidenceRecords:races.length,linkedExistingEvidencePairs:linkedEvidencePairs.length,resultRows:races.reduce((n,r)=>n+r.documentedRows,0),withNonnumericExceptions:races.filter(x=>x.exceptionRows?.length).length,sourceFirstWithoutStructuredOriginalEntry:sourceFirst.filter(r=>!r.originalEntries?.length).length,formalPass:0},linkedEvidencePairs,races};
 }
 if(require.main===module){
  const dir=path.join(root,'tools','reconstruction-candidates');
