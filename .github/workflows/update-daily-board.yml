@@ -421,6 +421,7 @@ jobs:
               f"- Pending eligible races: {report['eligibleTotal']}",
               f"- Attempted: {report['eligibleExamined']}",
               f"- Deferred: {report['eligibleDeferred']}",
+              f"- Not yet due (no verified start time or before start+20m): {report.get('notYetDueCount', 0)}",
               f"- Saved: {report['savedCount']}",
               f"- LotoPlace fallback comparisons: {sum(bool(r.get('alternateSourceUsed')) for r in report['results'])}",
               f"- Time budget reached: {report['timeBudgetExceeded']}",
