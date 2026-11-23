@@ -117,38 +117,6 @@ jobs:
           python scripts/collect_historical_batch.py --self-test
           python scripts/classify_historical_candidates.py --self-test
           python scripts/build_daily_board.py --self-test
-      - name: TEMP verify approved Sheets writer on existing identical header
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
-        env:
-          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-        run: |
-          python - <<'PY'
-          import json, os
-          expected = "keirin-insight-sheets-reader@possible-helix-433523-q9.iam.gserviceaccount.com"
-          credential = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"])
-          if credential.get("client_email") != expected:
-              raise SystemExit("SERVICE_ACCOUNT_IDENTITY_MISMATCH; no write")
-          print("SERVICE_ACCOUNT_IDENTITY_MATCH; credentials withheld")
-          PY
-          python scripts/upsert_daily_sheets.py --verify-write-access
-      - name: TEMP verify existing seven-car idempotent Google intake
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
-        env:
-          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-        run: |
-          python scripts/collect_tospo_entry.py --date 2026-11-23 --track-code 26 --track 西武園 --race 1 --url 'https://keirin.tokyo-sports.co.jp/list/race/20261122_31332' --out /tmp/ki-idempotent-one-race.json
-          python scripts/upsert_daily_sheets.py --input /tmp/ki-idempotent-one-race.json --validate-only
-          python scripts/upsert_daily_sheets.py --input /tmp/ki-idempotent-one-race.json > /tmp/ki-dry-run.json
-          python - <<'PY'
-          import json
-          d=json.load(open('/tmp/ki-dry-run.json', encoding='utf-8'))
-          print("DAILY_UPSERT_DRY_RUN",json.dumps(d,ensure_ascii=False))
-          e=d["summary"]["entries"]
-          if e["new"] or e["changed"] or e["unchanged"] != 7 or d["summary"]["results"]["new"]:
-              raise SystemExit("Live racecard differs from existing seven rows; no apply")
-          PY
-          python scripts/upsert_daily_sheets.py --input /tmp/ki-idempotent-one-race.json --apply
-          python scripts/upsert_daily_sheets.py --input /tmp/ki-idempotent-one-race.json --apply
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
