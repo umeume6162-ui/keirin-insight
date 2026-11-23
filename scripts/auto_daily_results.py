@@ -131,9 +131,16 @@ def partial_existing_results(entries, results, start, end):
                    or clean(row[8]).removesuffix("期")
                    != clean(original[8]).removesuffix("期")):
                 bad_cars.append(number)
-        if len(numbers) != len(expected) or set(numbers) != expected or bad_cars:
+        stored_set = set(numbers)
+        missing = sorted(expected - stored_set, key=int)
+        unexpected = sorted(stored_set - expected)
+        duplicate = sorted((n for n in stored_set if numbers.count(n) > 1))
+        if missing or unexpected or duplicate or bad_cars or len(numbers) != len(expected):
             findings.append({"raceKey": key, "expectedCars": len(expected),
                              "storedRows": len(stored),
+                             "missingCarNumbers": missing,
+                             "unexpectedCarNumbers": unexpected,
+                             "duplicateCarNumbers": duplicate,
                              "identityMismatchCars": sorted(set(bad_cars)),
                              "status": "PARTIAL_DUPLICATE_OR_IDENTITY_CONFLICT_REVIEW"})
     return findings
@@ -321,6 +328,10 @@ def self_test():
     flags = partial_existing_results(records, partial_rows, start, start)
     assert len(flags) == 1 and flags[0]["expectedCars"] == 7
     assert flags[0]["storedRows"] == 3
+    assert flags[0]["missingCarNumbers"] == ["4", "5", "6", "7"]
+    assert flags[0]["duplicateCarNumbers"] == []
+    assert flags[0]["unexpectedCarNumbers"] == []
+    assert partial_existing_results(records, partial_rows + partial_rows, start, start)[0]["duplicateCarNumbers"] == ["1", "2", "3"]
     assert partial_existing_results(records, partial_rows + partial_rows, start, start)[0]["storedRows"] == 6
     full_rows = [list(x) + [""] * (15 - len(x)) for x in records]
     for row in full_rows:
