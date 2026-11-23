@@ -192,8 +192,8 @@
       "grade": "F1",
       "className": "A1",
       "sourceReceiptId": "RACE-MANUAL-V4-20261122T160828-75-2",
-      "sourceReceiptState": "PENDING",
-      "independentApproval": "PENDING",
+      "sourceReceiptState": "PASS",
+      "independentApproval": "PASS_2_SOURCE_MATCH",
       "resultAgreement": "all_required_comparison_fields_two_sites_agree",
       "resultComparison": "既存チャリロト由来台帳7行と今回取得したnetkeirin本文の10項目が正規化後一致。",
       "resultLimitations": "主催者公式結果未取得。チャリロト原本再取得未実施。原本スナップショット未保存。払戻は照合対象外。",
@@ -318,7 +318,7 @@
           "exception": ""
         }
       ],
-      "provenance": "元台帳の全7車主要項目と予想並びの2サイト一致を再利用。追加独立承認は要求しない。公式主催者の独立原本を取得済みとは主張しない。",
+      "provenance": "元台帳の全7車主要項目と予想並びの2サイト一致を再利用。追加独立承認は要求しない。公式主催者の独立原本を取得済みとは主張しない。 2026-11-23に保存済み原文10項目70/70一致を再監査し正式PASSへ反映。",
       "resultSourcePair": [
         "https://keirin.netkeiba.com/race/result/?race_id=202610057502",
         "https://www.chariloto.com/keirin/results/75/2026-10-05"
@@ -344,9 +344,19 @@
           "chariloto.com"
         ],
         "proofType": "observed_field_transcription",
-        "perRiderPerFieldComparison": "not_yet_structured",
+        "perRiderPerFieldComparison": "2026-11-23 structured 7 riders x 10 comparison fields =70/70; 49 mandatory result fields all match",
         "unresolved": "主催者公式結果未取得。チャリロト原本再取得未実施。原本スナップショット未保存。払戻は照合対象外。",
-        "originalReceiptStatus": "PENDING"
+        "originalReceiptStatus": "PASS 2026-11-23"
+      },
+      "formalPublication": {
+        "status": "PASS",
+        "dateJST": "2026-11-23",
+        "key": "2026-10-05|75|2",
+        "verifiedResultAndLineFeed": true,
+        "evidenceFile": "tools/reconstruction-candidates/2026-10-05_75_2.research.json",
+        "resultFieldsMatched": 70,
+        "formalMandatoryFieldsMatched": 49,
+        "notice": "Stored V99 and netkeirin original seven-rider result transcriptions matched all 10 preserved fields, K-Dreams and Oddspark published seven-car forecast groups agree. Direct page open this turn cache miss; saved original data retained."
       }
     },
     {
