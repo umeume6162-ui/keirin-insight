@@ -27,7 +27,7 @@ def race_link(base, href):
     return None
 
 
-def discover(list_html, track, loader):
+def discover(list_html, track, loader, date=None):
     """Use a venue-labelled index link, never numeric URL arithmetic."""
     doc = BeautifulSoup(list_html, "html.parser")
     starts = []
@@ -38,12 +38,22 @@ def discover(list_html, track, loader):
             starts.append(url)
     if not starts:
         raise ValueError("Venue 1R not found on current public race list")
-    if len(set(starts)) > 2:
-        raise ValueError("Ambiguous multiple venue listings; manual review")
-    # Each page may expose a full same-day race navigation. Bound requests and
-    # leave identity proof to the racecard parser.
-    first = sorted(set(starts))[0]
-    page = loader(first)
+    if len(set(starts)) > 3:
+        raise ValueError("Too many venue listings; manual review")
+    # The index may mix yesterday/today/tomorrow; select by the event date
+    # shown on the racecard, never lexicographically by URL.
+    yyyy, mm, dd = date.split("-") if date else ("", "", "")
+    matches = []
+    for candidate in sorted(set(starts)):
+        page = loader(candidate)
+        if not date or re.search(
+            rf"{int(yyyy)}年\\s*{int(mm)}月\\s*{int(dd)}日",
+            norm(BeautifulSoup(page, "html.parser").get_text(" ", strip=True))
+        ):
+            matches.append((candidate, page))
+    if len(matches) != 1:
+        raise ValueError("Venue/date 1R not uniquely confirmed")
+    first, page = matches[0]
     nav = BeautifulSoup(page, "html.parser")
     urls = {1: first}
     for a in nav.select("a[href]"):
@@ -62,7 +72,7 @@ def discover(list_html, track, loader):
 
 
 def collect(date, track, code, list_html, loader):
-    urls, cache = discover(list_html, track, loader)
+    urls, cache = discover(list_html, track, loader, date)
     entries, failed = [], []
     for race, url in sorted(urls.items()):
         try:
@@ -82,7 +92,7 @@ def self_test():
              'FⅡ 西武園 初日 1R 10:00発走</a>')
     page = ('<h1>西武園 2026年11月23日 1R</h1>'
             '<a href="/list/race/20261122_31333">2R A級戦</a>')
-    urls, cache = discover(index, "西武園", lambda url: page)
+    urls, cache = discover(index, "西武園", lambda url: page, "2026-11-23")
     assert len(urls) == 2 and 1 in urls and 2 in urls
     assert len(cache) == 1
     try:
