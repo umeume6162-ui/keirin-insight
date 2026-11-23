@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-24",
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
-  "verificationNote": "既存の2掲載元照合済み選手IDに加え、KI｜公式照合証拠・選手ID照合台帳で確認できた22名を追加。",
+  "verificationNote": "2掲載元一致・4項目確認済みの選手ID。既存230名に佐藤有輝・佐藤和典・佐藤亙・佐藤亜貴子4名を追加。",
   "summary": {
-    "rows": 230
+    "rows": 234
   },
   "riders": [
     {
@@ -5541,6 +5541,102 @@
           "https://www.winticket.jp/keirin/cyclist/014317"
         ],
         "note": "既存証拠 MANUAL-V4-20261124-PAIR-014317 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "013705",
+      "name": "佐藤 有輝",
+      "prefecture": "神奈川",
+      "period": "85",
+      "source": "https://keirin.jp/sp/racerprofile?snum=013705",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=013705",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=013705",
+          "https://www.chariloto.com/keirin_athletes/13705"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-CHECK-013705、2媒体原文全4項目一致・選手ID照合台帳更新・再読済み。"
+      }
+    },
+    {
+      "id": "012586",
+      "name": "佐藤 和典",
+      "prefecture": "神奈川",
+      "period": "70",
+      "source": "https://keirin.jp/pc/racerprofile?snum=012586",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=012586",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=012586",
+          "https://www.chariloto.com/keirin_athletes/12586"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-CHECK-012586、2媒体原文全4項目一致・選手ID照合台帳更新・再読済み。"
+      }
+    },
+    {
+      "id": "013716",
+      "name": "佐藤 亙",
+      "prefecture": "愛知",
+      "period": "85",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013716",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013716",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013716",
+          "https://www.yen-joy.net/racer/data/013716/1"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-CHECK-013716、2媒体原文全4項目一致・選手ID照合台帳更新・再読済み。"
+      }
+    },
+    {
+      "id": "015071",
+      "name": "佐藤亜貴子",
+      "prefecture": "神奈川",
+      "period": "108",
+      "source": "https://keirin.jp/sp/racerprofile?snum=015071",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=015071",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=015071",
+          "https://keirin.netkeiba.com/db/profile/?id=15071"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-CHECK-015071、2媒体原文全4項目一致・選手ID照合台帳更新・再読済み。"
       }
     }
   ],
