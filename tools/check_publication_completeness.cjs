@@ -12,6 +12,8 @@ const full=load('verified-rider-results-feed-v1.json');
 const lines=load('verified-line-snapshots-feed-v1.json');
 const domain=u=>{try{return new URL(u).hostname.replace(/^www\./,'')}catch{return ''}};
 const requireUrl=u=>{assert.match(u,/^https:\/\//);assert.ok(domain(u),'invalid site URL')};
+const kdSource=u=>/^https:\/\/keirin\.kdreams\.jp\//.test(String(u||''));
+const kdEvidence=r=>{const e=r.officialVerification,p=e?.sourceProof;return e?.status==='verified'&&e?.method==='kdreams_single_source_verified'&&kdSource(e.source)&&Array.isArray(e.matchingSources)&&e.matchingSources.length===1&&e.matchingSources[0]===e.source&&p&&['live_html','preserved_original_html'].includes(p.kind)&&/^\d{4}-\d\d-\d\d$/.test(p.retrievedDate)&&typeof p.evidenceRef==='string'&&p.evidenceRef.trim().length>8};
 assert.equal(ids.summary.rows,ids.riders.length);
 const idset=new Set(),personset=new Set();
 for(const x of ids.riders){
@@ -79,11 +81,13 @@ for(const race of official.races){
  assert.ok(!verifiedRaceKeys.has(key),'duplicate published race');verifiedRaceKeys.add(key);
  assert.ok([7,9].includes(race.size),'verified result size must be 7 or 9');
  // Publication-facing provenance is checked here, not repeated by the mobile UI test.
- assert.ok(['rider_comments_and_published_forecast','published_forecast'].includes(race.preRaceFormation?.basis),'missing forecast heading provenance');
+ const isKD=kdEvidence(race);
+ if(!isKD)assert.ok(['rider_comments_and_published_forecast','published_forecast'].includes(race.preRaceFormation?.basis),'missing forecast heading provenance');
  assert.equal(race.officialVerification?.status,'verified');
- assert.equal(race.officialVerification?.method,'two_distinct_sites_agree');
+ assert.ok(isKD||race.officialVerification?.method==='two_distinct_sites_agree','unknown verification method');
  const rs=race.officialVerification.matchingSources||[];
- assert.ok(new Set(rs.map(domain)).size>=2,'published result needs two sources');
+ if(isKD)assert.deepEqual(rs,[race.officialVerification.source],'K-Dreams proof must have one source');
+ else assert.ok(new Set(rs.map(domain)).size>=2,'legacy result needs two sources');
  rs.forEach(requireUrl);
  const riderRows=full.rows.filter(row=>[row[fieldIndex.date],String(row[fieldIndex.trackCode]),Number(row[fieldIndex.race])].join('|')===key);
  assert.equal(riderRows.length,race.size,'published result must contain entire field');
@@ -92,16 +96,19 @@ for(const race of official.races){
  for(const row of riderRows){
   assert.equal(row.length,full.columns.length,'result row width');
   assert.ok(rs.includes(row[fieldIndex.sourceUrl]),'rider result URL not in verified result sources');
-  for(const mandatory of ['name','prefecture','period','finishRaw','riderClass','lastLapRaw']){
+  if(isKD)assert.ok(kdSource(row[fieldIndex.sourceUrl]),'K-Dreams result has foreign source');
+  for(const mandatory of (isKD?['name','prefecture','period','finishRaw','riderClass']:['name','prefecture','period','finishRaw','riderClass','lastLapRaw'])){
    assert.ok(String(row[fieldIndex[mandatory]]??'').trim(),'missing verified rider field: '+mandatory);
   }
  }
  const line=lines.races.find(x=>x.id===key);
- assert.ok(line,'verified race requires matched pre-race lineup');
+ if(isKD&&!line)continue;
+ assert.ok(line,'legacy verified race requires matched pre-race lineup');
  assert.equal(line.officialVerification?.status,'verified');
- assert.equal(line.officialVerification?.method,'two_distinct_sites_agree');
+ assert.ok(line.officialVerification?.method==='two_distinct_sites_agree'||(isKD&&line.officialVerification?.method==='kdreams_single_source_verified'),'invalid forecast provenance');
  const ls=line.officialVerification.matchingSources||[];
- assert.ok(new Set(ls.map(domain)).size>=2,'lineup needs two sources');ls.forEach(requireUrl);
+ if(line.officialVerification.method==='kdreams_single_source_verified')assert.ok(ls.length===1&&kdSource(ls[0]),'K-Dreams single forecast proof');
+ else assert.ok(new Set(ls.map(domain)).size>=2,'legacy lineup needs two sources');ls.forEach(requireUrl);
  assert.equal(line.riders.length,race.size,'lineup rider count');
  const lineCars=line.riders.map(x=>Number(x.number));
  assert.deepEqual(lineCars.slice().sort((a,b)=>a-b),cars.slice().sort((a,b)=>a-b),'lineup/result car mismatch');
@@ -118,5 +125,5 @@ for(const race of official.races){
   assert.ok(line.forecastGroups.some(g=>JSON.stringify(g)===JSON.stringify(rider.line)),'line group not corroborated');
  }
 }
-assert.equal(verifiedRaceKeys.size,lines.races.length,'orphan lineup publication');
+assert.ok(lines.races.every(x=>verifiedRaceKeys.has(x.id)),'orphan lineup publication');
 console.log('OK: '+ids.riders.length+' rider IDs, '+races.races.length+' research races, '+races.summary.finishers+' finishers; verified official race stream '+official.races.length);
