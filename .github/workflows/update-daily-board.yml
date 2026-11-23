@@ -2,6 +2,7 @@ name: Update daily race board
 on:
   push:
     paths:
+      - 'scripts/discover_tospo_races.py'
       - '.github/workflows/update-daily-board.yml'
       - 'scripts/compare_race_results.py'
       - 'scripts/collect_netkeirin_result.py'
