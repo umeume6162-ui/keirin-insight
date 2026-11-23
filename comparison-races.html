@@ -73,8 +73,9 @@ function render(r){
 const shell=el("section",undefined,"panel"),d=el("details");d.open=true;
 const title=el("summary",r.date+" "+r.track+r.race+"R（"+r.className+"）");d.append(title);
 const body=el("div",undefined,"inner");
+const formallyPublished=r.formalPublication?.status==="PASS"&&r.formalPublication.key===r.key;
 const confirmed=(r.finishers||[]).length;
-body.append(el("p","研究照合記録：全"+confirmed+"車の着順・車番・氏名・上がり・着差・決まり手・S/Bを比較。項目別独立証拠の確認は未完了のため正式公開とは別です。","race-summary"));
+body.append(el("p",formallyPublished?"正式PASS済み（研究時の比較記録）。全"+confirmed+"車の結果を照合し、正式結果ページでも確認できます。":"研究照合記録：全"+confirmed+"車の結果と事前並びを比較。正式公開には追加の項目別証拠が必要です。","race-summary"));
 const card=el("section",undefined,"line-result-card");
 card.append(el("h2","事前の並び予想"));
 if(r.formation?.state==="two_site_agreement_recorded"){
@@ -100,9 +101,14 @@ body.append(el("h2","レース展開の検証"));
 if(r.raceCommentary&&r.raceCommentaryEvidence?.length){body.append(el("p",r.raceCommentary,"review-note"));body.append(el("p","展開根拠資料は管理用台帳に保存しています。","note"))}
 else body.append(el("p","展開未検証。着順と事前ラインから捲り・マークなどの実走過程を推定しません。","note"));
 body.append(el("p","結果の比較証拠は管理用台帳に保存しています。","note"));
-body.append(el("p","正式公開用の項目別証拠は追加確認が必要です。","note"));
+if(formallyPublished){
+ body.append(el("p","公開区分：正式PASS済み（ここには研究時の原記録を表示）","note"));
+ body.append(link("./race-result-detail.html?key="+encodeURIComponent(r.key),"このレースの正式結果ページを見る"));
+}else{
+ body.append(el("p","正式公開用の項目別証拠は追加確認が必要です。","note"));
+}
 
-body.append(el("p","公開区分：研究資料（正式結果フィードには未収録）","note"));
+if(!formallyPublished)body.append(el("p","公開区分：研究資料（正式結果フィードには未収録）","note"));
 d.append(body);shell.append(d);return shell
 }
 
@@ -132,7 +138,8 @@ async function load(){try{
  }
  activeRaces=data.races;
  addOptions("trackFilter",activeRaces.map(r=>r.track));addOptions("classFilter",activeRaces.map(r=>r.className));
- $("status").textContent="研究用の全車結果・事前並び比較記録。正式公開の合格レース数ではありません。";
+ const passed=activeRaces.filter(r=>r.formalPublication?.status==="PASS"&&r.formalPublication.key===r.key).length;
+ $("status").textContent="研究時の比較記録 "+activeRaces.length+"R（正式PASS済み "+passed+"R／研究・保留 "+(activeRaces.length-passed)+"R）。正式件数は公開フィードで確認してください。";
  filterAndRender();
  }catch(e){$("status").textContent="研究用データを表示できません："+e.message}
 }
