@@ -13,6 +13,13 @@ assert.equal(fake.publicationPassed,false);assert.equal(fake.status,'NOT_READY')
 const absent=audit(candidate,{});
 assert.equal(absent.publicationPassed,false);assert.equal(absent.status,'NOT_READY');
 assert.ok(absent.errors.some(x=>x.includes('official full result rows not supplied')));
+assert.ok(absent.errors.some(x=>x.includes('original source identity/method has not been attested')));
+// A populated but mismatched official-domain URL is also rejected; this is a fixture, not web evidence.
+const wrongHost=JSON.parse(JSON.stringify(fixture));delete wrongHost.exampleOnly;
+wrongHost.sourceUrl='https://example.org/keirin/official';
+const hostAudit=audit(candidate,wrongHost);
+assert.equal(hostAudit.publicationPassed,false);
+assert.ok(hostAudit.errors.some(x=>x.includes('KEIRIN.JP issuer URL host mismatch')));
 const mismatch=JSON.parse(JSON.stringify(fixture));delete mismatch.exampleOnly;
 mismatch.results[0].finishRaw='2';mismatch.results[0].finish=2;
 const bad=audit(candidate,mismatch);
