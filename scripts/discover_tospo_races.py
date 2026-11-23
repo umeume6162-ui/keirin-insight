@@ -181,6 +181,7 @@ def self_test():
     found = list_venue_starts(listing)
     assert set(found) == {"静岡", "西武園"}
     assert found["静岡"] == ["https://keirin.tokyo-sports.co.jp/list/race/20261123_30926"]
+    assert len({(x, n) for x in ("静岡", "松山") for n in range(1,13)}) == 24
     # Mismatching all dates must fail closed without a fake 'no races' result.
     try:
         collect_venues("2026-11-24", listing, lambda u: "<h1>2026年11月22日 西武園 1R</h1>", 2)
@@ -213,7 +214,7 @@ def main():
     failed = report if a.all_venues else report
     Path(a.out).write_text(json.dumps(data, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
     print(json.dumps({"status": "PREVIEW_ONLY", "races": len(set(
-        x["race"] for x in data["entries"])), "entries": len(data["entries"]),
+        (x["trackCode"], x["race"]) for x in data["entries"])), "entries": len(data["entries"]),
         "failed": failed, "out": a.out}, ensure_ascii=False))
 
 
