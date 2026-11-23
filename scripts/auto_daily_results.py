@@ -206,6 +206,13 @@ def self_test():
     keys = eligible_races(records, [], datetime.strptime(day, "%Y-%m-%d").date(),
                           datetime.strptime(day, "%Y-%m-%d").date())
     assert len(keys) == 1
+    # A race missed several days ago must remain eligible for the bounded retry.
+    older = [list(row) for row in records]
+    older_day = (datetime.strptime(day, "%Y-%m-%d") - timedelta(days=6)).date()
+    for row in older:
+        row[0] = older_day.isoformat()
+    assert len(eligible_races(older, [], older_day, start_day := datetime.strptime(day, "%Y-%m-%d").date())) == 1
+    assert eligible_races(older, [], older_day + timedelta(days=1), start_day) == []
     assert canonical_rider_name("国井 裕樹") == canonical_rider_name("國井裕樹")
     assert canonical_prefecture("神奈") == canonical_prefecture("神奈川")
     assert canonical_rider_name("国井裕樹") != canonical_rider_name("國村洋")
