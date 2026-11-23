@@ -324,7 +324,8 @@ def select_rotating_races(eligible, limit, now=None):
 
 def process(entries, results, start, end, limit=4, write=False,
             collect_fn=collect, apply_fn=apply, max_seconds=720,
-            monotonic_fn=time.monotonic, start_times=None, now=None):
+            monotonic_fn=time.monotonic, start_times=None, now=None,
+            target_race_key=None):
     if not 1 <= limit <= 20:
         raise ValueError("limit must be 1..20")
     if not 60 <= max_seconds <= 1800:
@@ -350,7 +351,12 @@ def process(entries, results, start, end, limit=4, write=False,
     due = all_due_candidates
     if start_times is not None:
         due, not_due = due_result_races(all_due_candidates, start_times, now=now)
-    selected = select_rotating_races(due, limit, now=now)
+    if target_race_key is not None:
+        if target_race_key not in dict(due):
+            raise ValueError("Requested result race not eligible or not yet due")
+        selected = [(target_race_key, dict(due)[target_race_key])]
+    else:
+        selected = select_rotating_races(due, limit, now=now)
     reports = []
     for key, rows in selected:
         if monotonic_fn() - started >= max_seconds:
@@ -699,6 +705,16 @@ def self_test():
                 covered.update(key for key, _ in select_rotating_races(candidates, 12, moment))
         assert covered == {key for key, _ in candidates}, count
     assert select_rotating_races([], 4) == []
+    targeted = process(records, [], start, start, collect_fn=lambda *a: actual,
+                       apply_fn=pretend_apply, target_race_key=day+"|26|1")
+    assert targeted["eligibleExamined"] == 1 and targeted["results"][0]["raceKey"] == day+"|26|1"
+    try:
+        process(records, [], start, start, collect_fn=lambda *a: actual,
+                apply_fn=pretend_apply, target_race_key=day+"|61|1")
+    except ValueError as err:
+        assert "not eligible" in str(err)
+    else:
+        raise AssertionError("Requested race not in stored entries was attempted")
     exhausted = process(records, [], start, start, collect_fn=lambda *a: actual,
                         apply_fn=pretend_apply, max_seconds=60,
                         monotonic_fn=iter((0, 61)).__next__)
@@ -717,6 +733,8 @@ def main():
     p.add_argument("--self-test", action="store_true")
     p.add_argument("--apply", action="store_true")
     p.add_argument("--date", help="Optional exact event date YYYY-MM-DD")
+    p.add_argument("--track-code", help="Exact track code, only with --date and --race")
+    p.add_argument("--race", type=int, help="Exact 1..12 race, only with --date and --track-code")
     p.add_argument("--max-races", type=int, default=4)
     p.add_argument("--max-seconds", type=int, default=720)
     p.add_argument("--lookback-days", type=int, default=7,
@@ -735,10 +753,17 @@ def main():
         start = end = fixed
     else:
         start, end = today - timedelta(days=args.lookback_days), today
+    if bool(args.track_code) != (args.race is not None):
+        raise ValueError("Both --track-code and --race are required for exact retry")
+    if args.track_code and (not args.date or not re.fullmatch(r"\d{2}", args.track_code)
+                            or not 1 <= int(args.track_code) <= 99
+                            or not 1 <= args.race <= 12):
+        raise ValueError("Invalid exact result race selector")
+    target = f"{args.date}|{args.track_code}|{args.race}" if args.track_code else None
     entries, results = read_existing()
     report = process(entries, results, start, end, limit=args.max_races,
                      write=args.apply, max_seconds=args.max_seconds,
-                     start_times=load_start_time_cache())
+                     start_times=load_start_time_cache(), target_race_key=target)
     print(json.dumps(report, ensure_ascii=False))
 
 
