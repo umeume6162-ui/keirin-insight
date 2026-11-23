@@ -43,30 +43,6 @@ jobs:
           python scripts/collect_chariloto_entry.py --self-test
           python scripts/collect_tospo_entry.py --self-test
           python scripts/build_daily_board.py --self-test
-      - name: Safe preview of one public racecard (not a save)
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
-        run: python scripts/collect_chariloto_entry.py --date 2026-11-23 --track-code 26 --track 西武園 --race 1
-      - name: Read-only one-race Tokyo Sports 7-car preview
-        if: github.event_name == 'pull_request'
-        run: python scripts/collect_tospo_entry.py --date 2026-11-23 --track-code 26 --track 西武園 --race 1 --url https://keirin.tokyo-sports.co.jp/list/race/20261122_31332
-      - name: Validate actual seven riders against Google intake schema (no write)
-        if: github.event_name == 'pull_request'
-        run: python scripts/upsert_daily_sheets.py --input /tmp/keirin-tospo-one-race-preview.json --validate-only
-      - name: Test Google Sheets intake access without writing
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
-        env:
-          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-        run: python scripts/upsert_daily_sheets.py --input /tmp/keirin-tospo-one-race-preview.json
-      - name: Record pilot rows for connected Google handoff (not a site publication)
-        if: github.event_name == 'pull_request' && github.head_ref == 'daily-pipeline-safe-pr-check-20261123'
-        run: |
-          python -c "import json; x=json.load(open('/tmp/keirin-tospo-one-race-preview.json')); assert len(x['entries'])==7; print('INBOUND_SEVEN '+json.dumps(x['entries'],ensure_ascii=False,separators=(',',':')))"
-      - name: Compare other permitted live racecard sources (read only)
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
-        run: python scripts/probe_daily_source.py
       - name: Build daily board
         if: github.event_name != 'pull_request'
         env:
