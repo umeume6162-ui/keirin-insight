@@ -213,6 +213,8 @@
 
 - **日次結果の保留計数修正（2026-11-24）**：`auto_daily_results.py`のレポートは収集済み出走表の未結果レース総数`eligibleTotal`に加え、発走時刻ゲート通過済みの`eligibleDueTotal`を区別する。`eligibleDeferred`は発走可能な未調査候補のみとし、未発走/時刻未確認の`notYetDueCount`と二重計上しない。GitHub Actions Summaryも両者を明示する。既存の結果2掲載元/7・9車/選手属性/出典/Google差分判定・正式PASS分離を維持。コード保存と定期実行・結果新規保存は別途検証する。
 
+- **2026-11-24 実行ログで判明した日次結果保存・配信障害の修復**：GitHub Actions Run `45280110024`で2026-11-23玉野1/2/5/7Rはnetkeirinとチャリロトの公開内容一致まで成立したが、`SHEETS_DRY_RUN`でValueErrorとなり保存0。原因は比較結果の`sourceAttempts`/`sourcePairMode`を、許可キーが`entries`/`results`/`sourceNote`のみのGoogle upsert器へ渡していたこと。`auto_daily_results.py`は診断メタデータをレポートに保持し、保存器には許可3キーだけ渡すよう変更し自己テストでキー集合を検査。加えて日次feedコミットの`git rebase`がGit committer identity未設定で失敗したため、既存ワークフローでrepository-local bot name/emailを設定してからcommit/rebaseする。両者ともコードmain保存済みであり、Google新規結果追記・実run完了・公開サイト反映成功は実ログと台帳再読まで未確定。出典一致と正式PASSは混同しない。
+
 ### C. 移行時に避ける失敗
 
 - 古いチャットの「過去照合を手動優先」の指示を復活させない。前回の大量収集量・照合件数を最新と誤認しない。過去のコメント全文/払戻の収集を最優先にしない。
