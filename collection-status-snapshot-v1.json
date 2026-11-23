@@ -4,19 +4,19 @@
   "mode": "manual-read-only-snapshot",
   "collection": {
     "source": "V100収集状態台帳",
-    "meetings": 128,
-    "regularRaces": 1221,
+    "meetings": 138,
+    "regularRaces": 1321,
     "cancelledRaces": 1,
-    "riderRows": 8740,
-    "independentReviewNotPerformed": 128
+    "riderRows": 9435,
+    "independentReviewNotPerformed": 138
   },
   "quality": {
     "source": "AIレース品質監査",
     "scope": "V99",
-    "races": 1157,
-    "provisional": 907,
-    "needsFinishReview": 90,
-    "otherFieldSize": 160
+    "races": 1257,
+    "provisional": 999,
+    "needsFinishReview": 95,
+    "otherFieldSize": 163
   },
   "line": {
     "source": "AIライン接続監査",
