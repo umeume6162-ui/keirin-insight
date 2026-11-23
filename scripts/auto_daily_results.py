@@ -34,7 +34,14 @@ JST = ZoneInfo("Asia/Tokyo")
 
 # Evidence-scoped source display differences; do not generalize all kanji.
 PREFECTURE_ALIASES = {"神奈": "神奈川", "北海": "北海道", "鹿児": "鹿児島"}
-RIDER_NAME_ALIASES = {"国井裕樹": "國井裕樹", "斎藤輝彦": "齋藤輝彦"}
+RIDER_NAME_ALIASES = {
+    "国井裕樹": "國井裕樹", "斎藤輝彦": "齋藤輝彦",
+    # Confirmed exact-name differences on 2026-11-23 Tamano 3R, 4R and 6R.
+    # Never generalize to arbitrary kanji substitutions or other riders.
+    "末広快理": "末廣快理",
+    "連仏康浩": "連佛康浩",
+    "辺見竜馬": "邊見竜馬",
+}
 
 
 class RiderIdentityMismatch(ValueError):
@@ -495,6 +502,14 @@ def self_test():
     assert canonical_rider_name("国井 裕樹") == canonical_rider_name("國井裕樹")
     assert canonical_prefecture("神奈") == canonical_prefecture("神奈川")
     assert canonical_rider_name("国井裕樹") != canonical_rider_name("國村洋")
+    for original, published in (
+        ("末広 快理", "末廣快理"),
+        ("連仏 康浩", "連佛康浩"),
+        ("辺見 竜馬", "邊見竜馬"),
+    ):
+        assert canonical_rider_name(original) == canonical_rider_name(published)
+    assert canonical_rider_name("末広快理") != canonical_rider_name("末廣別人")
+    assert canonical_rider_name("辺見竜馬") != canonical_rider_name("辺見別人")
     race_data = dict(date=day, trackCode="26", track="西武園",
                      race=1, className="A3", expectedCars=7)
     riders = [dict(number=n, name=f"選手 {n}", prefecture="埼玉",
