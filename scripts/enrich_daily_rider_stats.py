@@ -189,8 +189,11 @@ def enrich(board,cache,loader=fetch,limit=4):
             counts["cached"]+=1
         else:
             pending.append((race,url,sig))
-    # Prioritize current and forthcoming dates; older records keep cache when valid.
-    pending.sort(key=lambda x:(x[0]["date"],x[0]["track"],x[0]["race"]),reverse=True)
+    # Prefer the current meeting over future cards that may not yet contain
+    # rider statistics. Never let tomorrow repeatedly starve todays races.
+    today=datetime.now(JST).date()
+    pending.sort(key=lambda x:(abs((datetime.strptime(x[0]["date"],"%Y-%m-%d").date()-today).days),
+                               x[0]["date"]>today.isoformat(),x[0]["track"],x[0]["race"]))
     for race,url,sig in pending[:limit]:
         try:
             rows=extract(loader(url),race,url)
