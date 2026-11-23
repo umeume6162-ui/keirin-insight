@@ -8,10 +8,179 @@
     "results": "2026-11-05"
   },
   "verification": "source_sheet_unverified_do_not_treat_as_formal_PASS",
-  "races": [],
+  "races": [
+    {
+      "key": "2026-11-21|福井|3",
+      "date": "2026-11-21",
+      "track": "福井",
+      "race": 3,
+      "className": "A3チャレンジ一般",
+      "entries": [
+        {
+          "number": 1,
+          "name": "小西 芳樹",
+          "prefecture": "大阪",
+          "period": "66",
+          "preRaceLine": "7-4-1",
+          "position": "3番手",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030003/?pageType=showResult"
+        },
+        {
+          "number": 2,
+          "name": "川上 修平",
+          "prefecture": "高知",
+          "period": "99",
+          "preRaceLine": "2-6",
+          "position": "先頭",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030003/?pageType=showResult"
+        },
+        {
+          "number": 3,
+          "name": "高尾 剛文",
+          "prefecture": "福岡",
+          "period": "66",
+          "preRaceLine": "5-3",
+          "position": "番手",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030003/?pageType=showResult"
+        },
+        {
+          "number": 4,
+          "name": "中井 修",
+          "prefecture": "滋賀",
+          "period": "75",
+          "preRaceLine": "7-4-1",
+          "position": "番手",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030003/?pageType=showResult"
+        },
+        {
+          "number": 5,
+          "name": "矢田 晋",
+          "prefecture": "福岡",
+          "period": "94",
+          "preRaceLine": "5-3",
+          "position": "先頭",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030003/?pageType=showResult"
+        },
+        {
+          "number": 6,
+          "name": "近藤 直幹",
+          "prefecture": "徳島",
+          "period": "75",
+          "preRaceLine": "2-6",
+          "position": "番手",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030003/?pageType=showResult"
+        },
+        {
+          "number": 7,
+          "name": "武田 和也",
+          "prefecture": "奈良",
+          "period": "92",
+          "preRaceLine": "7-4-1",
+          "position": "先頭",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030003/?pageType=showResult"
+        }
+      ],
+      "results": [],
+      "status": "entry_only",
+      "entrySource": "AI事前出走スナップ",
+      "resultSource": "V99選手結果蓄積",
+      "expectedCount": 7
+    },
+    {
+      "key": "2026-11-21|福井|4",
+      "date": "2026-11-21",
+      "track": "福井",
+      "race": 4,
+      "className": "A3チャレンジ選抜",
+      "entries": [
+        {
+          "number": 1,
+          "name": "荒木 真慈",
+          "prefecture": null,
+          "period": null,
+          "preRaceLine": "4-7-1",
+          "position": "3番手",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030004/"
+        },
+        {
+          "number": 2,
+          "name": "上原 直樹",
+          "prefecture": null,
+          "period": null,
+          "preRaceLine": "単騎",
+          "position": "単騎",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030004/"
+        },
+        {
+          "number": 3,
+          "name": "藤井 準也",
+          "prefecture": null,
+          "period": null,
+          "preRaceLine": "5-3-6",
+          "position": "番手",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030004/"
+        },
+        {
+          "number": 4,
+          "name": "白濱 蓮",
+          "prefecture": null,
+          "period": null,
+          "preRaceLine": "4-7-1",
+          "position": "先頭",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030004/"
+        },
+        {
+          "number": 5,
+          "name": "永田 吏玖",
+          "prefecture": null,
+          "period": null,
+          "preRaceLine": "5-3-6",
+          "position": "先頭",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030004/"
+        },
+        {
+          "number": 6,
+          "name": "竹田 慎一",
+          "prefecture": null,
+          "period": null,
+          "preRaceLine": "5-3-6",
+          "position": "3番手",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030004/"
+        },
+        {
+          "number": 7,
+          "name": "瓦田 勝也",
+          "prefecture": null,
+          "period": null,
+          "preRaceLine": "4-7-1",
+          "position": "番手",
+          "capturedAt": "2026-11-21 07:16 JST",
+          "sourceUrl": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030004/"
+        }
+      ],
+      "results": [],
+      "status": "entry_only",
+      "entrySource": "AI事前出走スナップ",
+      "resultSource": "V99選手結果蓄積",
+      "expectedCount": 7
+    }
+  ],
   "summary": {
-    "races": 0,
-    "entries": 0,
+    "races": 2,
+    "entries": 14,
     "resultRows": 0
   }
 }
