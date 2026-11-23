@@ -172,6 +172,11 @@ def self_test():
     args = ("2026-09-10", "27", "京王閣", 2, "A3", 7, url)
     r = extract(html, *args)
     assert len(r["results"]) == 7 and r["results"][0]["finish"] == "1"
+    mixed = html.replace("83期 A3", "83期 A1").replace(
+        "テスト選手2 福島 48歳 83期 A1", "テスト選手2 福島 48歳 83期 A2")
+    observed_mixed = extract(mixed, "2026-09-10", "27", "京王閣", 2,
+                             "A2", 7, url)
+    assert len(observed_mixed["results"]) == 7
     assert grade_matches("A1", "A2") and grade_matches("A2", "A1")
     assert grade_matches("A3", "A3") and not grade_matches("A3", "A2")
     assert not grade_matches("S1", "A1") and not grade_matches("L1", "A2")
