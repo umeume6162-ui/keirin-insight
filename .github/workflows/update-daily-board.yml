@@ -51,6 +51,15 @@ jobs:
         if: github.event_name == 'pull_request'
         continue-on-error: true
         run: python scripts/collect_tospo_entry.py --date 2026-11-23 --track-code 26 --track 西武園 --race 1 --url https://keirin.tokyo-sports.co.jp/list/race/20261122_31332
+      - name: Validate actual seven riders against Google intake schema (no write)
+        if: github.event_name == 'pull_request'
+        run: python scripts/upsert_daily_sheets.py --input /tmp/keirin-tospo-one-race-preview.json --validate-only
+      - name: Test Google Sheets intake access without writing
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: python scripts/upsert_daily_sheets.py --input /tmp/keirin-tospo-one-race-preview.json
       - name: Compare other permitted live racecard sources (read only)
         if: github.event_name == 'pull_request'
         continue-on-error: true
