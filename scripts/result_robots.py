@@ -40,7 +40,7 @@ def self_test():
     from unittest.mock import patch
     agent = "KEIRIN-INSIGHT-Research/1.0"
     host = "verified.example"
-    rule = "User-agent: *\\nDisallow: /private/\\nAllow: /public/\\n"
+    rule = "User-agent: *\nDisallow: /private/\nAllow: /public/\n"
     try:
         with patch.object(requests, "get", return_value=SimpleNamespace(
                 status_code=200, text=rule)) as get:
