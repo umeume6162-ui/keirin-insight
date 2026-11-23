@@ -4,7 +4,7 @@
   "windowStart": "2026-11-21",
   "windowEnd": "2026-11-25",
   "sourceLatest": {
-    "entries": "2026-11-21",
+    "entries": "2026-11-23",
     "results": "2026-11-05"
   },
   "verification": "source_sheet_unverified_do_not_treat_as_formal_PASS",
@@ -176,11 +176,95 @@
       "entrySource": "AI事前出走スナップ",
       "resultSource": "V99選手結果蓄積",
       "expectedCount": 7
+    },
+    {
+      "key": "2026-11-23|西武園|1",
+      "date": "2026-11-23",
+      "track": "西武園",
+      "race": 1,
+      "className": "A3",
+      "entries": [
+        {
+          "number": 1,
+          "name": "山崎 光展",
+          "prefecture": "京都",
+          "period": "93",
+          "preRaceLine": null,
+          "position": null,
+          "capturedAt": "2026-11-23 14:53 JST",
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+        },
+        {
+          "number": 2,
+          "name": "国井 裕樹",
+          "prefecture": "神奈川",
+          "period": "113",
+          "preRaceLine": null,
+          "position": null,
+          "capturedAt": "2026-11-23 14:53 JST",
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+        },
+        {
+          "number": 3,
+          "name": "市川 博章",
+          "prefecture": "静岡",
+          "period": "80",
+          "preRaceLine": null,
+          "position": null,
+          "capturedAt": "2026-11-23 14:53 JST",
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+        },
+        {
+          "number": 4,
+          "name": "高瀬 卓",
+          "prefecture": "埼玉",
+          "period": "87",
+          "preRaceLine": null,
+          "position": null,
+          "capturedAt": "2026-11-23 14:53 JST",
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+        },
+        {
+          "number": 5,
+          "name": "柴田 健",
+          "prefecture": "神奈川",
+          "period": "71",
+          "preRaceLine": null,
+          "position": null,
+          "capturedAt": "2026-11-23 14:53 JST",
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+        },
+        {
+          "number": 6,
+          "name": "落合 豊",
+          "prefecture": "茨城",
+          "period": "69",
+          "preRaceLine": null,
+          "position": null,
+          "capturedAt": "2026-11-23 14:53 JST",
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+        },
+        {
+          "number": 7,
+          "name": "中川 博文",
+          "prefecture": "福井",
+          "period": "61",
+          "preRaceLine": null,
+          "position": null,
+          "capturedAt": "2026-11-23 14:53 JST",
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+        }
+      ],
+      "results": [],
+      "status": "entry_only",
+      "entrySource": "KI｜日次出走表",
+      "resultSource": "KI｜日次結果",
+      "expectedCount": 7
     }
   ],
   "summary": {
-    "races": 2,
-    "entries": 14,
+    "races": 3,
+    "entries": 21,
     "resultRows": 0
   }
 }
