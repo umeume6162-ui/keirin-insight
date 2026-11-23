@@ -35,6 +35,16 @@ const wrongRider=JSON.parse(JSON.stringify(linkedLegacy));
 wrongRider.finishers[0].name='別人';
 assert.throws(()=>auditAll([linkedResearch],{races:[wrongRider]}),/DUPLICATE_RACE_KEYS conflicting rider rows/);
 
+// Historic full-field PASS pairs must be linked to their original receipts without being double-counted.
+
+// Integration fixtures are loaded from the same archived source files used below.
+const historical=JSON.parse(fs.readFileSync(path.join(__dirname,'..','comparison-races-v1.json'),'utf8'));
+const oldAndVerified=[1,2].map(n=>JSON.parse(fs.readFileSync(path.join(dataDir,'2026-10-05_75_'+n+'.research.json'),'utf8')));
+for(const x of oldAndVerified)assert.equal(x.audit.publicationPass,true);
+const historicAudit=auditAll(oldAndVerified,{races:historical.races});
+assert.equal(historicAudit.summary.linkedExistingEvidencePairs,2);
+assert.equal(historicAudit.summary.allRaces,historical.races.length);
+assert.equal(historicAudit.summary.formalPass,0,'read-only audit never grants approval');
 // Regression against real archived 2026-11-20 Nagoya 1-4R records after roster normalization.
 // These assertions verify structure ONLY and must never assert official-source provenance.
 const fs=require('node:fs'),path=require('node:path');
