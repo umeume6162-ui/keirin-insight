@@ -15,6 +15,7 @@ import time
 import unicodedata
 from collections import defaultdict
 from datetime import datetime, timedelta
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import requests
@@ -26,6 +27,7 @@ from upsert_daily_sheets import (
     SHEET_ID, HEADERS, CONFIG, apply, remote_client
 )
 from auto_daily_tospo_intake import verify_approved_editor
+from enrich_daily_start_times import source_identity
 
 JST = ZoneInfo("Asia/Tokyo")
 
@@ -184,6 +186,58 @@ def candidate(key, rows, collect_fn=collect):
 
 
 
+
+def due_result_races(eligible, cache, now=None):
+    """Keep today's races out of result intake until their sourced start time + 20m.
+
+    Unknown or stale start-time evidence is deliberately not treated as race
+    completion. Yesterday and older races remain eligible without this gate.
+    """
+    if cache.get("schema") != "ki-daily-start-times-v1" or not isinstance(cache.get("races"), dict):
+        raise ValueError("Invalid start-time cache")
+    now = now or datetime.now(JST)
+    due, withheld = [], []
+    for key, rows in eligible:
+        day, code, number = key.split("|")
+        if day < now.date().isoformat():
+            due.append((key, rows))
+            continue
+        if day > now.date().isoformat():
+            withheld.append(key)
+            continue
+        track = clean(rows[0][2])
+        # Bind cached times to the identical original racecard source and rider list.
+        race = {"key": f"{day}|{track}|{int(number)}", "date": day,
+                "track": track, "race": int(number),
+                "entries": [{"number": int(row[5]), "name": clean(row[6]),
+                             "sourceUrl": clean(row[10]) if len(row) > 10 else ""}
+                            for row in rows]}
+        ident = source_identity(race)
+        saved = cache["races"].get(race["key"])
+        if not ident or not isinstance(saved, dict) or (
+                saved.get("sourceUrl"), saved.get("signature")) != ident:
+            withheld.append(key)
+            continue
+        start_time = saved.get("startTime")
+        if not isinstance(start_time, str) or not re.fullmatch(r"(?:[01]\\d|2[0-3]):[0-5]\\d", start_time):
+            withheld.append(key)
+            continue
+        target = datetime.strptime(f"{day} {start_time}", "%Y-%m-%d %H:%M").replace(tzinfo=JST)
+        if now >= target + timedelta(minutes=20):
+            due.append((key, rows))
+        else:
+            withheld.append(key)
+    return due, withheld
+
+
+def load_start_time_cache(path="daily-race-start-times-v1.json"):
+    source = Path(path)
+    if not source.is_file():
+        return {"schema": "ki-daily-start-times-v1", "races": {}}
+    return json.loads(source.read_text(encoding="utf-8"))
+
+
+
 def select_rotating_races(eligible, limit, now=None):
     """Spread bounded attempts across eligible races instead of retrying the first N.
 
@@ -206,7 +260,7 @@ def select_rotating_races(eligible, limit, now=None):
 
 def process(entries, results, start, end, limit=4, write=False,
             collect_fn=collect, apply_fn=apply, max_seconds=720,
-            monotonic_fn=time.monotonic):
+            monotonic_fn=time.monotonic, start_times=None, now=None):
     if not 1 <= limit <= 20:
         raise ValueError("limit must be 1..20")
     if not 60 <= max_seconds <= 1800:
@@ -214,7 +268,11 @@ def process(entries, results, start, end, limit=4, write=False,
     started = monotonic_fn()
     eligible = eligible_races(entries, results, start, end)
     incomplete_stored = partial_existing_results(entries, results, start, end)
-    selected = select_rotating_races(eligible, limit)
+    not_due = []
+    due = eligible
+    if start_times is not None:
+        due, not_due = due_result_races(eligible, start_times, now=now)
+    selected = select_rotating_races(due, limit, now=now)
     reports = []
     for key, rows in selected:
         if monotonic_fn() - started >= max_seconds:
@@ -255,6 +313,7 @@ def process(entries, results, start, end, limit=4, write=False,
     return {"schema": "ki-daily-result-intake-v1", "formalPass": False,
             "eligibleTotal": len(eligible), "eligibleExamined": len(reports),
             "eligibleDeferred": len(eligible) - len(reports),
+            "notYetDueCount": len(not_due), "notYetDueSample": not_due[:10],
             "timeBudgetExceeded": len(reports) < len(selected),
             "savedCount": sum(bool(r["saved"]) for r in reports),
             "partialExistingCount": len(incomplete_stored),
@@ -298,6 +357,35 @@ def self_test():
     start = datetime.strptime(day, "%Y-%m-%d").date()
     summary = process(records, [], start, start, collect_fn=lambda *a: actual,
                       apply_fn=pretend_apply)
+    # Same-day source-bound gate: the race must have started 20 minutes ago.
+    from enrich_daily_start_times import source_identity
+    gate_rows = [list(row) + [""] * (11 - len(row)) for row in records]
+    gate_url = "https://keirin.tokyo-sports.co.jp/list/race/test"
+    for row in gate_rows:
+        row[10] = gate_url
+    gate_race = {"key": day+"|西武園|1", "date": day, "track": "西武園",
+                 "race": 1, "entries": [{"number": int(row[5]),
+                 "name": row[6], "sourceUrl": gate_url} for row in gate_rows]}
+    signature = source_identity(gate_race)
+    assert signature is not None
+    cache = {"schema": "ki-daily-start-times-v1", "races": {
+        gate_race["key"]: {"startTime": "20:57", "sourceUrl": gate_url,
+                           "signature": signature[1]}}}
+    before = datetime(2026, 11, 23, 19, 0, tzinfo=JST)
+    assert due_result_races([(day+"|26|1", gate_rows)], cache, before)[0] == []
+    at_start = datetime(2026, 11, 23, 20, 57, tzinfo=JST)
+    assert due_result_races([(day+"|26|1", gate_rows)], cache, at_start)[0] == []
+    after = datetime(2026, 11, 23, 21, 17, tzinfo=JST)
+    assert len(due_result_races([(day+"|26|1", gate_rows)], cache, after)[0]) == 1
+    stale = {"schema": cache["schema"], "races": {
+        gate_race["key"]: {**cache["races"][gate_race["key"]], "signature": "wrong"}}}
+    assert due_result_races([(day+"|26|1", gate_rows)], stale, after)[0] == []
+    assert len(due_result_races([(day+"|26|1", gate_rows)], stale,
+                              after + timedelta(days=1))[0]) == 1
+    gated = process(gate_rows, [], start, start, collect_fn=lambda *a: actual,
+                    apply_fn=pretend_apply, start_times=cache, now=before)
+    assert gated["notYetDueCount"] == 1 and gated["eligibleExamined"] == 0
+    assert gated["savedCount"] == 0
     assert summary["results"][0]["status"] == "DRY_RUN_TWO_SOURCES_MATCH" and calls == [True]
     assert (summary["eligibleTotal"], summary["eligibleExamined"], summary["eligibleDeferred"], summary["savedCount"]) == (1, 1, 0, 0)
     assert summary["results"][0]["secondSourceId"] == "chariloto-day-results"
@@ -398,7 +486,8 @@ def main():
         start, end = today - timedelta(days=args.lookback_days), today
     entries, results = read_existing()
     report = process(entries, results, start, end, limit=args.max_races,
-                     write=args.apply, max_seconds=args.max_seconds)
+                     write=args.apply, max_seconds=args.max_seconds,
+                     start_times=load_start_time_cache())
     print(json.dumps(report, ensure_ascii=False))
 
 
