@@ -14,6 +14,11 @@
 .quick-days{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 0}
 .quick-days button{min-height:39px;padding:6px 13px;color:var(--text)}
 .quick-days button[aria-pressed=true]{background:#21534a;color:#e9fff5;border-color:#68b29b}
+.session-filter{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 0}
+.session-filter button{min-height:40px;padding:7px 11px;font-size:13px;color:var(--text)}
+.session-filter button[aria-pressed=true]{background:#24544b;border-color:#7bcbb2;color:#f4fff9}
+.session-group{border-top:1px solid var(--stroke);padding-top:15px;margin-top:15px}
+.session-head{font-weight:800;font-size:15px;color:var(--mint);margin:0 0 12px}
 .day-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0}
 .day-stat{padding:12px;background:#0a1e2c;border:1px solid #284657;border-radius:12px}
 .day-stat strong{font-size:22px;font-variant-numeric:tabular-nums;display:block;color:var(--mint);line-height:1.35}
@@ -62,6 +67,15 @@
 <div><label for="track">競輪場</label><select id="track"><option value="">すべての競輪場</option></select></div>
 <button type="button" id="refresh">最新を取得</button>
 </div>
+<div class="session-filter" role="group" aria-label="開催時間帯で絞り込む">
+<button type="button" data-session="all" aria-pressed="true">すべて</button>
+<button type="button" data-session="morning" aria-pressed="false">モーニング</button>
+<button type="button" data-session="day" aria-pressed="false">デイ</button>
+<button type="button" data-session="night" aria-pressed="false">ナイター</button>
+<button type="button" data-session="midnight" aria-pressed="false">ミッドナイト</button>
+<button type="button" data-session="unknown" aria-pressed="false">時間帯未確認</button>
+</div>
+<p class="muted" style="font-size:12px">時間帯は出典で明示確認できた開催だけ分類します。未確認のレースも「すべて」で表示します。</p>
 <div class="quick-days" aria-label="日付を素早く選ぶ">
 <button type="button" data-day-offset="-1" aria-pressed="false">昨日</button>
 <button type="button" data-day-offset="0" aria-pressed="false">今日</button>
@@ -87,7 +101,16 @@ const jstDay=()=>new Date().toLocaleDateString("sv-SE",{timeZone:"Asia/Tokyo"});
 const changeJst=(offset)=>{const base=new Date(jstDay()+"T12:00:00+09:00");base.setUTCDate(base.getUTCDate()+offset);return base.toLocaleDateString("sv-SE",{timeZone:"Asia/Tokyo"})};
 const today=jstDay();
 el("day").value=today;
-let cache=null;
+let cache=null,selectedSession="all";
+const sessionNames={morning:"モーニング",day:"デイ",night:"ナイター",midnight:"ミッドナイト",unknown:"時間帯未確認"};
+function raceSession(r){
+ const value=String(r.session||r.timeSlot||"").trim().toLowerCase();
+ // Only explicit, bounded feed metadata is accepted. Never infer from R or venue.
+ return ["morning","day","night","midnight"].includes(value)?value:"unknown";
+}
+function syncSessionButtons(){
+ document.querySelectorAll("[data-session]").forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.session===selectedSession)));
+}
 function node(tag,text,cls){const x=document.createElement(tag);if(text!==undefined)x.textContent=String(text);if(cls)x.className=cls;return x}
 function stats(races){el("race-count").textContent=String(races.length);el("entry-count").textContent=String(races.reduce((n,r)=>n+(Array.isArray(r.entries)?r.entries.length:0),0));el("result-count").textContent=String(races.reduce((n,r)=>n+(Array.isArray(r.results)?r.results.length:0),0))}
 function syncQuickButtons(){const day=el("day").value;document.querySelectorAll("[data-day-offset]").forEach(btn=>btn.setAttribute("aria-pressed",String(day===changeJst(Number(btn.dataset.dayOffset)))))}
@@ -129,15 +152,28 @@ function render(){
  const day=el("day").value,track=el("track").value;
  if(day<cache.windowStart||day>cache.windowEnd){stats([]);el("state").textContent="選択日はこの配信の対象範囲外です。";root.append(node("p","この配信は "+cache.windowStart+" ～ "+cache.windowEnd+" の範囲を表示します。","empty-panel"));return}
  const all=cache.races.filter(r=>r.date===day);
- const chosen=all.filter(r=>!track||r.track===track);
+ const chosen=all.filter(r=>(!track||r.track===track)&&(selectedSession==="all"||raceSession(r)===selectedSession));
+ syncSessionButtons();
  stats(chosen);
  el("state").textContent=all.length?day+" の収録記録を表示中":"この日の出走表・結果はまだ台帳から届いていません。";
  if(!chosen.length){
-  root.append(node("p",all.length?"選択した競輪場の収録記録はありません。":"収録がないことは、開催がないことを意味しません。","empty-panel"));return;
+  root.append(node("p",all.length?"選択した競輪場・時間帯の収録記録はありません。":"収録がないことは、開催がないことを意味しません。","empty-panel"));return;
  }
  const groups=new Map();
- chosen.forEach(r=>{if(!groups.has(r.track))groups.set(r.track,[]);groups.get(r.track).push(r)});
- for(const [venue,races] of groups){
+ chosen.forEach(r=>{
+  const slot=raceSession(r),key=slot+"|"+r.track;
+  if(!groups.has(key))groups.set(key,{slot,venue:r.track,races:[]});
+  groups.get(key).races.push(r);
+ });
+ const ordered=[...groups.values()].sort((a,b)=>
+  ["morning","day","night","midnight","unknown"].indexOf(a.slot)-
+  ["morning","day","night","midnight","unknown"].indexOf(b.slot)||a.venue.localeCompare(b.venue,"ja"));
+ let lastSlot=null;
+ for(const {slot,venue,races} of ordered){
+  if(slot!==lastSlot){
+   root.append(node("h2",sessionNames[slot],"session-head"));
+   lastSlot=slot;
+  }
   const section=node("section",undefined,"venue-group"),heading=node("div",undefined,"venue-title");
   heading.append(node("h2",venue),node("span",races.length+"R","pill"));section.append(heading);
   const grid=node("div",undefined,"race-grid");
@@ -161,6 +197,7 @@ async function load(){
 }
 el("day").addEventListener("change",()=>{updateVenues();render()});
 el("track").addEventListener("change",render);
+document.querySelectorAll("[data-session]").forEach(btn=>btn.addEventListener("click",()=>{selectedSession=btn.dataset.session;render()}));
 el("refresh").addEventListener("click",load);
 document.querySelectorAll("[data-day-offset]").forEach(btn=>btn.addEventListener("click",()=>{el("day").value=changeJst(Number(btn.dataset.dayOffset));updateVenues();render()}));
 load();
