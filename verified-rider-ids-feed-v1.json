@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付",
   "verificationNote": "公開選手IDの4必須項目を2掲載サイト照合 194件。各officialVerificationに証拠参照。検索キャッシュの転記と直接ライブ取得、サイトごとの上流独立性を区別。",
   "summary": {
-    "rows": 198
+    "rows": 199
   },
   "riders": [
     {
@@ -4770,6 +4770,31 @@
           "https://www.yen-joy.net/racer/data/015656/2"
         ],
         "note": "2026-11-23に2掲載サイトの4必須項目一致を確認。検索インデックス/取得済み公開本文の項目転記。元の証拠記録KI-V4-20261123-015656。共通上流独立性は未証明。"
+      }
+    },
+    {
+      "id": "016040",
+      "name": "アニー　紗世子",
+      "prefecture": "和歌山",
+      "period": "130",
+      "source": "https://keirin.jp/pc/racerprofile?snum=016040",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=016040",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=016040",
+          "https://keirin-marche.jp/girlskeirin/players/016040/",
+          "https://www.winticket.jp/keirin/cyclist/016040"
+        ],
+        "note": "旧出走表短縮名「アニー紗世」→正式名「アニー紗世子」へユーザー指示で救済。登録番号016040／和歌山県／130期がKEIRIN.JPとJKAガールズ公式で4項目一致。旧名・省略表示は手動受付MANUAL-V4-20261122T163137-016040および証拠KI-V4-20261123-016040に保存。検索掲載・キャッシュ由来の項目照合、上流独立性は未証明。"
       }
     }
   ],
