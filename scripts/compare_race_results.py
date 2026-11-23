@@ -74,7 +74,7 @@ def canonical_method(value):
     raw = clean(value)
     return {
         "差し": "差", "差": "差",
-        "捲り": "捲", "捲": "捲",
+        "捲り": "捲", "捲くり": "捲", "まくり": "捲", "捲": "捲",
         "逃げ": "逃", "逃": "逃",
         "マーク": "ク", "ク": "ク",
     }.get(raw, raw)
@@ -177,6 +177,8 @@ def self_test():
     a, b = observation("https://source-a.example/r", "a"), observation(
         "https://source-b.example/r", "b")
     b["results"][0]["method"] = "差し"
+    a["results"][1]["method"] = "捲くり"
+    b["results"][1]["method"] = "捲り"
     assert compare({"observations": [a, b]})["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
     b["results"][0]["finish"] = "2"
     b["results"][1]["finish"] = "1"
