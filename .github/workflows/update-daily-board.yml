@@ -100,6 +100,9 @@ on:
     # One-time daily viewer refresh after first verified two-site content-matched result intake.
     # UTC corresponds to JST 07:10, 12:10, 17:10, 22:10.
     - cron: '10 22,3,8,13 * * *'
+    # A dedicated overnight opportunity after late midnight races (JST 00:10).
+    # Existing full-field, two-publication and source-identity guards still apply.
+    - cron: '10 15 * * *'
 permissions:
   contents: write
 concurrency:
