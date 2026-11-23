@@ -476,7 +476,8 @@ jobs:
               if isinstance(attempt, dict))
           rows = [
               "## Daily two-source result intake",
-              f"- Pending eligible races: {report['eligibleTotal']}",
+              f"- Pending stored races: {report['eligibleTotal']}",
+              f"- Due for results: {report['eligibleDueTotal']}",
               f"- Attempted: {report['eligibleExamined']}",
               f"- Deferred: {report['eligibleDeferred']}",
               f"- Not yet due (no verified start time or before start+20m): {report.get('notYetDueCount', 0)}",
