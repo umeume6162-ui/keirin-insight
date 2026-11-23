@@ -11,6 +11,7 @@ on:
       - 'scripts/discover_tospo_races.py'
       - 'scripts/compare_race_results.py'
       - 'scripts/collect_netkeirin_result.py'
+      - 'scripts/collect_lotoplace_result.py'
       - 'scripts/upsert_daily_sheets.py'
       - 'scripts/build_daily_board.py'
       - '.github/workflows/update-daily-board.yml'
@@ -38,6 +39,10 @@ on:
         type: string
       historical_result_url:
         description: 'Optional netkeirin historical result page (read-only)'
+        required: false
+        type: string
+      historical_second_url:
+        description: 'Optional LotoPlace event-day results URL for comparison'
         required: false
         type: string
       historical_class:
@@ -88,12 +93,13 @@ jobs:
         run: pip install 'google-auth==2.38.0' 'requests==2.32.3' 'beautifulsoup4==4.14.2'
       - name: Check daily intake script syntax
         run: |
-          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py
+          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py
           python scripts/collect_chariloto_entry.py --self-test
           python scripts/collect_tospo_entry.py --self-test
           python scripts/discover_tospo_races.py --self-test
           python scripts/compare_race_results.py --self-test
           python scripts/collect_netkeirin_result.py --self-test
+          python scripts/collect_lotoplace_result.py --self-test
           python scripts/build_daily_board.py --self-test
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.source_url != ''
@@ -159,6 +165,35 @@ jobs:
           assert x['sourceId']=='netkeirin-result' and len(x['results']) in (7,9)
           print('HISTORICAL_SOURCE_OBSERVATION_OK: full-car candidate, not formal PASS')
           PY
+      - name: Collect second historical result and compare full fields
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url != '' && inputs.historical_second_url != ''
+        env:
+          RACE_DATE: ${{ inputs.race_date }}
+          TRACK_CODE: ${{ inputs.track_code }}
+          TRACK_NAME: ${{ inputs.track_name }}
+          RACE_NUMBER: ${{ inputs.race_number }}
+          CLASS_NAME: ${{ inputs.historical_class }}
+          EXPECTED_CARS: ${{ inputs.historical_cars }}
+          SECOND_URL: ${{ inputs.historical_second_url }}
+        run: |
+          python scripts/collect_lotoplace_result.py --date "$RACE_DATE" --track-code "$TRACK_CODE" --track "$TRACK_NAME" --race "$RACE_NUMBER" --class-name "$CLASS_NAME" --expected-cars "$EXPECTED_CARS" --url "$SECOND_URL" --out /tmp/ki-lotoplace-observation.json
+          python scripts/compare_race_results.py --left /tmp/ki-historical-observation.json --right /tmp/ki-lotoplace-observation.json --out /tmp/ki-result-comparison.json
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/ki-result-comparison.json', encoding='utf-8'))
+          assert x['formalPass'] is False
+          print('HISTORICAL_COMPARISON_COMPLETE: ' + x['status'])
+          PY
+      - name: Save second observation and comparison
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url != '' && inputs.historical_second_url != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: historical-result-two-sources
+          path: |
+            /tmp/ki-lotoplace-observation.json
+            /tmp/ki-result-comparison.json
+          retention-days: 7
+          if-no-files-found: error
       - name: Save historical observation as workflow artifact
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url != ''
         uses: actions/upload-artifact@v4
