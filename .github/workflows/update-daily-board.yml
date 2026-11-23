@@ -201,39 +201,6 @@ jobs:
           python scripts/classify_historical_candidates.py --self-test
           python scripts/audit_v99_race_shape.py --self-test
           python scripts/build_daily_board.py --self-test
-      # PR-only read-only live observation; remove after testing.
-      - name: Verify real Tamano K-Dreams 1R result table (research branch only)
-        if: github.event_name == 'pull_request' && github.head_ref == 'feat/kdreams-verified-tamano-result-adapter-20261123'
-        run: |
-          PYTHONPATH=scripts python - <<'PY'
-          import collect_kdreams_result as adapter
-          from compare_race_results import normalized_results
-          day, code, track, race, cls, cars = "2026-11-23", "61", "玉野", 1, "L1", 7
-          url = adapter.result_url(day, code, track, race)
-          obs = adapter.extract(adapter.fetch(url), day, code, track, race, cls, cars, url)
-          rows = normalized_results(obs, cars)
-          assert len(rows) == cars
-          print("KDREAMS_LIVE_OBSERVATION_OK", obs["sourceId"], len(rows), obs["race"]["date"])
-          import collect_netkeirin_result as netkeirin
-          from compare_race_results import compare
-          net_url = "https://keirin.netkeiba.com/race/result/?race_id=202611236101"
-          net = netkeirin.extract(netkeirin.fetch(net_url), day, code, track,
-                                 race, cls, cars, net_url)
-          actual = compare({"observations": [obs, net]})
-          assert actual["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
-          assert not actual["disagreements"] and actual["formalPass"] is False
-          print("KDREAMS_NETKEIRIN_FULL_MATCH", actual["carCount"],
-                len(actual["disagreements"]), actual["formalPass"])
-          from collect_historical_pair import collect_auto
-          try:
-              pair = collect_auto(day, code, track, race, cls, cars)
-              print("TAMANO_LIVE_PAIR", pair["comparison"]["status"],
-                    pair["comparison"]["carCount"], pair.get("sourcePairMode"),
-                    pair.get("sourceAttempts"))
-          except ValueError as exc:
-              print("TAMANO_PAIR_PENDING", getattr(exc, "source_stage", "CONTENT_REVIEW"),
-                    getattr(exc, "source_attempts", []))
-          PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
