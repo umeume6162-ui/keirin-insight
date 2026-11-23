@@ -231,14 +231,6 @@ function buildRace(r){
  summary.append(text,pending);details.append(summary);
  const body=node("div",undefined,"race-body");
  if(results.length){
-  const top=topThree(results);
-  if(top){
-   const overview=node("div",undefined,"race-overview"),hero=node("div",undefined,"result-hero");
-   hero.append(node("small","記録された上位3車"));
-   const order=node("div",undefined,"result-order");
-   top.forEach((n,i)=>{if(i)order.append(node("span","－"));order.append(badge(n))});
-   hero.append(order);overview.append(hero);body.append(overview);
-  }else body.append(node("p","上位3車：全車の1～3着が一意に揃うまで未確定","source-caption"));
   body.append(node("h3","着順・決まり手"));
   const ordered=[...results].sort((a,b)=>{
    const fa=Number(a.finish),fb=Number(b.finish);
@@ -269,6 +261,16 @@ function buildRace(r){
   extra.append(node("p","競走得点・S/B・勝率・2連対率・3連対率・近走成績は、データ取得・照合が完了した項目から追加します。","source-caption"));
   body.append(extra);
  }else body.append(node("p","事前出走表・ライン：未収録","source-caption"));
+ if(results.length){
+  const top=topThree(results);
+  if(top){
+   const overview=node("div",undefined,"race-overview"),hero=node("div",undefined,"result-hero");
+   hero.append(node("small","記録された上位3車"));
+   const order=node("div",undefined,"result-order");
+   top.forEach((n,i)=>{if(i)order.append(node("span","－"));order.append(badge(n))});
+   hero.append(order);overview.append(hero);body.append(overview);
+  }else body.append(node("p","上位3車：全車の1～3着が一意に揃うまで未確定","source-caption"));
+ }
  if(r.weather||r.windSpeed)body.append(node("p",[r.weather||"",r.windSpeed?"風速 "+r.windSpeed:""].filter(Boolean).join("・"),"source-caption"));
  if(r.raceCommentVerified)body.append(node("p",r.raceCommentVerified,"source-caption"));
  else body.append(node("p","展開短評：映像または根拠となる記録の確認後に掲載します。","source-caption"));
