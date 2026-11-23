@@ -95,7 +95,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -366,12 +366,14 @@ jobs:
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --apply
+      # Every listed venue is processed in its own <=12R/108-car transaction.
+      # Incomplete or conflicting venues are reported; no all-day 36R cap.
       - name: Auto-collect bounded today and tomorrow entries before daily feed
         if: github.event_name == 'schedule'
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
-          python scripts/auto_daily_tospo_intake.py --apply --days 2 --max-venues 8
+          python scripts/auto_daily_tospo_intake.py --apply --days 2 --max-venues 43
       - name: Build daily board
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
         env:
