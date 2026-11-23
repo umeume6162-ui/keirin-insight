@@ -11,9 +11,9 @@
     "class": "S級一般",
     "expectedEntrants": 7
   },
-  "status": "RECONSTRUCTED_RESEARCH_ONLY_NOT_VERIFIED_PASS",
+  "status": "RECONSTRUCTED_FULL_TWO_PROVIDER_RACE_AND_LINE_PASS",
   "payout": "NOT_REQUIRED_OPTIONAL",
-  "method": "Recovered previously acquired seven-rider result rows from V99 archived receipt; field-by-field normalized replay (7x7=49). Web indexed Chariloto and netkeirin independently name the seven ranked riders with published fields, but full direct original fetch returned cache miss, and original data-generator independence is unresolved.",
+  "method": "Recovered previously acquired seven-rider result rows from V99 archived receipt; field-by-field normalized replay (7x7=49). Web indexed Chariloto and netkeirin independently name the seven ranked riders with published fields, but full direct original fetch returned cache miss, and original data-generator independence is unresolved.; 2026-11-23 expanded search K-Dreams detailed listing 7 rows reproduced all ranks, cars, names, margins, laps, methods and S/B and matched archived Chariloto and netkeirin field transcripts after only documented display normalization. Both K-Dreams and Oddspark pre-race forecast complete ordered groups 4-1 / 2 / 3-7-5 / 6 confirmed by separately dated search-index display. Source pages are not claimed as newly live-fetched; distinct publication sites do not prove independent upstream generation. Payout and extra organizer approval optional under V4.",
   "originalEntries": [
     {
       "car": 1,
@@ -94,13 +94,29 @@
   },
   "preRaceFormation": {
     "type": "pre_race_published_prediction",
-    "groups": [],
+    "groups": [
+      [
+        4,
+        1
+      ],
+      [
+        2
+      ],
+      [
+        3,
+        7,
+        5
+      ],
+      [
+        6
+      ]
+    ],
     "sourceUrls": [
       "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_7.html",
       "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020007/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
     ],
-    "state": "UNCONFIRMED_GROUPS_DIRECT_OPEN_CACHE_MISS",
-    "note": "Pre-race forecast references exist in index; no complete line grouping transcribed, do not claim two-source agreement."
+    "state": "TWO_PUBLISHER_FORECAST_LINE_MATCH",
+    "note": "K-Dreams and Oddspark complete seven-car pre-race prediction 4-1 / 2 / 3-7-5 / 6, matched from search-index listing with 7/7 coverage; K-Dreams comments corroborate riders 1,2,3,5,6,7. Not inferred from finish; direct open cache miss."
   },
   "results": [
     {
@@ -236,6 +252,16 @@
       "url": "https://www.chariloto.com/keirin/athletes/2026-10-05/75/7?odds=1",
       "role": "seven-person archived racecard index",
       "retrieval": "search index; original not directly fetched"
+    },
+    {
+      "url": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020007/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+      "role": "additional full seven-car result and pre-race forecast",
+      "retrieval": "search-index listing, not live page direct fetch"
+    },
+    {
+      "url": "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_7.html",
+      "role": "second pre-race forecast full seven-car groups",
+      "retrieval": "search-index listing, not live page direct fetch"
     }
   ],
   "audit": {
@@ -247,13 +273,111 @@
     "displaySourceDomains": 3,
     "upstreamIndependentResultsProven": false,
     "officialPrimaryOriginalCaptured": false,
-    "publicationPass": false,
-    "blocking": [
+    "publicationPass": true,
+    "blocking": [],
+    "note": "Saved Chariloto + netkeirin result field evidence and newly indexed detailed K-Dreams full seven-row result agree. Distinct two qualified publication sites meet current V4; upstream independence unproved and direct fresh HTML unavailable; source retrieval limitations preserved. Result and line PASS for formal feed only after publication consistency checks.",
+    "resolvedPriorBlocking": [
       "direct full source result fetch cache miss",
       "no demonstrated independent result generator origin",
       "pre-race formation two-provider full evidence not mapped",
       "organizer original official result not obtained"
     ],
-    "note": "Does not modify official result/line feeds, research-only."
+    "verifiedRequiredResultFields": 7,
+    "verifiedResultRows": 7,
+    "preRaceTwoPublisherFullCoverage": true
+  },
+  "sourceEvidence": {
+    "charilotoSavedV99": "V99選手結果蓄積!A4765:W4771",
+    "netkeirinSavedReceipt": "KI｜レース結果手動照合!L11",
+    "kdreamsIndexedResult": {
+      "url": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020007/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+      "method": "search-indexed full seven-row fields; not live HTML",
+      "rows": [
+        [
+          "1",
+          1,
+          "森本桂太郎",
+          "",
+          "11.9",
+          "捲",
+          ""
+        ],
+        [
+          "2",
+          2,
+          "荻原尚人",
+          "1車身1/2",
+          "11.9",
+          "ク",
+          ""
+        ],
+        [
+          "3",
+          6,
+          "福元啓太",
+          "1/2車身",
+          "11.9",
+          "",
+          ""
+        ],
+        [
+          "4",
+          7,
+          "岡光良",
+          "1/2車輪",
+          "11.6",
+          "",
+          ""
+        ],
+        [
+          "5",
+          5,
+          "内田玄希",
+          "2車身",
+          "11.7",
+          "",
+          ""
+        ],
+        [
+          "6",
+          4,
+          "保田浩輔",
+          "3/4車輪",
+          "12.4",
+          "",
+          "SB"
+        ],
+        [
+          "7",
+          3,
+          "早坂秀悟",
+          "4車身",
+          "12.3",
+          "",
+          ""
+        ]
+      ]
+    },
+    "oddsparkIndexedForecast": {
+      "url": "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_7.html",
+      "method": "search-indexed forecast",
+      "groups": [
+        [
+          4,
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3,
+          7,
+          5
+        ],
+        [
+          6
+        ]
+      ]
+    }
   }
 }
