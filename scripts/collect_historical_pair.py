@@ -15,6 +15,7 @@ from pathlib import Path
 
 import collect_netkeirin_result as netkeirin
 import collect_lotoplace_result as day_results
+import collect_kdreams_result as kdreams
 from compare_race_results import compare
 from result_hold_diagnostics import classify_result_hold
 
@@ -124,9 +125,17 @@ def collect_auto(day, code, track, number, class_name, cars, sources=None):
             return day_results.parse_result(day_results.fetch(url), day, code,
                                             track, number, class_name, cars, url)
 
-        sources = (("netkeirin", read_net),
+        # K-Dreams page format has been verified for Tamano first-day races.
+        # Other venue/day links are not guessed.
+        sources = [("netkeirin", read_net),
                    ("chariloto", lambda: read_day(char_url)),
-                   ("lotoplace", lambda: read_day(loto_url)))
+                   ("lotoplace", lambda: read_day(loto_url))]
+        if track == "玉野" and code == "61":
+            kd_url = kdreams.result_url(day, code, track, number)
+            def read_kdreams():
+                return kdreams.extract(kdreams.fetch(kd_url), day, code, track,
+                                      number, class_name, cars, kd_url)
+            sources.append(("kdreams", read_kdreams))
     if not sources or len(sources) > 12:
         raise ValueError("Invalid bounded result source pool")
     collected = []
