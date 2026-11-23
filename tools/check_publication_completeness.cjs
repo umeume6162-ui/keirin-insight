@@ -78,6 +78,8 @@ for(const race of official.races){
  assert.equal(race.key,key,'published race key mismatch');
  assert.ok(!verifiedRaceKeys.has(key),'duplicate published race');verifiedRaceKeys.add(key);
  assert.ok([7,9].includes(race.size),'verified result size must be 7 or 9');
+ // Publication-facing provenance is checked here, not repeated by the mobile UI test.
+ assert.ok(['rider_comments_and_published_forecast','published_forecast'].includes(race.preRaceFormation?.basis),'missing forecast heading provenance');
  assert.equal(race.officialVerification?.status,'verified');
  assert.equal(race.officialVerification?.method,'two_distinct_sites_agree');
  const rs=race.officialVerification.matchingSources||[];
