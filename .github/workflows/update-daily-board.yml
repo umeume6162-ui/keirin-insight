@@ -129,9 +129,9 @@ jobs:
           d=json.load(open('/tmp/ki-active-venues-preview.json', encoding='utf-8'))
           print("ACTIVE_VENUES_PREVIEW_ENTRIES", len(d["entries"]))
           print("ACTIVE_VENUES_PREVIEW_TRACKS", sorted(set(x["track"] for x in d["entries"])))
-          assert 14 <= len(d['entries']) <= 200
-          assert all(x['date']=='2026-11-24' and x['track'] in ('静岡','松山')
-                     and x['trackCode'] in ('38','75') for x in d['entries'])
+          assert 14 <= len(d['entries']) <= 288
+          assert all(x['date']=='2026-11-24' and x['track'] in ('静岡','松山','奈良')
+                     and x['trackCode'] in ('38','75','53') for x in d['entries'])
           assert len(set((x['trackCode'],x['race'],x['number']) for x in d['entries']))==len(d['entries'])
           PY
           python scripts/upsert_daily_sheets.py --input /tmp/ki-active-venues-preview.json --validate-only
@@ -141,7 +141,7 @@ jobs:
           d=json.load(open('/tmp/ki-multivenue-dryrun.json',encoding='utf-8'))
           print('MULTIVENUE_DRYRUN',json.dumps(d,ensure_ascii=False))
           q=d['summary']['entries']
-          assert q['changed']==0 and q['new']>=7 and q['new']<=200
+          assert q['changed']==0 and q['new']>=7 and q['new']<=288
           assert d['summary']['results']['new']==0 and d['summary']['results']['changed']==0
           PY
           python scripts/upsert_daily_sheets.py --input /tmp/ki-active-venues-preview.json --apply
