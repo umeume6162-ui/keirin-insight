@@ -66,6 +66,23 @@ jobs:
                   obs=parse_historical_html(html,url=url,day=day,code=code,track=track,
                                             race=race,grade=grade,cars=cars)
                   print('HISTORICAL_KDREAMS_OBSERVED',key,len(obs['observation']['results']))
+                  from compare_race_results import normalized_name,normalized_prefecture,canonical_method
+                  import json
+                  baseline=json.loads('''{"2026-10-05|75|3":[{"number":3,"name":"滝本泰行","prefecture":"岡山","period":"107","finish":"1","method":"差し","exception":""},{"number":4,"name":"野中祐志","prefecture":"埼玉","period":"98","finish":"2","method":"差し","exception":""},{"number":7,"name":"吉田航","prefecture":"大分","period":"127","finish":"3","method":"","exception":""},{"number":1,"name":"小原唯志","prefecture":"茨城","period":"101","finish":"4","method":"","exception":""},{"number":2,"name":"内山慧大","prefecture":"福井","period":"123","finish":"5","method":"","exception":""},{"number":5,"name":"水谷将司","prefecture":"愛知","period":"105","finish":"6","method":"","exception":""},{"number":6,"name":"田中勝仁","prefecture":"千葉","period":"93","finish":"7","method":"","exception":""}],"2026-10-05|75|4":[{"number":6,"name":"三好陽一","prefecture":"愛媛","period":"88","finish":"1","method":"差し","exception":""},{"number":1,"name":"田中和磨","prefecture":"岡山","period":"113","finish":"2","method":"差し","exception":""},{"number":3,"name":"石田拓真","prefecture":"愛知","period":"119","finish":"3","method":"","exception":""},{"number":5,"name":"小林信晴","prefecture":"愛知","period":"83","finish":"4","method":"","exception":""},{"number":4,"name":"岡本英之","prefecture":"千葉","period":"85","finish":"5","method":"","exception":""},{"number":7,"name":"須賀和彦","prefecture":"茨城","period":"89","finish":"6","method":"","exception":""},{"number":2,"name":"吉竹尚城","prefecture":"静岡","period":"109","finish":"7","method":"","exception":""}],"2026-10-05|75|6":[{"number":2,"name":"磯川勝裕","prefecture":"東京","period":"113","finish":"1","method":"捲くり","exception":""},{"number":7,"name":"大矢将大","prefecture":"埼玉","period":"81","finish":"2","method":"マーク","exception":""},{"number":3,"name":"花田将司","prefecture":"千葉","period":"99","finish":"3","method":"","exception":""},{"number":5,"name":"城幸弘","prefecture":"山梨","period":"96","finish":"4","method":"","exception":""},{"number":6,"name":"栗本尚宗","prefecture":"千葉","period":"113","finish":"5","method":"","exception":""},{"number":1,"name":"竹澤浩司","prefecture":"富山","period":"90","finish":"6","method":"","exception":""},{"number":4,"name":"上杉嘉槻","prefecture":"福井","period":"119","finish":"7","method":"","exception":""}]}''')[key]
+                  a={int(x['number']):x for x in obs['observation']['results']}
+                  diffs=[]
+                  for rider in baseline:
+                      actual=a.get(rider['number'])
+                      if actual is None:
+                          diffs.append((rider['number'],'missing'))
+                          continue
+                      checks=(('name',normalized_name),('prefecture',normalized_prefecture),
+                              ('period',str),('finish',str),('method',canonical_method))
+                      for field,normal in checks:
+                          if normal(actual.get(field,'')) != normal(rider[field]):
+                              diffs.append((rider['number'],field))
+                  print('HISTORICAL_V99_COMPARE',key,'PASS' if not diffs else 'HOLD',
+                        'mismatchCount',len(diffs),'details',diffs[:8])
               except Exception as exc:
                   print('HISTORICAL_KDREAMS_HOLD',key,type(exc).__name__,str(exc)[:120])
                   if 'html' in locals() and 'Race date/venue not found' in str(exc):
