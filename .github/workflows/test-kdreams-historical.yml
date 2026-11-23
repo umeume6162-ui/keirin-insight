@@ -3,10 +3,12 @@ on:
   push:
     paths:
       - 'scripts/collect_kdreams_historical.py'
+      - 'scripts/collect_kdreams_result.py'
       - '.github/workflows/test-kdreams-historical.yml'
   pull_request:
     paths:
       - 'scripts/collect_kdreams_historical.py'
+      - 'scripts/collect_kdreams_result.py'
       - '.github/workflows/test-kdreams-historical.yml'
   workflow_dispatch:
 permissions:
@@ -24,6 +26,8 @@ jobs:
         run: pip install 'requests==2.32.3' 'beautifulsoup4==4.14.2'
       - name: Compile isolated historical reader
         run: python -m py_compile scripts/collect_kdreams_historical.py
+      - name: Test shared daily K-Dreams source (offline only)
+        run: python scripts/collect_kdreams_result.py
       - name: Test URL guards and full 7-car extraction (offline only)
         run: python scripts/collect_kdreams_historical.py --self-test
       - name: Read-only one-race live K-Dreams probe (not an acceptance gate)
