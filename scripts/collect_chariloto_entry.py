@@ -60,13 +60,31 @@ def parse_entries(html, date, track_code, track, race, source):
 
 def main():
     p=argparse.ArgumentParser()
-    p.add_argument("--date",required=True)
-    p.add_argument("--track-code",required=True)
-    p.add_argument("--track",required=True)
-    p.add_argument("--race",type=int,required=True)
+    p.add_argument("--date")
+    p.add_argument("--track-code")
+    p.add_argument("--track")
+    p.add_argument("--race",type=int)
     p.add_argument("--out",default="/tmp/keirin-daily-intake-preview.json")
     p.add_argument("--html-fixture",help="Local source HTML; omits live request")
+    p.add_argument("--self-test",action="store_true",help="Parse a fictional 7-car HTML table without network or Sheets")
     args=p.parse_args()
+    if args.self_test:
+        rows="".join(f"<tr><td>{n}</td><td><a>テスト選手{chr(64+n)}</a></td><td>東京</td><td>100期</td></tr>" for n in range(1,8))
+        html="<table><tr><th>車番</th><th>選手名</th><th>府県</th><th>期別</th></tr>"+rows+"</table>"
+        actual=parse_entries(html,"2026-11-23","26","西武園",1,
+            "https://www.chariloto.com/keirin/athletes/2026-11-23/26/1")
+        if [v["number"] for v in actual]!=list(range(1,8)):
+            raise ValueError("self test did not preserve seven cars")
+        try:
+            parse_entries(html.replace("<tr><td>7</td>", "<tr><td>8</td>"),"2026-11-23","26","西武園",1,"https://example.org/race")
+        except ValueError:
+            pass
+        else:
+            raise ValueError("duplicate/invalid seven-car table was not rejected")
+        print("SELF_TEST_OK: synthetic seven-car field and invalid duplicate rejected")
+        return
+    if not all([args.date,args.track_code,args.track,args.race]):
+        p.error("--date --track-code --track --race are required for live preview")
     datetime.strptime(args.date,"%Y-%m-%d")
     if not args.track_code.isdigit() or not 1<=int(args.track_code)<=99 or not 1<=args.race<=12:
         raise ValueError("invalid track or race")
