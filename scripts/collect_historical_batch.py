@@ -108,8 +108,11 @@ def run(plan, output):
             if data["comparison"]["raceKey"] != key or data["comparison"]["formalPass"] is not False:
                 raise ValueError("Candidate comparison identity or PASS boundary mismatch")
             store(file, data)
+            source_id = data["observations"][1]["sourceId"]
             processed.append({"raceKey": key, "status": data["comparison"]["status"],
-                              "disagreements": len(data["comparison"]["disagreements"])})
+                              "disagreements": len(data["comparison"]["disagreements"]),
+                              "secondSourceId": source_id,
+                              "alternateSourceUsed": source_id == "lotoplace-day-results"})
         except Exception as exc:
             # Do not record raw page or service credential contents in the summary.
             processed.append({"raceKey": key, "status": "SOURCE_ERROR",
@@ -157,6 +160,8 @@ def self_test():
         with patch.object(sys.modules[__name__], "collect", return_value=valid):
             first = run({"races": [demo]}, directory)
             assert first["results"][0]["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
+            assert first["results"][0]["secondSourceId"] == "b"
+            assert first["results"][0]["alternateSourceUsed"] is False
         with patch.object(sys.modules[__name__], "collect", side_effect=AssertionError("unnecessary fetch")):
             repeat = run({"races": [demo]}, directory)
             assert repeat["results"][0]["status"] == "SKIPPED_EXISTING_CANDIDATE"
