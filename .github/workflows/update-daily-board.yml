@@ -187,53 +187,6 @@ jobs:
           python scripts/collect_historical_batch.py --self-test
           python scripts/classify_historical_candidates.py --self-test
           python scripts/build_daily_board.py --self-test
-      - name: TEMP read-only netkeirin rider statistics markup probe
-        if: github.event_name == 'pull_request'
-        run: |
-          python - <<'PY'
-          import requests
-          from bs4 import BeautifulSoup
-          url='https://keirin.netkeiba.com/race/entry/?race_id=202611233403'
-          resp=requests.get(url,headers={'User-Agent':'KEIRIN-INSIGHT-Research/1.0'},timeout=15)
-          print('STATS_PROBE_HTTP',resp.status_code,'BYTES',len(resp.content))
-          resp.raise_for_status()
-          soup=BeautifulSoup(resp.text,'html.parser')
-          print('STATS_PROBE_TITLE',soup.title.get_text(' ',strip=True)[:150] if soup.title else '')
-          for table in soup.select('table')[:8]:
-              headers=[x.get_text(' ',strip=True) for x in table.select('thead th,th')][:24]
-              print('STATS_TABLE',str(table.get('class'))[:150], 'HEADERS',headers)
-              for tr in table.select('tr')[:3]:
-                  print('STATS_ROW',str(tr.get('class'))[:100],tr.get_text(' | ',strip=True)[:350])
-          PY
-      - name: TEMP inspect official rider stats row cell structure
-        if: github.event_name == 'pull_request'
-        run: |
-          python - <<'PY'
-          import requests
-          from bs4 import BeautifulSoup
-          soup=BeautifulSoup(requests.get('https://keirin.netkeiba.com/race/entry/?race_id=202611233403',timeout=15).text,'html.parser')
-          for table in soup.select('table.RaceCard_Table')[:2]:
-              print('RIDER_TABLE_CLASS',table.get('class'))
-              header=table.select_one('tr.Header')
-              if header:
-                  for i,cell in enumerate(header.find_all(['th','td'],recursive=False)):
-                      print('RIDER_HEAD_CELL',i,cell.get_text(' ',strip=True)[:45],cell.get('class'))
-              row=table.select_one('tr.PlayerList')
-              if row:
-                  for i,cell in enumerate(row.find_all(['td','th'],recursive=False)):
-                      print('RIDER_DATA_CELL',i,cell.get_text(' ',strip=True)[:65],cell.get('class'))
-          PY
-      - name: TEMP live source-checked rider statistics preview
-        if: github.event_name == 'pull_request'
-        run: |
-          cp daily-board-feed-v1.json /tmp/ki-stat-preview.json
-          python scripts/enrich_daily_rider_stats.py --feed /tmp/ki-stat-preview.json --cache /tmp/ki-stat-cache.json --limit 4
-          python - <<'PY'
-          import json
-          d=json.load(open('/tmp/ki-stat-preview.json',encoding='utf-8'))
-          hits=[(r['key'],len([e for e in r['entries'] if e.get('riderStats')])) for r in d['races'] if r.get('riderStatsSource')]
-          print('RIDER_STATS_LIVE_PREVIEW',hits[:8])
-          PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
@@ -448,10 +401,13 @@ jobs:
       - name: Enrich daily start times using the original racecard sources
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
         run: python scripts/enrich_daily_start_times.py --limit 36
+      - name: Enrich rider statistics only for complete identity-matched racecards
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
+        run: python scripts/enrich_daily_rider_stats.py --limit 8
       - name: Commit changed daily feed only
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
         run: |
-          git add daily-board-feed-v1.json daily-race-start-times-v1.json
+          git add daily-board-feed-v1.json daily-race-start-times-v1.json daily-rider-stats-v1.json
           if git diff --cached --quiet; then
             echo 'Daily feed unchanged; no commit or duplicate validation.'
             exit 0
