@@ -34,7 +34,7 @@ def discover(list_html, track, loader):
     for anchor in doc.select("a[href]"):
         url = race_link(LIST_URL, anchor.get("href"))
         label = norm(anchor.get_text(" ", strip=True))
-        if url and track in label and re.search(r"(?<!\\d)1\\s*R(?!\\d)", label):
+        if url and track in label and re.search(r"(?<!\d)1\s*R(?!\d)", label):
             starts.append(url)
     if not starts:
         raise ValueError("Venue 1R not found on current public race list")
@@ -48,7 +48,7 @@ def discover(list_html, track, loader):
     urls = {1: first}
     for a in nav.select("a[href]"):
         label = norm(a.get_text(" ", strip=True))
-        m = re.match(r"^(\\d{1,2})\\s*R(?:\\s|$)", label)
+        m = re.match(r"^(\d{1,2})\s*R(?:\s|$)", label)
         url = race_link(first, a.get("href"))
         if not m or not url:
             continue
@@ -87,7 +87,7 @@ def main():
     if not (a.track_code.isdigit() and 1 <= int(a.track_code) <= 99):
         raise ValueError("Invalid track code")
     data, failed = collect(a.date, a.track, a.track_code, fetch(LIST_URL), fetch)
-    Path(a.out).write_text(json.dumps(data, ensure_ascii=False, indent=2)+"\\n", encoding="utf-8")
+    Path(a.out).write_text(json.dumps(data, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
     print(json.dumps({"status": "PREVIEW_ONLY", "races": len(set(
         x["race"] for x in data["entries"])), "entries": len(data["entries"]),
         "failed": failed, "out": a.out}, ensure_ascii=False))
