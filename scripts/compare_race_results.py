@@ -69,6 +69,17 @@ def normalized_race(observation):
     return values
 
 
+def canonical_method(value):
+    """Normalize only established keirin decision-word equivalents."""
+    raw = clean(value)
+    return {
+        "差し": "差", "差": "差",
+        "捲り": "捲", "捲": "捲",
+        "逃げ": "逃", "逃": "逃",
+        "マーク": "ク", "ク": "ク",
+    }.get(raw, raw)
+
+
 def normalized_results(observation, expected):
     rows = observation.get("results")
     if not isinstance(rows, list) or len(rows) != expected:
@@ -87,6 +98,7 @@ def normalized_results(observation, expected):
         attrs = {field: clean(r.get(field)) for field in RIDER_FIELDS}
         attrs["name"] = normalized_name(attrs["name"])
         attrs["period"] = re.sub(r"期$", "", attrs["period"])
+        attrs["method"] = canonical_method(attrs["method"])
         if not attrs["name"] or not attrs["prefecture"] or not attrs["period"].isdigit():
             raise ValueError("Unidentified rider in result observation")
         finish, ex = attrs["finish"], attrs["exception"]
@@ -166,6 +178,7 @@ def self_test():
                     results=[dict(x) for x in rows])
     a, b = observation("https://source-a.example/r", "a"), observation(
         "https://source-b.example/r", "b")
+    b["results"][0]["method"] = "差し"
     assert compare({"observations": [a, b]})["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
     b["results"][0]["finish"] = "2"
     b["results"][1]["finish"] = "1"
