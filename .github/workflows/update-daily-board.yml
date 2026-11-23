@@ -553,7 +553,11 @@ jobs:
             echo 'Daily feed unchanged; no commit or duplicate validation.'
             exit 0
           fi
-          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Update daily entries and results snapshot [skip ci]'
+          # Rebase replays this bot commit and requires a committer identity too.
+          # Repository-local configuration; do not change the runner's global Git settings.
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Update daily entries and results snapshot [skip ci]'
           # Other authorized tasks may update main during this job. Replay only
           # this three-feed commit on the current main; never force-push.
           for attempt in 1 2 3; do
