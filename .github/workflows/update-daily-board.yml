@@ -184,6 +184,24 @@ jobs:
           python scripts/collect_historical_batch.py --self-test
           python scripts/classify_historical_candidates.py --self-test
           python scripts/build_daily_board.py --self-test
+      - name: TEMP read-only netkeirin rider statistics markup probe
+        if: github.event_name == 'pull_request'
+        run: |
+          python - <<'PY'
+          import requests
+          from bs4 import BeautifulSoup
+          url='https://keirin.netkeiba.com/race/entry/?race_id=202611233403'
+          resp=requests.get(url,headers={'User-Agent':'KEIRIN-INSIGHT-Research/1.0'},timeout=15)
+          print('STATS_PROBE_HTTP',resp.status_code,'BYTES',len(resp.content))
+          resp.raise_for_status()
+          soup=BeautifulSoup(resp.text,'html.parser')
+          print('STATS_PROBE_TITLE',soup.title.get_text(' ',strip=True)[:150] if soup.title else '')
+          for table in soup.select('table')[:8]:
+              headers=[x.get_text(' ',strip=True) for x in table.select('thead th,th')][:24]
+              print('STATS_TABLE',str(table.get('class'))[:150], 'HEADERS',headers)
+              for tr in table.select('tr')[:3]:
+                  print('STATS_ROW',str(tr.get('class'))[:100],tr.get_text(' | ',strip=True)[:350])
+          PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
