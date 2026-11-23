@@ -16,6 +16,7 @@ on:
     paths:
       - 'index.html'
       - 'daily-board.html'
+      - 'scripts/test_daily_board_ui.js'
       - 'site-ui.css'
       - 'scripts/collect_chariloto_entry.py'
       - 'scripts/probe_daily_source.py'
@@ -164,6 +165,8 @@ jobs:
           assert 'verified-publication-guard-v138.js' in Path('index.html').read_text()
           print('PUBLISHING_GUARD_AND_DAILY_FEED_REFERENCE_OK')
           PY
+      - name: Check source-grounded line grouping and result rankings
+        run: node scripts/test_daily_board_ui.js
       - name: Check daily intake script syntax
         run: |
           python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py scripts/collect_historical_pair.py scripts/collect_historical_batch.py scripts/classify_historical_candidates.py scripts/auto_daily_tospo_intake.py scripts/auto_daily_results.py
