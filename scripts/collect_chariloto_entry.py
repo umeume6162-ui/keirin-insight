@@ -76,7 +76,7 @@ def main():
         if [v["number"] for v in actual]!=list(range(1,8)):
             raise ValueError("self test did not preserve seven cars")
         try:
-            parse_entries(html.replace("<tr><td>7</td>", "<tr><td>8</td>"),"2026-11-23","26","西武園",1,"https://example.org/race")
+            parse_entries(html.replace("<tr><td>7</td>", "<tr><td>6</td>"),"2026-11-23","26","西武園",1,"https://example.org/race")
         except ValueError:
             pass
         else:
