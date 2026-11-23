@@ -137,7 +137,9 @@ def self_test():
         if "GOOGLE_SERVICE_ACCOUNT_JSON" not in os.environ:
             raise AssertionError("Missing credential accepted")
     race_list = ('<a href="/list/race/a">FⅠ 静岡 1R</a>'
-                 '<a href="/list/race/b">FⅡ 松山 1R</a>')
+                 '<a href="/list/race/b">FⅡ 松山 1R</a>'
+                 '<a href="/list/race/c">FⅡ 前橋 1R</a>'
+                 '<a href="/list/race/d">FⅡ 奈良 1R</a>')
     def fake_collect(day, track, code, html, loader):
         rows = [{"date": day, "track": track, "trackCode": code,
                  "race": race, "number": car, "name": "選手"}
@@ -159,16 +161,16 @@ def self_test():
           patch.object(mod, "apply", side_effect=fake_apply),
           patch.object(mod, "verify_approved_editor", return_value=None)):
         result = run("2026-11-24", race_list, max_venues=43, write=True)
-    assert result["listedVenues"] == 2 and result["counts"]["races"] == 24
+    assert result["listedVenues"] == 4 and result["counts"]["races"] == 48
     by_track = {x["track"]: x for x in result["venues"]}
     assert by_track["静岡"]["saved"] and not by_track["松山"]["saved"]
-    assert result["counts"]["new"] == 84 and not result["coverageComplete"]
+    assert result["counts"]["new"] == 252 and not result["coverageComplete"]
     assert observed.count(("静岡", True)) == 1
     assert observed.count(("静岡", False)) == 1
     assert observed.count(("松山", True)) == 1
     assert ("松山", False) not in observed
     assert run("2026-11-24", "<p>no race links</p>")["status"] == "INDEX_UNAVAILABLE_OR_EMPTY"
-    print("SELF_TEST_OK: 24R across venues, isolated write, conflict skip and incomplete coverage")
+    print("SELF_TEST_OK: 48R across four venues, isolated writes, conflict skip and incomplete coverage")
 
 
 def main():
