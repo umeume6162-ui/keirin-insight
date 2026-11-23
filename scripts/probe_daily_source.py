@@ -35,10 +35,21 @@ def run(name,url):
         soup=BeautifulSoup(r.text,"html.parser")
         txt=soup.get_text(" ",strip=True)
         headings=[x.get_text(" ",strip=True).replace(" ","")[:25] for x in soup.select("th")[:12]]
+        row_shapes=[]
+        for table in soup.select("table"):
+            th=" ".join(x.get_text(" ",strip=True) for x in table.select("th")[:30])
+            if "車番" not in th or "選手名" not in th:
+                continue
+            for tr in table.select("tr")[:4]:
+                cells=tr.find_all(["th","td"],recursive=False)
+                row_shapes.append({"tags":["th" if c.name=="th" else "td" for c in cells[:9]],
+                                   "text":[c.get_text(" ",strip=True)[:36] for c in cells[:9]]})
+            break
         return {"source":name,"status":"page_read","bytes":len(r.content),
                 "textChars":len(txt),"tableCount":len(soup.select("table")),
                 "raceTextPresent":("西武園" in txt),"riderMarkerPresent":("山崎" in txt),
-                "nameHeadingPresent":("選手名" in txt),"headings":headings}
+                "nameHeadingPresent":("選手名" in txt),"headings":headings,
+                "raceRowShapes":row_shapes}
     except requests.RequestException as e:
         return {"source":name,"status":"network_error","type":type(e).__name__}
 if __name__=="__main__":
