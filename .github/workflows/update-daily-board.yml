@@ -113,9 +113,6 @@ jobs:
           python scripts/collect_lotoplace_result.py --self-test
           python scripts/collect_historical_batch.py --self-test
           python scripts/build_daily_board.py --self-test
-      - name: TEMP candidate replay integrity regression
-        if: github.event_name == 'pull_request'
-        run: python scripts/collect_historical_batch.py --self-test
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
