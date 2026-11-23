@@ -93,21 +93,28 @@ def extract(html, day, code, track, race, class_name, cars, url):
     if (track + "競輪" not in title or stamp not in title
             or not re.search(rf"(?<!\d){int(race)}R(?!\d)", title)):
         raise ValueError("Race date/venue not found in title")
-    entry, eidx = exact_table(soup, ("車番", "選手名府県/年齢/期別", "級班", "直近4ヶ月の成績"))
+    entry, _ = exact_table(soup, ("車番", "選手名府県/年齢/期別", "級班", "直近4ヶ月の成績"))
     expected = {}
     for tr in entry.find_all("tr")[1:]:
         cells = tr.find_all("td", recursive=False)
-        if len(cells) <= max(eidx.values()):
-            continue
-        car = compact(cells[eidx["車番"]].get_text(" ", strip=True))
+        # The public table omits an empty prediction cell for some riders.
+        # Anchor to the source-labelled identity cell, not a fragile td index.
+        identities = [i for i, cell in enumerate(cells)
+                      if re.fullmatch(r".+/\\d{1,3}/\\d{2,3}",
+                                      compact(cell.get_text(" ", strip=True)))]
+        if not identities:
+            continue  # heading/guide/footer row, not a rider
+        if len(identities) != 1 or identities[0] == 0 or identities[0] + 1 >= len(cells):
+            raise ValueError("Ambiguous rider identity in racecard")
+        i = identities[0]
+        car = compact(cells[i - 1].get_text(" ", strip=True))
         if not car.isdigit() or not 1 <= int(car) <= cars:
-            continue
+            raise ValueError("Invalid car number adjacent to rider identity")
         num = int(car)
         if num in expected:
             raise ValueError("Duplicate car in racecard")
-        name, pref, period = parse_identity(
-            cells[eidx["選手名府県/年齢/期別"]].get_text(" ", strip=True))
-        grade = compact(cells[eidx["級班"]].get_text(" ", strip=True))
+        name, pref, period = parse_identity(cells[i].get_text(" ", strip=True))
+        grade = compact(cells[i + 1].get_text(" ", strip=True))
         if not grade_matches(grade, class_name):
             raise ValueError("Rider class conflicts with requested race class")
         expected[num] = (normalized_name(name), normalized_prefecture(pref), period)
