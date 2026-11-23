@@ -4,6 +4,7 @@ on:
     paths:
       - 'scripts/collect_chariloto_entry.py'
       - 'scripts/probe_daily_source.py'
+      - 'scripts/collect_tospo_entry.py'
       - 'scripts/upsert_daily_sheets.py'
       - 'scripts/build_daily_board.py'
       - '.github/workflows/update-daily-board.yml'
@@ -38,13 +39,18 @@ jobs:
         run: pip install 'google-auth==2.38.0' 'requests==2.32.3' 'beautifulsoup4==4.14.2'
       - name: Check daily intake script syntax
         run: |
-          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py
+          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py
           python scripts/collect_chariloto_entry.py --self-test
+          python scripts/collect_tospo_entry.py --self-test
           python scripts/build_daily_board.py --self-test
       - name: Safe preview of one public racecard (not a save)
         if: github.event_name == 'pull_request'
         continue-on-error: true
         run: python scripts/collect_chariloto_entry.py --date 2026-11-23 --track-code 26 --track 西武園 --race 1
+      - name: Read-only one-race Tokyo Sports 7-car preview
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: python scripts/collect_tospo_entry.py --date 2026-11-23 --track-code 26 --track 西武園 --race 1 --url https://keirin.tokyo-sports.co.jp/list/race/20261122_31332
       - name: Compare other permitted live racecard sources (read only)
         if: github.event_name == 'pull_request'
         continue-on-error: true
