@@ -118,7 +118,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check read-only Sheets credential
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[verify-sheets-writer]') || contains(github.event.head_commit.message, '[refresh-daily-feed]')))
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[verify-sheets-writer]') || contains(github.event.head_commit.message, '[refresh-daily-feed]') || contains(github.event.head_commit.message, '[collect-daily-results]')))
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
@@ -403,8 +403,10 @@ jobs:
       # Stored racecards are independently eligible for result retries. Even if
       # today's venue-index fetch fails, keep this step running and retain the
       # earlier step's failure status; never mark the workflow as successful.
+      # One explicitly tagged main push may retry bounded, guarded results without
+      # re-running entry collection. Never enable this for PRs or ordinary pushes.
       - name: Collect two-source daily results for completed stored races
-        if: ${{ !cancelled() && github.event_name == 'schedule' }}
+        if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))) }}
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
@@ -489,7 +491,7 @@ jobs:
               out.write("\n".join(rows) + "\n")
           PY
       - name: Build daily board
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/build_daily_board.py --out daily-board-feed-v1.json
@@ -503,7 +505,7 @@ jobs:
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
         run: python scripts/enrich_daily_rider_stats.py --limit 8
       - name: Commit changed daily feed only
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))
         run: |
           git add daily-board-feed-v1.json daily-race-start-times-v1.json daily-rider-stats-v1.json
           if git diff --cached --quiet; then
