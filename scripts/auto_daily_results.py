@@ -133,11 +133,31 @@ def candidate(key, rows, collect_fn=collect):
             "sourceNote": "Content matched on two sites, upstream independence not verified"}
 
 
+def select_rotating_races(eligible, limit, now=None):
+    """Spread bounded attempts across eligible races instead of retrying the first N.
+
+    Four scheduled daily runs use different five-hour windows (07/12/17/22 JST).
+    Rotate without wrapping within a single attempt; a later run gets the next
+    block, including when an earlier source remains unavailable.
+    """
+    if not 1 <= limit <= 20:
+        raise ValueError("limit must be 1..20")
+    if not eligible:
+        return []
+    now = now or datetime.now(JST)
+    # The schedule runs at 07:10, 12:10, 17:10 and 22:10 JST.
+    slot = ((now.hour - 7) % 24) // 5
+    blocks = (len(eligible) + limit - 1) // limit
+    index = ((now.date().toordinal() * 4) + slot) % blocks
+    first = index * limit
+    return eligible[first:first + limit]
+
+
 def process(entries, results, start, end, limit=4, write=False,
             collect_fn=collect, apply_fn=apply):
     if not 1 <= limit <= 20:
         raise ValueError("limit must be 1..20")
-    selected = eligible_races(entries, results, start, end)[:limit]
+    selected = select_rotating_races(eligible_races(entries, results, start, end), limit)
     reports = []
     for key, rows in selected:
         item = {"raceKey": key, "saved": False}
@@ -204,6 +224,16 @@ def self_test():
     assert summary["results"][0]["status"] == "SOURCE_OR_IDENTITY_REVIEW_NO_WRITE"
     assert calls == [True]
     assert eligible_races(records, [[""] * 14 + ["2026-11-23|26|1"]], start, start) == []
+    # Repeated source failures at the start of the backlog must not starve later races.
+    rotation = [(f"race-{i}", []) for i in range(13)]
+    day0 = datetime(2026, 11, 23, 7, 10, tzinfo=JST)
+    batches = [select_rotating_races(rotation, 4, day0.replace(hour=h))
+               for h in (7, 12, 17, 22)]
+    assert all(1 <= len(batch) <= 4 for batch in batches)
+    assert len({k for batch in batches for k, _ in batch}) == 13
+    assert select_rotating_races([], 4) == []
+    assert [k for k, _ in select_rotating_races(rotation, 4, day0)] == [
+        k for k, _ in select_rotating_races(rotation, 4, day0)]
     print("SELF_TEST_OK: seven-car two-source result intake, identity guard and duplicate skip")
 
 
