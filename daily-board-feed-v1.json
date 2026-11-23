@@ -5,7 +5,7 @@
   "windowEnd": "2026-11-25",
   "sourceLatest": {
     "entries": "2026-11-24",
-    "results": "2026-11-05"
+    "results": "2026-11-23"
   },
   "verification": "source_sheet_unverified_do_not_treat_as_formal_PASS",
   "races": [
@@ -255,8 +255,79 @@
           "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
         }
       ],
-      "results": [],
-      "status": "entry_only",
+      "results": [
+        {
+          "number": 2,
+          "name": "国井 裕樹",
+          "prefecture": "神奈川",
+          "period": "113",
+          "finish": "1",
+          "method": "逃",
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611232601"
+        },
+        {
+          "number": 1,
+          "name": "山崎 光展",
+          "prefecture": "京都",
+          "period": "93",
+          "finish": "2",
+          "method": "差",
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611232601"
+        },
+        {
+          "number": 7,
+          "name": "中川 博文",
+          "prefecture": "福井",
+          "period": "61",
+          "finish": "3",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611232601"
+        },
+        {
+          "number": 3,
+          "name": "市川 博章",
+          "prefecture": "静岡",
+          "period": "80",
+          "finish": "4",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611232601"
+        },
+        {
+          "number": 5,
+          "name": "柴田 健",
+          "prefecture": "神奈川",
+          "period": "71",
+          "finish": "5",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611232601"
+        },
+        {
+          "number": 4,
+          "name": "高瀬 卓",
+          "prefecture": "埼玉",
+          "period": "87",
+          "finish": "6",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611232601"
+        },
+        {
+          "number": 6,
+          "name": "落合 豊",
+          "prefecture": "茨城",
+          "period": "69",
+          "finish": "7",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611232601"
+        }
+      ],
+      "status": "results_recorded",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
       "expectedCount": 7
@@ -2953,6 +3024,6 @@
   "summary": {
     "races": 35,
     "entries": 245,
-    "resultRows": 0
+    "resultRows": 7
   }
 }
