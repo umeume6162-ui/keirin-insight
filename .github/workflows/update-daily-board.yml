@@ -531,21 +531,21 @@ jobs:
               out.write("\n".join(rows) + "\n")
           PY
       - name: Build daily board
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))
+        if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))) }}
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/build_daily_board.py --out daily-board-feed-v1.json
       # Source identity and full rider field must agree before exposing startTime.
       - name: Enrich daily start times using the original racecard sources
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
+        if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))) }}
         run: python scripts/enrich_daily_start_times.py --limit 36
       # Single-source last-four-month stats remain unverified, never formal PASS.
       # Missing full rider identity or numeric S/B must remain on a bounded retry hold.
       - name: Enrich rider statistics only for complete identity-matched racecards
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
+        if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))) }}
         run: python scripts/enrich_daily_rider_stats.py --limit 8
       - name: Commit changed daily feed only
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))
+        if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))) }}
         run: |
           git add daily-board-feed-v1.json daily-race-start-times-v1.json daily-rider-stats-v1.json
           if git diff --cached --quiet; then
