@@ -214,6 +214,16 @@ jobs:
           rows = normalized_results(obs, cars)
           assert len(rows) == cars
           print("KDREAMS_LIVE_OBSERVATION_OK", obs["sourceId"], len(rows), obs["race"]["date"])
+          import collect_netkeirin_result as netkeirin
+          from compare_race_results import compare
+          net_url = "https://keirin.netkeiba.com/race/result/?race_id=202611236101"
+          net = netkeirin.extract(netkeirin.fetch(net_url), day, code, track,
+                                 race, cls, cars, net_url)
+          actual = compare({"observations": [obs, net]})
+          assert actual["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
+          assert not actual["disagreements"] and actual["formalPass"] is False
+          print("KDREAMS_NETKEIRIN_FULL_MATCH", actual["carCount"],
+                len(actual["disagreements"]), actual["formalPass"])
           from collect_historical_pair import collect_auto
           try:
               pair = collect_auto(day, code, track, race, cls, cars)
