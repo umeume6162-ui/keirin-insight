@@ -9,8 +9,8 @@
 - **このチャットの担当**：日次開催・出走表・結果の収集元確保、GitHubからGoogleへのupsert、日次JSONの更新、サイト表示、稼働監視、GASからの段階的移行。
 - **既存自動タスクの担当**：選手IDと過去レース/発走前ラインの照合、既存2集計JSONの同期。手動の過去照合へ戻さない。
 - **Googleに作成済み（日次保存先・まだヘッダのみ）**：`KI｜日次出走表`（sheetId `2101100610`）、`KI｜日次結果`（sheetId `2101100611`）。
-- **実装済み**：`daily-board.html`、`daily-board-feed-v1.json`、`scripts/build_daily_board.py`、`.github/workflows/update-daily-board.yml`。現在のJSON生成は旧Sheetsを**読取専用**で使用。新2タブへの収集/書込と新タブからの配信は未完成。ワークフローの存在は実行成功・最新データ取得を意味しない。
-- **次の着手点**：日次データソース確認 → GitHubから新2タブへの書込権限・upsert検証 → 1開催の収集から画面反映まで実証 → 全開催へ拡張。GAS本体とトリガーの依存関係が確認できるまで旧処理を停止しない。
+- **実装済み（動作未実証部分あり）**：`daily-board.html`、`daily-board-feed-v1.json`、`scripts/build_daily_board.py`（新日次2タブ優先＋旧Sheetsフォールバック）、`scripts/upsert_daily_sheets.py`（検証/差分upsert、既定dry-run）、`.github/workflows/update-daily-board.yml`（読取配信用定期処理）。**外部データの自動収集・Google新2タブへの実書込・公開画面の最新データ表示は未完成／未確認**。ワークフロー設置は運用成功の証明ではない。
+- **次の着手点**：取得可能な公開データ源で当日の1開催・全車の実出走表を取得 → 入力JSON生成・`--validate-only` → Google Sheets書込権限検証 → `--apply`で対象保存・再読 → 日次JSON/サイトを確認 → 全開催へ拡張。GAS本体とトリガーの依存関係が確認できるまで旧処理を停止しない。
 - **重要な別系統障害**：2026-11-23のGitHub Actionsログで従来の`scripts/build_feeds.py`にSyntaxError（line 208）。最新mainでの修復・再実行成功は未確認。影響を切り分けて対処。
 
 ## 品質・引き継ぎ
