@@ -302,6 +302,7 @@ def self_test():
     alt_report = process(records, [], start, start, collect_fn=lambda *a: alternate,
                          apply_fn=pretend_apply)
     assert alt_report["results"][0]["alternateSourceUsed"] is True
+    calls.pop()  # restore the original one-write expectation for the following identity test
     broken = [list(x) for x in records]
     broken[0][6] = "別人"
     summary = process(broken, [], start, start, collect_fn=lambda *a: actual,
