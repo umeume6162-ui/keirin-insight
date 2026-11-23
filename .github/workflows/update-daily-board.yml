@@ -200,6 +200,10 @@ jobs:
           python scripts/classify_historical_candidates.py --self-test
           python scripts/audit_v99_race_shape.py --self-test
           python scripts/build_daily_board.py --self-test
+      # One-off, read-only source layout research; no Google credentials or result writes.
+      - name: Inspect two public result layouts (research PR only)
+        if: github.event_name == 'pull_request' && github.head_ref == 'research/probe-public-result-layout-20261123'
+        run: python scripts/probe_public_result_layout.py
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
