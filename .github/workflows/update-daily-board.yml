@@ -4,6 +4,7 @@ on:
     paths:
       - 'scripts/discover_tospo_races.py'
       - 'scripts/auto_daily_tospo_intake.py'
+      - 'scripts/auto_daily_results.py'
       - '.github/workflows/update-daily-board.yml'
       - 'scripts/compare_race_results.py'
       - 'scripts/collect_netkeirin_result.py'
@@ -21,6 +22,7 @@ on:
       - 'scripts/collect_tospo_entry.py'
       - 'scripts/discover_tospo_races.py'
       - 'scripts/auto_daily_tospo_intake.py'
+      - 'scripts/auto_daily_results.py'
       - 'scripts/compare_race_results.py'
       - 'scripts/collect_netkeirin_result.py'
       - 'scripts/collect_lotoplace_result.py'
@@ -164,11 +166,12 @@ jobs:
           PY
       - name: Check daily intake script syntax
         run: |
-          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py scripts/collect_historical_pair.py scripts/collect_historical_batch.py scripts/classify_historical_candidates.py scripts/auto_daily_tospo_intake.py
+          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py scripts/collect_historical_pair.py scripts/collect_historical_batch.py scripts/classify_historical_candidates.py scripts/auto_daily_tospo_intake.py scripts/auto_daily_results.py
           python scripts/collect_chariloto_entry.py --self-test
           python scripts/collect_tospo_entry.py --self-test
           python scripts/discover_tospo_races.py --self-test
           python scripts/auto_daily_tospo_intake.py --self-test
+          python scripts/auto_daily_results.py --self-test
           python scripts/compare_race_results.py --self-test
           python scripts/collect_netkeirin_result.py --self-test
           python scripts/collect_lotoplace_result.py --self-test
@@ -374,6 +377,12 @@ jobs:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
           python scripts/auto_daily_tospo_intake.py --apply --days 2 --max-venues 43
+      - name: TEMP live today Seibuen 1R two-source result preview (no writes)
+        if: github.event_name == 'pull_request'
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python scripts/auto_daily_results.py --date 2026-11-23 --max-races 1
       - name: Build daily board
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
         env:
