@@ -176,6 +176,20 @@ assert.equal(matsuyama1.fieldVerification.resultFields.differences,0);
 assert.deepEqual(matsuyama1.preRaceFormation.groups,[[1,7,3],[6],[2,4,5]]);
 assert.equal(new Set(matsuyama1.preRaceFormation.groups.flat()).size,7);
 assert.equal(matsuyama1.payout,'OPTIONAL_ORIGINAL_PAYOUT_DIFFERENCE_NOT_PASS_BLOCKER');
+// Matsuyama 2R: all seven riders and ten archived fields/record agree, with five pre-race groups.
+const matsuyama2=JSON.parse(fs.readFileSync(path.join(base,'2026-10-05_75_2.research.json'),'utf8'));
+const mat2=check(matsuyama2);
+assert.equal(mat2.structuralOk,true,JSON.stringify(mat2.errors));
+assert.equal(mat2.documentedResultRows,7);
+assert.equal(mat2.numericFinishers,7);
+assert.deepEqual(mat2.missingFromResult,[]);
+assert.equal(mat2.publicationPassed,false,'structural proof never auto-publishes');
+assert.equal(matsuyama2.audit.publicationPass,true);
+assert.equal(matsuyama2.fieldVerification.resultFields.fieldComparisons,70);
+assert.equal(matsuyama2.fieldVerification.resultFields.corePublicationComparisons,49);
+assert.equal(matsuyama2.fieldVerification.resultFields.differences,0);
+assert.deepEqual(matsuyama2.preRaceFormation.groups,[[7,2],[1],[3,5],[4],[6]]);
+assert.equal(new Set(matsuyama2.preRaceFormation.groups.flat()).size,7);
 // Five numeric places plus fall/disqualification must be retained without ranking the exceptions.
 const r4=check(load(4));
 assert.equal(r4.structuralOk,true,JSON.stringify(r4.errors));
