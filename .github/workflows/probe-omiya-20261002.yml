@@ -66,6 +66,22 @@ jobs:
                       row=got.get(1)
                       print('OMIYA_RACE3_CONFLICT',key,'observed',json.dumps(row,ensure_ascii=False),
                             'stored',json.dumps([z for z in base[str(race)] if z['number']==1],ensure_ascii=False))
+                      # Normalize ONLY the proven short form 失 -> 失格. Keep the
+                      # raw V99 original and the published source as separate evidence.
+                      normalize_status=lambda s: {'失':'失格'}.get(str(s or ''),str(s or ''))
+                      canonical_diffs=[]
+                      for saved in base[str(race)]:
+                          actual=got.get(saved['number'])
+                          if not actual:
+                              canonical_diffs.append((saved['number'],'missing'));continue
+                          for field,normal in (('name',normalized_name),('prefecture',normalized_prefecture),
+                               ('period',str),('finish',normalize_status),
+                               ('method',canonical_method),('exception',normalize_status)):
+                              if normal(actual.get(field,''))!=normal(saved[field]):
+                                  canonical_diffs.append((saved['number'],field))
+                      print('OMIYA_RACE3_CANONICAL',key,'PASS' if not canonical_diffs else 'HOLD',
+                            'cars',len(got),'mismatchCount',len(canonical_diffs),'details',canonical_diffs)
+
               except Exception as exc:
                   print('OMIYA_V99_HOLD',key,type(exc).__name__,str(exc)[:120])
           PY
