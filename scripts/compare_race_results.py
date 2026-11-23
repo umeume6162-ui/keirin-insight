@@ -206,6 +206,34 @@ def self_test():
         pass
     else:
         raise AssertionError("Same-domain duplication accepted")
+    # Real publicly listed 2026-09-10 Keio-kaku 2R result: 7 finishers.
+    # This fixture checks representation differences only, not source independence.
+    actual = [
+        (3, "田村光昭", "広島", "67", "1", "差"),
+        (4, "篠田樹", "大分", "113", "2", "捲"),
+        (5, "齋藤仁", "徳島", "83", "3", ""),
+        (2, "深井高志", "東京", "63", "4", ""),
+        (1, "相樂修", "千葉", "78", "5", ""),
+        (6, "伊藤司", "福島", "83", "6", ""),
+        (7, "山内大作", "静岡", "75", "7", ""),
+    ]
+    base = {"date": "2026-09-10", "trackCode": "27", "track": "京王閣",
+            "race": 2, "className": "A3", "expectedCars": 7}
+    observed_a = {"sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202609102702",
+                  "sourceId": "netkeirin-result", "race": dict(base),
+                  "results": [{"number": c, "name": n, "prefecture": p, "period": k,
+                               "finish": rank, "method": method, "exception": ""}
+                              for c, n, p, k, rank, method in actual]}
+    observed_b = {"sourceUrl": "https://www.lotoplace.jp/keirin/results/27/2026-09-10/",
+                  "sourceId": "lotoplace-day-results", "race": dict(base),
+                  "results": [{"number": c, "name": " ".join(list(n)),
+                               "prefecture": p, "period": k, "finish": rank,
+                               "method": {"差": "差し", "捲": "捲くり"}.get(method, method),
+                               "exception": ""}
+                              for c, n, p, k, rank, method in actual]}
+    result = compare({"observations": [observed_a, observed_b]})
+    assert result["carCount"] == 7 and result["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
+    assert not result["formalPass"]
     print("SELF_TEST_OK: full-field match/conflict, missing car and same-domain guards")
 
 
