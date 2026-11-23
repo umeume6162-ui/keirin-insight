@@ -63,18 +63,26 @@ jobs:
       - name: Test source-first entry/result exception reconciliation
         run: node tools/test_reconcile_reconstructed_race.cjs
       - name: Validate acquired Matsuyama 1R and 2R source rechecks
+        if: ${{ success() || failure() }}
         run: node tools/check_legacy_rechecks.cjs
       - name: Test all previously acquired races and no implicit PASS
+        if: ${{ success() || failure() }}
         run: node tools/test_audit_all_acquired_races.cjs
       - name: Audit all prior research and comparison races
+        if: ${{ success() || failure() }}
         run: node tools/audit_all_acquired_races.cjs > /tmp/keirin-acquired-race-audit.json
       - name: Test official-primary evidence comparison (no implicit PASS)
+        if: ${{ success() || failure() }}
         run: node tools/test_audit_official_primary_candidate.cjs
       - name: Run missing-rider reconciliation tests
+        if: ${{ success() || failure() }}
         run: node tools/reconcile_race_entries.cjs
       - name: Audit formal race readiness (read-only)
+        if: ${{ success() || failure() }}
         run: node tools/audit_formal_race_readiness.cjs
       - name: Validate published feeds and two-source evidence metadata
+        if: ${{ success() || failure() }}
         run: node tools/check_publication_completeness.cjs
       - name: Check photo-based mobile result presentation contract (static)
+        if: ${{ success() || failure() }}
         run: node tools/test_mobile_result_contract.cjs
