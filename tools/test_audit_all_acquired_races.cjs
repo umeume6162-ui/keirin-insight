@@ -15,6 +15,26 @@ const e=inspectSourceFirst(exceptional);assert.equal(e.numericFinishers,6);asser
 const comparison={races:[{key:'2026-10-05|75|1',track:'松山',finishers:Array.from({length:7},(_,i)=>({number:i+1,finish:String(i+1)})),formation:{groups:[[1,2,3,4,5,6,7]]},resultSourcePair:['https://a.example/','https://b.example/']}]};
 const sum=auditAll([base],comparison);assert.equal(sum.summary.allRaces,2);assert.equal(sum.summary.resultRows,14);assert.equal(sum.summary.formalPass,0);
 assert.throws(()=>auditAll([base,base],comparison),/DUPLICATE_RACE_KEYS/);
+// Recovered research + archived legacy receipt for the SAME verified race must be linked,
+// never counted as two different races. Missing PASS evidence or differing riders remains an error.
+const linkedResearch=JSON.parse(JSON.stringify(base));
+linkedResearch.raceKey='2026-10-05|75|1';
+linkedResearch.audit={publicationPass:true};
+const linkedLegacy=JSON.parse(JSON.stringify(comparison.races[0]));
+linkedLegacy.finishers=linkedResearch.results.map(x=>({number:x.car,finish:x.finishRaw,name:x.name}));
+linkedLegacy.formalPublication={status:'PASS',key:linkedResearch.raceKey};
+const linked=auditAll([linkedResearch],{races:[linkedLegacy]});
+assert.equal(linked.summary.allRaces,1);
+assert.equal(linked.summary.evidenceRecords,2);
+assert.equal(linked.summary.linkedExistingEvidencePairs,1);
+assert.equal(linked.linkedEvidencePairs[0].key,linkedResearch.raceKey);
+assert.equal(linked.summary.formalPass,0,'read-only audit never independently promotes');
+const noProof=JSON.parse(JSON.stringify(linkedLegacy));delete noProof.formalPublication;
+assert.throws(()=>auditAll([linkedResearch],{races:[noProof]}),/DUPLICATE_RACE_KEYS/);
+const wrongRider=JSON.parse(JSON.stringify(linkedLegacy));
+wrongRider.finishers[0].name='別人';
+assert.throws(()=>auditAll([linkedResearch],{races:[wrongRider]}),/DUPLICATE_RACE_KEYS conflicting rider rows/);
+
 // Regression against real archived 2026-11-20 Nagoya 1-4R records after roster normalization.
 // These assertions verify structure ONLY and must never assert official-source provenance.
 const fs=require('node:fs'),path=require('node:path');
