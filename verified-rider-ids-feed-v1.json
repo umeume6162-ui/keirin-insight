@@ -1,10 +1,10 @@
 {
   "schema": "ki-official-rider-ids-v1",
-  "snapshotDate": "2026-11-23",
-  "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "公開選手IDの4必須項目を2掲載サイト照合 194件。各officialVerificationに証拠参照。検索キャッシュの転記と直接ライブ取得、サイトごとの上流独立性を区別。",
+  "snapshotDate": "2026-11-24",
+  "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
+  "verificationNote": "既存の2掲載元照合済み選手IDに加え、KI｜公式照合証拠・選手ID照合台帳で確認できた22名を追加。",
   "summary": {
-    "rows": 208
+    "rows": 230
   },
   "riders": [
     {
@@ -5013,6 +5013,534 @@
           "https://www.winticket.jp/keirin/cyclist/015535"
         ],
         "note": "V4 4必須項目2掲載元一致。証拠 KI｜公式照合証拠!A28:S28 (AUTO-V4-20261123-015535)。検索索引キャッシュの項目転記でありライブ取得ではない。上流データ独立性未確証。級班A1適用2026-07-01は別途履歴。"
+      }
+    },
+    {
+      "id": "015386",
+      "name": "阪本 和也",
+      "prefecture": "長崎",
+      "period": "115",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015386",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015386",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015386",
+          "https://www.winticket.jp/keirin/cyclist/015386"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-015386 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "013729",
+      "name": "堺 文人",
+      "prefecture": "和歌山",
+      "period": "85",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013729",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013729",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013729",
+          "https://www.chariloto.com/keirin_athletes/13729"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-013729 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "013235",
+      "name": "榊枝 輝文",
+      "prefecture": "福島",
+      "period": "79",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013235",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013235",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013235",
+          "https://www.yen-joy.net/racer/data/013235"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-013235 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "015961",
+      "name": "榊枝 天旺",
+      "prefecture": "福島",
+      "period": "129",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015961",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015961",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015961",
+          "https://www.winticket.jp/keirin/cyclist/015961"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-015961 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "014261",
+      "name": "作田 悦章",
+      "prefecture": "徳島",
+      "period": "92",
+      "source": "https://www.chariloto.com/keirin_athletes/14261",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.chariloto.com/keirin_athletes/14261",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.chariloto.com/keirin_athletes/14261",
+          "https://www.winticket.jp/keirin/cyclist/014261"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-014261 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "015179",
+      "name": "皿屋 豊",
+      "prefecture": "三重",
+      "period": "111",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015179",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015179",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015179",
+          "https://www.winticket.jp/keirin/cyclist/015179"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-015179 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "014268",
+      "name": "山口 貴弘",
+      "prefecture": "佐賀",
+      "period": "92",
+      "source": "https://keirin.jp/sp/racerprofile?snum=014268",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=014268",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=014268",
+          "https://www.chariloto.com/keirin_athletes/14268"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-014268 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "013615",
+      "name": "山口 貴弘",
+      "prefecture": "栃木",
+      "period": "84",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013615",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013615",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013615",
+          "https://www.winticket.jp/keirin/cyclist/013615"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-013615 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "014316",
+      "name": "山崎 光展",
+      "prefecture": "京都",
+      "period": "93",
+      "source": "https://www.chariloto.com/keirin_athletes/14316",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.chariloto.com/keirin_athletes/14316",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.chariloto.com/keirin_athletes/14316",
+          "https://www.yen-joy.net/racer/data/014316"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-014316 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "015038",
+      "name": "山岸 佳太",
+      "prefecture": "茨城",
+      "period": "107",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015038",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015038",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015038",
+          "https://www.yen-joy.net/racer/data/015038/5"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-015038 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "015451",
+      "name": "山口 拳矢",
+      "prefecture": "岐阜",
+      "period": "117",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015451",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015451",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015451",
+          "https://www.chariloto.com/keirin_athletes/15451"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-015451 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "014551",
+      "name": "山下 一輝",
+      "prefecture": "山口",
+      "period": "96",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014551",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014551",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014551",
+          "https://www.winticket.jp/keirin/cyclist/014551"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-014551 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "014138",
+      "name": "山下 渡",
+      "prefecture": "茨城",
+      "period": "91",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014138",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014138",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014138",
+          "https://www.winticket.jp/keirin/cyclist/014138"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-014138 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "015805",
+      "name": "山下 祐輔",
+      "prefecture": "千葉",
+      "period": "125",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015805",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015805",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015805",
+          "https://www.winticket.jp/keirin/cyclist/015805"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-015805 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "014554",
+      "name": "山形 一気",
+      "prefecture": "徳島",
+      "period": "96",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014554",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014554",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014554",
+          "https://www.yen-joy.net/racer/data/014554/0"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-014554 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "013514",
+      "name": "山口 貴嗣",
+      "prefecture": "福岡",
+      "period": "82",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013514",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013514",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013514",
+          "https://www.chariloto.com/keirin_athletes/13514"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-013514 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "015608",
+      "name": "山口 多聞",
+      "prefecture": "埼玉",
+      "period": "121",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015608",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015608",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015608",
+          "https://www.yen-joy.net/racer/data/015608"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261123-PAIR-015608 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "012450",
+      "name": "山口 富生",
+      "prefecture": "岐阜",
+      "period": "68",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=012450",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=012450",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=012450",
+          "https://www.yen-joy.net/racer/data/012450"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261124-PAIR-012450 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "015546",
+      "name": "山根 将太",
+      "prefecture": "岡山",
+      "period": "119",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015546",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015546",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015546",
+          "https://www.yen-joy.net/racer/data/015546"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261124-PAIR-015546 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "013920",
+      "name": "山崎 芳仁",
+      "prefecture": "福島",
+      "period": "88",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013920",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013920",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013920",
+          "https://www.yen-joy.net/racer/data/013920/2"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261124-PAIR-013920 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "014108",
+      "name": "山中 貴雄",
+      "prefecture": "高知",
+      "period": "90",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014108",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014108",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014108",
+          "https://www.chariloto.com/keirin_athletes/14108"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261124-PAIR-014108 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
+      }
+    },
+    {
+      "id": "014317",
+      "name": "山田 久徳",
+      "prefecture": "京都",
+      "period": "93",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014317",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014317",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014317",
+          "https://www.winticket.jp/keirin/cyclist/014317"
+        ],
+        "note": "既存証拠 MANUAL-V4-20261124-PAIR-014317 と元選手ID照合台帳の公式照合済みを再読・突合。別掲載元2サイト全4項目一致。正式公開への登録。"
       }
     }
   ],
