@@ -14,6 +14,7 @@ from datetime import date
 from pathlib import Path
 
 from collect_historical_pair import collect
+from compare_race_results import compare
 
 MAX_BATCH = 10
 ALLOWED_CLASSES = {"A3", "A1A2", "A1", "A2", "S", "S1", "S2", "L1"}
@@ -85,8 +86,15 @@ def run(plan, output):
                         and result.get("carCount") == row["expectedCars"]
                         and isinstance(existing.get("observations"), list)
                         and len(existing["observations"]) == 2):
-                    processed.append({"raceKey": key, "status": "SKIPPED_EXISTING_CANDIDATE"})
-                    continue
+                    verified = compare({"observations": existing["observations"]})
+                    # Recompute the result from the stored rows; do not trust a
+                    # claimed previous comparison or an attacker-edited summary.
+                    if verified == result:
+                        observed_race = existing["observations"][0]["race"]
+                        if (observed_race["track"] == row["track"]
+                                and observed_race["className"] == row["className"]):
+                            processed.append({"raceKey": key, "status": "SKIPPED_EXISTING_CANDIDATE"})
+                            continue
             except (OSError, ValueError, AttributeError):
                 pass
             processed.append({"raceKey": key, "status": "EXISTING_FILE_CONFLICT_REVIEW"})
@@ -128,6 +136,33 @@ def self_test():
     else:
         raise AssertionError("Duplicate key accepted")
     assert digest_spec(demo) == digest_spec(dict(demo))
+    from unittest.mock import patch
+    from tempfile import TemporaryDirectory
+    rows = [{"number": i, "name": f"選手{i}", "prefecture": "京都",
+             "period": "93", "finish": str(i), "method": "", "exception": ""}
+            for i in range(1, 8)]
+    def make_obs(url, sid):
+        return {"sourceUrl": url, "sourceId": sid,
+                "race": dict(demo), "results": [dict(r) for r in rows]}
+    a = make_obs("https://one.example/r", "a")
+    b = make_obs("https://two.example/r", "b")
+    valid = {"observations": [a, b],
+             "comparison": compare({"observations": [a, b]})}
+    with TemporaryDirectory() as directory:
+        with patch("collect_historical_batch.collect", return_value=valid):
+            first = run({"races": [demo]}, directory)
+            assert first["results"][0]["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
+        with patch("collect_historical_batch.collect", side_effect=AssertionError("unnecessary fetch")):
+            repeat = run({"races": [demo]}, directory)
+            assert repeat["results"][0]["status"] == "SKIPPED_EXISTING_CANDIDATE"
+        p = Path(directory) / "2026-09-10_27_2.json"
+        candidate = json.loads(p.read_text(encoding="utf-8"))
+        candidate["observations"][0]["results"][0]["finish"] = "2"
+        store(p, candidate)
+        with patch("collect_historical_batch.collect", side_effect=AssertionError("must not overwrite")):
+            corrupted = run({"races": [demo]}, directory)
+            assert corrupted["results"][0]["status"] == "EXISTING_FILE_CONFLICT_REVIEW"
+
     print("SELF_TEST_OK: bounded historical candidate plan, identity, duplicates, metadata")
 
 
