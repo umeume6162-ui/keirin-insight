@@ -9,6 +9,32 @@ on:
       - 'scripts/build_daily_board.py'
       - '.github/workflows/update-daily-board.yml'
   workflow_dispatch:
+    inputs:
+      race_date:
+        description: 'Race date YYYY-MM-DD (manual one-race intake only)'
+        required: false
+        type: string
+      track_code:
+        description: 'Track code, e.g. 26'
+        required: false
+        type: string
+      track_name:
+        description: 'Japanese track name, e.g. 西武園'
+        required: false
+        type: string
+      race_number:
+        description: 'Race number, 1-12'
+        required: false
+        type: string
+      source_url:
+        description: 'Public Tokyo Sports racecard URL'
+        required: false
+        type: string
+      apply_intake:
+        description: 'Write validated racecard to daily entry tab (requires Sheets editor permission)'
+        required: false
+        default: false
+        type: boolean
   schedule:
     # UTC corresponds to JST 07:10, 12:10, 17:10, 22:10.
     - cron: '10 22,3,8,13 * * *'
@@ -43,6 +69,47 @@ jobs:
           python scripts/collect_chariloto_entry.py --self-test
           python scripts/collect_tospo_entry.py --self-test
           python scripts/build_daily_board.py --self-test
+      - name: Validate manually supplied racecard fields
+        if: github.event_name == 'workflow_dispatch' && inputs.source_url != ''
+        env:
+          RACE_DATE: ${{ inputs.race_date }}
+          TRACK_CODE: ${{ inputs.track_code }}
+          TRACK_NAME: ${{ inputs.track_name }}
+          RACE_NUMBER: ${{ inputs.race_number }}
+          SOURCE_URL: ${{ inputs.source_url }}
+        run: |
+          python - <<'PY'
+          import os, re, sys
+          from datetime import date
+          values = [os.environ[x] for x in ('RACE_DATE','TRACK_CODE','TRACK_NAME','RACE_NUMBER','SOURCE_URL')]
+          d, code, track, race, url = values
+          try:
+              date.fromisoformat(d)
+              assert re.fullmatch(r'20\\d{2}-\\d{2}-\\d{2}', d)
+              assert code.isdigit() and 1 <= int(code) <= 99
+              assert track.strip()
+              assert race.isdigit() and 1 <= int(race) <= 12
+              assert re.fullmatch(r'https://keirin\\.tokyo-sports\\.co\\.jp/list/race/[^\\s]+',url)
+          except (ValueError, AssertionError):
+              sys.exit('Invalid manual racecard inputs; no intake')
+          PY
+      - name: Collect one public racecard (preview only)
+        if: github.event_name == 'workflow_dispatch' && inputs.source_url != ''
+        env:
+          RACE_DATE: ${{ inputs.race_date }}
+          TRACK_CODE: ${{ inputs.track_code }}
+          TRACK_NAME: ${{ inputs.track_name }}
+          RACE_NUMBER: ${{ inputs.race_number }}
+          SOURCE_URL: ${{ inputs.source_url }}
+        run: |
+          python scripts/collect_tospo_entry.py --date "$RACE_DATE" --track-code "$TRACK_CODE" --track "$TRACK_NAME" --race "$RACE_NUMBER" --url "$SOURCE_URL" --out /tmp/ki-manual-racecard.json
+          python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --validate-only
+          python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json
+      - name: Save validated manual racecard to daily intake tab
+        if: github.event_name == 'workflow_dispatch' && inputs.source_url != '' && inputs.apply_intake
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --apply
       - name: Build daily board
         if: github.event_name != 'pull_request'
         env:
