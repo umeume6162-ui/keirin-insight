@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
   "verificationNote": "KEIRIN.JPと異なる別掲載元で氏名・府県・期別・6桁IDの一致。2026-11-24阿部弘、阿部充宏の2名を追加。 2026-11-24阿部蒼大015960、阿部大樹014370を公式証拠2元一致で追加。",
   "summary": {
-    "rows": 244
+    "rows": 246
   },
   "riders": [
     {
@@ -5877,6 +5877,55 @@
           "https://www.winticket.jp/keirin/cyclist/014370"
         ],
         "note": "V4証拠台帳 MANUAL-V4-20261124-014370（KEIRIN.JPとWINTICKETの公開選手プロフィール4項目一致、原HTML全文永続保存なし）"
+      }
+    },
+    {
+      "id": "014800",
+      "name": "伊東 翔貴",
+      "prefecture": "福島",
+      "period": "100",
+      "source": "https://keirin.jp/sp/racerracentrecord?snum=014800",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerracentrecord?snum=014800",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerracentrecord?snum=014800",
+          "https://www.winticket.jp/keirin/cyclist/014800"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-014800（2媒体で氏名・府県・期別・6桁登録番号を確認、原HTML全文永続保存なし）"
+      }
+    },
+    {
+      "id": "012717",
+      "name": "伊藤 一貴",
+      "prefecture": "栃木",
+      "period": "72",
+      "source": "https://keirin.jp/sp/racerprofile?snum=012717",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=012717",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=012717",
+          "https://www.winticket.jp/keirin/cyclist/012717",
+          "https://www.chariloto.com/keirin_athletes/12717"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-012717（2媒体で氏名・府県・期別・6桁登録番号を確認、原HTML全文永続保存なし）"
       }
     }
   ],
