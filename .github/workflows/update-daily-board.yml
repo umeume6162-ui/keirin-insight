@@ -403,6 +403,7 @@ jobs:
       # Stored racecards are independently eligible for result retries. Even if
       # today's venue-index fetch fails, keep this step running and retain the
       # earlier step's failure status; never mark the workflow as successful.
+      # Explicit main-only retry tag: [collect-daily-results] is never a PR credential path.
       # One explicitly tagged main push may retry bounded, guarded results without
       # re-running entry collection. Never enable this for PRs or ordinary pushes.
       - name: Collect two-source daily results for completed stored races
