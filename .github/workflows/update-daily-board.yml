@@ -410,6 +410,28 @@ jobs:
             d=compare({"observations":observations})
             print("RESULT_PAIR",d["status"],"disagreements",len(d["disagreements"]))
           PY
+          python - <<'PY'
+          import sys
+          sys.path.insert(0,"scripts")
+          from auto_daily_results import read_existing, eligible_races, clean
+          from collect_historical_pair import collect
+          from compare_race_results import normalized_name
+          from datetime import date
+          entries, results=read_existing()
+          group=eligible_races(entries,results,date(2026,11,23),date(2026,11,23))
+          if group:
+            key,rows=group[0]
+            obs=collect("2026-11-23","26","西武園",1,"A3",7)
+            expected={int(x[5]):x for x in rows}
+            for rider in obs["observations"][0]["results"]:
+              x=expected[rider["number"]]
+              mismatches=[]
+              if normalized_name(x[6])!=normalized_name(rider["name"]):mismatches.append("name")
+              if clean(x[7])!=clean(rider["prefecture"]):mismatches.append("prefecture")
+              if clean(x[8]).removesuffix("期")!=clean(rider["period"]).removesuffix("期"):mismatches.append("period")
+              if mismatches:print("RESULT_ENTRY_IDENTITY_REVIEW",rider["number"],",".join(mismatches),
+                "sheetPref",clean(x[7]),"resultPref",clean(rider["prefecture"]))
+          PY
       - name: Build daily board
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
         env:
