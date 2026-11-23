@@ -47,7 +47,7 @@
 - **検査結果を正式PASSに直結させない**：一致は`SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING`、不一致は`SOURCE_CONFLICT_REVIEW_REQUIRED`。どちらも`formalPass:false`、直接`V99`・正式4フィード・日次結果シートを更新しない。出典の真正性・転載元・元HTML/証拠・欠車数の例外・既存PASSとの整合は既存受付と証拠台帳で確認し、正式PASS昇格は従来の既存公開ガードへ委ねる。
 - **手動作業削減方針**：取得済み全車を機械比較し、一致候補は必要な独立性・出典監査へ、不一致・欠落・例外だけ既存過去レース照合専任タスクへ引き渡す。過去データを別台帳・別自動タスクへ二重収録せず、既存の収集元の実アクセス可否・ライセンスと複数年の保存期間は別途実証する。比較スクリプトは既存日次CI内で1つの自己検査を実行。**追加済みは比較器、単一掲載元の過去結果HTMLアダプター、オフライン自己検査であり、過去結果のライブ取得成功・2サイト独立性確認・自動PASS/Google保存は未確認または未実装**。
 
-- **過去結果取得の第一アダプター**：`scripts/collect_netkeirin_result.py` は `https://keirin.netkeiba.com/race/result/?race_id=YYYYMMDDCCRR` 形式の公開結果ページについて、URL中の開催日・場コード・Rとページの見出しを照合し、着順・全車番・選手名・府県・期別・決まり手・例外が1つの完全な7/9車表に揃う場合だけ**単一掲載元の観測JSON**を出力する。robots/HTTP/表構造が不可なら無保存で停止。`compare_race_results.py --left <観測元A> --right <観測元B>` で共通比較器へ接続できるが、**第2の独立掲載元アダプターと実HTMLでの成功実績はまだない**。自動タスクには新たな書込権限を与えず、既存の履歴照合タスクとの役割は変えない。
+- **過去結果取得の第一アダプター**：`scripts/collect_netkeirin_result.py` は `https://keirin.netkeiba.com/race/result/?race_id=YYYYMMDDCCRR` 形式の公開結果ページについて、URL中の開催日・場コード・Rとページの見出しを照合し、着順・全車番・選手名・府県・期別・決まり手・例外が1つの完全な7/9車表に揃う場合だけ**単一掲載元の観測JSON**を出力する。robots/HTTP/表構造が不可なら無保存で停止。`compare_race_results.py --left <観測元A> --right <観測元B>` で共通比較器へ接続できるが、**第2の独立掲載元アダプターと実HTMLでの成功実績はまだない**。既存`update-daily-board.yml`の手動起動に`historical_result_url`・`historical_class`・`historical_cars`を追加し、開催日・場・Rを指定した過去1Rについて読み取り専用取得→全車チェック→7日保存のActions artifactへ出力する経路を設置。履歴プレビュー時は日次Google保存・日次feed更新を行わない。実際のActions成功とartifact生成は未確認。自動タスクには新たな書込権限を与えず、既存の履歴照合タスクとの役割は変えない。
 
 ### 日次の出走表・結果公開経路（2026-11-23開始）
 
