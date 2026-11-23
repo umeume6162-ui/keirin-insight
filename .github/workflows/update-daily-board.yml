@@ -391,7 +391,28 @@ jobs:
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
-          python scripts/auto_daily_results.py --apply --max-races 12 --max-seconds 720 --lookback-days 7
+          python scripts/auto_daily_results.py --apply --max-races 12 --max-seconds 720 --lookback-days 7 | tee /tmp/ki-daily-result-intake.json
+          python - <<'PY'
+          import collections, json, os
+          from pathlib import Path
+          report = json.loads(Path("/tmp/ki-daily-result-intake.json").read_text())
+          statuses = collections.Counter(r.get("status", "UNKNOWN") for r in report["results"])
+          rows = [
+              "## Daily two-source result intake",
+              f"- Pending eligible races: {report['eligibleTotal']}",
+              f"- Attempted: {report['eligibleExamined']}",
+              f"- Deferred: {report['eligibleDeferred']}",
+              f"- Saved: {report['savedCount']}",
+              f"- Time budget reached: {report['timeBudgetExceeded']}",
+              f"- Stored partial/identity conflicts: {report.get('partialExistingCount', 0)}",
+              "",
+              "| Status | Races |",
+              "|---|---:|",
+          ]
+          rows += [f"| {key} | {count} |" for key, count in sorted(statuses.items())]
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as out:
+              out.write("\n".join(rows) + "\n")
+          PY
       - name: Build daily board
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
         env:
