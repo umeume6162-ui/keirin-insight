@@ -112,7 +112,7 @@ jobs:
           fi
       - name: Install Google reader
         run: pip install 'google-auth==2.38.0' 'requests==2.32.3' 'beautifulsoup4==4.14.2'
-      - name: TEMP check mobile redesign HTML and JavaScript
+      - name: Check mobile home and daily-board contracts
         if: github.event_name == 'pull_request'
         run: |
           python - <<'PY'
