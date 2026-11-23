@@ -410,6 +410,8 @@ jobs:
           holds = collections.Counter((r.get("failurePhase", "UNSPECIFIED"),
                                        r.get("reasonCode", "UNCLASSIFIED"))
                                       for r in report["results"] if not r.get("saved") and r.get("reasonCode"))
+          lanes = collections.Counter(r.get("reviewRoute", "UNCLASSIFIED")
+                                      for r in report["results"] if r.get("reviewRoute"))
           rows = [
               "## Daily two-source result intake",
               f"- Pending eligible races: {report['eligibleTotal']}",
@@ -426,6 +428,8 @@ jobs:
           rows += ["", "| Failure phase / reason | Races |", "|---|---:|"]
           rows += [f"| {phase} / {reason} | {count} |"
                    for (phase, reason), count in sorted(holds.items())]
+          rows += ["", "| Suggested review lane | Races |", "|---|---:|"]
+          rows += [f"| {lane} | {count} |" for lane, count in sorted(lanes.items())]
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as out:
               out.write("\n".join(rows) + "\n")
           PY
