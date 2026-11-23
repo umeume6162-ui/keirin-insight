@@ -441,4 +441,21 @@ jobs:
             exit 0
           fi
           git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Update daily entries and results snapshot [skip ci]'
-          git push
+          # Other authorized tasks may update main during this job. Replay only
+          # this three-feed commit on the current main; never force-push.
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo "::error::Daily feed rebase conflict; leave main unchanged for review."
+              exit 1
+            fi
+            if git push origin HEAD:main; then
+              echo "DAILY_FEED_PUBLISHED: rebased and pushed without force"
+              exit 0
+            fi
+            echo "::warning::main advanced during daily feed publish (attempt ${attempt}); retrying."
+            sleep 2
+          done
+          echo "::error::Daily feed publication retries exhausted; main unchanged."
+          exit 1
