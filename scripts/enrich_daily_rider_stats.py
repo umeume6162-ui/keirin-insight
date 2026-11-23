@@ -103,7 +103,9 @@ def extract(html,race,url):
         labels=[clean(c.get_text(" ",strip=True)).replace(" ","").replace("｜","ー")
                 for c in head.find_all(["th","td"],recursive=False)]
         check=[clean(x).replace(" ","").replace("｜","ー") for x in HEADERS]
-        if labels==check:
+        if (len(labels)==len(check) and labels[4].startswith("選手名")
+                and "府県" in labels[4] and "期別" in labels[4]
+                and all(labels[i]==check[i] for i in range(len(check)) if i!=4)):
             tables.append(table)
     if len(tables)!=1:
         raise ValueError("Unique full-name racecard table not found")
@@ -211,7 +213,7 @@ def self_test():
     url="https://keirin.netkeiba.com/race/entry/?race_id=202611233403"
     race={"key":"2026-11-23|川崎|3","date":"2026-11-23","track":"川崎","race":3,
           "entries":[{"number":n,"name":f"テスト太郎{n}","prefecture":"宮城","period":"98"} for n in range(1,8)]}
-    header="<tr class='Header'>"+"".join("<th>"+h+"</th>" for h in HEADERS)+"</tr>"
+    header="<tr class='Header'>"+"".join("<th>"+("選手名 府県 年齢 期別 級班" if i==4 else h)+"</th>" for i,h in enumerate(HEADERS))+"</tr>"
     items=[]
     for n in range(1,8):
         values=["1",str(n),"","1",f"テストタロウ テスト太郎{n} お気に入り選手 宮城 46歳 98期 A3",
