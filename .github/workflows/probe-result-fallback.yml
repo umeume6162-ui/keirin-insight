@@ -170,3 +170,39 @@ jobs:
           except Exception as e:
               print('KURUME_2R_DIAGNOSTIC_HOLD',type(e).__name__,str(e)[:160])
           PY
+
+      - name: Re-check Kurume 2R source after fault-state parser fix
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0,'scripts')
+          import collect_lotoplace_result as char
+          from compare_race_results import normalized_name,normalized_prefecture,canonical_method
+          url='https://www.chariloto.com/keirin/results/83/2026-10-01/'
+          expected=[
+            (7,'西澤優聖','岐阜','129','1','逃げ',''),
+            (1,'窪田陽介','滋賀','90','2','マーク',''),
+            (5,'陶器一馬','大阪','86','3','',''),
+            (3,'水木裕聡','高知','96','4','',''),
+            (6,'武智尚之','愛媛','70','5','',''),
+            (2,'篠田樹','大分','113','6','','故'),
+            (4,'喜納隆志','沖縄','92','7','','故')
+          ]
+          try:
+            char.self_test()
+            obs=char.parse_result(char.fetch(url),'2026-10-01','83','久留米',2,'A3',7,url)
+            actual={int(r['number']):r for r in obs['results']}
+            diffs=[]
+            for number,name,pref,period,finish,method,exception in expected:
+              row=actual.get(number)
+              if not row:
+                diffs.append((number,'missing'));continue
+              for field,match in [('name',normalized_name(name)),('prefecture',normalized_prefecture(pref)),('period',str(period)),('finish',str(finish)),('method',canonical_method(method)),('exception',str(exception))]:
+                norm={'name':normalized_name,'prefecture':normalized_prefecture,'period':str,'finish':str,'method':canonical_method,'exception':str}[field]
+                if norm(row.get(field,'')) != match: diffs.append((number,field))
+            print('KURUME_2R_FAULT_SAFE_COMPARE', 'PASS' if not diffs else 'HOLD','cars',len(actual),'mismatchCount',len(diffs),'faultRows',[(r['number'],r['finish'],r['exception']) for r in obs['results'] if r['exception']])
+            if diffs: raise AssertionError(str(diffs))
+          except Exception as e:
+            print('KURUME_2R_FAULT_SAFE_HOLD',type(e).__name__,str(e)[:170])
+            raise
+          PY
