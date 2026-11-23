@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-24",
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
-  "verificationNote": "選手登録番号は2掲載元の氏名・府県・期別・6桁番号照合。2026-11-24に阿竹智史・阿部英光・阿部兼士の3名を追加。",
+  "verificationNote": "KEIRIN.JPと異なる別掲載元で氏名・府県・期別・6桁IDの一致。2026-11-24阿部弘、阿部充宏の2名を追加。",
   "summary": {
-    "rows": 240
+    "rows": 242
   },
   "riders": [
     {
@@ -5781,6 +5781,54 @@
           "https://www.winticket.jp/keirin/cyclist/014333"
         ],
         "note": "KI｜公式照合証拠 MANUAL-KD-V4-20261124-014333: KEIRIN.JPとWINTICKETの公開プロフィールを2サイト照合、原HTML永続保存なし。"
+      }
+    },
+    {
+      "id": "014774",
+      "name": "阿部 弘",
+      "prefecture": "高知",
+      "period": "99",
+      "source": "https://keirin.jp/sp/racerprofile?snum=014774",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=014774",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=014774",
+          "https://www.winticket.jp/keirin/cyclist/014774"
+        ],
+        "note": "V4公式証拠台帳 MANUAL-V4-20261124-014774: KEIRIN.JP + WINTICKET 本文4項目照合"
+      }
+    },
+    {
+      "id": "014704",
+      "name": "阿部 充宏",
+      "prefecture": "山口",
+      "period": "98",
+      "source": "https://keirin.jp/sp/racerprofile?snum=014704",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=014704",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=014704",
+          "https://www.winticket.jp/keirin/cyclist/014704"
+        ],
+        "note": "V4公式証拠台帳 MANUAL-V4-20261124-014704: KEIRIN.JP + WINTICKET 本文4項目照合"
       }
     }
   ],
