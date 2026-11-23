@@ -187,6 +187,30 @@ jobs:
           python scripts/collect_historical_batch.py --self-test
           python scripts/classify_historical_candidates.py --self-test
           python scripts/build_daily_board.py --self-test
+      - name: TEMP examine missing future netkeirin stats source
+        if: github.event_name == 'pull_request'
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0,'scripts')
+          from enrich_daily_rider_stats import source_url,fetch,clean,HEADERS
+          from bs4 import BeautifulSoup
+          from collections import Counter
+          import json
+          b=json.load(open('daily-board-feed-v1.json',encoding='utf-8'))
+          for race in [next(x for x in b['races'] if x['key']==key) for key in ('2026-11-24|静岡|12','2026-11-24|松山|1')]:
+              try:
+                  html=fetch(source_url(race))
+                  soup=BeautifulSoup(html,'html.parser')
+                  print('STATS_FUTURE_CHECK',race['key'],'title',soup.title.get_text(' ',strip=True)[:160],
+                        'tables',len(soup.select('table.RaceCard_Table')),
+                        'rows',len(soup.select('tr.PlayerList')))
+                  for t in soup.select('table.RaceCard_Table')[:2]:
+                      h=t.select_one('tr.Header')
+                      print('STATS_FUTURE_HEAD',race['key'],[clean(c.get_text(' ',strip=True)) for c in h.find_all(['th','td'],recursive=False)] if h else [])
+              except Exception as e:
+                  print('STATS_FUTURE_SOURCE_HOLD',race['key'],type(e).__name__)
+          PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
