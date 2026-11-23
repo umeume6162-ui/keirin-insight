@@ -9,7 +9,7 @@
 <section class="panel warning"><strong>データの扱い</strong><p>JSONファイルを再取得する方式です。<b>Google SheetsからJSONへの自動書き出しは未実装</b>です。JSON内には選手ごとの着順・ライン構成・公式IDはなく、これらを推測して表示しません。公式結果の全件独立照合も未完了です。</p></section>
 <section class="panel"><h2>級別の収録状況</h2><div id="grades">データ待機中</div><h2 style="margin-top:27px">収録が多い競輪場</h2><div id="tracks">データ待機中</div></section>
 <section class="panel"><h2>レースを検索</h2><div class="controls"><label class="field full">競輪場・日付・レース番号<input id="query" placeholder="例：別府 / 2026-11-05 / 11R" autocomplete="off"></label><label class="field">級別<select id="grade"><option value="">すべて</option><option>A3</option><option>A1/A2</option><option>S級</option><option>ガールズ</option></select></label><label class="field">車立て<select id="size"><option value="">すべて</option><option value="7">7車</option><option value="9">9車</option><option value="6">6車</option><option value="5">5車</option><option value="8">8車</option></select></label><label class="field">競輪場<select id="track"><option value="">全競輪場</option></select></label></div><div class="buttons"><button class="secondary" id="reset">絞り込み解除</button><button class="secondary" id="more">さらに30件表示</button></div><p class="sub" id="count">—</p><div class="list" id="list"></div></section>
-<div class="footer">V99公開結果索引を表示するだけの閲覧専用画面です。既存のGoogle Sheets・GAS・GitHub上の原本は変更しません。更新されたJSONは次回取得時に反映されます。</div></main>
+<div class="footer">正式照合済み結果フィードだけを表示する閲覧専用画面です。既存のGoogle Sheets・GAS・GitHub上の原本は変更しません。更新されたJSONは次回取得時に反映されます。</div></main>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
