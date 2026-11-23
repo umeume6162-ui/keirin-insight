@@ -9,6 +9,7 @@ probe one explicitly supplied public URL (robots checked by existing fetch).
 import argparse
 import json
 import re
+from bs4 import BeautifulSoup
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 from unittest.mock import patch
@@ -39,6 +40,25 @@ def validate_historical_url(url, day, code, track, race):
 
 def parse_historical_html(html, *, url, day, code, track, race, grade, cars):
     validate_historical_url(url, day, code, track, race)
+    # K-Dreams real titles often zero-pad the day: 2026年10月05日.
+    # Only normalize the *title date* AFTER confirming it denotes the exact
+    # requested day; never rewrite the date, racecard, or result rows.
+    from datetime import date
+    d = date.fromisoformat(day)
+    soup = BeautifulSoup(html, "html.parser")
+    if soup.title is None:
+        raise ValueError("Missing race source title")
+    title = soup.title.get_text(" ", strip=True)
+    date_in_title = re.findall(r"(?<!\\d)(\\d{4})年(\\d{1,2})月(\\d{1,2})日", title)
+    if len(date_in_title) != 1 or tuple(map(int,date_in_title[0])) != (
+            d.year,d.month,d.day):
+        raise ValueError("Race date mismatch in original K-Dreams title")
+    # The pre-existing parser checks an unpadded literal date string. Update
+    # only a temporary parsed copy to maintain the unchanged shared parser.
+    source_date = "".join((str(d.year), "年", str(d.month), "月", str(d.day), "日"))
+    source_title_date = re.search(r"(?<!\\d)\\d{4}年\\d{1,2}月\\d{1,2}日",title)
+    soup.title.string = title[:source_title_date.start()] + source_date + title[source_title_date.end():]
+    html = str(soup)
     # Avoid changing the daily collector. Its extraction does full source table
     # checks and calls validate_url internally; override only for this call.
     with patch.object(kdreams, "validate_url", validate_historical_url):
@@ -94,6 +114,25 @@ def self_test():
         code="61", track="玉野", race=1, grade="L1", cars=7)
     assert len(result["observation"]["results"]) == 7
     assert result["verificationState"] == "SOURCE_OBSERVED_NOT_FORMAL_PASS"
+    padded = html.replace("2026年11月23日","2026年11月023日")
+    try:
+        parse_historical_html(padded,url=urls[0],day="2026-11-23",
+                              code="61",track="玉野",race=1,grade="L1",cars=7)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Invalid 3-digit day passed")
+    padded_valid = html.replace("2026年11月23日","2026年11月23日")
+    assert len(parse_historical_html(padded_valid,url=urls[0],day="2026-11-23",
+              code="61",track="玉野",race=1,grade="L1",cars=7)["observation"]["results"]) == 7
+    wrong = html.replace("2026年11月23日", "2026年11月22日")
+    try:
+        parse_historical_html(wrong,url=urls[0],day="2026-11-23",
+                              code="61",track="玉野",race=1,grade="L1",cars=7)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Wrong event date passed")
     print("SELF_TEST_OK: historical K-Dreams URL variants, full 7-car parser; daily unchanged")
 
 
