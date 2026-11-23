@@ -3,15 +3,15 @@
   "origin_sheet": "VERIFIED publication",
   "source_snapshot_date": "2026-11-24",
   "latest_race_date": "2026-10-05",
-  "official_result_independent_audit": "legacy_two_publishers_or_kdreams_single_source_provenance_per_race",
-  "notes": "既存2媒体照合の7レースに、Kドリームス原文をGitHub Actionsで全7車取得しV99全必須項目一致した松山3R/4R/6Rを追加。単一元記録を2媒体独立一致とは表示しない。",
+  "official_result_independent_audit": "legacy_two_sources_or_verified_KDreams_or_proven_one_fallback_HTML_with_V99",
+  "notes": "全車原文取得とV99照合を必須。松山5/8/9Rはチャリロト、久留米3Rはnetkeirinの実HTMLを読んだ単一元結果照合。追加の他社独立一致と誤表示しない。",
   "summary": {
-    "races": 10,
-    "rider_rows": 70,
+    "races": 14,
+    "rider_rows": 98,
     "by_grade": {
-      "A1/A2": 5,
-      "A3": 0,
-      "S級": 5,
+      "A1/A2": 6,
+      "A3": 1,
+      "S級": 7,
       "ガールズ": 0
     }
   },
@@ -564,6 +564,162 @@
           "runUrl": "https://github.com/umeume6162-ui/keirin-insight/actions/runs/45210802591",
           "comparisonResult": "V99 all 7 cars / required items mismatchCount 0",
           "originalHtmlArchived": false
+        }
+      }
+    },
+    {
+      "key": "2026-10-05|75|5",
+      "date": "2026-10-05",
+      "track": "松山",
+      "track_code": "75",
+      "race": 5,
+      "size": 7,
+      "grade": "A1/A2",
+      "non_numeric": 0,
+      "className": "A級準決勝",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+        "method": "fallback_source_verified",
+        "matchingSources": [
+          "https://www.chariloto.com/keirin/results/75/2026-10-05/"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "sourceTier": "other_media",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "RACE-MANUAL-V4-20261122T163137-75-5",
+          "runUrl": "https://github.com/umeume6162-ui/keirin-insight/actions/runs/45218073230",
+          "originalHtmlArchived": false,
+          "comparison": "7 cars; mandatory V99 fields mismatchCount 0"
+        }
+      }
+    },
+    {
+      "key": "2026-10-05|75|8",
+      "date": "2026-10-05",
+      "track": "松山",
+      "track_code": "75",
+      "race": 8,
+      "size": 7,
+      "grade": "S級",
+      "non_numeric": 0,
+      "className": "S級一般",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+        "method": "fallback_source_verified",
+        "matchingSources": [
+          "https://www.chariloto.com/keirin/results/75/2026-10-05/"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "sourceTier": "other_media",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "RACE-MANUAL-V4-20261122T163733-75-8",
+          "runUrl": "https://github.com/umeume6162-ui/keirin-insight/actions/runs/45218073230",
+          "originalHtmlArchived": false,
+          "comparison": "7 cars; mandatory V99 fields mismatchCount 0"
+        }
+      }
+    },
+    {
+      "key": "2026-10-05|75|9",
+      "date": "2026-10-05",
+      "track": "松山",
+      "track_code": "75",
+      "race": 9,
+      "size": 7,
+      "grade": "S級",
+      "non_numeric": 0,
+      "className": "S級一般",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+        "method": "fallback_source_verified",
+        "matchingSources": [
+          "https://www.chariloto.com/keirin/results/75/2026-10-05/"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "sourceTier": "other_media",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "RACE-MANUAL-V4-20261122T163959-75-9",
+          "runUrl": "https://github.com/umeume6162-ui/keirin-insight/actions/runs/45218073230",
+          "originalHtmlArchived": false,
+          "comparison": "7 cars; mandatory V99 fields mismatchCount 0"
+        }
+      }
+    },
+    {
+      "key": "2026-10-01|83|3",
+      "date": "2026-10-01",
+      "track": "久留米",
+      "track_code": "83",
+      "race": 3,
+      "size": 7,
+      "grade": "A3",
+      "non_numeric": 0,
+      "className": "A級チャレンジ予選",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.netkeiba.com/race/result/?race_id=202610018303",
+        "method": "fallback_source_verified",
+        "matchingSources": [
+          "https://keirin.netkeiba.com/race/result/?race_id=202610018303"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "sourceTier": "other_media",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "RACE-TRIAGE-20261123-83-3",
+          "runUrl": "https://github.com/umeume6162-ui/keirin-insight/actions/runs/45218073230",
+          "originalHtmlArchived": false,
+          "comparison": "7 cars; mandatory V99 fields mismatchCount 0"
         }
       }
     }
