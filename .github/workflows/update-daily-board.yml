@@ -432,6 +432,7 @@ jobs:
               f"- Not yet due (no verified start time or before start+20m): {report.get('notYetDueCount', 0)}",
               f"- Saved: {report['savedCount']}",
               f"- LotoPlace fallback comparisons: {sum(bool(r.get('alternateSourceUsed')) for r in report['results'])}",
+              f"- Chariloto + LotoPlace complete-pair fallback: {sum(r.get('sourcePairMode') == 'CHARILOTO_LOTOPLACE_FALLBACK' for r in report['results'])}",
               f"- Time budget reached: {report['timeBudgetExceeded']}",
               f"- Stored partial/identity conflicts: {report.get('partialExistingCount', 0)}",
               "",
