@@ -18,7 +18,9 @@ def audit(rows, sample_limit=20):
         if not row or not str(row[0]).strip():
             continue
         if (len(row) < 8 or not str(row[2]).isdigit()
-                or not str(row[4]).isdigit() or not str(row[7]).isdigit()):
+                or not str(row[4]).isdigit() or not str(row[7]).isdigit()
+                or not 1 <= int(row[2]) <= 99 or not 1 <= int(row[4]) <= 12
+                or not 1 <= int(row[7]) <= 9):
             invalid_rows += 1
             continue
         key = f"{row[0]}|{int(row[2]):02d}|{int(row[4])}"
@@ -101,6 +103,7 @@ def self_test():
     assert report["formalPass"] is False
     data[-1][7] = "5"
     assert audit(data)["duplicateCarRaceCount"] == 1
+    assert audit(data + [row("3", 10)])["invalidKeyRows"] == 1
     print("SELF_TEST_OK: V99 read-only shape audit and duplicate detection")
 
 
