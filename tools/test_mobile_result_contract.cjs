@@ -17,4 +17,11 @@ assert.ok(html.includes('lineup(line,r.size)'),'must validate complete lineup be
 assert.ok(html.includes('pref(y.prefecture)!==pref(x.prefecture)'),'must validate matching rider identity');
 const colors=['#f4f4f4','#242424','#d84242','#2d5fbb','#efd849','#278850','#ed9337','#dfa1c9','#8254ae'];
 for(const color of colors)assert.ok(html.includes(color),'missing keirin car color '+color);
+const forecast=fs.readFileSync('line-forecast.html','utf8');
+const home=fs.readFileSync('index.html','utf8');
+assert.ok(home.includes('href="./line-forecast.html"'),'home must link independent line forecast view');
+assert.ok(home.includes('window.KIVerified.validate(a,b,i,l);'),'home must use shared publication guard');
+assert.ok(!home.includes('function verifyPublication(a,b,i,l){'),'home must not retain old two-source forecast validator');
+for(const label of ['媒体の並び予想','脚見せ','他媒体との一致も要求しません','forecastGroups'])assert.ok(forecast.includes(label),'forecast page missing '+label);
+assert.ok(forecast.includes('results.has(r.id)'),'orphan forecast must be visible without result');
 console.log('OK: mobile UI labels, numbered car colors, pre-race forecast rendering guards (static HTML checks only; published feed validation is handled by check_publication_completeness.cjs).');
