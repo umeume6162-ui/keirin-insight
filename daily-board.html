@@ -170,7 +170,7 @@ function allLines(entries){
  if(claims.some(v=>!v))return null;
  const groups=new Map();
  for(let i=0;i<entries.length;i++){
-  const tokens=claims[i].split(/[-－ー−–→＞>・\s]+/).filter(Boolean);
+  const tokens=claims[i]==="単騎"||claims[i]==="単独" ? [String(entries[i].number)] : claims[i].split(/[-－ー−–→＞>・\s]+/).filter(Boolean);
   if(!tokens.length||tokens.some(n=>!/^[1-9]$/.test(n)))return null;
   const cars=tokens.map(Number);
   if(new Set(cars).size!==cars.length||!cars.includes(Number(entries[i].number)))return null;
