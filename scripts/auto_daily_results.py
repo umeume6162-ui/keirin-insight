@@ -273,10 +273,14 @@ def main():
     p.add_argument("--date", help="Optional exact event date YYYY-MM-DD")
     p.add_argument("--max-races", type=int, default=4)
     p.add_argument("--max-seconds", type=int, default=720)
+    p.add_argument("--lookback-days", type=int, default=7,
+                   help="Include current date and this many previous event dates (1..14)")
     args = p.parse_args()
     if args.self_test:
         self_test()
         return
+    if not 1 <= args.lookback_days <= 14:
+        raise ValueError("lookback-days must be 1..14")
     today = datetime.now(JST).date()
     if args.date:
         fixed = datetime.strptime(args.date, "%Y-%m-%d").date()
@@ -284,7 +288,7 @@ def main():
             raise ValueError("Cannot collect future results")
         start = end = fixed
     else:
-        start, end = today - timedelta(days=1), today
+        start, end = today - timedelta(days=args.lookback_days), today
     entries, results = read_existing()
     report = process(entries, results, start, end, limit=args.max_races,
                      write=args.apply, max_seconds=args.max_seconds)
