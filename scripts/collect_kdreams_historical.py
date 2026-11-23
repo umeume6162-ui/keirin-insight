@@ -49,14 +49,14 @@ def parse_historical_html(html, *, url, day, code, track, race, grade, cars):
     if soup.title is None:
         raise ValueError("Missing race source title")
     title = soup.title.get_text(" ", strip=True)
-    date_in_title = re.findall(r"(?<!\\d)(\\d{4})年(\\d{1,2})月(\\d{1,2})日", title)
+    date_in_title = re.findall(r"(?<!\d)(\d{4})年(\d{1,2})月(\d{1,2})日", title)
     if len(date_in_title) != 1 or tuple(map(int,date_in_title[0])) != (
             d.year,d.month,d.day):
         raise ValueError("Race date mismatch in original K-Dreams title")
     # The pre-existing parser checks an unpadded literal date string. Update
     # only a temporary parsed copy to maintain the unchanged shared parser.
     source_date = "".join((str(d.year), "年", str(d.month), "月", str(d.day), "日"))
-    source_title_date = re.search(r"(?<!\\d)\\d{4}年\\d{1,2}月\\d{1,2}日",title)
+    source_title_date = re.search(r"(?<!\d)\d{4}年\d{1,2}月\d{1,2}日",title)
     soup.title.string = title[:source_title_date.start()] + source_date + title[source_title_date.end():]
     html = str(soup)
     # Avoid changing the daily collector. Its extraction does full source table
@@ -114,6 +114,19 @@ def self_test():
         code="61", track="玉野", race=1, grade="L1", cars=7)
     assert len(result["observation"]["results"]) == 7
     assert result["verificationState"] == "SOURCE_OBSERVED_NOT_FORMAL_PASS"
+    # Regression: K-Dreams event titles use zero-padded single-digit day.
+    oct_url = "https://keirin.kdreams.jp/tamano/racedetail/6120261005010001/?pageType=showResult"
+    october = html.replace("2026年11月23日", "2026年10月05日")
+    observed_october = parse_historical_html(october, url=oct_url,
+        day="2026-10-05",code="61",track="玉野",race=1,grade="L1",cars=7)
+    assert len(observed_october["observation"]["results"]) == 7
+    try:
+        parse_historical_html(october,url=oct_url,day="2026-10-06",
+            code="61",track="玉野",race=1,grade="L1",cars=7)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Wrong event date was accepted")
     padded = html.replace("2026年11月23日","2026年11月023日")
     try:
         parse_historical_html(padded,url=urls[0],day="2026-11-23",
