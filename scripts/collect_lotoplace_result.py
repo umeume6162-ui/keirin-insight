@@ -44,9 +44,11 @@ def compact(value):
 
 def validate_url(url, day, code):
     parsed = urlsplit(url)
-    expected = f"/keirin/results/{int(code)}/{day}/"
-    if parsed.scheme != "https" or parsed.netloc != "www.lotoplace.jp" or parsed.path != expected or parsed.query:
-        raise ValueError("LotoPlace URL must match target venue and date")
+    expected = f"/keirin/results/{int(code)}/{day}"
+    allowed_hosts = ("www.lotoplace.jp", "www.chariloto.com")
+    if (parsed.scheme != "https" or parsed.netloc not in allowed_hosts
+            or parsed.path.rstrip("/") != expected or parsed.query or parsed.fragment):
+        raise ValueError("Unsupported event-day result source URL, venue or date")
     return url
 
 
@@ -83,6 +85,9 @@ def closest_race_number(table):
         label = compact(parent.get("data-race", ""))
         if label.isdigit():
             return int(label)
+        section_id = compact(parent.get("id", ""))
+        if parent.name == "section" and (m := re.fullmatch(r"race(\d{1,2})", section_id)):
+            return int(m.group(1))
         if parent.name in ("section", "article"):
             headings = parent.find_all(["h2", "h3", "h4"], recursive=False)
             candidates = [compact(x.get_text(" ", strip=True)) for x in headings]
@@ -164,7 +169,9 @@ def parse_result(html, day, code, track, race, class_name, cars, url):
             candidate_tables.append(sorted(parsed, key=lambda r: r["number"]))
     if len(candidate_tables) != 1:
         raise ValueError("Exactly one complete target-race result table required")
-    return {"sourceUrl": url, "sourceId": "lotoplace-day-results",
+    source_id = ("chariloto-day-results" if urlsplit(url).netloc == "www.chariloto.com"
+                 else "lotoplace-day-results")
+    return {"sourceUrl": url, "sourceId": source_id,
             "race": {"date": day, "trackCode": str(code).zfill(2),
                      "track": track, "race": race, "className": class_name,
                      "expectedCars": cars},
@@ -176,7 +183,10 @@ def fetch(url):
     import requests
     from urllib.robotparser import RobotFileParser
     agent = "KEIRIN-INSIGHT-Research/1.0 (single public result read-only)"
-    robots = requests.get("https://www.lotoplace.jp/robots.txt",
+    hostname = urlsplit(url).netloc
+    if hostname not in ("www.lotoplace.jp", "www.chariloto.com"):
+        raise ValueError("Unapproved result host")
+    robots = requests.get("https://" + hostname + "/robots.txt",
                           headers={"User-Agent": agent}, timeout=15)
     if robots.status_code == 200:
         rules = RobotFileParser()
@@ -205,6 +215,12 @@ def self_test():
     html = html.replace("<h2>2R チャレンジ一般</h2>", "<h2>第2レース A級</h2>")
     observation = parse_result(html, day, code, track, race, grade, cars, url)
     assert len(observation["results"]) == 7
+    chariloto_url = f"https://www.chariloto.com/keirin/results/27/{day}"
+    chariloto_html = html.replace("<section>", '<section id="race2">')
+    chariloto_observation = parse_result(chariloto_html, day, code, track, race, grade, cars, chariloto_url)
+    assert chariloto_observation["sourceId"] == "chariloto-day-results"
+    assert len(chariloto_observation["results"]) == 7
+
     # A lone abbreviated exception in the finish column is sufficient;
     # do not invent a numeric finishing rank.
     falling = html.replace("<td>7</td><td>7</td>", "<td>落</td><td>7</td>")

@@ -45,7 +45,7 @@ on:
         required: false
         type: string
       historical_second_url:
-        description: 'Optional LotoPlace event-day results URL for comparison'
+        description: 'Optional Chariloto or LotoPlace event-day results URL'
         required: false
         type: string
       historical_class:
@@ -84,7 +84,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check read-only Sheets credential
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[verify-sheets-writer]'))
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[verify-sheets-writer]'))
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
@@ -129,7 +129,7 @@ jobs:
               sys.exit('Invalid manual racecard inputs; no intake')
           PY
       - name: Collect one public racecard (preview only)
-        if: github.event_name == 'workflow_dispatch' && inputs.source_url != ''
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.source_url != ''
         env:
           RACE_DATE: ${{ inputs.race_date }}
           TRACK_CODE: ${{ inputs.track_code }}
@@ -150,6 +150,11 @@ jobs:
           python scripts/discover_tospo_races.py --date "$RACE_DATE" --track-code "$TRACK_CODE" --track "$TRACK_NAME" --out /tmp/ki-manual-racecard.json
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --validate-only
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json
+      - name: Validate historical preview input mode
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_second_url != '' && inputs.historical_result_url == ''
+        run: |
+          echo "::error::historical_second_url requires historical_result_url"
+          exit 1
       - name: Collect one historical result (observation only)
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url != ''
         env:
@@ -168,7 +173,7 @@ jobs:
           assert x['sourceId']=='netkeirin-result' and len(x['results']) in (7,9)
           print('HISTORICAL_SOURCE_OBSERVATION_OK: full-car candidate, not formal PASS')
           PY
-      - name: Collect second historical result and compare full fields
+      - name: Collect second historical result from approved day-page and compare full fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url != '' && inputs.historical_second_url != ''
         env:
           RACE_DATE: ${{ inputs.race_date }}
