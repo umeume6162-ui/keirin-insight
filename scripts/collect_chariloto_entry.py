@@ -58,8 +58,13 @@ def parse_entries(html, date, track_code, track, race, source):
             numbers = [r["number"] for r in records]
             if len(records) in (7,9) and len(set(numbers)) == len(numbers) and not failures:
                 return sorted(records,key=lambda x:x["number"])
+    diagnostics = []
+    for table in soup.select("table")[:8]:
+        th = [compact(x.get_text(" ", strip=True))[:28] for x in table.find_all("th")[:12]]
+        diagnostics.append({"rows": len(table.find_all("tr")), "headings": th})
     raise ValueError("Source HTML did not expose an unambiguous full 7/9-car table; no save. "
-                     + (";".join(failures[:2]) if failures else "missing expected table headers"))
+                     + (";".join(failures[:2]) if failures else "missing expected table headers")
+                     + " layouts=" + json.dumps(diagnostics, ensure_ascii=False)[:1900])
 
 def main():
     p=argparse.ArgumentParser()
