@@ -29,6 +29,7 @@
 - 重複判定：選手は6桁登録番号と同定4項目、レースは`YYYY-MM-DD|場コード|R`、結果行はレースキー+車番。手動・自動の受付、元台帳、GitHub研究用候補、正式フィードを横断し、取得済み・既合格レコードの再登録や二重カウントをしない。
 - 正本の収集蓄積は当面`V99選手結果蓄積`、取得状態は`V100収集状態台帳`、選手は`選手ID照合台帳`、照合証拠は`KI｜公式照合証拠`/`KI｜手動照合受付`/`KI｜レース結果手動照合`、事前資料は`AI事前出走スナップ`。古い`KI｜レース索引`は**過去のスナップショット**で、新規V99行を自動反映した最新の全件台帳ではない。
 - 公開正本：`verified-rider-ids-feed-v1.json`、`verified-results-feed-v1.json`、`verified-rider-results-feed-v1.json`、`verified-line-snapshots-feed-v1.json`。研究受付`comparison-races-v1.json`・`tools/reconstruction-candidates/**`は歴史的研究証拠であり、自動的に正式PASSになるわけではない。
+- **正式4フィードをまとめて更新する際の反映単位はGitHubの1コミット**。ID・レース・選手結果・事前ラインを個別コミットで順次更新して一時的な不整合CIを誘発しない。先に4ファイルの完成版をステージし、GitHub Git Data APIなら`create_tree(base_tree)`→`create_commit(parent=main HEAD)`→`update_ref(force=false)`の順でmainを一度だけ進める。GitHubの接続ツール経由も同じ一括Git tree方式を使う。Node実行環境では`tools/publish_verified_bundle.cjs --staged-dir <対象4ファイルのディレクトリ> --expected-head <作業開始時のmainコミットSHA> --apply`（`GITHUB_REPOSITORY`と`GITHUB_TOKEN`が必要）を使える。既存の1コミットにつき通常2CIのみで検証し、同じ内容の独自再検査を重ねない。関係するフィード以外の単独更新は従来どおり。上書き競合時は古い内容で押し切らず、最新mainからステージし直す。正式4ファイルのどれかを欠いた更新は禁止。
 - 作業は「既存受付/公開の重複確認→当該項目の2サイト照合→対象行/ファイル保存→**対象のみ再読**→既存V3.2同期・公開ガードへ引渡し」。取得・保存・内容PASS・正式フィード書込・GitHub Actions成功・実サイト表示は**別の実績**。固定件数や前回報告を最新数として使わない。
 
 ## 4. 検査・テストを最小化する運用
