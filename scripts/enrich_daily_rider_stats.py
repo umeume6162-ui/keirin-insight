@@ -150,10 +150,12 @@ def extract(html,race,url):
         raise ValueError("Car number coverage conflict")
     for source in recorded:
         original=expected[source["number"]]
-        if (compare_name(source["name"])!=compare_name(original["name"]) or
-            clean(source["prefecture"])!=clean(original["prefecture"]) or
-            clean(source["period"])!=clean(original["period"]).removesuffix("期")):
-            raise ValueError("Rider identity mismatch in source")
+        mismatches=[]
+        if compare_name(source["name"])!=compare_name(original["name"]):mismatches.append("name:"+compare_name(source["name"])+" / "+compare_name(original["name"]))
+        if clean(source["prefecture"])!=clean(original["prefecture"]):mismatches.append("prefecture:"+clean(source["prefecture"])+" / "+clean(original["prefecture"]))
+        if clean(source["period"])!=clean(original["period"]).removesuffix("期"):mismatches.append("period:"+clean(source["period"])+" / "+clean(original["period"]))
+        if mismatches:
+            raise ValueError("Rider identity mismatch in source car "+str(source["number"])+": "+",".join(mismatches))
     return {str(x["number"]):{k:v for k,v in x.items()
              if k not in ("number","name","prefecture","period")} for x in recorded}
 
