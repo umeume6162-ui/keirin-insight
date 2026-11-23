@@ -397,8 +397,79 @@
           "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_32473"
         }
       ],
-      "results": [],
-      "status": "entry_only",
+      "results": [
+        {
+          "number": 1,
+          "name": "末広 快理",
+          "prefecture": "兵庫",
+          "period": "121",
+          "finish": "1",
+          "method": "逃",
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611236103"
+        },
+        {
+          "number": 2,
+          "name": "玉手 翔",
+          "prefecture": "兵庫",
+          "period": "91",
+          "finish": "2",
+          "method": "ク",
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611236103"
+        },
+        {
+          "number": 5,
+          "name": "竹内 一暢",
+          "prefecture": "滋賀",
+          "period": "84",
+          "finish": "3",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611236103"
+        },
+        {
+          "number": 7,
+          "name": "真鍋 伸也",
+          "prefecture": "香川",
+          "period": "85",
+          "finish": "4",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611236103"
+        },
+        {
+          "number": 6,
+          "name": "吉岡 伸太郎",
+          "prefecture": "愛媛",
+          "period": "105",
+          "finish": "5",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611236103"
+        },
+        {
+          "number": 3,
+          "name": "小笠原 昭太",
+          "prefecture": "青森",
+          "period": "76",
+          "finish": "6",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611236103"
+        },
+        {
+          "number": 4,
+          "name": "小田 恭介",
+          "prefecture": "青森",
+          "period": "125",
+          "finish": "7",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611236103"
+        }
+      ],
+      "status": "results_recorded",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
       "expectedCount": 7
@@ -4025,6 +4096,6 @@
   "summary": {
     "races": 41,
     "entries": 287,
-    "resultRows": 56
+    "resultRows": 63
   }
 }
