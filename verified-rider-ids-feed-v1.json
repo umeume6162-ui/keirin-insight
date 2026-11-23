@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-23",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "KEIRIN.JP と別媒体の固定4項目照合 182件。全件の原資料と取得法は各選手officialVerificationを参照。ライブ取得や上流独立性を推定しない。",
+  "verificationNote": "KEIRIN.JPと別掲載元の固定4項目照合 187件。各officialVerificationに根拠を保持。直接ライブ取得・上流独立性の証明とは区別。",
   "summary": {
-    "rows": 182
+    "rows": 187
   },
   "riders": [
     {
@@ -4386,6 +4386,126 @@
           "https://www.yen-joy.net/racer/data/012786/3"
         ],
         "note": "2026-11-23 KEIRIN.JP official profile date 2025-04-01 and other profiles incl official track/local sources show 4 identity fields matching after whitespace/prefecture normalizations. Indexed/cached snapshots, not guaranteed live. Upstream source independence not proven. Sheet row 425 G:K readback."
+      }
+    },
+    {
+      "id": "015896",
+      "name": "丸山　留依",
+      "prefecture": "静岡",
+      "period": "127",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015896",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015896",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015896",
+          "https://www.winticket.jp/keirin/cyclist/015896"
+        ],
+        "note": "既存AUTO受付と2026-11-23公式・WINTICKETの検索キャッシュ照合。4必須項目一致／元選手ID台帳row179 G:K再読済。検索キャッシュの項目転記でありライブ全文取得ではない。掲載サイト間の上流独立性は未立証。"
+      }
+    },
+    {
+      "id": "015955",
+      "name": "岩元　杏奈",
+      "prefecture": "宮崎",
+      "period": "128",
+      "source": "https://keirin.jp/sp/racerprofile?snum=015955",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=015955",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=015955",
+          "https://www.winticket.jp/keirin/cyclist/015955"
+        ],
+        "note": "既存AUTO受付と2026-11-23公式・WINTICKETの検索キャッシュ照合。4必須項目一致／元選手ID台帳row184 G:K再読済。検索キャッシュの項目転記でありライブ全文取得ではない。掲載サイト間の上流独立性は未立証。"
+      }
+    },
+    {
+      "id": "016026",
+      "name": "吉田　恵利",
+      "prefecture": "北海",
+      "period": "130",
+      "source": "https://keirin.jp/sp/racerprofile?snum=016026",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=016026",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=016026",
+          "https://www.winticket.jp/keirin/cyclist/016026"
+        ],
+        "note": "既存AUTO受付と2026-11-23公式・WINTICKETの検索キャッシュ照合。4必須項目一致／元選手ID台帳row219 G:K再読済。検索キャッシュの項目転記でありライブ全文取得ではない。掲載サイト間の上流独立性は未立証。"
+      }
+    },
+    {
+      "id": "016024",
+      "name": "宮本　寛大",
+      "prefecture": "熊本",
+      "period": "129",
+      "source": "https://keirin.jp/pc/racerprofile?snum=016024",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=016024",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=016024",
+          "https://www.winticket.jp/keirin/cyclist/016024"
+        ],
+        "note": "既存AUTO受付と2026-11-23公式・WINTICKETの検索キャッシュ照合。4必須項目一致／元選手ID台帳row257 G:K再読済。検索キャッシュの項目転記でありライブ全文取得ではない。掲載サイト間の上流独立性は未立証。"
+      }
+    },
+    {
+      "id": "015534",
+      "name": "牛田　樹希斗",
+      "prefecture": "愛知",
+      "period": "119",
+      "source": "https://keirin.jp/sp/racerprofile?snum=015534",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=015534",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=015534",
+          "https://www.winticket.jp/keirin/cyclist/015534"
+        ],
+        "note": "既存AUTO受付と2026-11-23公式・WINTICKETの検索キャッシュ照合。4必須項目一致／元選手ID台帳row260 G:K再読済。検索キャッシュの項目転記でありライブ全文取得ではない。掲載サイト間の上流独立性は未立証。"
       }
     }
   ],
