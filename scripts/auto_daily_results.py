@@ -291,7 +291,7 @@ def load_start_time_cache(path="daily-race-start-times-v1.json"):
 def select_rotating_races(eligible, limit, now=None):
     """Spread bounded attempts across eligible races instead of retrying the first N.
 
-    Four scheduled daily runs use different five-hour windows (07/12/17/22 JST).
+    Five scheduled daily runs use distinct 00/07/12/17/22 JST slots.
     Rotate without wrapping within a single attempt; a later run gets the next
     block, including when an earlier source remains unavailable.
     """
@@ -300,10 +300,12 @@ def select_rotating_races(eligible, limit, now=None):
     if not eligible:
         return []
     now = now or datetime.now(JST)
-    # The schedule runs at 07:10, 12:10, 17:10 and 22:10 JST.
-    slot = ((now.hour - 7) % 24) // 5
+    # Explicitly account for the post-midnight 00:10 run.
+    # No two configured runs share a slot on the same JST date.
+    slot = (0 if now.hour < 7 else 1 if now.hour < 12 else
+            2 if now.hour < 17 else 3 if now.hour < 22 else 4)
     blocks = (len(eligible) + limit - 1) // limit
-    index = ((now.date().toordinal() * 4) + slot) % blocks
+    index = ((now.date().toordinal() * 5) + slot) % blocks
     first = index * limit
     return eligible[first:first + limit]
 
@@ -558,16 +560,19 @@ def self_test():
     rotation = [(f"race-{i}", []) for i in range(13)]
     day0 = datetime(2026, 11, 23, 7, 10, tzinfo=JST)
     batches = [select_rotating_races(rotation, 4, day0.replace(hour=h))
-               for h in (7, 12, 17, 22)]
+               for h in (0, 7, 12, 17, 22)]
     assert all(1 <= len(batch) <= 4 for batch in batches)
     assert len({k for batch in batches for k, _ in batch}) == 13
-    # The production limit is twelve races; verify the four JST windows
+    overnight = day0.replace(hour=0)
+    assert select_rotating_races(rotation, 4, overnight) != select_rotating_races(
+        rotation, 4, day0.replace(hour=22))
+    # The production limit is twelve races; verify all five JST windows
     # eventually cover every candidate even when the backlog spans days.
     for count in (12, 13, 48, 49, 80):
         candidates = [(f"race-{i}", []) for i in range(count)]
         covered = set()
         for offset in range(6):
-            for hour in (7, 12, 17, 22):
+            for hour in (0, 7, 12, 17, 22):
                 moment = (day0 + timedelta(days=offset)).replace(hour=hour)
                 covered.update(key for key, _ in select_rotating_races(candidates, 12, moment))
         assert covered == {key for key, _ in candidates}, count
