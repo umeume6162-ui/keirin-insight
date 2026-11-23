@@ -391,7 +391,7 @@ jobs:
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
-          python scripts/auto_daily_results.py --apply --max-races 12
+          python scripts/auto_daily_results.py --apply --max-races 12 --max-seconds 720
       - name: Build daily board
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
         env:
