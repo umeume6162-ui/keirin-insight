@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付",
   "verificationNote": "公開選手IDの4必須項目を2掲載サイト照合 194件。各officialVerificationに証拠参照。検索キャッシュの転記と直接ライブ取得、サイトごとの上流独立性を区別。",
   "summary": {
-    "rows": 199
+    "rows": 202
   },
   "riders": [
     {
@@ -4795,6 +4795,78 @@
           "https://www.winticket.jp/keirin/cyclist/016040"
         ],
         "note": "旧出走表短縮名「アニー紗世」→正式名「アニー紗世子」へユーザー指示で救済。登録番号016040／和歌山県／130期がKEIRIN.JPとJKAガールズ公式で4項目一致。旧名・省略表示は手動受付MANUAL-V4-20261122T163137-016040および証拠KI-V4-20261123-016040に保存。検索掲載・キャッシュ由来の項目照合、上流独立性は未証明。"
+      }
+    },
+    {
+      "id": "013245",
+      "name": "佐藤　真一",
+      "prefecture": "東京",
+      "period": "79",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013245",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013245",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013245",
+          "https://www.chariloto.com/keirin_athletes/13245"
+        ],
+        "note": "元台帳と公開2媒体の4項目一致、登録番号013245。2026-11-23証拠記録KI-V4-20261123-013245。掲載ドメインは別、上流ソース独立性未確定。"
+      }
+    },
+    {
+      "id": "014155",
+      "name": "佐藤　政利",
+      "prefecture": "新潟",
+      "period": "91",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014155",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014155",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014155",
+          "https://www.yen-joy.net/racer/data/014155"
+        ],
+        "note": "元台帳と公開2媒体の4項目一致、登録番号014155。2026-11-23証拠記録KI-V4-20261123-014155。掲載ドメインは別、上流ソース独立性未確定。"
+      }
+    },
+    {
+      "id": "015276",
+      "name": "佐伯　亮輔",
+      "prefecture": "岡山",
+      "period": "113",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015276",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015276",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015276",
+          "https://www.winticket.jp/keirin/cyclist/015276"
+        ],
+        "note": "元台帳と公開2媒体の4項目一致、登録番号015276。2026-11-23証拠記録KI-V4-20261123-015276。掲載ドメインは別、上流ソース独立性未確定。"
       }
     }
   ],
