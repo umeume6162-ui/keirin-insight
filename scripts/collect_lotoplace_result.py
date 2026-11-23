@@ -66,8 +66,8 @@ def grade_matches(source_grade, expected_class):
     target = compact(expected_class)
     accepted = {
         "A3": {"A3"}, "A1A2": {"A1", "A2"},
-        "S": {"S1", "S2"}, "L1": {"L1"},
-        "A1": {"A1", "A2"}, "A2": {"A1", "A2"}, "S1": {"S1", "S2"}, "S2": {"S1", "S2"}
+        "S": {"S1", "S2", "SS"}, "L1": {"L1", "L2"}, "L2": {"L1", "L2"},
+        "A1": {"A1", "A2"}, "A2": {"A1", "A2"}, "S1": {"S1", "S2", "SS"}, "S2": {"S1", "S2", "SS"}, "SS": {"S1", "S2", "SS"}
     }
     # A1/A2 競走 can contain both rider grades even when the sheet label is A1 or A2.
     # S1/S2 races also mix rider grades. Keep A, S and L groups separate;
@@ -239,6 +239,8 @@ def self_test():
     assert len(parse_result(mixed_s, day, code, track, race, "S2", cars, url)["results"]) == 7
     assert grade_matches("A1", "A2") and grade_matches("A2", "A1")
     assert grade_matches("S1", "S2") and grade_matches("S2", "S1")
+    assert grade_matches("SS", "S1") and grade_matches("S1", "SS")
+    assert grade_matches("L2", "L1") and grade_matches("L1", "L2")
     assert not grade_matches("A1", "S2") and not grade_matches("A3", "S1")
     assert grade_matches("A3", "A3") and not grade_matches("A3", "A2")
     assert not grade_matches("S1", "A1") and not grade_matches("L1", "A2")

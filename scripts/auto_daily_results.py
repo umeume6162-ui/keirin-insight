@@ -101,7 +101,7 @@ def eligible_races(entries, results, start, end):
         classes = {clean(r[4]) for r in rows}
         # A1/A2 and S1/S2 are rider grades, not proof of different races.
         # They legitimately coexist in one A- or S-class event.
-        permitted_groups = ({"A1", "A2"}, {"S1", "S2"}, {"A3"}, {"L1"})
+        permitted_groups = ({"A1", "A2"}, {"S1", "S2", "SS"}, {"A3"}, {"L1", "L2"})
         if (len(tracks) != 1 or "" in tracks or "" in classes or
                 not any(classes <= group for group in permitted_groups)):
             continue
@@ -427,6 +427,13 @@ def self_test():
     for i, row in enumerate(s_mix):
         row[4] = "S1" if i % 2 else "S2"
     assert len(eligible_races(s_mix, [], start, start)) == 1
+    ss_mix = [list(r) for r in s_mix]
+    ss_mix[0][4] = "SS"
+    assert len(eligible_races(ss_mix, [], start, start)) == 1
+    l_mix = [list(r) for r in records]
+    for i, row in enumerate(l_mix):
+        row[4] = "L1" if i % 2 else "L2"
+    assert len(eligible_races(l_mix, [], start, start)) == 1
     # Nine-car S1/S2 races remain eligible, retaining every rider's own grade.
     nine = [list(r) for r in records] + [[day, "26", "西武園", "1", "S1", str(n),
             f"選手 {n}", "埼玉", "93"] for n in (8, 9)]
