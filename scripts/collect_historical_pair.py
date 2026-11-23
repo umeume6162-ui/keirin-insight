@@ -64,13 +64,14 @@ def collect(day, code, track, number, class_name, cars, left_url=None, right_url
                                              track, number, class_name, cars, right_url)
             second = day_results.parse_result(day_results.fetch(alt_url), day, code,
                                               track, number, class_name, cars, alt_url)
-            alt_comparison = compare({"observations": [first, second]})
-            assert alt_comparison["formalPass"] is False
-            return {"observations": [first, second],
-                    "comparison": alt_comparison,
-                    "sourcePairMode": "CHARILOTO_LOTOPLACE_FALLBACK"}
         except (ValueError, requests.exceptions.RequestException) as alt_exc:
             raise SourceStageError("ALTERNATE_PAIR_UNAVAILABLE") from alt_exc
+        # Keep content disagreement distinct from a source outage.
+        alt_comparison = compare({"observations": [first, second]})
+        assert alt_comparison["formalPass"] is False
+        return {"observations": [first, second],
+                "comparison": alt_comparison,
+                "sourcePairMode": "CHARILOTO_LOTOPLACE_FALLBACK"}
     try:
         right = day_results.parse_result(day_results.fetch(right_url), day, code,
                                          track, number, class_name, cars, right_url)
