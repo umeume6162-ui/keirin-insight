@@ -46,10 +46,11 @@ def discover(list_html, track, loader, date=None):
     matches = []
     for candidate in sorted(set(starts)):
         page = loader(candidate)
-        if not date or re.search(
-            rf"{int(yyyy)}年\s*{int(mm)}月\s*{int(dd)}日",
-            norm(BeautifulSoup(page, "html.parser").get_text(" ", strip=True))
-        ):
+        soup = BeautifulSoup(page, "html.parser")
+        title = " ".join(norm(x.get_text(" ", strip=True)) for x in soup.select("title,h1"))
+        if not date or (track in title and re.search(
+            rf"{int(yyyy)}年\s*{int(mm)}月\s*{int(dd)}日", title
+        )):
             matches.append((candidate, page))
     if len(matches) != 1:
         raise ValueError("Venue/date 1R not uniquely confirmed")
