@@ -52,7 +52,7 @@ def clean(value):
 def read_existing():
     session, token = remote_client()
     base = "https://sheets.googleapis.com/v4/spreadsheets/" + SHEET_ID + "/values:batchGet"
-    query = [("ranges", "'" + CONFIG[key][0] + "'!A1:O10000") for key in CONFIG]
+    query = [("ranges", "'" + CONFIG[key][0] + "'!A1:O") for key in CONFIG]
     response = session.get(base, params=query,
                            headers={"Authorization": "Bearer " + token}, timeout=40)
     response.raise_for_status()
