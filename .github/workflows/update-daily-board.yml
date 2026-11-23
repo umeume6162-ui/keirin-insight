@@ -44,6 +44,10 @@ on:
         description: 'Optional individual racecard URL; leave blank to discover venue racecards'
         required: false
         type: string
+      historical_batch_plan:
+        description: 'Optional JSON worklist of 1-10 historical races, read-only'
+        required: false
+        type: string
       historical_result_url:
         description: 'Optional netkeirin historical result page (read-only)'
         required: false
@@ -88,7 +92,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check read-only Sheets credential
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[verify-sheets-writer]'))
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[verify-sheets-writer]'))
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
@@ -110,7 +114,7 @@ jobs:
           python scripts/collect_historical_batch.py --self-test
           python scripts/build_daily_board.py --self-test
       - name: Validate manually supplied racecard fields
-        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.source_url != ''
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
           RACE_DATE: ${{ inputs.race_date }}
           TRACK_CODE: ${{ inputs.track_code }}
@@ -134,7 +138,7 @@ jobs:
               sys.exit('Invalid manual racecard inputs; no intake')
           PY
       - name: Collect one public racecard (preview only)
-        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.source_url != ''
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
           RACE_DATE: ${{ inputs.race_date }}
           TRACK_CODE: ${{ inputs.track_code }}
@@ -146,7 +150,7 @@ jobs:
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --validate-only
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json
       - name: Discover and validate venue racecards (manual preview)
-        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.source_url == '' && inputs.race_date != '' && inputs.track_name != '' && inputs.track_code != ''
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url == '' && inputs.race_date != '' && inputs.track_name != '' && inputs.track_code != ''
         env:
           RACE_DATE: ${{ inputs.race_date }}
           TRACK_CODE: ${{ inputs.track_code }}
@@ -155,13 +159,46 @@ jobs:
           python scripts/discover_tospo_races.py --date "$RACE_DATE" --track-code "$TRACK_CODE" --track "$TRACK_NAME" --out /tmp/ki-manual-racecard.json
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --validate-only
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json
+      - name: Reject mixed historical batch input modes
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_batch_plan != '' && (inputs.historical_result_url != '' || inputs.historical_second_url != '' || inputs.source_url != '' || inputs.verify_writer || inputs.apply_intake || inputs.race_date != '' || inputs.track_code != '' || inputs.track_name != '' || inputs.race_number != '')
+        run: |
+          echo "::error::Historical batch mode must be used alone; no writes"
+          exit 1
+      - name: Collect bounded historical batch (candidate only)
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_batch_plan != ''
+        env:
+          BATCH_PLAN: ${{ inputs.historical_batch_plan }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          plan=json.loads(os.environ["BATCH_PLAN"])
+          Path('/tmp/ki-batch-plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf-8')
+          PY
+          set +e
+          python scripts/collect_historical_batch.py --plan /tmp/ki-batch-plan.json --out-dir /tmp/ki-batch-candidates
+          rc=$?
+          set -e
+          if [ "$rc" -eq 2 ] && [ -f /tmp/ki-batch-candidates/batch-summary.json ]; then
+            echo "::warning::Partial historical batch; summary and successful candidates preserved"
+          elif [ "$rc" -ne 0 ]; then
+            exit "$rc"
+          fi
+      - name: Upload bounded historical batch candidates
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_batch_plan != '' && success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: historical-batch-candidates
+          path: /tmp/ki-batch-candidates/
+          retention-days: 7
+          if-no-files-found: error
       - name: Reject mixed historical and daily write modes
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url != '' && (inputs.apply_intake || inputs.verify_writer || inputs.source_url != '')
         run: |
           echo "::error::Historical preview may not request daily writes, writer verification or racecard input"
           exit 1
       - name: Validate historical preview input mode
-        if: github.event_name == 'workflow_dispatch' && inputs.historical_second_url != '' && inputs.historical_result_url == ''
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_second_url != '' && inputs.historical_result_url == '' && inputs.historical_batch_plan == ''
         run: |
           echo "::error::historical_second_url requires historical_result_url"
           exit 1
@@ -230,7 +267,7 @@ jobs:
           PY
           python scripts/upsert_daily_sheets.py --verify-write-access
       - name: Manually verify Sheets writer without adding race rows
-        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.verify_writer
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.verify_writer
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
@@ -247,7 +284,7 @@ jobs:
           PY
           python scripts/upsert_daily_sheets.py --verify-write-access
       - name: Verify private Sheets service-account identity before write
-        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.apply_intake
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.apply_intake
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
@@ -263,17 +300,17 @@ jobs:
           print("SERVICE_ACCOUNT_IDENTITY_MATCH: approved editor (credential withheld)")
           PY
       - name: Save validated manual racecard to daily intake tab
-        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.apply_intake && (inputs.source_url != '' || (inputs.race_date != '' && inputs.track_name != '' && inputs.track_code != ''))
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.apply_intake && (inputs.source_url != '' || (inputs.race_date != '' && inputs.track_name != '' && inputs.track_code != ''))
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --apply
       - name: Build daily board
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '')
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '')
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/build_daily_board.py --out daily-board-feed-v1.json
       - name: Commit changed daily feed only
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '')
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '')
         run: |
           git add daily-board-feed-v1.json
           if git diff --cached --quiet; then
