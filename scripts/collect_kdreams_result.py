@@ -93,7 +93,7 @@ def extract(html, day, code, track, race, class_name, cars, url):
     if (track + "競輪" not in title or stamp not in title
             or not re.search(rf"(?<!\d){int(race)}R(?!\d)", title)):
         raise ValueError("Race date/venue not found in title")
-    entry, eidx = exact_table(soup, ("車番", "選手名府県/年齢/期別", "級班"))
+    entry, eidx = exact_table(soup, ("車番", "選手名府県/年齢/期別", "級班", "直近4ヶ月の成績"))
     expected = {}
     for tr in entry.find_all("tr")[1:]:
         cells = tr.find_all("td", recursive=False)
@@ -164,10 +164,10 @@ def self_test():
     assert url.endswith("6120261123010001/?pageType=showResult")
     head = "<title>玉野競輪 レース詳細 | 1R | 2026年11月23日</title>"
     ehead = "<tr>" + "".join("<th>" + x + "</th>" for x in
-        ("予 想", "車 番", "選手名 府県/年齢/期別", "級 班")) + "</tr>"
+        ("予 想", "車 番", "選手名 府県/年齢/期別", "級 班", "直近4ヶ月の成績")) + "</tr>"
     rhead = "<tr>" + "".join("<th>" + x + "</th>" for x in
         ("着 順", "車 番", "選手名", "決ま り手")) + "</tr>"
-    ers = "".join(f"<tr><td></td><td>{n}</td><td>選手 {n} 埼　玉/30/90</td><td>L1</td></tr>"
+    ers = "".join(f"<tr><td></td><td>{n}</td><td>選手 {n} 埼　玉/30/90</td><td>L1</td><td></td></tr>"
                   for n in range(1, 8))
     rrs = "".join(f"<tr><td>{n}</td><td>{n}</td><td>選手 {n}</td><td>{'差' if n==1 else ''}</td></tr>"
                   for n in range(1, 8))
