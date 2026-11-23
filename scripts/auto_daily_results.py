@@ -219,7 +219,7 @@ def due_result_races(eligible, cache, now=None):
             withheld.append(key)
             continue
         start_time = saved.get("startTime")
-        if not isinstance(start_time, str) or not re.fullmatch(r"(?:[01]\\d|2[0-3]):[0-5]\\d", start_time):
+        if not isinstance(start_time, str) or not re.fullmatch(r"(?:[01]\d|2[0-3]):[0-5]\d", start_time):
             withheld.append(key)
             continue
         target = datetime.strptime(f"{day} {start_time}", "%Y-%m-%d %H:%M").replace(tzinfo=JST)
