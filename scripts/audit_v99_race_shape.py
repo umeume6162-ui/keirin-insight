@@ -119,6 +119,91 @@ def meeting_coverage(v99_rows, v100_rows, cancelled_rows):
 
 
 
+
+def reconcile_explicit_racecards(v99_rows, cards):
+    """Preview only; compare complete, sourced pre-race cards with saved V99 cars.
+
+    This does not decide official starters or prove a missing result row.
+    Incomplete/unsourced entry snapshots are never interpreted as missing cars.
+    """
+    from datetime import date
+    from urllib.parse import urlsplit
+    if not isinstance(cards, list) or len(cards) > 10:
+        raise ValueError("Expected 0..10 explicit racecard snapshots")
+    by_race = defaultdict(dict)
+    for row in v99_rows[1:]:
+        if len(row) < 9 or not row[0] or not str(row[2]).isdigit() or not str(row[4]).isdigit() or not str(row[7]).isdigit():
+            continue
+        race_key = f"{row[0]}|{int(row[2]):02d}|{int(row[4])}"
+        car = int(row[7])
+        if car in by_race[race_key]:
+            by_race[race_key][car] = None  # duplicate: never overwrite evidence
+        else:
+            by_race[race_key][car] = str(row[8]).strip()
+    seen = set()
+    reviews = []
+    for card in cards:
+        if not isinstance(card, dict):
+            raise ValueError("Racecard must be an object")
+        key = card.get("raceKey")
+        if not isinstance(key, str) or key in seen:
+            raise ValueError("Duplicate or invalid racecard key")
+        parts = key.split("|")
+        if len(parts) != 3:
+            raise ValueError("Bad racecard key")
+        day, code, race = parts
+        try:
+            date.fromisoformat(day)
+        except (ValueError, TypeError) as exc:
+            raise ValueError("Bad racecard date") from exc
+        if not (len(day) == 10 and len(code) == 2 and code.isdigit() and
+                1 <= int(code) <= 99 and race.isdigit() and
+                1 <= int(race) <= 12 and str(int(race)) == race):
+            raise ValueError("Bad racecard identity")
+        seen.add(key)
+        source = card.get("sourceUrl", "")
+        parsed = urlsplit(source) if isinstance(source, str) else None
+        items = card.get("entries")
+        if (not parsed or parsed.scheme != "https" or not parsed.hostname
+                or not isinstance(items, list) or not 1 <= len(items) <= 9):
+            raise ValueError("Racecard source or entries not proven")
+        entries = {}
+        for x in items:
+            if not isinstance(x, dict) or type(x.get("number")) is not int or not 1 <= x["number"] <= 9:
+                raise ValueError("Bad racecard car number")
+            if not isinstance(x.get("name"), str) or not x["name"].strip():
+                raise ValueError("Missing racecard rider name")
+            if x["number"] in entries:
+                raise ValueError("Duplicate racecard car number")
+            entries[x["number"]] = x["name"].strip()
+        if set(entries) != set(range(1, len(entries) + 1)):
+            raise ValueError("Incomplete racecard car numbering")
+        saved = by_race.get(key, {})
+        missing = sorted(set(entries) - set(saved))
+        extra = sorted(set(saved) - set(entries))
+        name_conflicts = sorted(car for car in set(entries) & set(saved)
+                                if saved[car] is None or
+                                "".join(entries[car].split()) != "".join(saved[car].split()))
+        if not saved:
+            status = "NO_V99_RESULTS_REVIEW_OTHER_LEDGER_AND_CANCELLATION"
+        elif missing or extra or name_conflicts:
+            status = "SOURCED_ENTRY_V99_DISCREPANCY_REVIEW"
+        else:
+            status = "STORED_CARS_MATCH_ENTRY_SNAPSHOT_UNVERIFIED"
+        reviews.append({
+            "raceKey": key, "sourceUrl": source, "status": status,
+            "entryCars": sorted(entries), "savedCars": sorted(saved),
+            "potentiallyMissingCars": missing, "unexpectedStoredCars": extra,
+            "riderNameConflictCars": name_conflicts,
+            "formalPass": False
+        })
+    return {"schema": "ki-v99-entry-snapshot-diff-v1", "readOnly": True,
+            "formalPass": False, "reviewed": len(reviews), "results": reviews,
+            "limitations": ("One pre-race source does not prove final starting count, "
+                            "official cancellations, independent results or PASS.")}
+
+
+
 def live_tables():
     from upsert_daily_sheets import SHEET_ID, remote_client
     session, token = remote_client()
@@ -176,6 +261,29 @@ def self_test():
     assert scope["unexplainedRaceNumberGapCount"] == 0
     assert meeting_coverage(data, v100, [cancelled[0]])["unexplainedRaceNumberGapCount"] == 1
     assert scope["formalPass"] is False
+    # Full pre-race source is required before inferring a *potential* absent car.
+    card = {"raceKey": "2026-11-01|24|2",
+            "sourceUrl": "https://example.org/race/24/2",
+            "entries": [{"number": i, "name": "架空選手"} for i in range(1, 8)]}
+    matching = reconcile_explicit_racecards(data, [card])["results"][0]
+    assert matching["status"] == "SOURCED_ENTRY_V99_DISCREPANCY_REVIEW"
+    assert matching["potentiallyMissingCars"] == [7] and matching["formalPass"] is False
+    matching_six = reconcile_explicit_racecards(
+        data, [{**card, "entries": card["entries"][:6]}])["results"][0]
+    assert matching_six["status"] == "STORED_CARS_MATCH_ENTRY_SNAPSHOT_UNVERIFIED"
+    assert matching_six["potentiallyMissingCars"] == []
+    try:
+        reconcile_explicit_racecards(data, [{**card, "sourceUrl": ""}])
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Unsourced entry snapshot accepted")
+    try:
+        reconcile_explicit_racecards(data, [{**card, "entries": [card["entries"][0]] * 7}])
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Duplicate entry numbering accepted")
     print("SELF_TEST_OK: V99 read-only shape and cross-ledger coverage checks")
 
 
@@ -183,6 +291,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--self-test", action="store_true")
     p.add_argument("--live", action="store_true", help="Google V99 read-only, no writes")
+    p.add_argument("--racecards-json", help="Optional <=10 sourced racecard snapshots for read-only comparison")
     args = p.parse_args()
     if args.self_test:
         return self_test()
@@ -192,6 +301,11 @@ def main():
     report = audit(v99_rows)
     report["crossLedgerCoverage"] = meeting_coverage(v99_rows, v100_rows,
                                                       cancelled_rows)
+    if args.racecards_json:
+        from pathlib import Path
+        snapshots = json.loads(Path(args.racecards_json).read_text(encoding="utf-8"))
+        report["entrySnapshotDiff"] = reconcile_explicit_racecards(
+            v99_rows, snapshots.get("racecards") if isinstance(snapshots, dict) else None)
     print(json.dumps(report, ensure_ascii=False))
 
 
