@@ -184,20 +184,12 @@ def parse_result(html, day, code, track, race, class_name, cars, url):
 
 def fetch(url):
     import requests
-    from urllib.robotparser import RobotFileParser
+    from result_robots import require_robots_access
     agent = "KEIRIN-INSIGHT-Research/1.0 (single public result read-only)"
     hostname = urlsplit(url).netloc
     if hostname not in ("www.lotoplace.jp", "www.chariloto.com"):
         raise ValueError("Unapproved result host")
-    robots = requests.get("https://" + hostname + "/robots.txt",
-                          headers={"User-Agent": agent}, timeout=15)
-    if robots.status_code == 200:
-        rules = RobotFileParser()
-        rules.parse(robots.text.splitlines())
-        if not rules.can_fetch(agent, url):
-            raise ValueError("robots disallows URL")
-    elif robots.status_code not in (404, 410):
-        raise ValueError("robots access could not be established")
+    require_robots_access(url, hostname, agent)
     response = requests.get(url, headers={"User-Agent": agent}, timeout=20)
     response.raise_for_status()
     if len(response.content) > 3_000_000:
