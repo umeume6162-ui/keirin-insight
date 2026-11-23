@@ -53,6 +53,19 @@ def race_number_from_label(label):
     return int(m.group(1)) if m else None
 
 
+def grade_matches(source_grade, expected_class):
+    grade = compact(source_grade)
+    target = compact(expected_class)
+    accepted = {
+        "A3": {"A3"}, "A1A2": {"A1", "A2"},
+        "S": {"S1", "S2"}, "L1": {"L1"},
+        "A1": {"A1"}, "A2": {"A2"}, "S1": {"S1"}, "S2": {"S2"}
+    }
+    if target not in accepted:
+        raise ValueError("Unsupported race class for source verification")
+    return grade in accepted[target]
+
+
 def closest_race_number(table):
     # A whole-day page can contain many result tables. Never choose by table
     # order; look for an enclosing race section or preceding heading.
@@ -129,6 +142,8 @@ def parse_result(html, day, code, track, race, class_name, cars, url):
                 finish = ex = finished
             else:
                 raise ValueError("Invalid finish/exception in target race")
+            if "grade" not in headers or not grade_matches(get("grade"), class_name):
+                raise ValueError("Rider class conflicts with requested race class")
             period = get("period").removesuffix("期")
             name, pref = norm(cells[headers["name"]].get_text(" ", strip=True)), get("prefecture")
             if len(compact(name)) < 2 or not pref or not period.isdigit():
@@ -181,6 +196,13 @@ def self_test():
     html = html.replace("<h2>2R チャレンジ一般</h2>", "<h2>第2レース A級</h2>")
     observation = parse_result(html, day, code, track, race, grade, cars, url)
     assert len(observation["results"]) == 7
+    try:
+        parse_result(html, day, code, track, race, "S", cars, url)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Wrong class accepted")
+
     for altered in (html.replace("<td>7</td><td>7</td>", "<td>7</td><td>6</td>"),
                     html.replace("<h2>第2レース", "<h2>第3レース")):
         try:
