@@ -427,6 +427,16 @@ def self_test():
     for i, row in enumerate(s_mix):
         row[4] = "S1" if i % 2 else "S2"
     assert len(eligible_races(s_mix, [], start, start)) == 1
+    # Nine-car S1/S2 races remain eligible, retaining every rider's own grade.
+    nine = [list(r) for r in records] + [[day, "26", "西武園", "1", "S1", str(n),
+            f"選手 {n}", "埼玉", "93"] for n in (8, 9)]
+    for i, row in enumerate(nine[:7]):
+        row[4] = "S2" if i % 2 else "S1"
+    assert len(eligible_races(nine, [], start, start)) == 1
+    assert eligible_races(nine[:-1], [], start, start) == []
+    mixed_nine = [list(r) for r in nine]
+    mixed_nine[8][4] = "A1"
+    assert eligible_races(mixed_nine, [], start, start) == []
     # A race missed several days ago must remain eligible for the bounded retry.
     older = [list(row) for row in records]
     older_day = (datetime.strptime(day, "%Y-%m-%d") - timedelta(days=6)).date()
