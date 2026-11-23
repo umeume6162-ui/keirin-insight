@@ -1,0 +1,50 @@
+name: Probe seven Aomori archived results read-only
+on:
+  push:
+    paths: ['.github/workflows/probe-aomori-historical.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install 'requests==2.32.3' 'beautifulsoup4==4.14.2'
+      - name: Compare entire 49-car original against one public day-result HTML
+        run: |
+          python - <<'PY'
+          import sys,json
+          sys.path.insert(0,'scripts')
+          import collect_lotoplace_result as src
+          from compare_race_results import normalized_name,normalized_prefecture,canonical_method
+          base=json.loads('''{"1":[{"number":2,"name":"荒川ひかり","prefecture":"茨城","period":"110","finish":"1","method":"差し","exception":""},{"number":3,"name":"小林真矢香","prefecture":"石川","period":"122","finish":"2","method":"捲くり","exception":""},{"number":4,"name":"藤原春陽","prefecture":"徳島","period":"122","finish":"3","method":"","exception":""},{"number":5,"name":"田野口佳奈","prefecture":"香川","period":"126","finish":"4","method":"","exception":""},{"number":1,"name":"五味田奈穂","prefecture":"千葉","period":"124","finish":"5","method":"","exception":""},{"number":7,"name":"松下彩也香","prefecture":"青森","period":"130","finish":"6","method":"","exception":""},{"number":6,"name":"高崎千賀","prefecture":"神奈","period":"128","finish":"7","method":"","exception":""}],"2":[{"number":2,"name":"井上公利","prefecture":"宮城","period":"93","finish":"1","method":"逃げ","exception":""},{"number":3,"name":"阿部英光","prefecture":"宮城","period":"89","finish":"2","method":"差し","exception":""},{"number":6,"name":"峠祐介","prefecture":"埼玉","period":"78","finish":"3","method":"","exception":""},{"number":5,"name":"佐々木健司","prefecture":"青森","period":"76","finish":"4","method":"","exception":""},{"number":1,"name":"水書義弘","prefecture":"千葉","period":"75","finish":"5","method":"","exception":""},{"number":4,"name":"柴田竜史","prefecture":"静岡","period":"96","finish":"6","method":"","exception":""},{"number":7,"name":"鈴木豪","prefecture":"福島","period":"105","finish":"7","method":"","exception":""}],"3":[{"number":1,"name":"泉文人","prefecture":"福島","period":"99","finish":"1","method":"捲くり","exception":""},{"number":2,"name":"工藤政志","prefecture":"青森","period":"84","finish":"2","method":"マーク","exception":""},{"number":5,"name":"鎌田聡","prefecture":"宮城","period":"81","finish":"3","method":"","exception":""},{"number":4,"name":"宮澤晃","prefecture":"山梨","period":"75","finish":"4","method":"","exception":""},{"number":7,"name":"松山正和","prefecture":"静岡","period":"76","finish":"5","method":"","exception":""},{"number":3,"name":"野村純宏","prefecture":"神奈","period":"82","finish":"6","method":"","exception":""},{"number":6,"name":"山本和瑳","prefecture":"神奈","period":"127","finish":"7","method":"","exception":""}],"4":[{"number":6,"name":"宮下一歩","prefecture":"長野","period":"115","finish":"1","method":"逃げ","exception":""},{"number":1,"name":"吉田元輝","prefecture":"茨城","period":"100","finish":"2","method":"差し","exception":""},{"number":7,"name":"井上雄三","prefecture":"埼玉","period":"88","finish":"3","method":"","exception":""},{"number":3,"name":"坂本将太郎","prefecture":"栃木","period":"101","finish":"4","method":"","exception":""},{"number":4,"name":"梅田加津也","prefecture":"神奈","period":"119","finish":"5","method":"","exception":""},{"number":2,"name":"戸邉捺希","prefecture":"埼玉","period":"117","finish":"6","method":"","exception":""},{"number":5,"name":"植草亮介","prefecture":"千葉","period":"90","finish":"7","method":"","exception":""}],"5":[{"number":1,"name":"菊地圭","prefecture":"宮城","period":"123","finish":"1","method":"差し","exception":""},{"number":4,"name":"山崎司","prefecture":"福島","period":"95","finish":"2","method":"マーク","exception":""},{"number":2,"name":"川越宏臣","prefecture":"東京","period":"125","finish":"3","method":"","exception":""},{"number":5,"name":"鈴木達也","prefecture":"福島","period":"97","finish":"4","method":"","exception":""},{"number":7,"name":"小川達也","prefecture":"静岡","period":"93","finish":"5","method":"","exception":""},{"number":6,"name":"小島雅章","prefecture":"埼玉","period":"83","finish":"6","method":"","exception":""},{"number":3,"name":"台和紀","prefecture":"埼玉","period":"83","finish":"7","method":"","exception":""}],"6":[{"number":3,"name":"吉川美穂","prefecture":"和歌","period":"120","finish":"1","method":"差し","exception":""},{"number":5,"name":"緒方詩央里","prefecture":"福岡","period":"130","finish":"2","method":"マーク","exception":""},{"number":1,"name":"尾方真生","prefecture":"福岡","period":"118","finish":"3","method":"","exception":""},{"number":2,"name":"大浦彩瑛","prefecture":"神奈","period":"126","finish":"4","method":"","exception":""},{"number":4,"name":"細田愛未","prefecture":"埼玉","period":"108","finish":"5","method":"","exception":""},{"number":6,"name":"東美月","prefecture":"兵庫","period":"124","finish":"6","method":"","exception":""},{"number":7,"name":"高橋美沙紀","prefecture":"愛知","period":"124","finish":"7","method":"","exception":""}],"7":[{"number":2,"name":"蒔田英彦","prefecture":"千葉","period":"93","finish":"1","method":"差し","exception":""},{"number":3,"name":"藤田祐大","prefecture":"茨城","period":"125","finish":"2","method":"捲くり","exception":""},{"number":6,"name":"川口直人","prefecture":"神奈","period":"84","finish":"3","method":"","exception":""},{"number":4,"name":"丸山貴秀","prefecture":"秋田","period":"89","finish":"4","method":"","exception":""},{"number":5,"name":"高塩讓次","prefecture":"栃木","period":"90","finish":"5","method":"","exception":""},{"number":7,"name":"鹿内翔","prefecture":"青森","period":"95","finish":"6","method":"","exception":""},{"number":1,"name":"内山雅貴","prefecture":"静岡","period":"113","finish":"7","method":"","exception":""}]}''')
+          day,code,track='2026-10-02','12','青森'
+          url='https://www.chariloto.com/keirin/results/12/2026-10-02'
+          try:
+              html=src.fetch(url)
+          except Exception as e:
+              print('AOMORI_FETCH_HOLD',type(e).__name__,str(e)[:120])
+              raise SystemExit(0)
+          for race in range(1,8):
+              key=f'{day}|{code}|{race}'
+              grade='L1' if race in (1,6) else 'A1A2'
+              try:
+                  ob=src.parse_result(html,day,code,track,race,grade,7,url)
+                  got={int(x['number']):x for x in ob['results']}
+                  problems=[]
+                  for exp in base[str(race)]:
+                      cur=got.get(exp['number'])
+                      if not cur:
+                          problems.append((exp['number'],'missing'));continue
+                      for field,norm in (('name',normalized_name),('prefecture',normalized_prefecture),('period',str),('finish',str),('method',canonical_method),('exception',str)):
+                          if norm(cur.get(field,'') or '')!=norm(exp[field]):
+                              problems.append((exp['number'],field))
+                  print('AOMORI_V99_COMPARE',key,'PASS' if not problems else 'HOLD','cars',len(got),'mismatchCount',len(problems),'details',problems[:8])
+              except Exception as e:
+                  print('AOMORI_V99_HOLD',key,type(e).__name__,str(e)[:120])
+          PY
