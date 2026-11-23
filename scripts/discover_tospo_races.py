@@ -9,6 +9,7 @@ import argparse
 import json
 import re
 import sys
+import requests
 from datetime import datetime
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit
@@ -94,8 +95,12 @@ def collect(date, track, code, list_html, loader):
         try:
             html = cache.get(url) or loader(url)
             entries.extend(parse(html, date, code, track, race, url))
-        except (ValueError, RuntimeError) as exc:
-            failed.append({"race": race, "error": str(exc)})
+        except (ValueError, RuntimeError, requests.exceptions.RequestException) as exc:
+            # A failed page must not discard other fully validated races.
+            # Keep only finite diagnostics; never output source HTML or raw URLs.
+            failed.append({"race": race, "reasonCode": (
+                "SOURCE_NETWORK_ERROR" if isinstance(exc, requests.exceptions.RequestException)
+                else "RACECARD_VALIDATION_ERROR")})
     if not entries:
         raise ValueError("No full racecard validated; do not treat as no races")
     return {"entries": entries, "results": [],
@@ -169,6 +174,22 @@ def self_test():
     urls, cache = discover(index, "西武園", lambda url: page, "2026-11-23")
     assert len(urls) == 2 and 1 in urls and 2 in urls
     assert len(cache) == 1
+    # Network failure for one R must preserve an independently valid full 7-car R.
+    from unittest.mock import patch
+    header = "<title>2026年11月23日 西武園競輪 1R 出走表</title>"
+    table = ("<table><tr><th>車番</th><th>選手名</th><th>級 脚</th></tr>"
+             + "".join(f"<tr><td>{n}</td><td>テスト選手{n} 40歳 / 京都 / 93期</td><td>A3 両</td></tr>" for n in range(1, 8))
+             + "</table>")
+    url_1 = "https://keirin.tokyo-sports.co.jp/list/race/one"
+    url_2 = "https://keirin.tokyo-sports.co.jp/list/race/two"
+    def read_one(url):
+        if url == url_2:
+            raise requests.exceptions.Timeout("private URL not for logs")
+        return header + table
+    with patch(__name__ + ".discover", return_value=({1: url_1, 2: url_2}, {})):
+        payload, missing = collect("2026-11-23", "西武園", "26", index, read_one)
+    assert len(payload["entries"]) == 7
+    assert missing == [{"race": 2, "reasonCode": "SOURCE_NETWORK_ERROR"}]
     try:
         discover(index, "前橋", lambda url: page)
     except ValueError:
