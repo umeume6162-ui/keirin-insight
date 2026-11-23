@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付",
   "verificationNote": "公開選手IDの4必須項目を2掲載サイト照合 194件。各officialVerificationに証拠参照。検索キャッシュの転記と直接ライブ取得、サイトごとの上流独立性を区別。",
   "summary": {
-    "rows": 202
+    "rows": 204
   },
   "riders": [
     {
@@ -4867,6 +4867,56 @@
           "https://www.winticket.jp/keirin/cyclist/015276"
         ],
         "note": "元台帳と公開2媒体の4項目一致、登録番号015276。2026-11-23証拠記録KI-V4-20261123-015276。掲載ドメインは別、上流ソース独立性未確定。"
+      }
+    },
+    {
+      "id": "014349",
+      "name": "佐藤　純嘉",
+      "prefecture": "青森",
+      "period": "94",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014349",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014349",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014349",
+          "https://www.chariloto.com/keirin_athletes/14349",
+          "https://www.yen-joy.net/racer/data/014349/1"
+        ],
+        "note": "既存の証拠台帳 AUTO-V4-20261123-014349 の4項目2サイト以上一致で正式救済。検索掲載と原文取得は区別、上流データ独立性は未証明。級班履歴の差は本人IDの合格条件と分離。"
+      }
+    },
+    {
+      "id": "015818",
+      "name": "佐藤　大地",
+      "prefecture": "三重",
+      "period": "125",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015818",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015818",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015818",
+          "https://www.winticket.jp/keirin/cyclist/015818",
+          "https://www.chariloto.com/keirin_athletes/15818"
+        ],
+        "note": "既存の証拠台帳 AUTO-V4-20261123-015818 の4項目2サイト以上一致で正式救済。検索掲載と原文取得は区別、上流データ独立性は未証明。級班履歴の差は本人IDの合格条件と分離。"
       }
     }
   ],
