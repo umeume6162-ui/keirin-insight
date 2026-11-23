@@ -18,6 +18,16 @@ import collect_lotoplace_result as day_results
 from compare_race_results import compare
 
 
+
+class SourceStageError(ValueError):
+    """Sanitized source location; original exception available as __cause__."""
+
+    def __init__(self, source_stage):
+        super().__init__("Result source observation unavailable")
+        self.source_stage = source_stage
+
+
+
 def collect(day, code, track, number, class_name, cars, left_url=None, right_url=None):
     date.fromisoformat(day)
     if not day.startswith("20") or not code.isdigit() or not 1 <= int(code) <= 99:
@@ -35,19 +45,25 @@ def collect(day, code, track, number, class_name, cars, left_url=None, right_url
     )
     netkeirin.validate_url(left_url, day, code, number)
     day_results.validate_url(right_url, day, code)
-    left = netkeirin.extract(netkeirin.fetch(left_url), day, code, track,
-                            number, class_name, cars, left_url)
+    try:
+        left = netkeirin.extract(netkeirin.fetch(left_url), day, code, track,
+                                number, class_name, cars, left_url)
+    except (ValueError, requests.exceptions.RequestException) as exc:
+        raise SourceStageError("PRIMARY_NETKEIRIN") from exc
     try:
         right = day_results.parse_result(day_results.fetch(right_url), day, code,
                                          track, number, class_name, cars, right_url)
-    except (ValueError, requests.exceptions.RequestException):
+    except (ValueError, requests.exceptions.RequestException) as exc:
         if explicit_right_url:
             # Never silently replace a user-verified right source URL.
-            raise
+            raise SourceStageError("SECONDARY_EXPLICIT") from exc
         alternate = f"https://www.lotoplace.jp/keirin/results/{int(code)}/{day}/"
-        day_results.validate_url(alternate, day, code)
-        right = day_results.parse_result(day_results.fetch(alternate), day, code,
-                                         track, number, class_name, cars, alternate)
+        try:
+            day_results.validate_url(alternate, day, code)
+            right = day_results.parse_result(day_results.fetch(alternate), day, code,
+                                             track, number, class_name, cars, alternate)
+        except (ValueError, requests.exceptions.RequestException) as fallback_exc:
+            raise SourceStageError("SECONDARY_BOTH_UNAVAILABLE") from fallback_exc
     comparison = compare({"observations": [left, right]})
     assert comparison["formalPass"] is False
     return {"observations": [left, right], "comparison": comparison}
@@ -79,11 +95,31 @@ def self_test():
           patch.object(day_results, "parse_result", side_effect=read_right)):
         try:
             collect(day, code, track, number, cls, cars, right_url=custom)
-        except ValueError:
-            pass
+        except SourceStageError as exc:
+            assert exc.source_stage == "SECONDARY_EXPLICIT"
+            assert isinstance(exc.__cause__, ValueError)
         else:
             raise AssertionError("Explicit right URL was silently changed")
         assert fetched.call_count == 1
+    with (patch.object(netkeirin, "fetch", side_effect=ValueError("Robots rules prohibit this page")),
+          patch.object(day_results, "fetch") as second):
+        try:
+            collect(day, code, track, number, cls, cars)
+        except SourceStageError as exc:
+            assert exc.source_stage == "PRIMARY_NETKEIRIN"
+            assert isinstance(exc.__cause__, ValueError)
+        else:
+            raise AssertionError("Primary result source error was not classified")
+        second.assert_not_called()
+    with (patch.object(netkeirin, "fetch", return_value="html"),
+          patch.object(netkeirin, "extract", return_value=left_obs),
+          patch.object(day_results, "fetch", side_effect=ValueError("No results"))):
+        try:
+            collect(day, code, track, number, cls, cars)
+        except SourceStageError as exc:
+            assert exc.source_stage == "SECONDARY_BOTH_UNAVAILABLE"
+        else:
+            raise AssertionError("Fallback failures were not classified")
     print("SELF_TEST_OK: bounded second-source fallback, explicit URL unchanged, no formal PASS")
 
 
