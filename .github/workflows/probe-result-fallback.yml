@@ -53,3 +53,31 @@ jobs:
             except Exception as exc:
               print('FALLBACK_SOURCE_HOLD',label,type(exc).__name__,str(exc)[:120])
           PY
+
+      - name: Extract complete target race data through existing adapters
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0,'scripts')
+          import collect_lotoplace_result as char
+          import collect_netkeirin_result as nk
+          cases=[
+            ('CHARILOTO_MATSUYAMA_5','char','2026-10-05','75','松山',5,'A1',7,'https://www.chariloto.com/keirin/results/75/2026-10-05/'),
+            ('CHARILOTO_MATSUYAMA_8','char','2026-10-05','75','松山',8,'S2',7,'https://www.chariloto.com/keirin/results/75/2026-10-05/'),
+            ('CHARILOTO_MATSUYAMA_9','char','2026-10-05','75','松山',9,'S2',7,'https://www.chariloto.com/keirin/results/75/2026-10-05/'),
+            ('NETKEIRIN_KURUME_3','net','2026-10-01','83','久留米',3,'A3',7,'https://keirin.netkeiba.com/race/result/?race_id=202610018303'),
+          ]
+          for name,adapter,day,code,track,race,grade,cars,url in cases:
+            try:
+              if adapter=='char':
+                obs=char.parse_result(char.fetch(url),day,code,track,race,grade,cars,url)
+              else:
+                obs=nk.extract(nk.fetch(url),day,code,track,race,grade,cars,url)
+              rows=obs['results']
+              assert len(rows)==7
+              assert sorted(int(r['number']) for r in rows)==list(range(1,8))
+              print('FALLBACK_PARSED',name,'TOTAL',len(rows),
+                    'CARS',[(r['number'],r['finish'],r['name'],r['prefecture'],r['period'],r['method']) for r in rows])
+            except Exception as e:
+              print('FALLBACK_PARSE_HOLD',name,type(e).__name__,str(e)[:130])
+          PY
