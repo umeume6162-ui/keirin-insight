@@ -28,6 +28,8 @@ jobs:
           fi
       - name: Install Google reader
         run: pip install 'google-auth==2.38.0' 'requests==2.32.3'
+      - name: Check daily intake script syntax
+        run: python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py
       - name: Build daily board
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
