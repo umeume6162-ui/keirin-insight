@@ -30,7 +30,16 @@ def clean(value):
 
 def normalized_name(value):
     # Spaces between Japanese surname and given name are presentation differences.
-    return re.sub(r"\s+", "", clean(value))
+    value = re.sub(r"\s+", "", clean(value))
+    # Evidence-scoped rider aliases. Never apply generic kanji substitutions.
+    return {"国井裕樹": "國井裕樹"}.get(value, value)
+
+
+def normalized_prefecture(value):
+    value = clean(value)
+    # Published abbreviations already verified in the pre-race identity matcher.
+    return {"神奈": "神奈川", "北海": "北海道",
+            "鹿児": "鹿児島"}.get(value, value)
 
 
 def require_source(observation):
@@ -96,6 +105,7 @@ def normalized_results(observation, expected):
             raise ValueError("Duplicate car in result observation")
         attrs = {field: clean(r.get(field)) for field in RIDER_FIELDS}
         attrs["name"] = normalized_name(attrs["name"])
+        attrs["prefecture"] = normalized_prefecture(attrs["prefecture"])
         attrs["period"] = re.sub(r"期$", "", attrs["period"])
         attrs["method"] = canonical_method(attrs["method"])
         if not attrs["name"] or not attrs["prefecture"] or not attrs["period"].isdigit():
@@ -166,6 +176,11 @@ def compare(payload):
 
 
 def self_test():
+    assert normalized_name("国井 裕樹") == normalized_name("國井裕樹")
+    assert normalized_name("国井裕樹") != normalized_name("國村洋")
+    assert normalized_prefecture("神奈") == "神奈川"
+    assert normalized_prefecture("鹿児") == "鹿児島"
+    assert normalized_prefecture("東京") != normalized_prefecture("神奈")
     race = dict(date="2026-11-23", trackCode="26", track="西武園",
                 race=1, className="A3", expectedCars=7)
     rows = [dict(number=i, name=f"テスト 選手{i}", prefecture="京都",
