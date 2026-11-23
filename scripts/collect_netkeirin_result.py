@@ -64,7 +64,7 @@ def extract(html, event_date, code, track, race, class_name, expected_cars, url)
         raise ValueError("Invalid race metadata")
     validate_url(url, event_date, code, race)
     soup = BeautifulSoup(html, "html.parser")
-    heading = " ".join(norm(x.get_text(" ", strip=True)) for x in soup.select("title,h1,h2"))
+    heading = " ".join(norm(x.get_text(" ", strip=True)) for x in soup.select("title,h1"))
     # Race cards can mention other races in navigation. Verify the event in a heading.
     if track not in heading or not (
         event_date in heading or
@@ -185,6 +185,15 @@ def self_test():
             pass
         else:
             raise AssertionError("Inconsistent source table accepted")
+    nav_bait = html.replace(" 2R 結果", " 3R 結果").replace(
+        "</body>", "<h2>京王閣 2026年09月10日 2R</h2></body>"
+    )
+    try:
+        extract(nav_bait, *args)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Navigation heading overrode incorrect title")
     print("SELF_TEST_OK: historical netkeirin result adapter, complete field and R guards")
 
 
