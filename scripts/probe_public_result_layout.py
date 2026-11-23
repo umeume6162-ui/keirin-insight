@@ -50,20 +50,27 @@ def inspect(label, url):
             if any(word in t for word in ("結果", "1R", "1Ｒ", "着順", "レース", "玉野")):
                 headings.append(t[:45])
         tables = []
-        for table in soup.select("table")[:20]:
+        for index, table in enumerate(soup.select("table")):
             trs = table.find_all("tr")
             if len(trs) < 3:
                 continue
-            headers = [t.get_text(" ", strip=True)[:30]
-                       for t in trs[0].find_all(["th", "td"], recursive=False)]
+            # Collect only explicit header cells, never rider names/results.
+            headers = []
+            for tr in trs[:3]:
+                th = tr.find_all("th", recursive=False)
+                if len(th) >= 2:
+                    headers = [t.get_text(" ", strip=True)[:24] for t in th]
+                    break
             if not headers:
-                headers = [t.get_text(" ", strip=True)[:30]
-                           for t in trs[1].find_all(["th", "td"], recursive=False)]
-            tables.append({"rows": len(trs), "columns": len(headers),
-                           "headers": headers[:15]})
+                continue
+            nearby = table.find_previous(["h2", "h3", "h4"])
+            section = nearby.get_text(" ", strip=True)[:36] if nearby else ""
+            tables.append({"index": index, "rows": len(trs),
+                           "headers": headers[:16], "section": section})
         result.update(status="HTML_OBSERVED", headings=headings[:12],
-                      tableCount=len(soup.select("table")), tables=tables[:12],
-                      resultHeadings=sum("結果" in h for h in headings))
+                      tableCount=len(soup.select("table")), tables=tables,
+                      resultHeadings=sum("結果" in h for h in headings),
+                      resultLabels=soup.get_text(" ", strip=True).count("レース結果"))
         return result
     except requests.exceptions.RequestException as exc:
         result["status"] = "NETWORK_UNAVAILABLE"
