@@ -21,7 +21,7 @@ from zoneinfo import ZoneInfo
 
 import requests
 
-from collect_historical_pair import collect
+from collect_historical_pair import collect_auto as collect
 from result_hold_diagnostics import classify_result_hold, review_route
 from compare_race_results import normalized_name, canonical_method, compare
 from upsert_daily_sheets import (
@@ -398,7 +398,8 @@ def process(entries, results, start, end, limit=4, write=False,
                         reviewRoute=review_route(reason))
             if getattr(exc, "source_stage", None) in (
                     "PRIMARY_NETKEIRIN", "SECONDARY_EXPLICIT",
-                    "SECONDARY_BOTH_UNAVAILABLE", "ALTERNATE_PAIR_UNAVAILABLE"):
+                    "SECONDARY_BOTH_UNAVAILABLE", "ALTERNATE_PAIR_UNAVAILABLE",
+                    "SOURCE_POOL_UNAVAILABLE"):
                 item["sourceStage"] = exc.source_stage
         reports.append(item)
     return {"schema": "ki-daily-result-intake-v1", "formalPass": False,
