@@ -240,6 +240,7 @@ def candidate(key, rows, collect_fn=collect):
     if not re.fullmatch(r"[a-zA-Z0-9_-]{1,64}", second_source):
         raise ValueError("Invalid second result source identifier")
     return {"entries": [], "results": payload,
+            "sourceAttempts": observation.get("sourceAttempts", []),
             "sourcePairMode": observation.get("sourcePairMode", "TWO_PUBLISHED_SOURCES"),
             "sourceNote": ("Content matched on two sites, upstream independence not verified; "
                            "secondSourceId=" + second_source)}
