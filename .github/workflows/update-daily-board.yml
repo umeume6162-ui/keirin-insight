@@ -182,6 +182,22 @@ jobs:
               ix=body.find(word)
               print('SOURCE_TEXT_TERM',word,'found',ix>=0,'context',body[max(0,ix-90):ix+170] if ix>=0 else '')
           PY
+      - name: TEMP inspect per-R published start times
+        if: github.event_name == 'pull_request'
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, "scripts")
+          from bs4 import BeautifulSoup
+          from collect_tospo_entry import fetch
+          soup=BeautifulSoup(fetch("https://keirin.tokyo-sports.co.jp/list/race/20261123_30926"),"html.parser")
+          for item in soup.select(".race-list__start")[:4]:
+              for depth,container in enumerate((item.parent,item.parent.parent)):
+                  print("RACE_TIME_PARENT",depth,container.name,str(container.get('class')),
+                    container.get_text(' ',strip=True)[:300])
+          item=soup.select_one(".race-detail__start")
+          if item:print("RACE_TIME_DETAIL",item.parent.get_text(' ',strip=True)[:220])
+          PY
       - name: Check daily intake script syntax
         run: |
           python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py scripts/collect_historical_pair.py scripts/collect_historical_batch.py scripts/classify_historical_candidates.py scripts/auto_daily_tospo_intake.py scripts/auto_daily_results.py
