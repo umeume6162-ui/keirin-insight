@@ -41,6 +41,7 @@ RIDER_NAME_ALIASES = {
     "末広快理": "末廣快理",
     "連仏康浩": "連佛康浩",
     "辺見竜馬": "邊見竜馬",
+    "真鍋伸也": "眞鍋伸也",
 }
 
 
@@ -506,6 +507,7 @@ def self_test():
         ("末広 快理", "末廣快理"),
         ("連仏 康浩", "連佛康浩"),
         ("辺見 竜馬", "邊見竜馬"),
+        ("真鍋 伸也", "眞鍋伸也"),
     ):
         assert canonical_rider_name(original) == canonical_rider_name(published)
     assert canonical_rider_name("末広快理") != canonical_rider_name("末廣別人")
