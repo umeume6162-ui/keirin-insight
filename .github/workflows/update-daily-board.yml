@@ -106,18 +106,6 @@ jobs:
           python scripts/collect_netkeirin_result.py --self-test
           python scripts/collect_lotoplace_result.py --self-test
           python scripts/build_daily_board.py --self-test
-      - name: TEMP verify reusable historical pair command against live public 7-car race
-        if: github.event_name == 'pull_request'
-        run: |
-          python scripts/collect_historical_pair.py --date 2026-09-10 --track-code 27 --track 京王閣 --race 2 --class-name A3 --expected-cars 7 --out /tmp/ki-history-pair-test.json
-          python - <<'PY'
-          import json
-          x = json.load(open('/tmp/ki-history-pair-test.json',encoding='utf-8'))
-          c=x['comparison']
-          assert c['carCount']==7 and c['disagreements']==[] and c['formalPass'] is False
-          assert c['status']=='SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING'
-          print('PAIR_LIVE_SELF_CHECK_OK: 7 cars, zero conflicts, candidate only')
-          PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.source_url != ''
         env:
