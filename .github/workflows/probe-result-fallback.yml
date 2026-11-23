@@ -144,3 +144,29 @@ jobs:
             except Exception as exc:
               print('KURUME_CHARILOTO_HOLD',key,type(exc).__name__,str(exc)[:160])
           PY
+
+      - name: Diagnose Kurume 2R individual condition without changing acceptance rules
+        run: |
+          python - <<'PY'
+          import sys,re
+          from bs4 import BeautifulSoup
+          sys.path.insert(0,'scripts')
+          import collect_lotoplace_result as src
+          day='2026-10-01'
+          url='https://www.chariloto.com/keirin/results/83/2026-10-01/'
+          try:
+              soup=BeautifulSoup(src.fetch(url),'html.parser')
+              tables=[table for table in soup.select('table') if src.closest_race_number(table)==2]
+              for t in tables:
+                  trs=t.find_all('tr')
+                  heads=[[src.compact(x.get_text(' ',strip=True)) for x in tr.find_all(['th','td'],recursive=False)] for tr in trs]
+                  for ix,cells in enumerate(heads):
+                      if all(h in cells for h in ('着','車番','選手名','個人状況')):
+                          print('KURUME_2R_HEADERS',cells)
+                          for row in heads[ix+1:]:
+                              if len(row)>=len(cells) and row[cells.index('車番')] in ('1','2','3','4','5','6','7'):
+                                  print('KURUME_2R_ROW',row)
+                          break
+          except Exception as e:
+              print('KURUME_2R_DIAGNOSTIC_HOLD',type(e).__name__,str(e)[:160])
+          PY
