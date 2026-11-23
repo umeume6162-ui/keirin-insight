@@ -67,8 +67,10 @@ def grade_matches(source_grade, expected_class):
     accepted = {
         "A3": {"A3"}, "A1A2": {"A1", "A2"},
         "S": {"S1", "S2"}, "L1": {"L1"},
-        "A1": {"A1"}, "A2": {"A2"}, "S1": {"S1"}, "S2": {"S2"}
+        "A1": {"A1", "A2"}, "A2": {"A1", "A2"}, "S1": {"S1"}, "S2": {"S2"}
     }
+    # A1/A2 競走 can contain both rider grades even when the sheet label is A1 or A2.
+    # Keep A3, S and L groups separate; never relax rider identity or race keys.
     if target not in accepted:
         raise ValueError("Unsupported race class for source verification")
     return grade in accepted[target]
@@ -227,6 +229,9 @@ def self_test():
     seen = parse_result(falling, day, code, track, race, grade, cars, url)
     assert seen["results"][-1]["finish"] == "落車棄権" and seen["results"][-1]["exception"] == "落車棄権"
 
+    assert grade_matches("A1", "A2") and grade_matches("A2", "A1")
+    assert grade_matches("A3", "A3") and not grade_matches("A3", "A2")
+    assert not grade_matches("S1", "A1") and not grade_matches("L1", "A2")
     try:
         parse_result(html, day, code, track, race, "S", cars, url)
     except ValueError:
