@@ -272,7 +272,7 @@ function riderEntryList(entries,race){
  }
  if(complete){
   wrapper.append(node("p","集計期間："+sourced.period+"／取得："+sourced.capturedAt+
-    "。単一掲載元の統計値であり、正式な独立照合PASSではありません。","source-caption"));
+    "。単一掲載元の取得時点の統計値です。発走前の値だったとは限らず、正式な独立照合PASSでもありません。","source-caption"));
   const link=node("a","選手成績の掲載元を確認");
   link.href=sourced.url;link.rel="noopener noreferrer";link.target="_blank";
   wrapper.append(link);
