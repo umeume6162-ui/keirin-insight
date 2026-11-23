@@ -114,6 +114,34 @@ jobs:
           python scripts/collect_lotoplace_result.py --date 2026-09-10 --track-code 27 --track 京王閣 --race 2 --class-name A3 --expected-cars 7 --url 'https://www.lotoplace.jp/keirin/results/27/2026-09-10/' --out /tmp/ki-live-lotoplace.json
           right=$?
           echo "LIVE_SOURCE_STATUS netkeirin=$left lotoplace=$right"
+          python - <<'PY'
+          import requests
+          from urllib.robotparser import RobotFileParser
+          sources = {
+              "kdreams": ("https://keirin.kdreams.jp/robots.txt",
+                  "https://keirin.kdreams.jp/keiokaku/racedetail/2720260908030002/?pageType=result"),
+              "chariloto": ("https://www.chariloto.com/robots.txt",
+                  "https://www.chariloto.com/keirin/results/27/2026-09-10")
+          }
+          agent = "KEIRIN-INSIGHT-Research/1.0 (single race read-only)"
+          for name, (robots_url, target) in sources.items():
+              try:
+                  r = requests.get(robots_url, headers={"User-Agent": agent}, timeout=12)
+                  if r.status_code == 200:
+                      rp = RobotFileParser()
+                      rp.parse(r.text.splitlines())
+                      allowed = rp.can_fetch(agent, target)
+                  elif r.status_code in (404, 410):
+                      allowed = True
+                  else:
+                      allowed = False
+                  print(f"ALT_SOURCE_ROBOTS {name} status={r.status_code} allowed={allowed}")
+                  if allowed:
+                      page = requests.get(target, headers={"User-Agent": agent}, timeout=18)
+                      print(f"ALT_SOURCE_HTML {name} status={page.status_code} bytes={len(page.content)}")
+              except requests.RequestException as exc:
+                  print(f"ALT_SOURCE_NETWORK_ERROR {name} kind={type(exc).__name__}")
+          PY
           if [ "$left" -eq 0 ] && [ "$right" -eq 0 ]; then
             python scripts/compare_race_results.py --left /tmp/ki-live-netkeirin.json --right /tmp/ki-live-lotoplace.json --out /tmp/ki-live-compare.json
           fi
