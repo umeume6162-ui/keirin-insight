@@ -159,6 +159,55 @@ jobs:
                   "formalPass": False, "wroteSheets": False
               }, ensure_ascii=False))
           PY
+      # One-time, source-verified, race-scoped production backfill. No formal PASS
+      # or existing result row changes; never runs on scheduled workflows.
+      - name: Backfill completed Seibuen 2R entry and two-source result
+        if: github.event_name == 'push' && contains(github.event.head_commit.message, '[backfill-seibuen2-20261123]')
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          set +e
+          python scripts/collect_tospo_entry.py --date 2026-11-23 --track-code 26 --track 西武園 --race 2 --url https://keirin.tokyo-sports.co.jp/list/race/20261122_31322 --out /tmp/ki-seibuen2-entry.json > /tmp/ki-seibuen2-entry-log 2>&1
+          rc=$?
+          set -e
+          if [ "$rc" -ne 0 ]; then
+            echo "SEIBUEN2_BACKFILL: ENTRY_SOURCE_HOLD, no writes"
+            exit 0
+          fi
+          python scripts/upsert_daily_sheets.py --input /tmp/ki-seibuen2-entry.json --validate-only
+          python scripts/upsert_daily_sheets.py --input /tmp/ki-seibuen2-entry.json --apply
+          python - <<'PY'
+          import sys
+          from datetime import date
+          sys.path.insert(0, "scripts")
+          from auto_daily_results import read_existing, eligible_races, candidate
+          from auto_daily_tospo_intake import verify_approved_editor
+          from result_hold_diagnostics import classify_result_hold
+          from upsert_daily_sheets import apply
+          try:
+              entries, results = read_existing()
+              key = "2026-11-23|26|2"
+              eligible = dict(eligible_races(entries, results, date(2026,11,23), date(2026,11,23)))
+              if key not in eligible:
+                  print("SEIBUEN2_BACKFILL: RESULT_ALREADY_STORED_OR_ENTRY_INCOMPLETE")
+              else:
+                  payload = candidate(key, eligible[key])
+                  dry = apply(payload, dry_run=True)
+                  check = dry["summary"]["results"]
+                  if check["new"] != 7 or check["changed"] != 0:
+                      print("SEIBUEN2_BACKFILL: RESULT_SHEETS_CONFLICT_NO_WRITE")
+                  else:
+                      verify_approved_editor()
+                      saved = apply(payload, dry_run=False)
+                      if saved["summary"]["results"]["new"] != 7 or saved["summary"]["results"]["changed"] != 0:
+                          raise ValueError("Saved result row count differs from dry-run")
+                      print("SEIBUEN2_BACKFILL: RESULTS_SAVED_7_UNVERIFIED")
+          except Exception as exc:
+              inner = exc.__cause__ if getattr(exc, "source_stage", None) and exc.__cause__ else exc
+              reason = classify_result_hold(inner, "COLLECT_COMPARE")
+              print("SEIBUEN2_BACKFILL: RESULT_HOLD " +
+                    getattr(exc, "source_stage", "OTHER") + " " + reason)
+          PY
       - name: Check mobile home and daily-board contracts
         if: github.event_name == 'pull_request'
         run: |
