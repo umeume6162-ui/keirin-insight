@@ -17,6 +17,7 @@ on:
       - 'scripts/collect_historical_batch.py'
       - 'scripts/result_hold_diagnostics.py'
       - 'scripts/classify_historical_candidates.py'
+      - 'scripts/audit_v99_race_shape.py'
   pull_request:
     paths:
       - 'index.html'
@@ -38,6 +39,7 @@ on:
       - 'scripts/collect_historical_batch.py'
       - 'scripts/result_hold_diagnostics.py'
       - 'scripts/classify_historical_candidates.py'
+      - 'scripts/audit_v99_race_shape.py'
       - 'scripts/upsert_daily_sheets.py'
       - 'scripts/build_daily_board.py'
       - '.github/workflows/update-daily-board.yml'
@@ -192,6 +194,7 @@ jobs:
           python scripts/collect_historical_pair.py --self-test
           python scripts/collect_historical_batch.py --self-test
           python scripts/classify_historical_candidates.py --self-test
+          python scripts/audit_v99_race_shape.py --self-test
           python scripts/build_daily_board.py --self-test
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
