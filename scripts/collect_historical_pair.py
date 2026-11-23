@@ -92,6 +92,126 @@ def collect(day, code, track, number, class_name, cars, left_url=None, right_url
 
 
 
+def collect_auto(day, code, track, number, class_name, cars, sources=None):
+    """Compare any two available validated result publications, not a fixed primary.
+
+    The default pool currently contains three supported adapters. New publicly
+    permitted source adapters can be added without changing the pair selector.
+    Each source is fetched at most once. Full-field validation, two distinct
+    publication hosts and rider identity are enforced downstream by compare().
+    This is not unrestricted website scraping or proof of upstream independence.
+    """
+    date.fromisoformat(day)
+    if (not day.startswith("20") or not code.isdigit()
+            or not 1 <= int(code) <= 99 or not track.strip()
+            or not 1 <= number <= 12 or cars not in (7, 9)):
+        raise ValueError("Invalid race identity or expected car count")
+    code = code.zfill(2)
+    if sources is None:
+        net_url = ("https://keirin.netkeiba.com/race/result/?race_id="
+                   + day.replace("-", "") + code + str(number).zfill(2))
+        char_url = f"https://www.chariloto.com/keirin/results/{int(code)}/{day}"
+        loto_url = f"https://www.lotoplace.jp/keirin/results/{int(code)}/{day}/"
+
+        def read_net():
+            netkeirin.validate_url(net_url, day, code, number)
+            return netkeirin.extract(netkeirin.fetch(net_url), day, code, track,
+                                    number, class_name, cars, net_url)
+
+        def read_day(url):
+            day_results.validate_url(url, day, code)
+            return day_results.parse_result(day_results.fetch(url), day, code,
+                                            track, number, class_name, cars, url)
+
+        sources = (("netkeirin", read_net),
+                   ("chariloto", lambda: read_day(char_url)),
+                   ("lotoplace", lambda: read_day(loto_url)))
+    if not sources or len(sources) > 12:
+        raise ValueError("Invalid bounded result source pool")
+    collected = []
+    matched = None
+    source_failed = 0
+    for source_name, read_source in sources:
+        if not callable(read_source) or not isinstance(source_name, str):
+            raise ValueError("Invalid result source adapter")
+        try:
+            observation = read_source()
+        except (ValueError, requests.exceptions.RequestException):
+            source_failed += 1
+            continue
+        # Recompute every pair, including when earlier publications disagreed.
+        for earlier in collected:
+            candidate = {"observations": [earlier, observation]}
+            try:
+                comparison = compare(candidate)
+            except ValueError:
+                continue
+            if (comparison["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
+                    and comparison["formalPass"] is False
+                    and not comparison["disagreements"]):
+                matched = {**candidate, "comparison": comparison,
+                           "sourcePairMode": "SOURCE_POOL_MATCH"}
+                break
+        if matched:
+            break
+        collected.append(observation)
+    if matched:
+        return matched
+    if len(collected) < 2:
+        raise SourceStageError("SOURCE_POOL_UNAVAILABLE")
+    raise ValueError("Two result publications do not agree")
+
+
+def self_test_auto():
+    race = dict(date="2026-09-10", trackCode="27", track="京王閣",
+                race=2, className="A3", expectedCars=7)
+    rows = [dict(number=n, name=f"選手 {n}", prefecture="東京", period="90",
+                 finish=str(n), method="差" if n == 1 else "", exception="")
+            for n in range(1, 8)]
+    def make(host, sid, altered=False):
+        rr = [dict(x) for x in rows]
+        if altered:
+            rr[0]["finish"] = "2"
+        return dict(sourceUrl=f"https://{host}/race/result/20260910/2",
+                    sourceId=sid, race=dict(race), results=rr)
+    net = make("source-a.example", "net")
+    official = make("venue.example", "official")
+    journalist = make("press.example", "press")
+    calls = []
+    def read(label, obj):
+        def run():
+            calls.append(label)
+            if obj is None:
+                raise ValueError("source unavailable")
+            return obj
+        return run
+    default = [("first", read("first", None)),
+               ("venue", read("venue", official)),
+               ("press", read("press", journalist))]
+    report = collect_auto("2026-09-10", "27", "京王閣", 2, "A3", 7,
+                          sources=default)
+    assert report["sourcePairMode"] == "SOURCE_POOL_MATCH"
+    assert report["comparison"]["formalPass"] is False
+    assert calls == ["first", "venue", "press"]
+    changed = make("source-a.example", "net", altered=True)
+    calls.clear()
+    report2 = collect_auto("2026-09-10", "27", "京王閣", 2, "A3", 7,
+                           sources=[("a", read("a", changed)),
+                                    ("b", read("b", official)),
+                                    ("c", read("c", journalist))])
+    assert report2["comparison"]["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
+    assert calls == ["a", "b", "c"]
+    try:
+        collect_auto("2026-09-10", "27", "京王閣", 2, "A3", 7,
+                     sources=[("only", read("only", net)),
+                              ("missing", read("missing", None))])
+    except SourceStageError as e:
+        assert e.source_stage == "SOURCE_POOL_UNAVAILABLE"
+    else:
+        raise AssertionError("Single source was accepted")
+    print("SELF_TEST_OK: publisher-neutral bounded result pool and full-field matching")
+
+
 def self_test():
     day, code, track, number, cls, cars = "2026-09-10", "27", "京王閣", 2, "A3", 7
     left_obs = {"sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202609102702",
@@ -164,6 +284,7 @@ def self_test():
             assert exc.source_stage == "SECONDARY_BOTH_UNAVAILABLE"
         else:
             raise AssertionError("Fallback failures were not classified")
+    self_test_auto()
     print("SELF_TEST_OK: bounded second-source fallback, explicit URL unchanged, no formal PASS")
 
 
