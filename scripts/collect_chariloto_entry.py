@@ -21,7 +21,6 @@ def parse_entries(html, date, track_code, track, race, source):
     from bs4 import BeautifulSoup
     soup = BeautifulSoup(html, "html.parser")
     wanted = {"車番","選手名","府県","期別","級班"}
-    failures = []
     for table in soup.select("table"):
         trs = table.find_all("tr")
         for head_index, row in enumerate(trs):
@@ -30,6 +29,7 @@ def parse_entries(html, date, track_code, track, race, source):
             if any(v is None for v in normalized.values()) or len(set(normalized.values())) != 4:
                 continue
             records = []
+            failures = []
             for child in trs[head_index+1:]:
                 cells = child.find_all(["td","th"], recursive=False)
                 if len(cells) <= max(normalized.values()):
