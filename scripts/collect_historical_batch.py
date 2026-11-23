@@ -14,6 +14,7 @@ from datetime import date
 from pathlib import Path
 
 from collect_historical_pair import collect
+from result_hold_diagnostics import classify_result_hold
 from compare_race_results import compare
 
 MAX_BATCH = 10
@@ -112,7 +113,8 @@ def run(plan, output):
         except Exception as exc:
             # Do not record raw page or service credential contents in the summary.
             processed.append({"raceKey": key, "status": "SOURCE_ERROR",
-                              "errorType": type(exc).__name__})
+                              "errorType": type(exc).__name__,
+                              "reasonCode": classify_result_hold(exc, "COLLECT_COMPARE")})
     summary = {"schema": "ki-batch-summary-v1", "formalPass": False,
                "requested": len(races), "results": processed}
     store(output / "batch-summary.json", summary)
@@ -136,6 +138,7 @@ def self_test():
     else:
         raise AssertionError("Duplicate key accepted")
     assert digest_spec(demo) == digest_spec(dict(demo))
+    assert classify_result_hold(ValueError("Rider class conflicts with requested race class"), "COLLECT_COMPARE") == "SOURCE_RIDER_CLASS_MISMATCH"
     from unittest.mock import patch
     from tempfile import TemporaryDirectory
     rows = [{"number": i, "name": f"選手{i}", "prefecture": "京都",
