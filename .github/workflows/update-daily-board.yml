@@ -150,6 +150,11 @@ jobs:
           python scripts/discover_tospo_races.py --date "$RACE_DATE" --track-code "$TRACK_CODE" --track "$TRACK_NAME" --out /tmp/ki-manual-racecard.json
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --validate-only
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json
+      - name: Reject mixed historical and daily write modes
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url != '' && (inputs.apply_intake || inputs.verify_writer || inputs.source_url != '')
+        run: |
+          echo "::error::Historical preview may not request daily writes, writer verification or racecard input"
+          exit 1
       - name: Validate historical preview input mode
         if: github.event_name == 'workflow_dispatch' && inputs.historical_second_url != '' && inputs.historical_result_url == ''
         run: |
@@ -228,7 +233,7 @@ jobs:
           PY
           python scripts/upsert_daily_sheets.py --verify-write-access
       - name: Manually verify Sheets writer without adding race rows
-        if: github.event_name == 'workflow_dispatch' && inputs.verify_writer
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.verify_writer
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
@@ -261,7 +266,7 @@ jobs:
           print("SERVICE_ACCOUNT_IDENTITY_MATCH: approved editor (credential withheld)")
           PY
       - name: Save validated manual racecard to daily intake tab
-        if: github.event_name == 'workflow_dispatch' && inputs.apply_intake && (inputs.source_url != '' || (inputs.race_date != '' && inputs.track_name != '' && inputs.track_code != ''))
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.apply_intake && (inputs.source_url != '' || (inputs.race_date != '' && inputs.track_name != '' && inputs.track_code != ''))
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --apply
