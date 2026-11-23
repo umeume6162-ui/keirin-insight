@@ -249,6 +249,19 @@ def self_test():
     result = compare({"observations": [observed_a, observed_b]})
     assert result["carCount"] == 7 and result["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
     assert not result["formalPass"]
+    # Explicit equivalence only for documented abbreviations and alias pairs.
+    import copy
+    pair_a, pair_b = copy.deepcopy(observed_a), copy.deepcopy(observed_b)
+    pair_a["results"][0]["name"] = "国井 裕樹"
+    pair_a["results"][0]["prefecture"] = "神奈"
+    pair_b["results"][0]["name"] = "國井裕樹"
+    pair_b["results"][0]["prefecture"] = "神奈川"
+    assert compare({"observations": [pair_a, pair_b]})["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
+    pair_b["results"][0]["name"] = "國村洋"
+    assert compare({"observations": [pair_a, pair_b]})["status"] == "SOURCE_CONFLICT_REVIEW_REQUIRED"
+    pair_b["results"][0]["name"] = "國井裕樹"
+    pair_b["results"][0]["prefecture"] = "東京"
+    assert compare({"observations": [pair_a, pair_b]})["status"] == "SOURCE_CONFLICT_REVIEW_REQUIRED"
     print("SELF_TEST_OK: full-field match/conflict, missing car and same-domain guards")
 
 
