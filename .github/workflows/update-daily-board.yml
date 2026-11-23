@@ -227,8 +227,14 @@ jobs:
       - name: TEMP live source-checked rider statistics preview
         if: github.event_name == 'pull_request'
         run: |
-          cp daily-board-feed-v1.json /tmp/ki-stat-preview.json
-          python scripts/enrich_daily_rider_stats.py --feed /tmp/ki-stat-preview.json --cache /tmp/ki-stat-cache.json --limit 4
+          python - <<'PY'
+          import json
+          d=json.load(open('daily-board-feed-v1.json',encoding='utf-8'))
+          d['races']=[r for r in d['races'] if r['key'] in
+                      ('2026-11-23|西武園|1','2026-11-24|松山|1','2026-11-24|静岡|12')]
+          json.dump(d,open('/tmp/ki-stat-preview.json','w',encoding='utf-8'),ensure_ascii=False)
+          PY
+          python scripts/enrich_daily_rider_stats.py --feed /tmp/ki-stat-preview.json --cache /tmp/ki-stat-cache.json --limit 3
           python - <<'PY'
           import json
           d=json.load(open('/tmp/ki-stat-preview.json',encoding='utf-8'))
