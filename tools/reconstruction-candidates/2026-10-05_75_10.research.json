@@ -282,6 +282,7 @@
       "pre-race full seven-car grouping not verified by two independent sources",
       "original pre-race amended entry list not obtained"
     ],
-    "extraReceipt": "KI｜レース結果手動照合!A14:U14"
+    "extraReceipt": "KI｜レース結果手動照合!A14:U14",
+    "publicationProtocol": "feature-branch-staging; GitHub squash merge into main yields one coherent formal feed commit; CI handles validation"
   }
 }
