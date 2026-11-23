@@ -5,6 +5,7 @@ on:
       - 'scripts/discover_tospo_races.py'
       - 'scripts/auto_daily_tospo_intake.py'
       - 'scripts/auto_daily_results.py'
+      - 'scripts/enrich_daily_rider_stats.py'
       - 'scripts/enrich_daily_start_times.py'
       - '.github/workflows/update-daily-board.yml'
       - 'scripts/compare_race_results.py'
@@ -25,6 +26,7 @@ on:
       - 'scripts/discover_tospo_races.py'
       - 'scripts/auto_daily_tospo_intake.py'
       - 'scripts/auto_daily_results.py'
+      - 'scripts/enrich_daily_rider_stats.py'
       - 'scripts/enrich_daily_start_times.py'
       - 'scripts/compare_race_results.py'
       - 'scripts/collect_netkeirin_result.py'
@@ -171,13 +173,14 @@ jobs:
         run: node scripts/test_daily_board_ui.js
       - name: Check daily intake script syntax
         run: |
-          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py scripts/collect_historical_pair.py scripts/collect_historical_batch.py scripts/classify_historical_candidates.py scripts/auto_daily_tospo_intake.py scripts/auto_daily_results.py scripts/enrich_daily_start_times.py
+          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py scripts/collect_historical_pair.py scripts/collect_historical_batch.py scripts/classify_historical_candidates.py scripts/auto_daily_tospo_intake.py scripts/auto_daily_results.py scripts/enrich_daily_start_times.py scripts/enrich_daily_rider_stats.py
           python scripts/collect_chariloto_entry.py --self-test
           python scripts/collect_tospo_entry.py --self-test
           python scripts/discover_tospo_races.py --self-test
           python scripts/auto_daily_tospo_intake.py --self-test
           python scripts/auto_daily_results.py --self-test
           python scripts/enrich_daily_start_times.py --self-test
+          python scripts/enrich_daily_rider_stats.py --self-test
           python scripts/compare_race_results.py --self-test
           python scripts/collect_netkeirin_result.py --self-test
           python scripts/collect_lotoplace_result.py --self-test
@@ -219,6 +222,17 @@ jobs:
               if row:
                   for i,cell in enumerate(row.find_all(['td','th'],recursive=False)):
                       print('RIDER_DATA_CELL',i,cell.get_text(' ',strip=True)[:65],cell.get('class'))
+          PY
+      - name: TEMP live source-checked rider statistics preview
+        if: github.event_name == 'pull_request'
+        run: |
+          cp daily-board-feed-v1.json /tmp/ki-stat-preview.json
+          python scripts/enrich_daily_rider_stats.py --feed /tmp/ki-stat-preview.json --cache /tmp/ki-stat-cache.json --limit 4
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/ki-stat-preview.json',encoding='utf-8'))
+          hits=[(r['key'],len([e for e in r['entries'] if e.get('riderStats')])) for r in d['races'] if r.get('riderStatsSource')]
+          print('RIDER_STATS_LIVE_PREVIEW',hits[:8])
           PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
