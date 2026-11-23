@@ -109,6 +109,34 @@ jobs:
           python scripts/collect_lotoplace_result.py --self-test
           python scripts/collect_historical_batch.py --self-test
           python scripts/build_daily_board.py --self-test
+      - name: TEMP historical two-race batch read-only test
+        if: github.event_name == 'pull_request'
+        run: |
+          cat > /tmp/ki-batch-plan.json <<'JSON'
+          {"races":[
+            {"date":"2026-09-10","trackCode":"27","track":"京王閣","race":2,"className":"A3","expectedCars":7},
+            {"date":"2026-09-10","trackCode":"27","track":"京王閣","race":1,"className":"A3","expectedCars":7}
+          ]}
+          JSON
+          python scripts/collect_historical_batch.py --plan /tmp/ki-batch-plan.json --out-dir /tmp/ki-batch-candidates || code=$?
+          echo "BATCH_FIRST_EXIT=${code:-0}"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('/tmp/ki-batch-candidates')
+          d=json.loads((p/'batch-summary.json').read_text(encoding='utf-8'))
+          print("BATCH_FIRST_SUMMARY",json.dumps(d,ensure_ascii=False))
+          assert len(d['results'])==2
+          PY
+          python scripts/collect_historical_batch.py --plan /tmp/ki-batch-plan.json --out-dir /tmp/ki-batch-candidates || code2=$?
+          echo "BATCH_SECOND_EXIT=${code2:-0}"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('/tmp/ki-batch-candidates/batch-summary.json').read_text(encoding='utf-8'))
+          print("BATCH_SECOND_SUMMARY",json.dumps(d,ensure_ascii=False))
+          assert all(x['status'] in ('SKIPPED_EXISTING_CANDIDATE','SOURCE_ERROR','EXISTING_FILE_CONFLICT_REVIEW') for x in d['results'])
+          PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.source_url != ''
         env:
