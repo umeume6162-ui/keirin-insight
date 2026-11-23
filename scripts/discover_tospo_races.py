@@ -47,7 +47,7 @@ def discover(list_html, track, loader, date=None):
     for candidate in sorted(set(starts)):
         page = loader(candidate)
         if not date or re.search(
-            rf"{int(yyyy)}年\\s*{int(mm)}月\\s*{int(dd)}日",
+            rf"{int(yyyy)}年\s*{int(mm)}月\s*{int(dd)}日",
             norm(BeautifulSoup(page, "html.parser").get_text(" ", strip=True))
         ):
             matches.append((candidate, page))
