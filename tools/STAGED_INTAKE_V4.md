@@ -215,6 +215,8 @@
 
 - **2026-11-24 実行ログで判明した日次結果保存・配信障害の修復**：GitHub Actions Run `45280110024`で2026-11-23玉野1/2/5/7Rはnetkeirinとチャリロトの公開内容一致まで成立したが、`SHEETS_DRY_RUN`でValueErrorとなり保存0。原因は比較結果の`sourceAttempts`/`sourcePairMode`を、許可キーが`entries`/`results`/`sourceNote`のみのGoogle upsert器へ渡していたこと。`auto_daily_results.py`は診断メタデータをレポートに保持し、保存器には許可3キーだけ渡すよう変更し自己テストでキー集合を検査。加えて日次feedコミットの`git rebase`がGit committer identity未設定で失敗したため、既存ワークフローでrepository-local bot name/emailを設定してからcommit/rebaseする。両者ともコードmain保存済みであり、Google新規結果追記・実run完了・公開サイト反映成功は実ログと台帳再読まで未確定。出典一致と正式PASSは混同しない。
 
+- **日次選手同定保留の有限診断（2026-11-24）**：日次結果の2掲載元内容一致後、保存済み発走前出走表と氏名・府県・期別が異なる場合は、依然としてGoogle書込/正式PASSを停止する。`auto_daily_results.py`は不一致の車番と項目名（`name`/`prefecture`/`period`）だけを`identityMismatch`としてレポートに記録し、Actions Summaryに最大20件表示する。原文氏名、HTML、個人データを診断ログへ追加せず、既存の限定的な表記正規化も拡大しない。出走表の保管済み原データは変更しない。コードの自己検査と実run結果、保留解消/新規保存は区別して評価する。
+
 ### C. 移行時に避ける失敗
 
 - 古いチャットの「過去照合を手動優先」の指示を復活させない。前回の大量収集量・照合件数を最新と誤認しない。過去のコメント全文/払戻の収集を最優先にしない。
