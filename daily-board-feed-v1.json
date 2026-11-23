@@ -192,7 +192,25 @@
           "preRaceLine": null,
           "position": null,
           "capturedAt": "2026-11-23 14:53 JST",
-          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332",
+          "riderStats": {
+            "score": "73.47",
+            "style": "両",
+            "s": 11,
+            "h": 3,
+            "b": 3,
+            "escape": 2,
+            "sprint": 0,
+            "difference": 6,
+            "mark": 3,
+            "first": 3,
+            "second": 8,
+            "third": 5,
+            "other": 18,
+            "winRate": "8.8%",
+            "top2Rate": "32.3%",
+            "top3Rate": "47.1%"
+          }
         },
         {
           "number": 2,
@@ -202,7 +220,25 @@
           "preRaceLine": null,
           "position": null,
           "capturedAt": "2026-11-23 14:53 JST",
-          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332",
+          "riderStats": {
+            "score": "74.17",
+            "style": "逃",
+            "s": 2,
+            "h": 5,
+            "b": 4,
+            "escape": 2,
+            "sprint": 1,
+            "difference": 0,
+            "mark": 1,
+            "first": 1,
+            "second": 3,
+            "third": 2,
+            "other": 6,
+            "winRate": "8.3%",
+            "top2Rate": "33.3%",
+            "top3Rate": "50.0%"
+          }
         },
         {
           "number": 3,
@@ -212,7 +248,25 @@
           "preRaceLine": null,
           "position": null,
           "capturedAt": "2026-11-23 14:53 JST",
-          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332",
+          "riderStats": {
+            "score": "68.96",
+            "style": "追",
+            "s": 5,
+            "h": 0,
+            "b": 0,
+            "escape": 0,
+            "sprint": 0,
+            "difference": 3,
+            "mark": 0,
+            "first": 2,
+            "second": 1,
+            "third": 5,
+            "other": 17,
+            "winRate": "8.0%",
+            "top2Rate": "12.0%",
+            "top3Rate": "32.0%"
+          }
         },
         {
           "number": 4,
@@ -222,7 +276,25 @@
           "preRaceLine": null,
           "position": null,
           "capturedAt": "2026-11-23 14:53 JST",
-          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332",
+          "riderStats": {
+            "score": "64.52",
+            "style": "追",
+            "s": 0,
+            "h": 1,
+            "b": 1,
+            "escape": 0,
+            "sprint": 0,
+            "difference": 0,
+            "mark": 0,
+            "first": 0,
+            "second": 0,
+            "third": 1,
+            "other": 22,
+            "winRate": "0.0%",
+            "top2Rate": "0.0%",
+            "top3Rate": "4.3%"
+          }
         },
         {
           "number": 5,
@@ -232,7 +304,25 @@
           "preRaceLine": null,
           "position": null,
           "capturedAt": "2026-11-23 14:53 JST",
-          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332",
+          "riderStats": {
+            "score": "70.94",
+            "style": "追",
+            "s": 1,
+            "h": 0,
+            "b": 0,
+            "escape": 0,
+            "sprint": 0,
+            "difference": 2,
+            "mark": 4,
+            "first": 0,
+            "second": 6,
+            "third": 7,
+            "other": 20,
+            "winRate": "0.0%",
+            "top2Rate": "18.1%",
+            "top3Rate": "39.4%"
+          }
         },
         {
           "number": 6,
@@ -242,7 +332,25 @@
           "preRaceLine": null,
           "position": null,
           "capturedAt": "2026-11-23 14:53 JST",
-          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332",
+          "riderStats": {
+            "score": "63.76",
+            "style": "追",
+            "s": 1,
+            "h": 0,
+            "b": 0,
+            "escape": 0,
+            "sprint": 0,
+            "difference": 0,
+            "mark": 0,
+            "first": 0,
+            "second": 0,
+            "third": 0,
+            "other": 29,
+            "winRate": "0.0%",
+            "top2Rate": "0.0%",
+            "top3Rate": "0.0%"
+          }
         },
         {
           "number": 7,
@@ -252,7 +360,25 @@
           "preRaceLine": null,
           "position": null,
           "capturedAt": "2026-11-23 14:53 JST",
-          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+          "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332",
+          "riderStats": {
+            "score": "67.96",
+            "style": "追",
+            "s": 0,
+            "h": 0,
+            "b": 0,
+            "escape": 0,
+            "sprint": 0,
+            "difference": 5,
+            "mark": 0,
+            "first": 0,
+            "second": 5,
+            "third": 1,
+            "other": 18,
+            "winRate": "0.0%",
+            "top2Rate": "20.8%",
+            "top3Rate": "25.0%"
+          }
         }
       ],
       "results": [
@@ -332,7 +458,13 @@
       "resultSource": "KI｜日次結果",
       "expectedCount": 7,
       "startTime": "15:28",
-      "startTimeSourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
+      "startTimeSourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332",
+      "riderStatsSource": {
+        "url": "https://keirin.netkeiba.com/race/entry/?race_id=202611232601",
+        "capturedAt": "2026-11-23 18:19 JST",
+        "period": "直近4か月（netkeirin掲載値）",
+        "status": "single_source_unverified"
+      }
     },
     {
       "key": "2026-11-24|奈良|3",
