@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付",
   "verificationNote": "公開選手IDの4必須項目を2掲載サイト照合 194件。各officialVerificationに証拠参照。検索キャッシュの転記と直接ライブ取得、サイトごとの上流独立性を区別。",
   "summary": {
-    "rows": 194
+    "rows": 198
   },
   "riders": [
     {
@@ -4674,6 +4674,102 @@
           "https://keirin.netkeiba.com/db/profile/?id=16032"
         ],
         "note": "既存の取得済み公式照合証拠 AUTO-20261123T100717JST-296 に記録された2媒体4必須項目一致。元選手台帳row296 G:Kへ救済保存・再読済。検索インデックス/キャッシュからの項目転記でありライブ直接取得ではない。媒体の上流独立性は未立証。"
+      }
+    },
+    {
+      "id": "015945",
+      "name": "橋本　のこ",
+      "prefecture": "愛知",
+      "period": "128",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015945",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015945",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015945",
+          "https://nagoyakeirin.com/racer/n-hashimoto/"
+        ],
+        "note": "2026-11-23に2掲載サイトの4必須項目一致を確認。検索インデックス/取得済み公開本文の項目転記。元の証拠記録KI-V4-20261123-015945。共通上流独立性は未証明。"
+      }
+    },
+    {
+      "id": "015774",
+      "name": "金田　舞夏",
+      "prefecture": "福岡",
+      "period": "124",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015774",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015774",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015774",
+          "https://keirin-marche.jp/girlskeirin/players/015774/"
+        ],
+        "note": "2026-11-23に2掲載サイトの4必須項目一致を確認。検索インデックス/取得済み公開本文の項目転記。元の証拠記録KI-V4-20261123-015774。共通上流独立性は未証明。"
+      }
+    },
+    {
+      "id": "014331",
+      "name": "栗田　貴徳",
+      "prefecture": "愛媛",
+      "period": "93",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014331",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014331",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014331",
+          "https://yen-joy.net/racer/data/014331/3"
+        ],
+        "note": "2026-11-23に2掲載サイトの4必須項目一致を確認。検索インデックス/取得済み公開本文の項目転記。元の証拠記録KI-V4-20261123-014331。共通上流独立性は未証明。"
+      }
+    },
+    {
+      "id": "015656",
+      "name": "甲斐　俊祐",
+      "prefecture": "大分",
+      "period": "121",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015656",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015656",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015656",
+          "https://www.yen-joy.net/racer/data/015656/2"
+        ],
+        "note": "2026-11-23に2掲載サイトの4必須項目一致を確認。検索インデックス/取得済み公開本文の項目転記。元の証拠記録KI-V4-20261123-015656。共通上流独立性は未証明。"
       }
     }
   ],
