@@ -632,8 +632,11 @@ def self_test():
                         monotonic_fn=iter((0, 61)).__next__)
     assert exhausted["eligibleExamined"] == 0 and exhausted["eligibleDeferred"] == 1
     assert exhausted["timeBudgetExceeded"] and exhausted["savedCount"] == 0
-    assert [k for k, _ in select_rotating_races(rotation, 4, day0)] == [
-        k for k, _ in select_rotating_races(rotation, 4, day0)]
+    # A non-tautological regression for the midnight/07:10 rotation boundary.
+    assert [k for k, _ in select_rotating_races(rotation, 4,
+           day0.replace(hour=0))] == ["race-12"]
+    assert [k for k, _ in select_rotating_races(rotation, 4,
+           day0)] == ["race-0", "race-1", "race-2", "race-3"]
     print("SELF_TEST_OK: seven-car two-source result intake, identity guard and duplicate skip")
 
 
