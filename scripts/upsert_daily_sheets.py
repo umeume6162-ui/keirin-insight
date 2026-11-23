@@ -122,7 +122,7 @@ def apply(input_data, dry_run=True):
             raise ValueError("Refuse write: sheet header mismatch " + name)
         original = {}
         for row_number, row in enumerate(current[1:], start=2):
-            cells = [str(x) for x in row] + [""] * max(0, 15 - len(row))
+            cells = ["" if x is None else str(x) for x in row] + [""] * max(0, 15 - len(row))
             if not cells[0]:
                 continue
             key = cells[13 if kind == "entries" else 14] + "|" + cells[5]
@@ -138,6 +138,10 @@ def apply(input_data, dry_run=True):
             row_number, previous = found
             # Do not silently erase existing attributes when new source omits them.
             merged = [new if new != "" else old for old,new in zip(previous, values)]
+            # A repeated identical observation should not update only its capture clock.
+            time_idx = 11 if kind == "entries" else 13
+            if all(previous[j] == merged[j] for j in range(15) if j != time_idx):
+                merged[time_idx] = previous[time_idx]
             if previous != merged:
                 updates.append((row_number, merged))
         for row_number, values in updates:
