@@ -22,6 +22,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from discover_tospo_races import VENUE_CODES
+from auto_daily_results import canonical_rider_name, canonical_prefecture
 
 JST=ZoneInfo("Asia/Tokyo")
 SCHEMA="ki-daily-rider-statistics-v1"
@@ -151,8 +152,8 @@ def extract(html,race,url):
     for source in recorded:
         original=expected[source["number"]]
         mismatches=[]
-        if compare_name(source["name"])!=compare_name(original["name"]):mismatches.append("name:"+compare_name(source["name"])+" / "+compare_name(original["name"]))
-        if clean(source["prefecture"])!=clean(original["prefecture"]):mismatches.append("prefecture:"+clean(source["prefecture"])+" / "+clean(original["prefecture"]))
+        if canonical_rider_name(source["name"])!=canonical_rider_name(original["name"]):mismatches.append("name")
+        if canonical_prefecture(source["prefecture"])!=canonical_prefecture(original["prefecture"]):mismatches.append("prefecture")
         if clean(source["period"])!=clean(original["period"]).removesuffix("期"):mismatches.append("period:"+clean(source["period"])+" / "+clean(original["period"]))
         if mismatches:
             raise ValueError("Rider identity mismatch in source car "+str(source["number"])+": "+",".join(mismatches))
@@ -226,6 +227,8 @@ def self_test():
     cache={"schema":SCHEMA,"races":{}}
     result=enrich(board,cache,lambda _:html,1)
     assert result["fetched"]==1 and race["entries"][0]["riderStats"]["b"]==5
+    assert canonical_rider_name("國井裕樹")==canonical_rider_name("国井裕樹")
+    assert canonical_prefecture("神奈")==canonical_prefecture("神奈川")
     assert race["entries"][0]["riderStats"]["winRate"]=="25.9%"
     assert enrich(board,cache,lambda _:(_ for _ in ()).throw(AssertionError("no fetch")),1)["cached"]==1
     race["entries"][0]["name"]="別選手"
