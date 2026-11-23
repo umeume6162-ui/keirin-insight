@@ -564,8 +564,10 @@ def self_test():
     assert all(1 <= len(batch) <= 4 for batch in batches)
     assert len({k for batch in batches for k, _ in batch}) == 13
     overnight = day0.replace(hour=0)
-    assert select_rotating_races(rotation, 4, overnight) != select_rotating_races(
-        rotation, 4, day0.replace(hour=22))
+    # Five distinct slot indices are observable only with >=5 candidate blocks.
+    five_blocks = [(f"race-{i}", []) for i in range(20)]
+    assert len({tuple(k for k, _ in select_rotating_races(five_blocks, 4,
+               overnight.replace(hour=h))) for h in (0, 7, 12, 17, 22)}) == 5
     # The production limit is twelve races; verify all five JST windows
     # eventually cover every candidate even when the backlog spans days.
     for count in (12, 13, 48, 49, 80):
