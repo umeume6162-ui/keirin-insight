@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#081622"><title>日次出走表・結果 | KEIRIN INSIGHT</title>
+<style>
+:root{color-scheme:dark;--bg:#081622;--card:#112738;--line:#345263;--accent:#9becc9;--muted:#abc0cb}
+*{box-sizing:border-box}body{margin:0;color:#edf7ff;background:var(--bg);font:15px/1.6 -apple-system,BlinkMacSystemFont,sans-serif}
+main{max-width:900px;margin:auto;padding:18px 14px 70px}nav{display:flex;flex-wrap:wrap;gap:8px}nav a{padding:7px 12px;border:1px solid var(--line);border-radius:9px;text-decoration:none;color:var(--accent)}
+h1{font-size:clamp(23px,5vw,32px);line-height:1.25}h2{font-size:18px;margin:0}.hint,small{color:var(--muted)}.box{padding:14px;margin:12px 0;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.controls{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.controls button{padding:9px 15px;border-radius:9px;border:1px solid var(--line);background:#153b42;color:var(--accent);font:inherit}
+input{padding:8px;border:1px solid var(--line);border-radius:8px;background:#081622;color:#edf7ff;font:inherit}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;border-bottom:1px solid var(--line);padding:6px 5px}th{color:var(--muted)}
+.chip{display:inline-block;background:#0a3442;padding:2px 8px;border-radius:8px;color:var(--accent);font-size:12px}
+.warning{border-left:3px solid #dca86b;padding-left:10px}.nowrap{white-space:nowrap}
+</style>
+</head>
+<body><main>
+<nav><a href="./index.html">ホーム</a><a href="./race-index-live.html">正式結果</a><a href="./research-hub.html">データ管理</a></nav>
+<h1>開催日別 出走表・レース結果</h1>
+<p class="hint">Google台帳からの記録を表示します。出走表は予定情報、結果は収録記録です。正式2媒体照合済みの結果とは区別しています。</p>
+<div class="box controls"><label for="day">対象日</label><input id="day" type="date"><button type="button" id="refresh">更新</button></div>
+<div class="box"><div id="state" role="status">データ確認中…</div><div id="source" class="hint"></div></div>
+<div id="races"></div>
+</main>
+<script>
+(()=>{"use strict";
+const el=id=>document.getElementById(id), norm=x=>String(x??"").trim();
+const jstDay=()=>new Date().toLocaleDateString("sv-SE",{timeZone:"Asia/Tokyo"});
+const today=jstDay();el("day").value=today;
+const node=(tag,text,cls)=>{const x=document.createElement(tag);if(text!==undefined)x.textContent=text;if(cls)x.className=cls;return x};
+const empty=()=>{el("races").replaceChildren()};
+let cache=null;
+function render(){
+ empty();const data=cache;if(!data)return;
+ const day=el("day").value;const items=data.races.filter(r=>r.date===day);
+ if(day<data.windowStart||day>data.windowEnd){el("state").textContent="この配信の対象範囲外です。直近5日分だけを保持します。";return}
+ el("state").textContent=items.length?day+"：記録のあるレース "+items.length+"R":"この日の出走表・結果はまだ台帳から届いていません。開催がないことを意味しません。";
+ for(const r of items){
+  const card=node("section",undefined,"box");
+  const title=node("h2",r.track+" "+r.race+"R");card.append(title);
+  const status=node("p",r.status==="results_recorded"?"結果記録あり（正式照合前）":r.status==="results_partial"?"結果記録が一部のみ":"出走表記録のみ","chip");card.append(status);
+  if(r.className)card.append(node("p",r.className,"hint"));
+  const entries=Array.isArray(r.entries)?r.entries:[];
+  if(entries.length){
+   card.append(node("h3","出走予定 "+entries.length+"車"));
+   const t=node("table"),head=node("tr");["車番","選手","府県・期別","事前ライン"].forEach(x=>head.append(node("th",x)));t.append(head);
+   entries.forEach(p=>{const tr=node("tr");[p.number,p.name,(p.prefecture||"—")+" "+(p.period||""),p.preRaceLine||"未収録"].forEach(x=>tr.append(node("td",String(x))));t.append(tr)});card.append(t);
+  } else card.append(node("p","出走表は未取得です。","hint"));
+  const results=Array.isArray(r.results)?r.results:[];
+  if(results.length){
+   card.append(node("h3","収録結果 "+results.length+"車"));
+   const t=node("table"),head=node("tr");["着順/状態","車番","選手","決まり手"].forEach(x=>head.append(node("th",x)));t.append(head);
+   results.forEach(p=>{const tr=node("tr");[p.finish,p.number,p.name,p.method||"—"].forEach(x=>tr.append(node("td",String(x))));t.append(tr)});card.append(t);
+  } else card.append(node("p","結果はまだ収録されていません。","hint"));
+  el("races").append(card);
+ }
+}
+async function load(){
+ el("state").textContent="最新の台帳配信を確認しています…";
+ try{
+  const response=await fetch("./daily-board-feed-v1.json",{cache:"no-store"});
+  if(!response.ok)throw new Error("HTTP "+response.status);
+  const data=await response.json();
+  if(data.schema!=="ki-daily-board-v1"||!Array.isArray(data.races)||!data.windowStart||!data.windowEnd)throw new Error("形式が不一致");
+  cache=data;
+  let msg="配信対象日："+data.windowStart+" ～ "+data.windowEnd;
+  msg+="／出走表側の最新開催日："+(data.sourceLatest?.entries||"未取得");
+  msg+="／結果側の最新開催日："+(data.sourceLatest?.results||"未取得");
+  el("source").textContent=msg;
+  if((data.sourceLatest?.entries||"")<today)el("source").classList.add("warning");else el("source").classList.remove("warning");
+  render();
+ }catch(e){
+  empty();el("state").textContent="配信データを読み込めませんでした："+e.message;
+  el("source").textContent="データが更新されるまで最新の出走表・結果として表示しません。";
+ }
+}
+el("day").addEventListener("change",render);
+el("refresh").addEventListener("click",load);
+load();
+})();
+</script></body></html>
