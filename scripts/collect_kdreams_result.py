@@ -100,7 +100,7 @@ def extract(html, day, code, track, race, class_name, cars, url):
         # The public table omits an empty prediction cell for some riders.
         # Anchor to the source-labelled identity cell, not a fragile td index.
         identities = [i for i, cell in enumerate(cells)
-                      if re.fullmatch(r".+/\\d{1,3}/\\d{2,3}",
+                      if re.fullmatch(r".+/\d{1,3}/\d{2,3}",
                                       compact(cell.get_text(" ", strip=True)))]
         if not identities:
             continue  # heading/guide/footer row, not a rider
