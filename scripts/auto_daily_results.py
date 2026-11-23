@@ -114,12 +114,27 @@ def partial_existing_results(entries, results, start, end):
                 by_key[key].append(row)
     findings = []
     for key, stored in sorted(by_key.items()):
-        expected = {str(i) for i in range(1, len(available[key]) + 1)}
+        expected_rows = available[key]
+        expected = {str(i) for i in range(1, len(expected_rows) + 1)}
         numbers = [clean(row[5]) if len(row) > 5 else "" for row in stored]
-        if len(numbers) != len(expected) or set(numbers) != expected:
+        expected_by_car = {clean(row[5]): row for row in expected_rows}
+        bad_cars = []
+        for row in stored:
+            number = clean(row[5]) if len(row) > 5 else ""
+            original = expected_by_car.get(number)
+            # Result rows must retain date/venue/race/class and rider identity.
+            if original is None or len(row) < 9 or any((
+                clean(row[i]) != clean(original[i]) for i in (0, 1, 2, 3, 4)
+            )) or (canonical_rider_name(row[6]) != canonical_rider_name(original[6])
+                   or canonical_prefecture(row[7]) != canonical_prefecture(original[7])
+                   or clean(row[8]).removesuffix("期")
+                   != clean(original[8]).removesuffix("期")):
+                bad_cars.append(number)
+        if len(numbers) != len(expected) or set(numbers) != expected or bad_cars:
             findings.append({"raceKey": key, "expectedCars": len(expected),
                              "storedRows": len(stored),
-                             "status": "PARTIAL_OR_DUPLICATE_STORED_RESULTS_REVIEW"})
+                             "identityMismatchCars": sorted(set(bad_cars)),
+                             "status": "PARTIAL_DUPLICATE_OR_IDENTITY_CONFLICT_REVIEW"})
     return findings
 
 
@@ -279,6 +294,14 @@ def self_test():
     for row in full_rows:
         row[14] = "2026-11-23|26|1"
     assert partial_existing_results(records, full_rows, start, start) == []
+    # Complete car-number coverage alone must not conceal wrong rider identity.
+    wrong_rider = [list(row) for row in full_rows]
+    wrong_rider[2][6] = "別人"
+    mismatch = partial_existing_results(records, wrong_rider, start, start)
+    assert len(mismatch) == 1 and mismatch[0]["identityMismatchCars"] == ["3"]
+    wrong_track = [list(row) for row in full_rows]
+    wrong_track[0][2] = "別競輪場"
+    assert partial_existing_results(records, wrong_track, start, start)[0]["identityMismatchCars"] == ["1"]
     # Repeated source failures at the start of the backlog must not starve later races.
     rotation = [(f"race-{i}", []) for i in range(13)]
     day0 = datetime(2026, 11, 23, 7, 10, tzinfo=JST)
