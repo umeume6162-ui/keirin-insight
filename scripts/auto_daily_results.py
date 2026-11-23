@@ -244,6 +244,17 @@ def self_test():
                for h in (7, 12, 17, 22)]
     assert all(1 <= len(batch) <= 4 for batch in batches)
     assert len({k for batch in batches for k, _ in batch}) == 13
+    # The production limit is twelve races; verify the four JST windows
+    # eventually cover every candidate even when the backlog spans days.
+    from datetime import timedelta
+    for count in (12, 13, 48, 49, 80):
+        candidates = [(f"race-{i}", []) for i in range(count)]
+        covered = set()
+        for offset in range(6):
+            for hour in (7, 12, 17, 22):
+                moment = (day0 + timedelta(days=offset)).replace(hour=hour)
+                covered.update(key for key, _ in select_rotating_races(candidates, 12, moment))
+        assert covered == {key for key, _ in candidates}, count
     assert select_rotating_races([], 4) == []
     exhausted = process(records, [], start, start, collect_fn=lambda *a: actual,
                         apply_fn=pretend_apply, max_seconds=60,
