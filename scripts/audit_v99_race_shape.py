@@ -26,22 +26,35 @@ def audit(rows, sample_limit=20):
     histogram = Counter()
     review = []
     duplicates = []
+    numbered_gaps = 0
     for key, group in sorted(races.items()):
         n = len(group)
         histogram[str(n)] += 1
         cars = [int(row[7]) for row in group]
         if len(set(cars)) != len(cars):
             duplicates.append(key)
-        if n not in (7, 9):
+        # Gaps are only provisional: a starting card or official absence
+        # record must establish whether a result row is truly missing.
+        numbered = set(cars)
+        gaps = sorted(set(range(1, max(numbered) + 1)) - numbered)
+        if n not in (7, 9) or gaps or len(cars) != len(numbered):
+            if gaps:
+                numbered_gaps += 1
             review.append({"raceKey": key, "storedRows": n,
                            "venue": str(group[0][1]), "raceClass": str(group[0][5]),
-                           "reason": "VERIFY_STARTING_CARD_AND_EXCEPTIONS"})
+                           "storedCars": sorted(cars),
+                           "numberingGaps": gaps,
+                           "reason": ("REVIEW_GAP_WITH_ENTRY_AND_EXCEPTIONS" if gaps
+                                      else "VERIFY_STARTING_CARD_AND_EXCEPTIONS")})
     return {"schema": "ki-v99-shape-audit-v1", "readOnly": True,
             "formalPass": False,
             "storedRiderRows": sum(len(group) for group in races.values()),
             "storedRaces": len(races),
             "storedRowCounts": dict(sorted(histogram.items(), key=lambda kv: int(kv[0]))),
-            "outOf7Or9Races": len(review), "invalidKeyRows": invalid_rows,
+            "outOf7Or9Races": sum(count for size, count in histogram.items()
+                                   if size not in ("7", "9")),
+            "numberingGapRaceCount": numbered_gaps,
+            "reviewCount": len(review), "invalidKeyRows": invalid_rows,
             "duplicateCarRaceCount": len(duplicates),
             "reviewSample": review[:sample_limit],
             "limitations": ("Row count alone cannot prove incomplete results. "
@@ -77,6 +90,14 @@ def self_test():
     assert report["storedRaces"] == 2 and report["outOf7Or9Races"] == 1
     assert report["storedRowCounts"] == {"6": 1, "7": 1}
     assert report["reviewSample"][0]["raceKey"] == "2026-11-01|24|2"
+    assert report["reviewSample"][0]["numberingGaps"] == []
+    assert report["reviewSample"][0]["storedCars"] == [1, 2, 3, 4, 5, 6]
+    assert report["numberingGapRaceCount"] == 0
+    data[-1][7] = "7"
+    review_gapped = audit(data)
+    assert review_gapped["numberingGapRaceCount"] == 1
+    assert review_gapped["reviewSample"][0]["numberingGaps"] == [6]
+    data[-1][7] = "6"
     assert report["formalPass"] is False
     data[-1][7] = "5"
     assert audit(data)["duplicateCarRaceCount"] == 1
