@@ -8,9 +8,10 @@
 
 - **このチャットの担当**：日次開催・出走表・結果の収集元確保、GitHubからGoogleへのupsert、日次JSONの更新、サイト表示、稼働監視、GASからの段階的移行。
 - **既存自動タスクの担当**：選手IDと過去レース/発走前ラインの照合、既存2集計JSONの同期。手動の過去照合へ戻さない。
-- **日次保存先（2026-11-23）**：`KI｜日次出走表` sheetId `2101100610`へ西武園1R・A3の全7車をGoogle接続経由で保存・再読済み（未正式照合）。`KI｜日次結果` sheetId `2101100611`はヘッダのみ。
-- **実装済み・検証済みの区別**：`scripts/collect_tospo_entry.py`で東スポ公開HTMLから西武園1Rの実7車をGitHub上で抽出成功。Google取り込み形式検証・dry-runは成功。`scripts/upsert_daily_sheets.py --apply`は旧実行でHTTP 403だったが、**2026-11-23 PR #9 Run #78でGitHubサービスアカウント一致・A1同値書込再読成功、Run #80で西武園1Rの7車一致・dry-run新規0/変更0・`--apply`2回とも新規0/変更0を確認**。Google接続ツール経由の7行保存は成功し、`daily-board-feed-v1.json`にも反映済み（GitHub commit `8299b508...`）。`daily-board.html`実サイト表示、全開催定期自動取得、結果収集は未完成・未確認。GitHubからGoogleへの新規出走表保存は2026-11-24静岡1Rで成功済み。PR #2はオフライン自己検査のみでmainに統合済み（`ed2cfadf...`）。
-- **次の着手点**：①Google共有済みサービスアカウントはユーザー承認により`reader`→`writer`変更・再読成功。GitHub ActionsにSecretの同一性照合ガードも追加済み。**PR #10 Run #83で翌日2026-11-24静岡1Rの新規7行をGitHubからGoogleへ保存成功**、再実行の重複0・対象7行再読確認済み。`[refresh-daily-feed]`付き明示的main更新から配信用JSONも更新し、Googleの静岡1R全7車と車番・氏名・府県・期別が一致。次は全場・Rの動的発見と定期収集・結果収録・GitHub Pages実機表示確認②固定URLから日次開催・R発見へ収集器を拡張 ③GitHubから1Rの実upsert成功/再実行の重複0確認 ④結果取得・例外照合 ⑤定期更新とサイト公開表示の実確認。GASは新経路の安定後にだけ停止。
+- **日次保存先（2026-11-23実測）**：Google `KI｜日次出走表`（sheetId `2101100610`）で**33レース・231車**、`KI｜日次結果`（sheetId `2101100611`）はヘッダのみ。日次は取得済み・未正式照合であり、既存V99・正式PASSとは分離する。
+- **実データ保存実績**：PR #9 Run #78でサービスアカウントのA1同値書込成功、PR #10 Run #83で静岡1Rの新規7車保存・再実行重複0を実証。**PR #11 Run #98では静岡・松山・奈良の32R/224車を検査し、GitHubからGoogleへ新規217行・既存一致7行・変更0行、再実行追加0行を実証。** 奈良の3R等、7/9車を満たさない表は拒否。
+- **新たな定期自動化**：43場コードの対応表を持つ`scripts/discover_tospo_races.py --all-venues`でレース一覧の掲載場・日付・全車を確認。既存`.github/workflows/update-daily-board.yml`の定期scheduleに`scripts/auto_daily_tospo_intake.py --apply --days 2 --max-venues 8`を追加し、JSTの当日・翌日を有限探索→変更0件の候補のみGoogleへ差分保存→日次配信JSON生成の順に実行。**新しいschedule経路の実動作は未確認**。全開催完全収集・日次結果・Safari実機表示は引き続き未完成。
+- **次の着手点**：①定期実行ログとGoogle追加行の再読を確認 ②未取得開催場・Rの上流取得方法を拡張 ③日次結果7/9車と例外の収集・保存 ④日次サイト公開画面の実確認。GASを停止するのは新経路の安定後だけ。
 - **過去結果の実HTML取得・2媒体比較（2026-11-23）**：GitHub Actions PR #3 Run #47で京王閣2026-09-10 2Rの全7車をnetkeirinとチャリロトから実取得し、共通比較器で**不一致0件**。`formalPass:false`で上流独立性確認待ち。LotoPlaceはrobots確認不能のため自動取得しない。PR #3は一時検証コードを除去し、通常の読み取り専用手動プレビュー経路だけmainへ統合。**手動dispatch経路の実行成功・Google保存・正式PASSは未実証**。
 - **重要な別系統障害**：2026-11-23のGitHub Actionsログで従来の`scripts/build_feeds.py`にSyntaxError（line 208）。最新mainでの修復・再実行成功は未確認。影響を切り分けて対処。
 
