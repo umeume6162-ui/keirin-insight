@@ -178,6 +178,25 @@ jobs:
           python scripts/collect_historical_batch.py --self-test
           python scripts/classify_historical_candidates.py --self-test
           python scripts/build_daily_board.py --self-test
+      - name: TEMP inspect public racecard time and line structures (read only)
+        if: github.event_name == 'pull_request'
+        run: |
+          python - <<'PY'
+          import sys,re
+          sys.path.insert(0,'scripts')
+          from bs4 import BeautifulSoup
+          from collect_tospo_entry import fetch
+          url='https://keirin.tokyo-sports.co.jp/list/race/20261123_30926'
+          html=fetch(url)
+          soup=BeautifulSoup(html,'html.parser')
+          print('RACECARD_TITLE',soup.title.get_text(' ',strip=True)[:150])
+          for tag in soup.find_all(string=re.compile('発走|並び予想|想定ライン')):
+              parent=tag.parent
+              text=parent.get_text(' ',strip=True)
+              if len(text)>400:continue
+              print('SOURCE_MARKUP',parent.name, 'class',str(parent.get('class'))[:100],
+                'text',text[:220], 'next',parent.parent.get_text(' ',strip=True)[:260])
+          PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
