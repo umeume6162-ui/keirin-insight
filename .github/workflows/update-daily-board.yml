@@ -391,11 +391,16 @@ jobs:
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
+          set -o pipefail
           python scripts/auto_daily_results.py --apply --max-races 12 --max-seconds 720 --lookback-days 7 | tee /tmp/ki-daily-result-intake.json
           python - <<'PY'
           import collections, json, os
           from pathlib import Path
           report = json.loads(Path("/tmp/ki-daily-result-intake.json").read_text())
+          if (report.get("schema") != "ki-daily-result-intake-v1" or
+                  report.get("formalPass") is not False or
+                  not isinstance(report.get("results"), list)):
+              raise ValueError("Invalid/unexpected daily intake report; do not mark success")
           statuses = collections.Counter(r.get("status", "UNKNOWN") for r in report["results"])
           rows = [
               "## Daily two-source result intake",
