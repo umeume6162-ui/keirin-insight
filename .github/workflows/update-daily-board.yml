@@ -7,6 +7,7 @@ on:
       - 'scripts/collect_netkeirin_result.py'
       - 'scripts/collect_lotoplace_result.py'
       - 'scripts/collect_historical_pair.py'
+      - 'scripts/collect_historical_batch.py'
   pull_request:
     paths:
       - 'scripts/collect_chariloto_entry.py'
@@ -17,6 +18,7 @@ on:
       - 'scripts/collect_netkeirin_result.py'
       - 'scripts/collect_lotoplace_result.py'
       - 'scripts/collect_historical_pair.py'
+      - 'scripts/collect_historical_batch.py'
       - 'scripts/upsert_daily_sheets.py'
       - 'scripts/build_daily_board.py'
       - '.github/workflows/update-daily-board.yml'
@@ -98,13 +100,14 @@ jobs:
         run: pip install 'google-auth==2.38.0' 'requests==2.32.3' 'beautifulsoup4==4.14.2'
       - name: Check daily intake script syntax
         run: |
-          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py scripts/collect_historical_pair.py
+          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py scripts/collect_historical_pair.py scripts/collect_historical_batch.py
           python scripts/collect_chariloto_entry.py --self-test
           python scripts/collect_tospo_entry.py --self-test
           python scripts/discover_tospo_races.py --self-test
           python scripts/compare_race_results.py --self-test
           python scripts/collect_netkeirin_result.py --self-test
           python scripts/collect_lotoplace_result.py --self-test
+          python scripts/collect_historical_batch.py --self-test
           python scripts/build_daily_board.py --self-test
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.source_url != ''
