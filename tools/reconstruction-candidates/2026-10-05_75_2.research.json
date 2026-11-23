@@ -1,0 +1,329 @@
+{
+  "schema": "ki-reconstructed-research-v1",
+  "raceKey": "2026-10-05|75|2",
+  "createdDateJST": "2026-11-23",
+  "race": {
+    "date": "2026-10-05",
+    "venue": "松山",
+    "venueCode": "75",
+    "raceNo": 2,
+    "grade": "F1",
+    "class": "A級一般",
+    "expectedEntrants": 7
+  },
+  "status": "RECONSTRUCTED_FULL_TWO_PROVIDER_RACE_AND_LINE_PASS",
+  "payout": "NOT_REQUIRED_OPTIONAL",
+  "method": "Compared existing V99 Chariloto full seven rider row records, separately preserved netkeirin full seven rider ten-field original transcription and legacy comparison: 7 cars x 10 comparison fields=70 aligned fields, no differences after documented typography/short-form normalizations. Two published forecast providers originally recorded full group agreement. Fresh search index corroborated results and groupings, direct full page fetches cache-missed this turn. Not a new live full-page capture.",
+  "originalEntries": [
+    {
+      "car": 5,
+      "name": "安東 宏高",
+      "prefecture": "大分",
+      "period": 90,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 7,
+      "name": "野上 竜太",
+      "prefecture": "岡山",
+      "period": 115,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 3,
+      "name": "山崎 晃",
+      "prefecture": "石川",
+      "period": 95,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 4,
+      "name": "小峰 烈",
+      "prefecture": "長野",
+      "period": 98,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 6,
+      "name": "塚本 勝士",
+      "prefecture": "栃木",
+      "period": 81,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 1,
+      "name": "佐藤 正吾",
+      "prefecture": "宮城",
+      "period": 88,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    },
+    {
+      "car": 2,
+      "name": "山本 貴章",
+      "prefecture": "岡山",
+      "period": 76,
+      "sourceStatus": "RECOVERED_FROM_SAVED_V99_RESULT_ROWS_NOT_CERTIFIED_RACECARD"
+    }
+  ],
+  "reconciliation": {
+    "originalEntryCars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "resultCars": [
+      5,
+      7,
+      3,
+      4,
+      6,
+      1,
+      2
+    ],
+    "unaccountedCars": [],
+    "numericFinishers": 7,
+    "nonNumericResultRows": 0,
+    "revisedStartCardSource": null,
+    "confirmedStarterCount": null,
+    "note": "All seven archived numeric finishers captured, with no documented exception; independent final amended racecard not re-opened."
+  },
+  "preRaceFormation": {
+    "type": "pre_race_published_prediction",
+    "groups": [
+      [
+        7,
+        2
+      ],
+      [
+        1
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        4
+      ],
+      [
+        6
+      ]
+    ],
+    "sourceUrls": [
+      "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020002/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+      "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_2.html"
+    ],
+    "state": "TWO_PUBLISHER_FORECAST_LINE_MATCH",
+    "basis": "published_forecast",
+    "note": "K-Dreams and Oddspark prior dated published forecasts: 7-2 / 1 / 3-5 / 4 / 6, preserved ordered within each group. Not in-race actual positions."
+  },
+  "results": [
+    {
+      "car": 5,
+      "name": "安東 宏高",
+      "prefecture": "大分",
+      "period": 90,
+      "grade": "A1",
+      "finishRaw": "1",
+      "finish": 1,
+      "lapSeconds": 11.8,
+      "marginRaw": "",
+      "winningMethodRaw": "差し",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_NETKEIRIN_SEVEN_RIDER_TEN_FIELDS_MATCH"
+    },
+    {
+      "car": 7,
+      "name": "野上 竜太",
+      "prefecture": "岡山",
+      "period": 115,
+      "grade": "A2",
+      "finishRaw": "2",
+      "finish": 2,
+      "lapSeconds": 12.3,
+      "marginRaw": "1/2車輪",
+      "winningMethodRaw": "逃げ",
+      "sbRaw": "B",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_NETKEIRIN_SEVEN_RIDER_TEN_FIELDS_MATCH"
+    },
+    {
+      "car": 3,
+      "name": "山崎 晃",
+      "prefecture": "石川",
+      "period": 95,
+      "grade": "A2",
+      "finishRaw": "3",
+      "finish": 3,
+      "lapSeconds": 12,
+      "marginRaw": "タイヤ差",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_NETKEIRIN_SEVEN_RIDER_TEN_FIELDS_MATCH"
+    },
+    {
+      "car": 4,
+      "name": "小峰 烈",
+      "prefecture": "長野",
+      "period": 98,
+      "grade": "A1",
+      "finishRaw": "4",
+      "finish": 4,
+      "lapSeconds": 11.5,
+      "marginRaw": "1 車身",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_NETKEIRIN_SEVEN_RIDER_TEN_FIELDS_MATCH"
+    },
+    {
+      "car": 6,
+      "name": "塚本 勝士",
+      "prefecture": "栃木",
+      "period": 81,
+      "grade": "A2",
+      "finishRaw": "5",
+      "finish": 5,
+      "lapSeconds": 11.8,
+      "marginRaw": "1/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_NETKEIRIN_SEVEN_RIDER_TEN_FIELDS_MATCH"
+    },
+    {
+      "car": 1,
+      "name": "佐藤 正吾",
+      "prefecture": "宮城",
+      "period": 88,
+      "grade": "A2",
+      "finishRaw": "6",
+      "finish": 6,
+      "lapSeconds": 11.8,
+      "marginRaw": "1/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "S",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_NETKEIRIN_SEVEN_RIDER_TEN_FIELDS_MATCH"
+    },
+    {
+      "car": 2,
+      "name": "山本 貴章",
+      "prefecture": "岡山",
+      "period": 76,
+      "grade": "A2",
+      "finishRaw": "7",
+      "finish": 7,
+      "lapSeconds": 12.3,
+      "marginRaw": "1/4車輪",
+      "winningMethodRaw": "",
+      "sbRaw": "",
+      "exceptionRaw": "",
+      "exceptionCategory": null,
+      "sourceStatus": "ARCHIVED_CHARILOTO_V99_AND_NETKEIRIN_SEVEN_RIDER_TEN_FIELDS_MATCH"
+    }
+  ],
+  "fieldVerification": {
+    "resultFields": {
+      "status": "TWO_SITES_ARCHIVED_FULL_10_FIELD_MATCH",
+      "comparedFields": [
+        "finish",
+        "car",
+        "name",
+        "prefecture",
+        "period",
+        "riderClass",
+        "lastLap",
+        "margin",
+        "winningMethod",
+        "startBack"
+      ],
+      "fieldComparisons": 70,
+      "corePublicationComparisons": 49,
+      "differences": 0,
+      "sources": [
+        "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+        "https://keirin.netkeiba.com/race/result/?race_id=202610057502"
+      ],
+      "retrieval": "Stored full records and recorded seven-row second publisher transcript, corroborated by fresh dated indexed result search. Original full URLs cache miss this turn.",
+      "normalizations": [
+        "name whitespace",
+        "Japanese fullwidth numeric fraction",
+        "差/差し",
+        "逃/逃げ",
+        "タイヤ/タイヤ差 (same gap category)"
+      ]
+    },
+    "forecastLine": {
+      "status": "TWO_SITES_FULL_ORDERED_GROUPS_MATCH",
+      "groups": [
+        [
+          7,
+          2
+        ],
+        [
+          1
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4
+        ],
+        [
+          6
+        ]
+      ],
+      "sources": [
+        "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020002/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_2.html"
+      ],
+      "retrieval": "dated original preview grouped forecasts recorded in legacy receipts and current indexed two-site pages; direct full open cache miss"
+    }
+  },
+  "sources": [
+    {
+      "url": "https://www.chariloto.com/keirin/results/75/2026-10-05/",
+      "role": "original saved complete V99 seven-car result",
+      "retrieval": "prior archive"
+    },
+    {
+      "url": "https://keirin.netkeiba.com/race/result/?race_id=202610057502",
+      "role": "complete secondary seven-car 10-field transcription",
+      "retrieval": "prior saved archived indexed original"
+    },
+    {
+      "url": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020002/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+      "role": "complete predicted groups",
+      "retrieval": "prior publication captured and current dated indexed search"
+    },
+    {
+      "url": "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_2.html",
+      "role": "second predicted groups",
+      "retrieval": "prior saved and current indexed search"
+    }
+  ],
+  "audit": {
+    "savedReceiptReference": "KI｜レース結果手動照合!A6:U6",
+    "savedV99Reference": "V99選手結果蓄積!A4730:W4736",
+    "archivedResultFieldsCompared": 70,
+    "mandatoryResultFieldsCompared": 49,
+    "archivedResultFieldDifferences": 0,
+    "fullRaceAndLineVerified": true,
+    "publicationPass": true,
+    "blockers": [],
+    "note": "V4 mandatory two eligible publication agreement; no third official organizer signoff or payout prerequisite. Domain difference alone not evidence of upstream producer independence. Reconfirmed original saved transcription and archived forecast."
+  }
+}
