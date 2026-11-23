@@ -8,6 +8,7 @@ import argparse
 import json
 import re
 import sys
+import unicodedata
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -15,7 +16,7 @@ from zoneinfo import ZoneInfo
 JST = ZoneInfo("Asia/Tokyo")
 
 def compact(value):
-    return re.sub(r"[\s　]+", "", str(value or ""))
+    return re.sub(r"[\s　]+", "", unicodedata.normalize("NFKC", str(value or "")))
 
 def parse_entries(html, date, track_code, track, race, source):
     from bs4 import BeautifulSoup
@@ -71,7 +72,7 @@ def main():
     p.add_argument("--self-test",action="store_true",help="Parse a fictional 7-car HTML table without network or Sheets")
     args=p.parse_args()
     if args.self_test:
-        rows="".join(f"<tr><td>{n}</td><td><a>テスト選手{chr(64+n)}</a></td><td>東京</td><td>100期</td><td>A3</td></tr>" for n in range(1,8))
+        rows="".join(f"<tr><td>{n}</td><td><a>テスト選手{chr(64+n)}</a></td><td>東京</td><td>１００期</td><td>Ａ３</td></tr>" for n in range(1,8))
         html="<table><tr><th>車番</th><th>選手名</th><th>府県</th><th>期別</th><th>級班</th></tr>"+rows+"</table>"
         actual=parse_entries(html,"2026-11-23","26","西武園",1,
             "https://www.chariloto.com/keirin/athletes/2026-11-23/26/1")
