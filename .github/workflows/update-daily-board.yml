@@ -36,6 +36,18 @@ on:
         description: 'Optional individual racecard URL; leave blank to discover venue racecards'
         required: false
         type: string
+      historical_result_url:
+        description: 'Optional netkeirin historical result page (read-only)'
+        required: false
+        type: string
+      historical_class:
+        description: 'Class for historical race, e.g. A3'
+        required: false
+        type: string
+      historical_cars:
+        description: 'Expected historical cars: 7 or 9'
+        required: false
+        type: string
       verify_writer:
         description: 'Verify writer access without changing race rows'
         required: false
@@ -84,7 +96,7 @@ jobs:
           python scripts/collect_netkeirin_result.py --self-test
           python scripts/build_daily_board.py --self-test
       - name: Validate manually supplied racecard fields
-        if: github.event_name == 'workflow_dispatch' && inputs.source_url != ''
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.source_url != ''
         env:
           RACE_DATE: ${{ inputs.race_date }}
           TRACK_CODE: ${{ inputs.track_code }}
@@ -120,7 +132,7 @@ jobs:
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --validate-only
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json
       - name: Discover and validate venue racecards (manual preview)
-        if: github.event_name == 'workflow_dispatch' && inputs.source_url == '' && inputs.race_date != '' && inputs.track_name != '' && inputs.track_code != ''
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.source_url == '' && inputs.race_date != '' && inputs.track_name != '' && inputs.track_code != ''
         env:
           RACE_DATE: ${{ inputs.race_date }}
           TRACK_CODE: ${{ inputs.track_code }}
@@ -129,6 +141,32 @@ jobs:
           python scripts/discover_tospo_races.py --date "$RACE_DATE" --track-code "$TRACK_CODE" --track "$TRACK_NAME" --out /tmp/ki-manual-racecard.json
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --validate-only
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json
+      - name: Collect one historical result (observation only)
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url != ''
+        env:
+          RACE_DATE: ${{ inputs.race_date }}
+          TRACK_CODE: ${{ inputs.track_code }}
+          TRACK_NAME: ${{ inputs.track_name }}
+          RACE_NUMBER: ${{ inputs.race_number }}
+          CLASS_NAME: ${{ inputs.historical_class }}
+          EXPECTED_CARS: ${{ inputs.historical_cars }}
+          RESULT_URL: ${{ inputs.historical_result_url }}
+        run: |
+          python scripts/collect_netkeirin_result.py --date "$RACE_DATE" --track-code "$TRACK_CODE" --track "$TRACK_NAME" --race "$RACE_NUMBER" --class-name "$CLASS_NAME" --expected-cars "$EXPECTED_CARS" --url "$RESULT_URL" --out /tmp/ki-historical-observation.json
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/ki-historical-observation.json', encoding='utf-8'))
+          assert x['sourceId']=='netkeirin-result' and len(x['results']) in (7,9)
+          print('HISTORICAL_SOURCE_OBSERVATION_OK: full-car candidate, not formal PASS')
+          PY
+      - name: Save historical observation as private workflow artifact
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: historical-result-observation
+          path: /tmp/ki-historical-observation.json
+          retention-days: 7
+          if-no-files-found: error
       - name: Verify Sheets writer permission on explicitly tagged main push
         if: github.event_name == 'push' && contains(github.event.head_commit.message, '[verify-sheets-writer]')
         env:
@@ -164,7 +202,7 @@ jobs:
           PY
           python scripts/upsert_daily_sheets.py --verify-write-access
       - name: Verify private Sheets service-account identity before write
-        if: github.event_name == 'workflow_dispatch' && inputs.apply_intake
+        if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.apply_intake
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
