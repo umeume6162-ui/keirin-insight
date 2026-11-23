@@ -9,8 +9,8 @@
 - **このチャットの担当**：日次開催・出走表・結果の収集元確保、GitHubからGoogleへのupsert、日次JSONの更新、サイト表示、稼働監視、GASからの段階的移行。
 - **既存自動タスクの担当**：選手IDと過去レース/発走前ラインの照合、既存2集計JSONの同期。手動の過去照合へ戻さない。
 - **日次保存先（2026-11-23）**：`KI｜日次出走表` sheetId `2101100610`へ西武園1R・A3の全7車をGoogle接続経由で保存・再読済み（未正式照合）。`KI｜日次結果` sheetId `2101100611`はヘッダのみ。
-- **実装済み・検証済みの区別**：`scripts/collect_tospo_entry.py`で東スポ公開HTMLから西武園1Rの実7車をGitHub上で抽出成功。Google取り込み形式検証・dry-runは成功。`scripts/upsert_daily_sheets.py --apply`は**GitHub認証資格情報でHTTP 403 Forbidden**のため失敗。Google接続ツール経由の7行保存は成功し、`daily-board-feed-v1.json`にも反映済み（GitHub commit `8299b508...`）。`daily-board.html`実サイト表示、全開催自動取得、結果収集、GitHubからGoogleへの直接書込は未完成・未確認。PR #2はオフライン自己検査のみでmainに統合済み（`ed2cfadf...`）。
-- **次の着手点**：①Google共有済みサービスアカウントはユーザー承認により`reader`→`writer`変更・再読成功。GitHub ActionsにSecretの同一性照合ガードも追加済み。**次はActions側の実書込・同一R再実行を検証**（過去の403は更新前の実行、変更後の書込成功は未確認）②固定URLから日次開催・R発見へ収集器を拡張 ③GitHubから1Rの実upsert成功/再実行の重複0確認 ④結果取得・例外照合 ⑤定期更新とサイト公開表示の実確認。GASは新経路の安定後にだけ停止。
+- **実装済み・検証済みの区別**：`scripts/collect_tospo_entry.py`で東スポ公開HTMLから西武園1Rの実7車をGitHub上で抽出成功。Google取り込み形式検証・dry-runは成功。`scripts/upsert_daily_sheets.py --apply`は旧実行でHTTP 403だったが、**2026-11-23 PR #9 Run #78でGitHubサービスアカウント一致・A1同値書込再読成功、Run #80で西武園1Rの7車一致・dry-run新規0/変更0・`--apply`2回とも新規0/変更0を確認**。Google接続ツール経由の7行保存は成功し、`daily-board-feed-v1.json`にも反映済み（GitHub commit `8299b508...`）。`daily-board.html`実サイト表示、全開催自動取得、結果収集、GitHubからGoogleへの直接書込は未完成・未確認。PR #2はオフライン自己検査のみでmainに統合済み（`ed2cfadf...`）。
+- **次の着手点**：①Google共有済みサービスアカウントはユーザー承認により`reader`→`writer`変更・再読成功。GitHub ActionsにSecretの同一性照合ガードも追加済み。**次は未登録の当日/翌日1RでGitHubから新規行を保存・再読し重複0を実証**（既存7行の再実行とA1同値書込は成功済み）②固定URLから日次開催・R発見へ収集器を拡張 ③GitHubから1Rの実upsert成功/再実行の重複0確認 ④結果取得・例外照合 ⑤定期更新とサイト公開表示の実確認。GASは新経路の安定後にだけ停止。
 - **過去結果の実HTML取得・2媒体比較（2026-11-23）**：GitHub Actions PR #3 Run #47で京王閣2026-09-10 2Rの全7車をnetkeirinとチャリロトから実取得し、共通比較器で**不一致0件**。`formalPass:false`で上流独立性確認待ち。LotoPlaceはrobots確認不能のため自動取得しない。PR #3は一時検証コードを除去し、通常の読み取り専用手動プレビュー経路だけmainへ統合。**手動dispatch経路の実行成功・Google保存・正式PASSは未実証**。
 - **重要な別系統障害**：2026-11-23のGitHub Actionsログで従来の`scripts/build_feeds.py`にSyntaxError（line 208）。最新mainでの修復・再実行成功は未確認。影響を切り分けて対処。
 
