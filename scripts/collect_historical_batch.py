@@ -149,17 +149,17 @@ def self_test():
     valid = {"observations": [a, b],
              "comparison": compare({"observations": [a, b]})}
     with TemporaryDirectory() as directory:
-        with patch("collect_historical_batch.collect", return_value=valid):
+        with patch.object(sys.modules[__name__], "collect", return_value=valid):
             first = run({"races": [demo]}, directory)
             assert first["results"][0]["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
-        with patch("collect_historical_batch.collect", side_effect=AssertionError("unnecessary fetch")):
+        with patch.object(sys.modules[__name__], "collect", side_effect=AssertionError("unnecessary fetch")):
             repeat = run({"races": [demo]}, directory)
             assert repeat["results"][0]["status"] == "SKIPPED_EXISTING_CANDIDATE"
         p = Path(directory) / "2026-09-10_27_2.json"
         candidate = json.loads(p.read_text(encoding="utf-8"))
         candidate["observations"][0]["results"][0]["finish"] = "2"
         store(p, candidate)
-        with patch("collect_historical_batch.collect", side_effect=AssertionError("must not overwrite")):
+        with patch.object(sys.modules[__name__], "collect", side_effect=AssertionError("must not overwrite")):
             corrupted = run({"races": [demo]}, directory)
             assert corrupted["results"][0]["status"] == "EXISTING_FILE_CONFLICT_REVIEW"
 
