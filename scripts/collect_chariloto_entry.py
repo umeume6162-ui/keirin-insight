@@ -21,12 +21,13 @@ def parse_entries(html, date, track_code, track, race, source):
     from bs4 import BeautifulSoup
     soup = BeautifulSoup(html, "html.parser")
     wanted = {"車番","選手名","府県","期別","級班"}
+    failures = []
     for table in soup.select("table"):
         trs = table.find_all("tr")
         for head_index, row in enumerate(trs):
             names = [compact(x.get_text(" ", strip=True)) for x in row.find_all(["th","td"], recursive=False)]
             normalized = {label: next((i for i, x in enumerate(names) if label in x), None) for label in wanted}
-            if any(v is None for v in normalized.values()) or len(set(normalized.values())) != 4:
+            if any(v is None for v in normalized.values()) or len(set(normalized.values())) != len(wanted):
                 continue
             records = []
             failures = []
