@@ -262,24 +262,25 @@ def self_test():
     assert meeting_coverage(data, v100, [cancelled[0]])["unexplainedRaceNumberGapCount"] == 1
     assert scope["formalPass"] is False
     # Full pre-race source is required before inferring a *potential* absent car.
+    complete_data = [HEADER] + [row("1", n) for n in range(1, 8)] + [row("2", n) for n in range(1, 7)]
     card = {"raceKey": "2026-11-01|24|2",
             "sourceUrl": "https://example.org/race/24/2",
             "entries": [{"number": i, "name": "架空選手"} for i in range(1, 8)]}
-    matching = reconcile_explicit_racecards(data, [card])["results"][0]
+    matching = reconcile_explicit_racecards(complete_data, [card])["results"][0]
     assert matching["status"] == "SOURCED_ENTRY_V99_DISCREPANCY_REVIEW"
     assert matching["potentiallyMissingCars"] == [7] and matching["formalPass"] is False
     matching_six = reconcile_explicit_racecards(
-        data, [{**card, "entries": card["entries"][:6]}])["results"][0]
+        complete_data, [{**card, "entries": card["entries"][:6]}])["results"][0]
     assert matching_six["status"] == "STORED_CARS_MATCH_ENTRY_SNAPSHOT_UNVERIFIED"
     assert matching_six["potentiallyMissingCars"] == []
     try:
-        reconcile_explicit_racecards(data, [{**card, "sourceUrl": ""}])
+        reconcile_explicit_racecards(complete_data, [{**card, "sourceUrl": ""}])
     except ValueError:
         pass
     else:
         raise AssertionError("Unsourced entry snapshot accepted")
     try:
-        reconcile_explicit_racecards(data, [{**card, "entries": [card["entries"][0]] * 7}])
+        reconcile_explicit_racecards(complete_data, [{**card, "entries": [card["entries"][0]] * 7}])
     except ValueError:
         pass
     else:
