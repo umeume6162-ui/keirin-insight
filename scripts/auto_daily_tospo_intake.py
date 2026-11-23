@@ -10,6 +10,7 @@ import json
 import os
 import sys
 from datetime import datetime, timedelta
+from requests.exceptions import RequestException
 from zoneinfo import ZoneInfo
 
 from collect_tospo_entry import fetch
@@ -36,12 +37,14 @@ def run(day, index_html, loader=fetch, max_venues=8, write=False):
     report = {"day": day, "saved": False}
     try:
         data, discovery = collect_venues(day, index_html, loader, max_venues)
-    except (ValueError, RuntimeError) as exc:
+    except (ValueError, RuntimeError, RequestException) as exc:
         return {**report, "status": "SOURCE_UNAVAILABLE_OR_NO_VALID_RACECARD",
                 "reason": type(exc).__name__}
     entries = data["entries"]
     if not entries or len(entries) > 288:
         return {**report, "status": "REVIEW_UNBOUNDED_OR_EMPTY_BATCH"}
+    if len({(x["trackCode"], x["race"]) for x in entries}) > 36:
+        return {**report, "status": "REVIEW_TOO_MANY_RACES"}
     if any(x["date"] != day or x["trackCode"] not in VENUE_CODES.values() for x in entries):
         raise ValueError("Unexpected venue/date in source payload")
     prepared = prepare(data)
