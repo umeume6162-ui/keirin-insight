@@ -214,6 +214,15 @@ jobs:
           rows = normalized_results(obs, cars)
           assert len(rows) == cars
           print("KDREAMS_LIVE_OBSERVATION_OK", obs["sourceId"], len(rows), obs["race"]["date"])
+          from collect_historical_pair import collect_auto
+          try:
+              pair = collect_auto(day, code, track, race, cls, cars)
+              print("TAMANO_LIVE_PAIR", pair["comparison"]["status"],
+                    pair["comparison"]["carCount"], pair.get("sourcePairMode"),
+                    pair.get("sourceAttempts"))
+          except ValueError as exc:
+              print("TAMANO_PAIR_PENDING", getattr(exc, "source_stage", "CONTENT_REVIEW"),
+                    getattr(exc, "source_attempts", []))
           PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
