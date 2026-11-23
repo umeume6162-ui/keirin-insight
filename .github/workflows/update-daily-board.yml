@@ -164,6 +164,24 @@ jobs:
           assert 'verified-publication-guard-v138.js' in Path('index.html').read_text()
           print('PUBLISHING_GUARD_AND_DAILY_FEED_REFERENCE_OK')
           PY
+          python - <<'PY'
+          import sys,re
+          sys.path.insert(0,'scripts')
+          from bs4 import BeautifulSoup
+          from collect_tospo_entry import fetch
+          url='https://keirin.tokyo-sports.co.jp/list/race/20261123_30926'
+          soup=BeautifulSoup(fetch(url),'html.parser')
+          for selector in ['[class*=line]','[class*=narabi]','[class*=formation]','[class*=race-detail]']:
+              items=soup.select(selector)
+              print('SOURCE_SELECTOR',selector,'count',len(items))
+              for el in items[:8]:
+                  short=el.get_text(' ',strip=True)
+                  if short and len(short)<320:print('SOURCE_SELECTOR_TEXT',el.name,str(el.get('class')),short[:230])
+          body=soup.get_text(' ',strip=True)
+          for word in ['並び予想','ライン予想','想定ライン','単騎','発走：']:
+              ix=body.find(word)
+              print('SOURCE_TEXT_TERM',word,'found',ix>=0,'context',body[max(0,ix-90):ix+170] if ix>=0 else '')
+          PY
       - name: Check daily intake script syntax
         run: |
           python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py scripts/collect_historical_pair.py scripts/collect_historical_batch.py scripts/classify_historical_candidates.py scripts/auto_daily_tospo_intake.py scripts/auto_daily_results.py
