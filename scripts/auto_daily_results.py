@@ -170,6 +170,45 @@ def candidate(key, rows, collect_fn=collect):
             "sourceNote": "Content matched on two sites, upstream independence not verified"}
 
 
+
+def classify_result_hold(exc, phase):
+    """Return a finite, non-sensitive diagnostic code, never raw source text."""
+    message = str(exc)
+    rules = (
+        ("Robots rules prohibit", "SOURCE_ROBOTS_DISALLOWED"),
+        ("robots disallows", "SOURCE_ROBOTS_DISALLOWED"),
+        ("robots access", "SOURCE_ROBOTS_UNAVAILABLE"),
+        ("Unable to confirm robots", "SOURCE_ROBOTS_UNAVAILABLE"),
+        ("Race date/venue not found", "SOURCE_HEADING_MISMATCH"),
+        ("Venue/date not established", "SOURCE_HEADING_MISMATCH"),
+        ("Requested R not proven", "SOURCE_RACE_HEADING_MISMATCH"),
+        ("Exactly one complete", "SOURCE_INCOMPLETE_OR_AMBIGUOUS_TABLE"),
+        ("Name/prefecture/period not fully visible", "SOURCE_RIDER_FIELDS_MISSING"),
+        ("Missing rider identity", "SOURCE_RIDER_FIELDS_MISSING"),
+        ("Rider class conflicts", "SOURCE_RIDER_CLASS_MISMATCH"),
+        ("Unsupported race class", "SOURCE_UNSUPPORTED_RACE_CLASS"),
+        ("Invalid finish", "SOURCE_RESULT_STATUS_INVALID"),
+        ("Unknown finish", "SOURCE_RESULT_STATUS_INVALID"),
+        ("Two result publications do not agree", "TWO_SOURCE_CONTENT_MISMATCH"),
+        ("Rider identity does not match pre-race sheet", "ENTRY_RIDER_IDENTITY_MISMATCH"),
+        ("Incomplete pair result", "SOURCE_CAR_COUNT_MISMATCH"),
+        ("Missing daily Sheets", "SHEETS_READ_INCOMPLETE"),
+        ("Daily sheet header mismatch", "SHEETS_HEADER_MISMATCH"),
+        ("Saved result row count differs", "SHEETS_SAVE_COUNT_MISMATCH"),
+    )
+    for fragment, reason in rules:
+        if fragment in message:
+            return reason
+    if phase.startswith("SHEETS"):
+        return "SHEETS_OTHER_ERROR"
+    if type(exc).__name__ in ("Timeout", "ConnectTimeout", "ReadTimeout"):
+        return "SOURCE_TIMEOUT"
+    if type(exc).__name__ in ("HTTPError", "ConnectionError", "SSLError"):
+        return "SOURCE_NETWORK_ERROR"
+    return "SOURCE_OTHER_ERROR"
+
+
+
 def select_rotating_races(eligible, limit, now=None):
     """Spread bounded attempts across eligible races instead of retrying the first N.
 
@@ -206,8 +245,10 @@ def process(entries, results, start, end, limit=4, write=False,
         if monotonic_fn() - started >= max_seconds:
             break
         item = {"raceKey": key, "saved": False}
+        phase = "COLLECT_COMPARE"
         try:
             data = candidate(key, rows, collect_fn=collect_fn)
+            phase = "SHEETS_DRY_RUN"
             dry = apply_fn(data, dry_run=True)
             result_delta = dry["summary"]["results"]
             if (result_delta["new"] != len(rows) or result_delta["changed"] != 0 or
@@ -215,6 +256,7 @@ def process(entries, results, start, end, limit=4, write=False,
                     dry["summary"]["entries"]["changed"]):
                 item["status"] = "SHEETS_DIFFERENCE_REVIEW_NO_WRITE"
             elif write:
+                phase = "SHEETS_APPLY"
                 verify_approved_editor()
                 saved = apply_fn(data, dry_run=False)
                 if (saved["summary"]["results"]["new"] != len(rows) or
@@ -226,7 +268,9 @@ def process(entries, results, start, end, limit=4, write=False,
                 item.update(status="DRY_RUN_TWO_SOURCES_MATCH", cars=len(rows))
         except Exception as exc:
             item.update(status="SOURCE_OR_IDENTITY_REVIEW_NO_WRITE",
-                        errorType=type(exc).__name__)
+                        errorType=type(exc).__name__,
+                        failurePhase=phase,
+                        reasonCode=classify_result_hold(exc, phase))
         reports.append(item)
     return {"schema": "ki-daily-result-intake-v1", "formalPass": False,
             "eligibleTotal": len(eligible), "eligibleExamined": len(reports),
@@ -282,6 +326,10 @@ def self_test():
                       apply_fn=pretend_apply)
     assert summary["results"][0]["status"] == "SOURCE_OR_IDENTITY_REVIEW_NO_WRITE"
     assert calls == [True]
+    assert summary["results"][0]["failurePhase"] == "COLLECT_COMPARE"
+    assert summary["results"][0]["reasonCode"] == "ENTRY_RIDER_IDENTITY_MISMATCH"
+    assert classify_result_hold(ValueError("Rider class conflicts with requested race class"), "COLLECT_COMPARE") == "SOURCE_RIDER_CLASS_MISMATCH"
+    assert classify_result_hold(ValueError("Unexpected Sheet response"), "SHEETS_DRY_RUN") == "SHEETS_OTHER_ERROR"
     assert eligible_races(records, [[""] * 14 + ["2026-11-23|26|1"]], start, start) == []
     partial_rows = [list(x) + [""] * (15 - len(x)) for x in records[:3]]
     for row in partial_rows:
