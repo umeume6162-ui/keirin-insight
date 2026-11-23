@@ -223,6 +223,7 @@ jobs:
                   for i,cell in enumerate(row.find_all(['td','th'],recursive=False)):
                       print('RIDER_DATA_CELL',i,cell.get_text(' ',strip=True)[:65],cell.get('class'))
           PY
+      # Test-only diagnostic for full-rider pre-race stats, never writes Sheets.
       - name: TEMP live source-checked rider statistics preview
         if: github.event_name == 'pull_request'
         run: |
