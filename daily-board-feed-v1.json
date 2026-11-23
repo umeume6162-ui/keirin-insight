@@ -1,0 +1,17 @@
+{
+  "schema": "ki-daily-board-v1",
+  "targetDate": "2026-11-23",
+  "windowStart": "2026-11-21",
+  "windowEnd": "2026-11-25",
+  "sourceLatest": {
+    "entries": "2026-11-21",
+    "results": "2026-11-05"
+  },
+  "verification": "source_sheet_unverified_do_not_treat_as_formal_PASS",
+  "races": [],
+  "summary": {
+    "races": 0,
+    "entries": 0,
+    "resultRows": 0
+  }
+}
