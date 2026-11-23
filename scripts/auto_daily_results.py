@@ -148,6 +148,55 @@ def partial_existing_results(entries, results, start, end):
     return findings
 
 
+
+def safe_missing_result_payload(candidate_payload, stored_rows, entry_rows):
+    """Return only absent cars after proving every stored observation matches.
+
+    Existing rows are never sent to the upsert writer. Partial results with
+    duplicated cars, altered rider identity, or conflicting finishes are held.
+    """
+    if not stored_rows:
+        raise ValueError("No partial stored results to complete")
+    desired = {str(x["number"]): x for x in candidate_payload["results"]}
+    if len(desired) != len(entry_rows) or len(candidate_payload["results"]) != len(entry_rows):
+        raise ValueError("Candidate full-field result mismatch")
+    stored_numbers = []
+    for row in stored_rows:
+        if len(row) < 15 or not clean(row[5]) or clean(row[14]) != clean(entry_rows[0][13]):
+            raise ValueError("Partial stored result identity mismatch")
+        number = clean(row[5])
+        if number in stored_numbers or number not in desired:
+            raise ValueError("Duplicate or unexpected stored result car")
+        stored_numbers.append(number)
+        proposed = desired[number]
+        values = [proposed["date"], proposed["trackCode"], proposed["track"],
+                  str(proposed["race"]), proposed["className"], str(proposed["number"]),
+                  proposed["name"], proposed["prefecture"], proposed["period"],
+                  proposed["finish"], proposed["method"], proposed["exception"]]
+        # Exact normalized comparison for all data, allowing documented
+        # source-specific rider naming variants but not a changed finish.
+        for pos in range(12):
+            old, new = clean(row[pos]), clean(values[pos])
+            if pos == 6:
+                equal = canonical_rider_name(old) == canonical_rider_name(new)
+            elif pos == 7:
+                equal = canonical_prefecture(old) == canonical_prefecture(new)
+            elif pos == 8:
+                equal = old.removesuffix("期") == new.removesuffix("期")
+            elif pos == 10:
+                equal = canonical_method(old) == canonical_method(new)
+            else:
+                equal = old == new
+            if not equal:
+                raise ValueError("Stored partial result conflicts with two-source full field")
+    missing = [x for x in candidate_payload["results"]
+               if str(x["number"]) not in stored_numbers]
+    if not missing:
+        raise ValueError("No genuinely missing result cars")
+    return {"entries": [], "results": missing}
+
+
+
 def candidate(key, rows, collect_fn=collect):
     day, code, race = key.split("|")
     track, cls = clean(rows[0][2]), clean(rows[0][4])
@@ -268,10 +317,24 @@ def process(entries, results, start, end, limit=4, write=False,
     started = monotonic_fn()
     eligible = eligible_races(entries, results, start, end)
     incomplete_stored = partial_existing_results(entries, results, start, end)
+    # Only structurally partial results are candidates for guarded completion.
+    available = dict(eligible_races(entries, [], start, end))
+    by_stored = defaultdict(list)
+    for stored_row in results:
+        if len(stored_row) > 14 and clean(stored_row[14]) in available:
+            by_stored[clean(stored_row[14])].append(stored_row)
+    partial_candidates = []
+    for flagged in incomplete_stored:
+        key = flagged["raceKey"]
+        if (flagged["missingCarNumbers"] and not flagged["unexpectedCarNumbers"]
+                and not flagged["duplicateCarNumbers"] and
+                not flagged["identityMismatchCars"] and key in available):
+            partial_candidates.append((key, available[key]))
+    all_due_candidates = sorted(eligible + partial_candidates)
     not_due = []
-    due = eligible
+    due = all_due_candidates
     if start_times is not None:
-        due, not_due = due_result_races(eligible, start_times, now=now)
+        due, not_due = due_result_races(all_due_candidates, start_times, now=now)
     selected = select_rotating_races(due, limit, now=now)
     reports = []
     for key, rows in selected:
@@ -281,6 +344,10 @@ def process(entries, results, start, end, limit=4, write=False,
         phase = "COLLECT_COMPARE"
         try:
             data = candidate(key, rows, collect_fn=collect_fn)
+            was_partial = key in by_stored
+            if was_partial:
+                data = {**data, **safe_missing_result_payload(data, by_stored[key], rows)}
+            expected_delta = len(data["results"])
             second_source = data["sourceNote"].rsplit("secondSourceId=", 1)[-1]
             if second_source in ("chariloto-day-results", "lotoplace-day-results"):
                 item["secondSourceId"] = second_source
@@ -288,7 +355,7 @@ def process(entries, results, start, end, limit=4, write=False,
             phase = "SHEETS_DRY_RUN"
             dry = apply_fn(data, dry_run=True)
             result_delta = dry["summary"]["results"]
-            if (result_delta["new"] != len(rows) or result_delta["changed"] != 0 or
+            if (result_delta["new"] != expected_delta or result_delta["changed"] != 0 or
                     dry["summary"]["entries"]["new"] or
                     dry["summary"]["entries"]["changed"]):
                 item["status"] = "SHEETS_DIFFERENCE_REVIEW_NO_WRITE"
@@ -296,13 +363,14 @@ def process(entries, results, start, end, limit=4, write=False,
                 phase = "SHEETS_APPLY"
                 verify_approved_editor()
                 saved = apply_fn(data, dry_run=False)
-                if (saved["summary"]["results"]["new"] != len(rows) or
+                if (saved["summary"]["results"]["new"] != expected_delta or
                         saved["summary"]["results"]["changed"] != 0):
                     raise RuntimeError("Saved result row count differs from dry-run")
                 item.update(status="SAVED_UNVERIFIED_RESULTS", saved=True,
-                            cars=len(rows))
+                            cars=expected_delta, partialCompleted=was_partial)
             else:
-                item.update(status="DRY_RUN_TWO_SOURCES_MATCH", cars=len(rows))
+                item.update(status="DRY_RUN_TWO_SOURCES_MATCH", cars=expected_delta,
+                            partialCompleted=was_partial)
         except Exception as exc:
             item.update(status="SOURCE_OR_IDENTITY_REVIEW_NO_WRITE",
                         errorType=type(exc).__name__,
@@ -311,8 +379,8 @@ def process(entries, results, start, end, limit=4, write=False,
                         reviewRoute=review_route(classify_result_hold(exc, phase)))
         reports.append(item)
     return {"schema": "ki-daily-result-intake-v1", "formalPass": False,
-            "eligibleTotal": len(eligible), "eligibleExamined": len(reports),
-            "eligibleDeferred": len(eligible) - len(reports),
+            "eligibleTotal": len(all_due_candidates), "eligibleExamined": len(reports),
+            "eligibleDeferred": len(all_due_candidates) - len(reports),
             "notYetDueCount": len(not_due), "notYetDueSample": not_due[:10],
             "timeBudgetExceeded": len(reports) < len(selected),
             "savedCount": sum(bool(r["saved"]) for r in reports),
@@ -425,6 +493,31 @@ def self_test():
     for row in full_rows:
         row[14] = "2026-11-23|26|1"
     assert partial_existing_results(records, full_rows, start, start) == []
+    # Partial result completion writes only proven missing rider rows.
+    preexisting = [list(row) + [""] * (15 - len(row)) for row in records[:3]]
+    for i, row in enumerate(preexisting):
+        row[9] = str(i + 1)
+        row[10] = "差" if i == 0 else ""
+        row[14] = day + "|26|1"
+    complete_candidate = candidate(day+"|26|1", records, collect_fn=lambda *a: actual)
+    only_missing = safe_missing_result_payload(complete_candidate, preexisting, records)
+    assert [x["number"] for x in only_missing["results"]] == [4, 5, 6, 7]
+    partial_calls = []
+    def partial_apply(data, dry_run=True):
+        partial_calls.append((dry_run, len(data["results"])))
+        return {"summary": {"entries": {"new": 0, "changed": 0},
+                            "results": {"new": len(data["results"]), "changed": 0}}}
+    repaired = process(records, preexisting, start, start, collect_fn=lambda *a: actual,
+                       apply_fn=partial_apply)
+    assert repaired["eligibleTotal"] == 1 and repaired["eligibleExamined"] == 1
+    assert repaired["results"][0]["partialCompleted"] is True
+    assert repaired["results"][0]["cars"] == 4 and partial_calls == [(True, 4)]
+    preexisting[1][9] = "7"  # already-recorded finish conflicts with source
+    partial_calls.clear()
+    held = process(records, preexisting, start, start, collect_fn=lambda *a: actual,
+                   apply_fn=partial_apply)
+    assert held["savedCount"] == 0 and partial_calls == []
+    assert held["results"][0]["status"] == "SOURCE_OR_IDENTITY_REVIEW_NO_WRITE"
     # Complete car-number coverage alone must not conceal wrong rider identity.
     wrong_rider = [list(row) for row in full_rows]
     wrong_rider[2][6] = "別人"
