@@ -45,6 +45,19 @@ def validate_url(url, event_date, code, race):
     return url
 
 
+def grade_matches(source_grade, expected_class):
+    from_source = compact(source_grade)
+    target = compact(expected_class)
+    accepted = {
+        "A3": {"A3"}, "A1A2": {"A1", "A2"},
+        "S": {"S1", "S2"}, "L1": {"L1"},
+        "A1": {"A1"}, "A2": {"A2"}, "S1": {"S1"}, "S2": {"S2"}
+    }
+    if target not in accepted:
+        raise ValueError("Unsupported race class for source verification")
+    return from_source in accepted[target]
+
+
 def extract(html, event_date, code, track, race, class_name, expected_cars, url):
     date.fromisoformat(event_date)
     if expected_cars not in (7, 9) or not 1 <= race <= 12 or not 1 <= int(code) <= 99:
@@ -95,12 +108,14 @@ def extract(html, event_date, code, track, race, class_name, expected_cars, url)
                 rider_text = norm(cells[headers["rider"]].get_text(" ", strip=True))
                 # Typical example: 伊藤司 福島 48歳 83期 A3
                 match = re.match(
-                    r"^(.+?)\s+([^\s\d/]+)\s+\d{1,2}歳\s+(\d{1,3})期(?:\s|$)",
+                    r"^(.+?)\s+([^\s\d/]+)\s+\d{1,2}歳\s+(\d{1,3})期\s+([ASL][123])(?:\s|$)",
                     rider_text
                 )
                 if not match:
                     raise ValueError("Name/prefecture/period not fully visible for car " + car)
-                name, prefecture, period = match.groups()
+                name, prefecture, period, source_grade = match.groups()
+                if not grade_matches(source_grade, class_name):
+                    raise ValueError("Rider class conflicts with requested race class")
                 method = (compact(cells[headers["method"]].get_text(" ", strip=True))
                           if "method" in headers else "")
                 found.append({
@@ -155,6 +170,13 @@ def self_test():
     args = ("2026-09-10", "27", "京王閣", 2, "A3", 7, url)
     r = extract(html, *args)
     assert len(r["results"]) == 7 and r["results"][0]["finish"] == "1"
+    try:
+        extract(html, "2026-09-10", "27", "京王閣", 2, "S", 7, url)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Wrong source class accepted")
+
     for bad in (html.replace("<td>7</td>", "<td>6</td>"),
                 html.replace(" 2R", " 3R")):
         try:
