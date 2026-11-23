@@ -14,8 +14,31 @@
  for(const [k,r] of keys)if(counts.get(k)!==r.size)fail('レース別人数');
  for(const [k,r] of keys)if(kdResult(r)){const rows=b.rows.filter(row=>[row[pos.date],String(row[pos.trackCode]),Number(row[pos.race])].join('|')===k);if(!rows.every(row=>kdSource(row[pos.sourceUrl])&&row[pos.sourceUrl]===r.officialVerification.source))fail('Kドリームス単一原本・全車URL不一致');}
  for(const [k,r] of keys)if(fallbackResult(r)){const rows=b.rows.filter(row=>[row[pos.date],String(row[pos.trackCode]),Number(row[pos.race])].join('|')===k);if(!rows.every(row=>row[pos.sourceUrl]===r.officialVerification.source))fail('代替原文・全車URL不一致');}
- const lineKeys=new Set();for(const x of l.races){if(!(evidence(x)||(kdResult(x)&&x.officialVerification.method==='kdreams_single_source_verified'))||!x.id||lineKeys.has(x.id)||!Array.isArray(x.riders)||![7,9].includes(x.riders.length))fail('ライン照合根拠・重複');lineKeys.add(x.id);const connected=a.races.find(r=>r.date===x.date&&r.track===x.track&&Number(r.race)===Number(x.race));if(!connected||connected.size!==x.riders.length)fail('ライン結果人数・接続不一致')}
- for(const [k,r] of keys)if(!kdResult(r)&&!fallbackResult(r)&&!lineKeys.has(k))fail('従来結果はライン接続必須');
+ const forecastSource=x=>{const e=x?.officialVerification,p=e?.sourceProof;return e?.status==='verified'&&e?.method==='published_single_source_forecast'&&date(x.verifiedDate)&&e?.forecastType==='media_prediction'&&typeof e.source==='string'&&/^https:\/\//.test(e.source)&&Array.isArray(e.matchingSources)&&e.matchingSources.length===1&&e.matchingSources[0]===e.source&&p?.kind==='published_pre_race_forecast'&&date(p.retrievedDate)&&typeof p.evidenceRef==='string'&&p.evidenceRef.trim().length>8&&typeof p.provider==='string'&&p.provider.trim().length>0};
+ const sameName=(x,y)=>norm(x)===norm(y);
+ const lineKeys=new Set();for(const x of l.races){
+  const e=x.officialVerification;
+  if(!(evidence(x)||forecastSource(x)||(kdResult(x)&&e?.method==='kdreams_single_source_verified'))||!date(x.date)||!x.track||!/^\d{2}$/.test(String(x.trackCode||''))||!Number.isInteger(Number(x.race))||Number(x.race)<1||Number(x.race)>12||!x.id||x.id!==[x.date,String(x.trackCode),Number(x.race)].join('|')||lineKeys.has(x.id)||!Array.isArray(x.riders)||![7,9].includes(x.riders.length)||x.size!==x.riders.length)fail('ライン予想の出典・レース識別・重複');
+  lineKeys.add(x.id);
+  const groups=x.forecastGroups;
+  if(!Array.isArray(groups)||!groups.length||groups.some(g=>!Array.isArray(g)||!g.length)||groups.flat().length!==x.size)fail('ライン全車グループ不備');
+  const nums=groups.flat().map(Number),expected=Array.from({length:x.size},(_,i)=>i+1);
+  if(new Set(nums).size!==x.size||nums.some(n=>!Number.isInteger(n))||nums.slice().sort((a,b)=>a-b).join(',')!==expected.join(','))fail('ライン車番の不足・重複');
+  if(new Set(x.riders.map(r=>Number(r.number))).size!==x.size)fail('ライン選手の重複');
+  for(const rider of x.riders){
+   const n=Number(rider.number),grp=groups.find(g=>g.map(Number).includes(n));
+   if(!Number.isInteger(n)||!grp||!sameName(rider.name,rider.name)||!norm(rider.name)||!norm(rider.prefecture)||!/^\d+$/.test(String(rider.period))||!Array.isArray(rider.line)||rider.line.map(Number).join(',')!==grp.map(Number).join(','))fail('ライン選手・グループ不整合');
+  }
+  const connected=keys.get(x.id);
+  if(connected){
+   if(connected.size!==x.riders.length||connected.track!==x.track)fail('ライン結果レース不一致');
+   const linkedRows=b.rows.filter(row=>[row[pos.date],String(row[pos.trackCode]),Number(row[pos.race])].join('|')===x.id);
+   for(const rider of x.riders){
+    const row=linkedRows.find(row=>Number(row[pos.number])===Number(rider.number));
+    if(!row||!sameName(row[pos.name],rider.name)||!sameName(row[pos.prefecture],rider.prefecture)||String(row[pos.period])!==String(rider.period))fail('ライン・結果選手の本人不一致');
+   }
+  }
+ }
  if(l.summary?.rider_rows!==l.races.reduce((n,x)=>n+x.riders.length,0))fail('ライン人数');
 }
 const originalFetch=window.fetch.bind(window);
