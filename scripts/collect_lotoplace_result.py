@@ -149,9 +149,11 @@ def parse_result(html, day, code, track, race, class_name, cars, url):
             get = lambda field: compact(cells[headers[field]].get_text(" ", strip=True)) if field in headers else ""
             finished = get("finish")
             ex = get("exception")
-            if finished.isdigit() and 1 <= int(finished) <= cars and not ex:
+            if finished.isdigit() and 1 <= int(finished) <= cars and ex in ("", "故"):
+                # Published 個人状況『故』 coexists with a numeric placing.
+                # Retain it verbatim as a separate condition; never convert
+                # numeric placement to loss, disqualification or withdrawal.
                 finish = str(int(finished))
-                ex = ""
             elif finished in EXCEPTION_LABELS:
                 normalized_status = EXCEPTION_LABELS[finished]
                 if ex and EXCEPTION_LABELS.get(ex) != normalized_status:
@@ -215,6 +217,23 @@ def self_test():
     chariloto_observation = parse_result(chariloto_html, day, code, track, race, grade, cars, chariloto_url)
     assert chariloto_observation["sourceId"] == "chariloto-day-results"
     assert len(chariloto_observation["results"]) == 7
+
+    # A numeric placing and the observed independent status『故』are both true.
+    numeric_fault = html.replace("<td>7</td><td>7</td>", "<td>7</td><td>7</td>", 1).replace(
+        "<td>A3</td><td></td><td>12.0</td><td></td><td></td><td></td>",
+        "<td>A3</td><td></td><td>12.0</td><td></td><td></td><td>故</td>", 1
+    )
+    with_fault = parse_result(numeric_fault, day, code, track, race, grade, cars, url)
+    assert sum(x["exception"] == "故" for x in with_fault["results"]) == 1
+    assert [x["finish"] for x in with_fault["results"]] == [str(n) for n in range(1,8)]
+    # Other unverified non-finisher conditions alongside a numeric finish stay blocked.
+    contradictory = numeric_fault.replace("<td>故</td>", "<td>失</td>", 1)
+    try:
+        parse_result(contradictory, day, code, track, race, grade, cars, url)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("numeric finish plus 失 should be rejected")
 
     # A lone abbreviated exception in the finish column is sufficient;
     # do not invent a numeric finishing rank.
