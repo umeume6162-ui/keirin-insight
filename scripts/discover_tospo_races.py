@@ -206,7 +206,7 @@ def main():
     if not a.date or (not a.all_venues and not all((a.track,a.track_code))):
         p.error("--date and (--all-venues or --track --track-code) required")
     datetime.strptime(a.date, "%Y-%m-%d")
-    if not (a.track_code.isdigit() and 1 <= int(a.track_code) <= 99):
+    if not a.all_venues and not (a.track_code.isdigit() and 1 <= int(a.track_code) <= 99):
         raise ValueError("Invalid track code")
     data, report = (collect_venues(a.date, fetch(LIST_URL), fetch, a.max_venues)
                     if a.all_venues else collect(a.date, a.track, a.track_code, fetch(LIST_URL), fetch))
