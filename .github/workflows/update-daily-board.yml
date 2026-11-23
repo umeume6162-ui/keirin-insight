@@ -432,6 +432,26 @@ jobs:
               if mismatches:print("RESULT_ENTRY_IDENTITY_REVIEW",rider["number"],",".join(mismatches),
                 "sheetPref",clean(x[7]),"resultPref",clean(rider["prefecture"]))
           PY
+      - name: TEMP save today's confirmed seven-car result to unverified daily Sheets and check replay
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python scripts/auto_daily_results.py --date 2026-11-23 --max-races 1 --apply > /tmp/ki-daily-result-first.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/ki-daily-result-first.json',encoding='utf-8'))
+          print('DAILY_RESULT_FIRST_SAVE',json.dumps(d,ensure_ascii=False))
+          assert d['eligibleExamined']==1 and d['results'][0]['status']=='SAVED_UNVERIFIED_RESULTS'
+          assert d['results'][0]['cars']==7 and d['results'][0]['saved'] is True
+          PY
+          python scripts/auto_daily_results.py --date 2026-11-23 --max-races 1 --apply > /tmp/ki-daily-result-replay.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/ki-daily-result-replay.json',encoding='utf-8'))
+          print('DAILY_RESULT_REPLAY',json.dumps(d,ensure_ascii=False))
+          assert d['eligibleExamined']==0
+          PY
       - name: Build daily board
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
         env:
