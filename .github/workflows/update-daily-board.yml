@@ -116,6 +116,9 @@ jobs:
           python scripts/collect_historical_batch.py --self-test
           python scripts/classify_historical_candidates.py --self-test
           python scripts/build_daily_board.py --self-test
+      - name: TEMP verify scoped V99 candidate classifications
+        if: github.event_name == 'pull_request'
+        run: python scripts/classify_historical_candidates.py --self-test
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
