@@ -414,8 +414,9 @@ def process(entries, results, start, end, limit=4, write=False,
                 item["sourceStage"] = exc.source_stage
         reports.append(item)
     return {"schema": "ki-daily-result-intake-v1", "formalPass": False,
-            "eligibleTotal": len(all_due_candidates), "eligibleExamined": len(reports),
-            "eligibleDeferred": len(all_due_candidates) - len(reports),
+            "eligibleTotal": len(all_due_candidates), "eligibleDueTotal": len(due),
+            "eligibleExamined": len(reports),
+            "eligibleDeferred": len(due) - len(reports),
             "notYetDueCount": len(not_due), "notYetDueSample": not_due[:10],
             "timeBudgetExceeded": len(reports) < len(selected),
             "savedCount": sum(bool(r["saved"]) for r in reports),
@@ -573,6 +574,7 @@ def self_test():
     gated = process(gate_rows, [], start, start, collect_fn=lambda *a: actual,
                     apply_fn=pretend_apply, start_times=cache, now=before)
     assert gated["notYetDueCount"] == 1 and gated["eligibleExamined"] == 0
+    assert gated["eligibleDueTotal"] == 0 and gated["eligibleDeferred"] == 0
     assert gated["savedCount"] == 0
     assert summary["results"][0]["status"] == "DRY_RUN_TWO_SOURCES_MATCH" and calls == [True]
     assert (summary["eligibleTotal"], summary["eligibleExamined"], summary["eligibleDeferred"], summary["savedCount"]) == (1, 1, 0, 0)
