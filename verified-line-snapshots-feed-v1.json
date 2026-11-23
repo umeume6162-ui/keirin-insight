@@ -4,8 +4,8 @@
   "sourceTab": "VERIFIED publication",
   "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence.",
   "summary": {
-    "races": 4,
-    "rider_rows": 28
+    "races": 5,
+    "rider_rows": 35
   },
   "races": [
     {
@@ -471,6 +471,118 @@
             1,
             7,
             3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-05|75|2",
+      "key": "2026-10-05|75|2",
+      "date": "2026-10-05",
+      "track": "松山",
+      "trackCode": "75",
+      "race": 2,
+      "size": 7,
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020002/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020002/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+          "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_2.html"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ]
+      },
+      "forecastGroups": [
+        [
+          7,
+          2
+        ],
+        [
+          1
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4
+        ],
+        [
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 5,
+          "name": "安東 宏高",
+          "prefecture": "大分",
+          "period": "90",
+          "line": [
+            3,
+            5
+          ]
+        },
+        {
+          "number": 7,
+          "name": "野上 竜太",
+          "prefecture": "岡山",
+          "period": "115",
+          "line": [
+            7,
+            2
+          ]
+        },
+        {
+          "number": 3,
+          "name": "山崎 晃",
+          "prefecture": "石川",
+          "period": "95",
+          "line": [
+            3,
+            5
+          ]
+        },
+        {
+          "number": 4,
+          "name": "小峰 烈",
+          "prefecture": "長野",
+          "period": "98",
+          "line": [
+            4
+          ]
+        },
+        {
+          "number": 6,
+          "name": "塚本 勝士",
+          "prefecture": "栃木",
+          "period": "81",
+          "line": [
+            6
+          ]
+        },
+        {
+          "number": 1,
+          "name": "佐藤 正吾",
+          "prefecture": "宮城",
+          "period": "88",
+          "line": [
+            1
+          ]
+        },
+        {
+          "number": 2,
+          "name": "山本 貴章",
+          "prefecture": "岡山",
+          "period": "76",
+          "line": [
+            7,
+            2
           ]
         }
       ]
