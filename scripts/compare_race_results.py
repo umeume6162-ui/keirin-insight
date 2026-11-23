@@ -32,7 +32,7 @@ def normalized_name(value):
     # Spaces between Japanese surname and given name are presentation differences.
     value = re.sub(r"\s+", "", clean(value))
     # Evidence-scoped rider aliases. Never apply generic kanji substitutions.
-    return {"国井裕樹": "國井裕樹"}.get(value, value)
+    return {"国井裕樹": "國井裕樹", "斎藤輝彦": "齋藤輝彦"}.get(value, value)
 
 
 def normalized_prefecture(value):
@@ -178,6 +178,8 @@ def compare(payload):
 def self_test():
     assert normalized_name("国井 裕樹") == normalized_name("國井裕樹")
     assert normalized_name("国井裕樹") != normalized_name("國村洋")
+    assert normalized_name("斎藤 輝彦") == normalized_name("齋藤輝彦")
+    assert normalized_name("斎藤 輝彦") != normalized_name("齋藤仁")
     assert normalized_prefecture("神奈") == "神奈川"
     assert normalized_prefecture("鹿児") == "鹿児島"
     assert normalized_prefecture("東京") != normalized_prefecture("神奈")
