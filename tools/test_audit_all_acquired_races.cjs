@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 const assert=require('node:assert/strict');
+const fs=require('node:fs'),path=require('node:path');
 const {auditAll,inspectSourceFirst}=require('./audit_all_acquired_races.cjs');
 const base={raceKey:'2026-11-20|22|1',race:{venue:'前橋'},originalEntries:[{car:1,name:'甲'},{car:2,name:'乙'},{car:3,name:'丙'},{car:4,name:'丁'},{car:5,name:'戊'},{car:6,name:'己'},{car:7,name:'庚'}],preRaceFormation:{groups:[[1,2,3,4,5,6,7]]},results:Array.from({length:7},(_,i)=>({car:i+1,finish:i+1,finishRaw:String(i+1),name:'選手'+i,lapSeconds:11.5+i/10,marginRaw:i===0?'':'1車身',winningMethodRaw:i===0?'逃':'',sbRaw:i===0?'B':'',exceptionRaw:''})),reconciliation:{revisedStartCardSource:null},resultUrls:['https://a.example/result','https://b.example/result']};
 const a=inspectSourceFirst(base);
@@ -35,7 +36,6 @@ const wrongRider=JSON.parse(JSON.stringify(linkedLegacy));
 wrongRider.finishers[0].name='別人';
 assert.throws(()=>auditAll([linkedResearch],{races:[wrongRider]}),/DUPLICATE_RACE_KEYS conflicting rider rows/);
 
-const fs=require('node:fs'),path=require('node:path');
 const dataDir=path.join(__dirname,'reconstruction-candidates');
 // Historic full-field PASS pairs must be linked to their original receipts without being double-counted.
 const historical=JSON.parse(fs.readFileSync(path.join(__dirname,'..','comparison-races-v1.json'),'utf8'));
