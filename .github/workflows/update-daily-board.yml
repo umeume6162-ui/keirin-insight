@@ -13,6 +13,9 @@ on:
       - 'scripts/classify_historical_candidates.py'
   pull_request:
     paths:
+      - 'index.html'
+      - 'daily-board.html'
+      - 'site-ui.css'
       - 'scripts/collect_chariloto_entry.py'
       - 'scripts/probe_daily_source.py'
       - 'scripts/collect_tospo_entry.py'
@@ -109,6 +112,56 @@ jobs:
           fi
       - name: Install Google reader
         run: pip install 'google-auth==2.38.0' 'requests==2.32.3' 'beautifulsoup4==4.14.2'
+      - name: TEMP check mobile redesign HTML and JavaScript
+        if: github.event_name == 'pull_request'
+        run: |
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import subprocess
+          class Inspect(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.scripts=[]
+                  self.inside=False
+                  self.current=''
+                  self.ids=set()
+                  self.links=[]
+              def handle_starttag(self, tag, attrs):
+                  attrs=dict(attrs)
+                  if 'id' in attrs:
+                      if attrs['id'] in self.ids:
+                          raise ValueError('duplicate id '+attrs['id'])
+                      self.ids.add(attrs['id'])
+                  if tag=='a' and 'href' in attrs:
+                      self.links.append(attrs['href'])
+                  if tag=='script' and 'src' not in attrs:
+                      self.inside=True
+                      self.current=''
+              def handle_data(self, data):
+                  if self.inside:self.current+=data
+              def handle_endtag(self,tag):
+                  if tag=='script' and self.inside:
+                      self.scripts.append(self.current)
+                      self.inside=False
+          expected={'index.html':{'races','rows','ids','lines','status','last','refresh'},
+                    'daily-board.html':{'day','track','refresh','state','source','races','race-count','entry-count','result-count'}}
+          for name,required in expected.items():
+              content=Path(name).read_text(encoding='utf-8')
+              check=Inspect()
+              check.feed(content)
+              assert required<=check.ids,(name,required-check.ids)
+              assert './site-ui.css' in content
+              assert all(Path(href.split('?')[0]).is_file() for href in check.links if href.startswith('./') and not href.startswith('./#')),name
+              for i,code in enumerate(check.scripts):
+                  destination=Path('/tmp')/(name.replace('.html','')+'-'+str(i)+'.js')
+                  destination.write_text(code,encoding='utf-8')
+                  subprocess.run(['node','--check',str(destination)],check=True)
+              print('SITE_MOBILE_CONTRACT_OK',name,len(check.scripts),len(check.links))
+          assert 'daily-board-feed-v1.json' in Path('daily-board.html').read_text()
+          assert 'verified-publication-guard-v138.js' in Path('index.html').read_text()
+          print('PUBLISHING_GUARD_AND_DAILY_FEED_REFERENCE_OK')
+          PY
       - name: Check daily intake script syntax
         run: |
           python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py scripts/collect_historical_pair.py scripts/collect_historical_batch.py scripts/classify_historical_candidates.py scripts/auto_daily_tospo_intake.py
