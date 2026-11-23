@@ -194,7 +194,8 @@ def enrich(board,cache,loader=fetch,limit=4):
             attach(race,record)
             next_cache[race["key"]]=record
             counts["fetched"]+=1
-        except Exception:
+        except Exception as exc:
+            print("RIDER_STATS_HOLD",race["key"],type(exc).__name__,str(exc)[:120],file=sys.stderr)
             counts["held"]+=1
     counts["deferred"]=max(0,len(pending)-limit)
     cache["races"]=dict(sorted(next_cache.items()))
