@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from collect_tospo_entry import fetch
-from discover_tospo_races import LIST_URL, collect_venues
+from discover_tospo_races import LIST_URL, VENUE_CODES, collect_venues
 from upsert_daily_sheets import apply, prepare
 
 APPROVED_EDITOR = "keirin-insight-sheets-reader@possible-helix-433523-q9.iam.gserviceaccount.com"
@@ -42,7 +42,7 @@ def run(day, index_html, loader=fetch, max_venues=8, write=False):
     entries = data["entries"]
     if not entries or len(entries) > 288:
         return {**report, "status": "REVIEW_UNBOUNDED_OR_EMPTY_BATCH"}
-    if any(x["date"] != day or x["trackCode"] not in ("11","12","13","21","22","23","24","25","26","27","28","31","32","34","35","36","37","38","42","43","44","45","46","47","48","51","53","54","55","56","61","62","63","71","73","74","75","81","83","84","85","86","87") for x in entries):
+    if any(x["date"] != day or x["trackCode"] not in VENUE_CODES.values() for x in entries):
         raise ValueError("Unexpected venue/date in source payload")
     prepared = prepare(data)
     if len(prepared["entries"]) != len(entries) or prepared["results"]:
