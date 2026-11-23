@@ -15,7 +15,13 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from bs4 import BeautifulSoup
 
-EXCEPTIONS = {"欠車", "取消", "失格", "落車棄権", "途中棄権", "棄権"}
+EXCEPTION_LABELS = {
+    "欠": "欠車", "欠車": "欠車", "取": "取消", "取消": "取消",
+    "失": "失格", "失格": "失格",
+    "落": "落車棄権", "落車": "落車棄権", "落車棄権": "落車棄権",
+    "途": "途中棄権", "途中棄権": "途中棄権",
+    "棄": "棄権", "棄権": "棄権",
+}
 HEADER_ALIASES = {
     "finish": {"着", "着順"},
     "number": {"車番"},
@@ -138,8 +144,11 @@ def parse_result(html, day, code, track, race, class_name, cars, url):
             if finished.isdigit() and 1 <= int(finished) <= cars and not ex:
                 finish = str(int(finished))
                 ex = ""
-            elif finished in EXCEPTIONS and (not ex or ex == finished):
-                finish = ex = finished
+            elif finished in EXCEPTION_LABELS:
+                normalized_status = EXCEPTION_LABELS[finished]
+                if ex and EXCEPTION_LABELS.get(ex) != normalized_status:
+                    raise ValueError("Conflicting exception and finish in target race")
+                finish = ex = normalized_status
             else:
                 raise ValueError("Invalid finish/exception in target race")
             if "grade" not in headers or not grade_matches(get("grade"), class_name):
@@ -196,6 +205,12 @@ def self_test():
     html = html.replace("<h2>2R チャレンジ一般</h2>", "<h2>第2レース A級</h2>")
     observation = parse_result(html, day, code, track, race, grade, cars, url)
     assert len(observation["results"]) == 7
+    # A lone abbreviated exception in the finish column is sufficient;
+    # do not invent a numeric finishing rank.
+    falling = html.replace("<td>7</td><td>7</td>", "<td>落</td><td>7</td>")
+    seen = parse_result(falling, day, code, track, race, grade, cars, url)
+    assert seen["results"][-1]["finish"] == "落車棄権" and seen["results"][-1]["exception"] == "落車棄権"
+
     try:
         parse_result(html, day, code, track, race, "S", cars, url)
     except ValueError:
