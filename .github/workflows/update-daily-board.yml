@@ -60,6 +60,14 @@ jobs:
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/upsert_daily_sheets.py --input /tmp/keirin-tospo-one-race-preview.json
+      - name: One-time controlled seven-rider daily Google intake
+        if: github.event_name == 'pull_request' && github.head_ref == 'daily-pipeline-safe-pr-check-20261123'
+        continue-on-error: true
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python -c "import json; x=json.load(open('/tmp/keirin-tospo-one-race-preview.json')); a=x['entries']; assert len(a)==7 and sorted(z['number'] for z in a)==list(range(1,8)) and all(z['date']=='2026-11-23' and z['trackCode']=='26' and z['track']=='西武園' and z['race']==1 for z in a)"
+          python scripts/upsert_daily_sheets.py --input /tmp/keirin-tospo-one-race-preview.json --apply
       - name: Compare other permitted live racecard sources (read only)
         if: github.event_name == 'pull_request'
         continue-on-error: true
