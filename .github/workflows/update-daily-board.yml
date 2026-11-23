@@ -189,6 +189,7 @@ jobs:
           python scripts/compare_race_results.py --self-test
           python scripts/collect_netkeirin_result.py --self-test
           python scripts/collect_lotoplace_result.py --self-test
+          python scripts/collect_historical_pair.py --self-test
           python scripts/collect_historical_batch.py --self-test
           python scripts/classify_historical_candidates.py --self-test
           python scripts/build_daily_board.py --self-test
