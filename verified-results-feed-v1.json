@@ -4,13 +4,13 @@
   "source_snapshot_date": "2026-11-24",
   "latest_race_date": "2026-10-05",
   "official_result_independent_audit": "legacy_two_sources_or_verified_KDreams_or_proven_one_fallback_HTML_with_V99",
-  "notes": "全車原文取得とV99照合を必須。松山5/8/9Rはチャリロト、久留米3Rはnetkeirinの実HTMLを読んだ単一元結果照合。追加の他社独立一致と誤表示しない。 2026-10-01久留米1R/4Rをチャリロト実HTML全車とV99不一致0件で追加。",
+  "notes": "全車原文取得とV99照合を必須。松山5/8/9Rはチャリロト、久留米3Rはnetkeirinの実HTMLを読んだ単一元結果照合。追加の他社独立一致と誤表示しない。 2026-10-01久留米1R/4Rをチャリロト実HTML全車とV99不一致0件で追加。 久留米2Rは数字着順と個人状況『故』を別列のまま原文照合。",
   "summary": {
-    "races": 16,
-    "rider_rows": 112,
+    "races": 17,
+    "rider_rows": 119,
     "by_grade": {
       "A1/A2": 6,
-      "A3": 3,
+      "A3": 4,
       "S級": 7,
       "ガールズ": 0
     }
@@ -798,6 +798,45 @@
           "runUrl": "https://github.com/umeume6162-ui/keirin-insight/actions/runs/45221053127",
           "originalHtmlArchived": false,
           "comparison": "7 cars; mandatory V99 fields mismatchCount 0"
+        }
+      }
+    },
+    {
+      "key": "2026-10-01|83|2",
+      "date": "2026-10-01",
+      "track": "久留米",
+      "track_code": "83",
+      "race": 2,
+      "size": 7,
+      "grade": "A3",
+      "non_numeric": 0,
+      "className": "A級チャレンジ予選",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.chariloto.com/keirin/results/83/2026-10-01/",
+        "method": "fallback_source_verified",
+        "matchingSources": [
+          "https://www.chariloto.com/keirin/results/83/2026-10-01/"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "sourceTier": "other_media",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "RACE-MANUAL-20261122T131303JST-83-2",
+          "runUrl": "https://github.com/umeume6162-ui/keirin-insight/actions/runs/45222214653",
+          "originalHtmlArchived": false,
+          "comparison": "7 cars; mandatory V99 fields mismatchCount 0; numeric finishes and 故 separate"
         }
       }
     }
