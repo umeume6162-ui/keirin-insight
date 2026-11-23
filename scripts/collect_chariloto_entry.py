@@ -20,7 +20,7 @@ def compact(value):
 def parse_entries(html, date, track_code, track, race, source):
     from bs4 import BeautifulSoup
     soup = BeautifulSoup(html, "html.parser")
-    wanted = {"車番","選手名","府県","期別"}
+    wanted = {"車番","選手名","府県","期別","級班"}
     failures = []
     for table in soup.select("table"):
         trs = table.find_all("tr")
@@ -44,11 +44,12 @@ def parse_entries(html, date, track_code, track, race, source):
                     name = compact(name_cell.get_text(" ", strip=True))
                 pref = compact(cells[normalized["府県"]].get_text(" ", strip=True))
                 period = compact(cells[normalized["期別"]].get_text(" ", strip=True)).removesuffix("期")
-                if not name or not re.fullmatch(r"\d{1,3}", period) or not pref:
+                grade = compact(cells[normalized["級班"]].get_text(" ", strip=True))
+                if not name or not re.fullmatch(r"\d{1,3}", period) or not pref or not re.fullmatch(r"(?:A[123]|S[12]|L1)", grade):
                     failures.append("incomplete rider identity")
                     continue
                 records.append({"date":date,"trackCode":str(track_code).zfill(2),"track":track,
-                    "race":race,"className":"未分類","number":int(car_raw),"name":name,
+                    "race":race,"className":grade,"number":int(car_raw),"name":name,
                     "prefecture":pref,"period":period,"preRaceLine":None,
                     "sourceUrl":source,"capturedAt":datetime.now(JST).strftime("%Y-%m-%d %H:%M JST"),
                     "state":"取得済・未照合","sourceId":"chariloto-racecard"})
@@ -69,8 +70,8 @@ def main():
     p.add_argument("--self-test",action="store_true",help="Parse a fictional 7-car HTML table without network or Sheets")
     args=p.parse_args()
     if args.self_test:
-        rows="".join(f"<tr><td>{n}</td><td><a>テスト選手{chr(64+n)}</a></td><td>東京</td><td>100期</td></tr>" for n in range(1,8))
-        html="<table><tr><th>車番</th><th>選手名</th><th>府県</th><th>期別</th></tr>"+rows+"</table>"
+        rows="".join(f"<tr><td>{n}</td><td><a>テスト選手{chr(64+n)}</a></td><td>東京</td><td>100期</td><td>A3</td></tr>" for n in range(1,8))
+        html="<table><tr><th>車番</th><th>選手名</th><th>府県</th><th>期別</th><th>級班</th></tr>"+rows+"</table>"
         actual=parse_entries(html,"2026-11-23","26","西武園",1,
             "https://www.chariloto.com/keirin/athletes/2026-11-23/26/1")
         if [v["number"] for v in actual]!=list(range(1,8)):
