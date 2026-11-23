@@ -67,6 +67,19 @@ def inspect(label, url):
             section = nearby.get_text(" ", strip=True)[:36] if nearby else ""
             tables.append({"index": index, "rows": len(trs),
                            "headers": headers[:16], "section": section})
+        if label == "kdreams":
+            all_tables = soup.select("table")
+            # One public, bounded target-race result table and racecard sample.
+            for table_idx in (0, 34):
+                if table_idx >= len(all_tables):
+                    continue
+                sample = []
+                for tr in all_tables[table_idx].find_all("tr")[:10]:
+                    cells = tr.find_all(["th", "td"], recursive=False)
+                    if cells:
+                        sample.append([cell.get_text(" ", strip=True)[:65]
+                                       for cell in cells[:12]])
+                result["tableSample" + str(table_idx)] = sample
         result.update(status="HTML_OBSERVED", headings=headings[:12],
                       tableCount=len(soup.select("table")), tables=tables,
                       resultHeadings=sum("結果" in h for h in headings),
