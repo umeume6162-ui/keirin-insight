@@ -18,6 +18,21 @@ from collect_tospo_entry import fetch, norm, parse
 LIST_URL = "https://keirin.tokyo-sports.co.jp/list/race"
 RACE_PATH = re.compile(r"^/list/race/[^/?#]+$")
 
+# Venue codes cross-checked against public 43-track stadium code list.
+VENUE_CODES = {
+    "函館":"11","青森":"12","いわき平":"13",
+    "弥彦":"21","前橋":"22","取手":"23","宇都宮":"24","大宮":"25",
+    "西武園":"26","京王閣":"27","立川":"28","松戸":"31","千葉":"32",
+    "川崎":"34","平塚":"35","小田原":"36","伊東温泉":"37","静岡":"38",
+    "名古屋":"42","岐阜":"43","大垣":"44","豊橋":"45","富山":"46",
+    "松阪":"47","四日市":"48","福井":"51","奈良":"53","向日町":"54",
+    "和歌山":"55","岸和田":"56","玉野":"61","広島":"62","防府":"63",
+    "高松":"71","小松島":"73","高知":"74","松山":"75","小倉":"81",
+    "久留米":"83","武雄":"84","佐世保":"85","別府":"86","熊本":"87"
+}
+# Only this known synonym is accepted; it is printed without 温泉 on some cards.
+VENUE_ALIASES = {"伊東":"伊東温泉"}
+
 
 def race_link(base, href):
     url = urljoin(base, href or "")
@@ -87,6 +102,64 @@ def collect(date, track, code, list_html, loader):
             "sourceNote": "Tokyo Sports preview; not independent PASS"}, failed
 
 
+
+def list_venue_starts(list_html):
+    """Find only explicit venue-labelled 1R index links, not unrelated site anchors."""
+    soup = BeautifulSoup(list_html, "html.parser")
+    discovered = {}
+    for anchor in soup.select("a[href]"):
+        url = race_link(LIST_URL, anchor.get("href"))
+        label = norm(anchor.get_text(" ", strip=True))
+        if not url or not re.search(r"(?<!\d)1\s*R(?!\d)", label):
+            continue
+        matches = []
+        for name in VENUE_CODES:
+            if re.search(r"(?<![一-龥])" + re.escape(name) + r"(?![一-龥])", label):
+                matches.append(name)
+        for alias, canonical in VENUE_ALIASES.items():
+            if alias in label and canonical not in matches and canonical not in label:
+                matches.append(canonical)
+        if len(matches) != 1:
+            continue
+        name = matches[0]
+        discovered.setdefault(name, set()).add(url)
+    return {name: sorted(urls) for name, urls in sorted(discovered.items())}
+
+
+def collect_venues(day, list_html, loader, max_venues=3):
+    """Bounded single-index preview; no network writes and no empty=zero-races claim."""
+    if not 1 <= max_venues <= 12:
+        raise ValueError("max_venues must be 1..12")
+    datetime.strptime(day, "%Y-%m-%d")
+    listing = list_venue_starts(list_html)
+    if not listing:
+        raise ValueError("No venue-labelled 1R links; source unavailable, not no races")
+    entries, failures, verified = [], [], []
+    for name in list(listing)[:max_venues]:
+        try:
+            # Discover verifies the requested date on each venue's racecard.
+            payload, missing = collect(day, name, VENUE_CODES[name], list_html, loader)
+            entries.extend(payload["entries"])
+            failures.extend([{"track": name, **x} for x in missing])
+            verified.append(name)
+        except (ValueError, RuntimeError) as exc:
+            failures.append({"track": name, "reason": type(exc).__name__})
+    if not entries:
+        raise ValueError("No full seven/nine-car racecard validated for chosen date")
+    unique = set()
+    for record in entries:
+        key = (record["date"], record["trackCode"], record["race"], record["number"])
+        if key in unique:
+            raise ValueError("Duplicate venue/race/car identity")
+        unique.add(key)
+    return {"entries": entries, "results": [],
+            "sourceNote": "Multi-venue Tokyo Sports preview only; not independent PASS"}, {
+                "listedVenues": len(listing), "examinedVenues": min(len(listing), max_venues),
+                "validatedVenues": verified, "failed": failures,
+                "truncated": len(listing) > max_venues
+            }
+
+
 def self_test():
     # Synthetic index mirrors the site's venue-labelled 1R links.
     index = ('<a href="/list/race/20261122_31332">'
@@ -102,6 +175,19 @@ def self_test():
         pass
     else:
         raise AssertionError("Accepted wrong venue")
+    assert len(VENUE_CODES) == 43 and len(set(VENUE_CODES.values())) == 43
+    listing = ('<a href="/list/race/20261123_30926">FⅠ 静岡 初日 1R 11:05</a>'
+               '<a href="/list/race/20261122_31332">FⅡ 西武園 ２日目 1R 10:00</a>')
+    found = list_venue_starts(listing)
+    assert set(found) == {"静岡", "西武園"}
+    assert found["静岡"] == ["https://keirin.tokyo-sports.co.jp/list/race/20261123_30926"]
+    # Mismatching all dates must fail closed without a fake 'no races' result.
+    try:
+        collect_venues("2026-11-24", listing, lambda u: "<h1>2026年11月22日 西武園 1R</h1>", 2)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Wrong-day venue list accepted")
     print("SELF_TEST_OK: venue index regex and bounded race navigation")
 
 
@@ -111,16 +197,20 @@ def main():
     p.add_argument("--date")
     p.add_argument("--track")
     p.add_argument("--track-code")
+    p.add_argument("--all-venues", action="store_true")
+    p.add_argument("--max-venues", type=int, default=3)
     p.add_argument("--out", default="/tmp/ki-tospo-discovery.json")
     a = p.parse_args()
     if a.self_test:
         return self_test()
-    if not all((a.date, a.track, a.track_code)):
-        p.error("--date --track --track-code required")
+    if not a.date or (not a.all_venues and not all((a.track,a.track_code))):
+        p.error("--date and (--all-venues or --track --track-code) required")
     datetime.strptime(a.date, "%Y-%m-%d")
     if not (a.track_code.isdigit() and 1 <= int(a.track_code) <= 99):
         raise ValueError("Invalid track code")
-    data, failed = collect(a.date, a.track, a.track_code, fetch(LIST_URL), fetch)
+    data, report = (collect_venues(a.date, fetch(LIST_URL), fetch, a.max_venues)
+                    if a.all_venues else collect(a.date, a.track, a.track_code, fetch(LIST_URL), fetch))
+    failed = report if a.all_venues else report
     Path(a.out).write_text(json.dumps(data, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
     print(json.dumps({"status": "PREVIEW_ONLY", "races": len(set(
         x["race"] for x in data["entries"])), "entries": len(data["entries"]),
