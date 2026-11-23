@@ -85,7 +85,6 @@ def normalized_results(observation, expected):
     if not isinstance(rows, list) or len(rows) != expected:
         raise ValueError("Expected full results for all scheduled cars")
     normalized = {}
-    finishes = []
     for r in rows:
         if not isinstance(r, dict):
             raise ValueError("Non-object result row")
@@ -109,7 +108,6 @@ def normalized_results(observation, expected):
         if finish.isdigit():
             if not 1 <= int(finish) <= expected or ex:
                 raise ValueError("Numeric finish conflicts with exception")
-            finishes.append(int(finish))
             attrs["finish"] = str(int(finish))
         elif finish in EXCEPTIONS:
             if ex != finish:
@@ -120,8 +118,8 @@ def normalized_results(observation, expected):
         normalized[car] = attrs
     if sorted(normalized) != list(range(1, expected + 1)):
         raise ValueError("Incomplete car numbers in result observation")
-    if len(finishes) != len(set(finishes)):
-        raise ValueError("Duplicate numeric finishing position")
+    # Keirin permits dead heats. Equal numeric ranks are legitimate; do not
+    # reject them unless the rider/car identity or source evidence conflicts.
     return normalized
 
 
@@ -184,6 +182,12 @@ def self_test():
     b["results"][1]["finish"] = "1"
     assert compare({"observations": [a, b]})["status"] == "SOURCE_CONFLICT_REVIEW_REQUIRED"
     b["results"][0]["finish"] = "1"
+    b["results"][1]["finish"] = "2"
+    b["results"][1]["finish"] = "1"
+    assert compare({"observations": [a, b]})["status"] == "SOURCE_CONFLICT_REVIEW_REQUIRED"
+    a["results"][1]["finish"] = "1"
+    assert compare({"observations": [a, b]})["status"] == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
+    a["results"][1]["finish"] = "2"
     b["results"][1]["finish"] = "2"
     b["results"].pop()
     try:
