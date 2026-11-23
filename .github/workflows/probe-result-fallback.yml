@@ -1,0 +1,55 @@
+name: Probe historical result fallback sources (read-only)
+on:
+  push:
+    paths:
+      - '.github/workflows/probe-result-fallback.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install 'requests==2.32.3' 'beautifulsoup4==4.14.2'
+      - name: Probe actual existing official and historical result pages
+        run: |
+          python - <<'PY'
+          import sys,requests,re
+          from bs4 import BeautifulSoup
+          sys.path.insert(0,'scripts')
+          from result_robots import require_robots_access
+          sources=[
+            ('VENUE_MATSUYAMA_OFFICIAL','https://www.matsuyamakeirin.jp/race-info/'),
+            ('CHARILOTO_MATSUYAMA_20261005','https://www.chariloto.com/keirin/results/75/2026-10-05/'),
+            ('YENJOY_MATSUYAMA_5R','https://www.yen-joy.net/kaisai/race/result/detail/202610/75/20261004/20261005/5'),
+            ('NETKEIRIN_KURUME_3R','https://keirin.netkeiba.com/race/result/?race_id=202610018303'),
+          ]
+          for label,url in sources:
+            from urllib.parse import urlsplit
+            host=urlsplit(url).netloc
+            try:
+              require_robots_access(url,host,'KEIRIN-INSIGHT-Research/1.0')
+              resp=requests.get(url,timeout=18,headers={'User-Agent':'KEIRIN-INSIGHT-Research/1.0'})
+              resp.raise_for_status()
+              page=BeautifulSoup(resp.content,'html.parser')
+              title=page.title.get_text(' ',strip=True) if page.title else ''
+              tables=page.select('table')
+              candidate=[]
+              for t in tables:
+                text=t.get_text(' ',strip=True)
+                if ('着順' in text or '着 ' in text) and ('車番' in text or '選手名' in text):
+                  candidate.append(len(t.select('tr')))
+              links=[a.get('href','') for a in page.select('a[href]')]
+              racepdf=[x for x in links if x.lower().endswith('.pdf') and ('202610' in x or '2026/10' in x)]
+              print('FALLBACK_SOURCE',label,'STATUS',resp.status_code,'TITLE',title[:120],
+                'TABLES',len(tables),'RESULT_TABLE_ROWS',candidate[:8],
+                'TARGET_DATE',any(d in page.get_text(' ',strip=True) for d in ('2026年10月5日','2026年10月05日','2026/10/05','2026年10月1日','2026年10月01日')),
+                'TARGET_PDFS',len(racepdf))
+            except Exception as exc:
+              print('FALLBACK_SOURCE_HOLD',label,type(exc).__name__,str(exc)[:120])
+          PY
