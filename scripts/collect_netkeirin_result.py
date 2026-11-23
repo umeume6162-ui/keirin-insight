@@ -15,7 +15,6 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
 from bs4 import BeautifulSoup
-from collect_tospo_entry import fetch as unused_fetch  # source-specific fetch below
 
 EXCEPTIONS = {
     "失": "失格", "失格": "失格",
