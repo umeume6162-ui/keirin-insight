@@ -161,8 +161,9 @@ def safe_missing_result_payload(candidate_payload, stored_rows, entry_rows):
     if len(desired) != len(entry_rows) or len(candidate_payload["results"]) != len(entry_rows):
         raise ValueError("Candidate full-field result mismatch")
     stored_numbers = []
+    expected_key = f"{clean(entry_rows[0][0])}|{int(clean(entry_rows[0][1])):02d}|{int(clean(entry_rows[0][3]))}"
     for row in stored_rows:
-        if len(row) < 15 or not clean(row[5]) or clean(row[14]) != clean(entry_rows[0][13]):
+        if len(row) < 15 or not clean(row[5]) or clean(row[14]) != expected_key:
             raise ValueError("Partial stored result identity mismatch")
         number = clean(row[5])
         if number in stored_numbers or number not in desired:
