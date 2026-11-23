@@ -311,7 +311,6 @@ def self_test():
     assert len({k for batch in batches for k, _ in batch}) == 13
     # The production limit is twelve races; verify the four JST windows
     # eventually cover every candidate even when the backlog spans days.
-    from datetime import timedelta
     for count in (12, 13, 48, 49, 80):
         candidates = [(f"race-{i}", []) for i in range(count)]
         covered = set()
