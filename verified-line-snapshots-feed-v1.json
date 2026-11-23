@@ -4,8 +4,8 @@
   "sourceTab": "VERIFIED publication",
   "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence.",
   "summary": {
-    "races": 6,
-    "rider_rows": 42
+    "races": 7,
+    "rider_rows": 49
   },
   "races": [
     {
@@ -697,6 +697,120 @@
             3,
             7,
             5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-05|75|10",
+      "key": "2026-10-05|75|10",
+      "date": "2026-10-05",
+      "track": "松山",
+      "trackCode": "75",
+      "race": 10,
+      "size": 7,
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020010/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020010/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+          "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_10.html"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ]
+      },
+      "forecastGroups": [
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          4,
+          3
+        ],
+        [
+          5
+        ],
+        [
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "川上 隆義",
+          "prefecture": "栃木",
+          "period": "125",
+          "line": [
+            1,
+            7
+          ]
+        },
+        {
+          "number": 7,
+          "name": "山岸 佳太",
+          "prefecture": "茨城",
+          "period": "107",
+          "line": [
+            1,
+            7
+          ]
+        },
+        {
+          "number": 2,
+          "name": "青柳 靖起",
+          "prefecture": "佐賀",
+          "period": "117",
+          "line": [
+            2,
+            4,
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "坂本健太郎",
+          "prefecture": "福岡",
+          "period": "86",
+          "line": [
+            2,
+            4,
+            3
+          ]
+        },
+        {
+          "number": 3,
+          "name": "吉松 直人",
+          "prefecture": "高知",
+          "period": "90",
+          "line": [
+            2,
+            4,
+            3
+          ]
+        },
+        {
+          "number": 5,
+          "name": "牧田 悠生",
+          "prefecture": "新潟",
+          "period": "123",
+          "line": [
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "佐々木亮太",
+          "prefecture": "青森",
+          "period": "125",
+          "line": [
+            6
           ]
         }
       ]

@@ -6,12 +6,12 @@
   "official_result_independent_audit": "two_qualifying_publishers_all_fields_agree",
   "notes": "Two qualified publisher result sources and two publisher forecast sources agree for full seven-car race. Third primary source not required.",
   "summary": {
-    "races": 6,
-    "rider_rows": 42,
+    "races": 7,
+    "rider_rows": 49,
     "by_grade": {
       "A1/A2": 3,
       "A3": 0,
-      "S級": 3,
+      "S級": 4,
       "ガールズ": 0
     }
   },
@@ -392,6 +392,69 @@
         "basisNote": "Full seven car ordered grouping: K-Dreams and Oddspark search indexed forecast listings agree; direct page open cache miss; not actual riding sequence"
       },
       "sourceEvidenceFile": "tools/reconstruction-candidates/2026-10-05_75_7.research.json"
+    },
+    {
+      "key": "2026-10-05|75|10",
+      "date": "2026-10-05",
+      "track": "松山",
+      "track_code": "75",
+      "race": 10,
+      "size": 7,
+      "grade": "S級",
+      "non_numeric": 0,
+      "className": "S級準決勝",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.chariloto.com/keirin/results/75/2026-10-05",
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.chariloto.com/keirin/results/75/2026-10-05",
+          "https://keirin.netkeiba.com/race/result/?race_id=202610057510",
+          "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020010/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "margin",
+          "lastLap",
+          "winningMethod",
+          "startBack",
+          "exception"
+        ]
+      },
+      "preRaceFormation": {
+        "groups": [
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            4,
+            3
+          ],
+          [
+            5
+          ],
+          [
+            6
+          ]
+        ],
+        "sourceUrls": [
+          "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020010/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+          "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_10.html"
+        ],
+        "verifiedDate": "2026-11-23",
+        "basis": "published_forecast",
+        "label": "事前の並び予想",
+        "basisNote": "K-Dreams and Oddspark seven-car pre-race forecast agrees by ordered groups (group presentation order differs). Cached/search-index text and saved source transcript; not actual race formation."
+      },
+      "sourceEvidenceFile": "tools/reconstruction-candidates/2026-10-05_75_10.research.json"
     }
   ],
   "publicationPolicy": "ki-verified-only-v1"
