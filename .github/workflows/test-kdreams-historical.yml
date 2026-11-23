@@ -45,3 +45,27 @@ jobs:
           print('LIVE_PROBE_OBSERVED',len(result['observation']['results']),
                 result['verificationState'])
           PY
+      - name: Inspect three pending historical races read-only
+        continue-on-error: true
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, 'scripts')
+          from collect_kdreams_historical import validate_historical_url,parse_historical_html
+          import collect_kdreams_result as source
+          cases=[
+              ('2026-10-05','75','松山',3,'A1A2',7,'https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020003/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT'),
+              ('2026-10-05','75','松山',4,'A1A2',7,'https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020004/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT'),
+              ('2026-10-05','75','松山',6,'S',7,'https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020006/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT'),
+          ]
+          for day,code,track,race,grade,cars,url in cases:
+              key=f'{day}|{code}|{race}'
+              try:
+                  validate_historical_url(url,day,code,track,race)
+                  html=source.fetch(url)
+                  obs=parse_historical_html(html,url=url,day=day,code=code,track=track,
+                                            race=race,grade=grade,cars=cars)
+                  print('HISTORICAL_KDREAMS_OBSERVED',key,len(obs['observation']['results']))
+              except Exception as exc:
+                  print('HISTORICAL_KDREAMS_HOLD',key,type(exc).__name__,str(exc)[:120])
+          PY
