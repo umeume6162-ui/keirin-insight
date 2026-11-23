@@ -578,6 +578,7 @@ def self_test():
     traced = process(records, [], start, start, collect_fn=lambda *a: with_attempts,
                      apply_fn=pretend_apply)
     assert len(traced["results"][0]["sourceAttempts"]) == 3
+    calls.pop()  # diagnostics probe must not change subsequent write-call expectations
     missing_sources = SourceStageError("SOURCE_POOL_UNAVAILABLE")
     missing_sources.source_attempts = [
         {"source": "netkeirin", "status": "FAILED", "reasonCode": "SOURCE_ROBOTS_DISALLOWED"},
