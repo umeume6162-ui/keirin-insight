@@ -202,6 +202,24 @@ jobs:
               for tr in table.select('tr')[:3]:
                   print('STATS_ROW',str(tr.get('class'))[:100],tr.get_text(' | ',strip=True)[:350])
           PY
+      - name: TEMP inspect official rider stats row cell structure
+        if: github.event_name == 'pull_request'
+        run: |
+          python - <<'PY'
+          import requests
+          from bs4 import BeautifulSoup
+          soup=BeautifulSoup(requests.get('https://keirin.netkeiba.com/race/entry/?race_id=202611233403',timeout=15).text,'html.parser')
+          for table in soup.select('table.RaceCard_Table')[:2]:
+              print('RIDER_TABLE_CLASS',table.get('class'))
+              header=table.select_one('tr.Header')
+              if header:
+                  for i,cell in enumerate(header.find_all(['th','td'],recursive=False)):
+                      print('RIDER_HEAD_CELL',i,cell.get_text(' ',strip=True)[:45],cell.get('class'))
+              row=table.select_one('tr.PlayerList')
+              if row:
+                  for i,cell in enumerate(row.find_all(['td','th'],recursive=False)):
+                      print('RIDER_DATA_CELL',i,cell.get_text(' ',strip=True)[:65],cell.get('class'))
+          PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
