@@ -27,6 +27,22 @@ from auto_daily_tospo_intake import verify_approved_editor
 
 JST = ZoneInfo("Asia/Tokyo")
 
+# Evidence-scoped source display differences; do not generalize all kanji.
+PREFECTURE_ALIASES = {"神奈": "神奈川", "北海": "北海道", "鹿児": "鹿児島"}
+RIDER_NAME_ALIASES = {"国井裕樹": "國井裕樹"}
+
+
+def canonical_rider_name(value):
+    value = normalized_name(value)
+    return RIDER_NAME_ALIASES.get(value, value)
+
+
+def canonical_prefecture(value):
+    value = clean(value)
+    return PREFECTURE_ALIASES.get(value, value)
+
+
+
 
 def clean(value):
     return unicodedata.normalize("NFKC", str(value if value is not None else "")).strip()
@@ -101,8 +117,8 @@ def candidate(key, rows, collect_fn=collect):
     for source in left["results"]:
         number = int(source["number"])
         old = snapshots[number]
-        if (normalized_name(old[6]) != normalized_name(source["name"])
-                or clean(old[7]) != clean(source["prefecture"])
+        if (canonical_rider_name(old[6]) != canonical_rider_name(source["name"])
+                or canonical_prefecture(old[7]) != canonical_prefecture(source["prefecture"])
                 or clean(old[8]).removesuffix("期") != clean(source["period"]).removesuffix("期")):
             raise ValueError("Rider identity does not match pre-race sheet")
         payload.append(dict(date=day, trackCode=code, track=track, race=int(race),
@@ -158,6 +174,9 @@ def self_test():
     keys = eligible_races(records, [], datetime.strptime(day, "%Y-%m-%d").date(),
                           datetime.strptime(day, "%Y-%m-%d").date())
     assert len(keys) == 1
+    assert canonical_rider_name("国井 裕樹") == canonical_rider_name("國井裕樹")
+    assert canonical_prefecture("神奈") == canonical_prefecture("神奈川")
+    assert canonical_rider_name("国井裕樹") != canonical_rider_name("國村洋")
     race_data = dict(date=day, trackCode="26", track="西武園",
                      race=1, className="A3", expectedCars=7)
     riders = [dict(number=n, name=f"選手 {n}", prefecture="埼玉",
