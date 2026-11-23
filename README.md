@@ -8,9 +8,9 @@
 
 - **このチャットの担当**：日次開催・出走表・結果の収集元確保、GitHubからGoogleへのupsert、日次JSONの更新、サイト表示、稼働監視、GASからの段階的移行。
 - **既存自動タスクの担当**：選手IDと過去レース/発走前ラインの照合、既存2集計JSONの同期。手動の過去照合へ戻さない。
-- **Googleに作成済み（日次保存先・まだヘッダのみ）**：`KI｜日次出走表`（sheetId `2101100610`）、`KI｜日次結果`（sheetId `2101100611`）。
-- **実装済み（動作未実証部分あり）**：`daily-board.html`、`daily-board-feed-v1.json`、`scripts/build_daily_board.py`（新日次2タブ優先＋旧Sheetsフォールバック）、`scripts/upsert_daily_sheets.py`（検証/差分upsert、既定dry-run）、`.github/workflows/update-daily-board.yml`（読取配信用定期処理）。**外部データの自動収集・Google新2タブへの実書込・公開画面の最新データ表示は未完成／未確認**。ワークフロー設置は運用成功の証明ではない。 1Rプレビュー収集器`collect_chariloto_entry.py`も追加済み（robots/全車完全性チェック、Googleへ自動保存しない）。
-- **次の着手点**：2026-11-23西武園1Rの公開チャリロトHTMLを`collect_chariloto_entry.py`で1Rプレビュー取得→7車全項目検査→`upsert_daily_sheets.py --validate-only`→Google書込権限確認・dry-run・対象保存再読→`build_daily_board.py`によるサイト反映。**直接取得と実書込の成功はまだ未確認**。出走表/結果の更新が検証できるまで旧GASを停止しない。
+- **日次保存先（2026-11-23）**：`KI｜日次出走表` sheetId `2101100610`へ西武園1R・A3の全7車をGoogle接続経由で保存・再読済み（未正式照合）。`KI｜日次結果` sheetId `2101100611`はヘッダのみ。
+- **実装済み・検証済みの区別**：`scripts/collect_tospo_entry.py`で東スポ公開HTMLから西武園1Rの実7車をGitHub上で抽出成功。Google取り込み形式検証・dry-runは成功。`scripts/upsert_daily_sheets.py --apply`は**GitHub認証資格情報でHTTP 403 Forbidden**のため失敗。Google接続ツール経由の7行保存は成功し、`daily-board-feed-v1.json`にも反映済み（GitHub commit `8299b508...`）。`daily-board.html`実サイト表示、全開催自動取得、結果収集、GitHubからGoogleへの直接書込は未完成・未確認。PR #2はオフライン自己検査のみでmainに統合済み（`ed2cfadf...`）。
+- **次の着手点**：①GitHub ActionsのサービスアカウントによるGoogle Sheets編集403を解決（閲覧は成功、保存だけ拒否）②固定URLから日次開催・R発見へ収集器を拡張 ③GitHubから1Rの実upsert成功/再実行の重複0確認 ④結果取得・例外照合 ⑤定期更新とサイト公開表示の実確認。GASは新経路の安定後にだけ停止。
 - **重要な別系統障害**：2026-11-23のGitHub Actionsログで従来の`scripts/build_feeds.py`にSyntaxError（line 208）。最新mainでの修復・再実行成功は未確認。影響を切り分けて対処。
 
 ## 品質・引き継ぎ
