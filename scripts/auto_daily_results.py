@@ -495,5 +495,9 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:
-        print("DAILY_RESULT_ABORT: " + type(exc).__name__, file=sys.stderr)
+        if "--self-test" in sys.argv:
+            import traceback
+            traceback.print_exc()
+        else:
+            print("DAILY_RESULT_ABORT: " + type(exc).__name__, file=sys.stderr)
         sys.exit(1)
