@@ -28,7 +28,7 @@ def parse(html,date,track_code,track,race,url,now=None):
         raise ValueError("Race track/date not independently visible on source")
     # Navigation links can show unrelated races. Prove the requested R via title/heading.
     heading=" ".join(norm(x.get_text(" ",strip=True)) for x in soup.select("title,h1"))
-    if not re.search(rf"{re.escape(track)}(?:競輪)?[^\\n]{{0,45}}?{int(race)}\\s*R(?!\\d)",heading):
+    if not re.search(rf"{re.escape(track)}(?:競輪)?[^\n]{{0,45}}?{int(race)}\s*R(?!\d)",heading):
         raise ValueError("Requested race number absent from main document heading")
     now=now or datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")
     for table in soup.select("table"):
