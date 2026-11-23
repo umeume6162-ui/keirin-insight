@@ -5,6 +5,8 @@ on:
       - 'scripts/discover_tospo_races.py'
       - 'scripts/auto_daily_tospo_intake.py'
       - 'scripts/auto_daily_results.py'
+      - 'scripts/upsert_daily_sheets.py'
+      - 'scripts/build_daily_board.py'
       - 'scripts/enrich_daily_rider_stats.py'
       - 'scripts/enrich_daily_start_times.py'
       - '.github/workflows/update-daily-board.yml'
