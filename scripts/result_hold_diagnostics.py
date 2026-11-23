@@ -43,11 +43,45 @@ def classify_result_hold(exc, phase):
 
 
 
+
+def review_route(reason):
+    """Suggest next review lane; this is not permission to save or grant PASS."""
+    if reason in {
+        "SOURCE_RIDER_FIELDS_MISSING", "ENTRY_RIDER_IDENTITY_MISMATCH",
+        "SOURCE_RIDER_CLASS_MISMATCH",
+    }:
+        return "RIDER_OR_CLASS_EVIDENCE_REVIEW"
+    if reason in {
+        "SOURCE_HEADING_MISMATCH", "SOURCE_RACE_HEADING_MISMATCH",
+        "SOURCE_UNSUPPORTED_RACE_CLASS", "SOURCE_CAR_COUNT_MISMATCH",
+    }:
+        return "RACE_METADATA_OR_ENTRY_REVIEW"
+    if reason in {
+        "SOURCE_INCOMPLETE_OR_AMBIGUOUS_TABLE", "SOURCE_RESULT_STATUS_INVALID",
+        "TWO_SOURCE_CONTENT_MISMATCH", "SOURCE_ROBOTS_DISALLOWED",
+    }:
+        return "ALTERNATE_PUBLIC_SOURCE_RESEARCH"
+    if reason in {
+        "SOURCE_TIMEOUT", "SOURCE_NETWORK_ERROR", "SOURCE_ROBOTS_UNAVAILABLE",
+    }:
+        return "DEFER_AND_CHECK_SOURCE_ACCESS"
+    if reason.startswith("SHEETS_"):
+        return "SHEETS_INTEGRITY_MANUAL_REVIEW"
+    return "UNCLASSIFIED_MANUAL_REVIEW"
+
+
+
+
 def self_test():
     assert classify_result_hold(ValueError("Rider class conflicts with requested race class"), "COLLECT_COMPARE") == "SOURCE_RIDER_CLASS_MISMATCH"
     assert classify_result_hold(ValueError("Rider identity does not match pre-race sheet"), "COLLECT_COMPARE") == "ENTRY_RIDER_IDENTITY_MISMATCH"
     assert classify_result_hold(ValueError("Unexpected Sheet response"), "SHEETS_DRY_RUN") == "SHEETS_OTHER_ERROR"
     assert classify_result_hold(ValueError("confidential unknown text"), "COLLECT_COMPARE") == "SOURCE_OTHER_ERROR"
+    assert review_route("SOURCE_RIDER_CLASS_MISMATCH") == "RIDER_OR_CLASS_EVIDENCE_REVIEW"
+    assert review_route("SOURCE_ROBOTS_DISALLOWED") == "ALTERNATE_PUBLIC_SOURCE_RESEARCH"
+    assert review_route("SOURCE_TIMEOUT") == "DEFER_AND_CHECK_SOURCE_ACCESS"
+    assert review_route("SHEETS_HEADER_MISMATCH") == "SHEETS_INTEGRITY_MANUAL_REVIEW"
+    assert review_route("SOURCE_OTHER_ERROR") == "UNCLASSIFIED_MANUAL_REVIEW"
     print("SELF_TEST_OK: finite shared result hold reason codes")
 
 
