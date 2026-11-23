@@ -121,7 +121,7 @@ assert.equal(matsuyama10.publicationPassed,false);
 assert.equal(matsuyama10.officialStartersKnown,false);
 assert.ok(matsuyama10.warnings.some(w=>w.startsWith('RESULT_DERIVED_ENTRIES_ONLY')));
 assert.ok(matsuyama10.warnings.some(w=>w.includes('pre-race formation does not cover entire original card')));
-// Matsuyama 11R: 49 archived result fields match two providers. Line groups remain independently pending.
+// Matsuyama 11R: verify the documented 49 matched result fields and the now-complete forecast.
 const matsuyama11=JSON.parse(fs.readFileSync(path.join(base,'2026-10-05_75_11.research.json'),'utf8'));
 const mat11check=check(matsuyama11);
 assert.equal(mat11check.structuralOk,true,JSON.stringify(mat11check.errors));
@@ -129,9 +129,12 @@ assert.equal(mat11check.documentedResultRows,7);
 assert.equal(mat11check.numericFinishers,7);
 assert.deepEqual(mat11check.missingFromResult,[]);
 assert.equal(matsuyama11.fieldVerification.resultFields.status,'TWO_SITES_ARCHIVED_MATCH');
-assert.equal(matsuyama11.fieldVerification.forecastLine.status,'PENDING');
-assert.equal(mat11check.publicationPassed,false);
-assert.ok(mat11check.warnings.some(w=>w.includes('pre-race formation does not cover entire original card')));
+assert.equal(matsuyama11.fieldVerification.resultFields.fieldComparisons,49);
+assert.equal(matsuyama11.fieldVerification.forecastLine.status,'TWO_SITES_ARCHIVED_AND_INDEX_MATCH');
+assert.deepEqual(matsuyama11.preRaceFormation.groups,[[4,2],[1],[6],[3,5],[7]]);
+assert.equal(new Set(matsuyama11.preRaceFormation.groups.flat()).size,7);
+assert.equal(matsuyama11.audit.publicationPass,true);
+assert.equal(mat11check.publicationPassed,false,'structural reconciliation alone cannot mark a formal PASS');
 // Matsuyama 12R: 2 provider result receipts and complete three-line forecast are formally recorded.
 const matsuyama12=JSON.parse(fs.readFileSync(path.join(base,'2026-10-05_75_12.research.json'),'utf8'));
 const mat12check=check(matsuyama12);
