@@ -77,11 +77,12 @@
 ### B. 現時点で存在する資産と未解決事項（次回必読）
 
 - **実装済み**：GitHub Pages `index.html` → `daily-board.html` の導線、`daily-board-feed-v1.json` の初期データ、`scripts/build_daily_board.py`（既存Sheetsを読取専用で日次JSON化）、`.github/workflows/update-daily-board.yml`（JST 07:10/12:10/17:10/22:10予定の定期更新）、旧正式4フィード・品質ゲート、既存Google V99・事前スナップ。日次JSONは現状**未正式照合の収集記録専用**で、正式verified-*のPASSを上書きしない。
+- **2026-11-23 追加**：`scripts/collect_chariloto_entry.py` は公開出走表HTMLを1レースだけ読み取る**プレビュー専用**収集器でGoogle書込しない。robots/解析/7・9車完全性の条件を満たさなければエラー停止。既存 `.github/workflows/update-daily-board.yml` に同収集器の架空7車テスト・`build_daily_board.py --self-test`の架空1行新旧統合テスト・構文チェックを追加。**GitHub上の実行成功は未確認**で、本番データへ架空の行を混ぜない。検索結果では西武園1Rの掲載場所を確認できたが、直接ページ取得はcache missで全選手の実取得は未確認。
 - **新規作成した保存先**：`KI｜日次出走表` sheetId `2101100610`、`KI｜日次結果` sheetId `2101100611`。2026-11-23時点で両方ヘッダのみ。**`scripts/build_daily_board.py`は新2タブ優先・旧`AI事前出走スナップ`/V99を読取専用フォールバックとするよう改修済み**。`scripts/upsert_daily_sheets.py`で新2タブへのキー付き差分upsert（同一日/場コード/R/車番・元URL/取得時刻保持）を実装し、既定はdry-run、`--validate-only`は認証不要、実書込には`--apply`と適切なGoogleサービスアカウント編集権限が必要。**コード実行・Google実書込・全開催データ供給の成功はまだ確認していない**。
 - **最新調査時の鮮度**：V99収録行の最大開催日`2026-11-05`、事前スナップ最大開催日`2026-11-21`（2026-11-23調査値）。数値を永続固定せず次回再読。データ不足の原因はGASそのものと断定できず、GAS本体/トリガーも未検証。**稼働未確認のGASは停止・削除しない**。
 - **別系統の既知障害**：従来の`scripts/build_feeds.py`を呼び出すGitHub Actions `Update KEIRIN INSIGHT public JSON` は2026-11-23の失敗ログで**Python SyntaxError line 208（引用符が閉じられていない）**を確認。最新mainで修正・再試行済みとは未確認。日次収集とは別系統なのでまず影響を切り分け、修復時は既存データ・正式PASSを壊さない。GitHub Actions成功とGoogle側の新規収集は別事象。
 - **システム統合の採用方針**：GitHub Actions/Python＝収集・差分保存・実行ログ、Google Sheets＝保存正本、GitHub Pages＝iPhone閲覧。GASは上流収集経路を検査して置換できる処理だけ段階的に停止。Googleの新規シート作成/編集/安全な整理はユーザーより委任済み。共有・認証・課金の変更やデータの不可逆削除は委任範囲として拡大解釈しない。
-- **直近の最優先TODO**：①適法で安定した日次開催/出走表データ源を選び、2026-11-23の公開開催一覧（Kドリームス/KEIRIN.JP等が存在）から1開催の全車・原文を実取得 ②`upsert_daily_sheets.py`の入力JSONを生成し`--validate-only`で構造検査 ③GitHub Actionsの認証資格情報のGoogle Sheets書込権限を確認、dry-run→`--apply`で新2タブへ1開催実保存・対象再読 ④同じキーの結果を追記し例外を検証 ⑤`build_daily_board.py`の実処理と日次サイト表示を確認 ⑥全開催拡張・失敗/遅延監視 ⑦GASと旧重複コードを安全移行後に整理。
+- **直近の最優先TODO**：①2026-11-23西武園1R（場コード26）の公開チャリロト出走表 `https://www.chariloto.com/keirin/athletes/2026-11-23/26/1` を対象に、`scripts/collect_chariloto_entry.py`でrobotsを確認し全7/9車の車番・選手名・府県・期別・級班が揃うときだけプレビューJSONを作る（**実ページの本文取得/解析成功・利用可否は未確認**）。②得られたデータを`upsert_daily_sheets.py --validate-only`で構造確認 ③GitHub認証情報のGoogle Sheets書込権限を検証、dry-run→`--apply`で新2タブへ実保存・対象再読 ④結果も同じキーに追加 ⑤日次JSON/サイト表示を実証 ⑥他開催・級班へ拡張 ⑦GAS移行後に重複処理を安全整理。
 - **運用中の3自動タスク**：選手ID照合 `6b00c3b741048191aeb0c35bc78b0cbf`、過去レース照合 `Automation_13d5a6020c5c8191a22bc87d7d4ea008`、集計/サイト同期 `Automation_6fb0a5dac1a8819193d7618928e6013f`。3タスクとも最新V4を読む設定で、集計タスクは**既存2集計JSONのみ書込可**。自動タスクに日次配信/GASの編集を代行させない。
 
 ### C. 移行時に避ける失敗
