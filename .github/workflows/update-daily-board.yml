@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'scripts/collect_chariloto_entry.py'
+      - 'scripts/probe_daily_source.py'
       - 'scripts/upsert_daily_sheets.py'
       - 'scripts/build_daily_board.py'
       - '.github/workflows/update-daily-board.yml'
@@ -44,6 +45,10 @@ jobs:
         if: github.event_name == 'pull_request'
         continue-on-error: true
         run: python scripts/collect_chariloto_entry.py --date 2026-11-23 --track-code 26 --track 西武園 --race 1
+      - name: Compare other permitted live racecard sources (read only)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: python scripts/probe_daily_source.py
       - name: Build daily board
         if: github.event_name != 'pull_request'
         env:
