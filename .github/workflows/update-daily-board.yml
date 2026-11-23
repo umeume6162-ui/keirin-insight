@@ -104,6 +104,19 @@ jobs:
           python scripts/collect_netkeirin_result.py --self-test
           python scripts/collect_lotoplace_result.py --self-test
           python scripts/build_daily_board.py --self-test
+      - name: TEMP live two-source historical preview (PR only, no writes)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: |
+          set +e
+          python scripts/collect_netkeirin_result.py --date 2026-09-10 --track-code 27 --track 京王閣 --race 2 --class-name A3 --expected-cars 7 --url 'https://keirin.netkeiba.com/race/result/?race_id=202609102702' --out /tmp/ki-live-netkeirin.json
+          left=$?
+          python scripts/collect_lotoplace_result.py --date 2026-09-10 --track-code 27 --track 京王閣 --race 2 --class-name A3 --expected-cars 7 --url 'https://www.lotoplace.jp/keirin/results/27/2026-09-10/' --out /tmp/ki-live-lotoplace.json
+          right=$?
+          echo "LIVE_SOURCE_STATUS netkeirin=$left lotoplace=$right"
+          if [ "$left" -eq 0 ] && [ "$right" -eq 0 ]; then
+            python scripts/compare_race_results.py --left /tmp/ki-live-netkeirin.json --right /tmp/ki-live-lotoplace.json --out /tmp/ki-live-compare.json
+          fi
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.source_url != ''
         env:
