@@ -55,7 +55,7 @@ def extract(html, event_date, code, track, race, class_name, expected_cars, url)
     # Race cards can mention other races in navigation. Verify the event in a heading.
     if track not in heading or not (
         event_date in heading or
-        re.search(rf"{int(event_date[:4])}年\s*{int(event_date[5:7])}月\s*{int(event_date[8:])}日", heading)
+        re.search(rf"{int(event_date[:4])}年\s*0?{int(event_date[5:7])}月\s*0?{int(event_date[8:])}日", heading)
     ):
         raise ValueError("Race date/venue not found in source heading")
     if not re.search(rf"(?<!\d){race}\s*R(?!\d)", heading):
@@ -144,7 +144,7 @@ def fetch(url):
 
 def self_test():
     url = "https://keirin.netkeiba.com/race/result/?race_id=202609102702"
-    headings = "<title>京王閣 2026年9月10日 2R 結果</title>"
+    headings = "<title>京王閣 2026年09月10日 2R 結果</title>"
     header = "<tr><th>着</th><th>枠番</th><th>車番</th><th>選手名</th><th>着差</th><th>上り</th><th>決</th></tr>"
     rows = "".join(
         f"<tr><td>{n}着</td><td>1</td><td>{n}</td><td>テスト選手{n} 福島 48歳 83期 A3</td>"
