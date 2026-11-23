@@ -1,0 +1,43 @@
+name: Update daily race board
+on:
+  workflow_dispatch:
+  schedule:
+    # UTC corresponds to JST 07:10, 12:10, 17:10, 22:10.
+    - cron: '10 22,3,8,13 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: keirin-daily-board
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check read-only Sheets credential
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          if [ -z "$GOOGLE_SERVICE_ACCOUNT_JSON" ]; then
+            echo "::error::Missing GOOGLE_SERVICE_ACCOUNT_JSON. Daily feed unchanged."
+            exit 1
+          fi
+      - name: Install Google reader
+        run: pip install 'google-auth==2.38.0' 'requests==2.32.3'
+      - name: Build daily board
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: python scripts/build_daily_board.py --out daily-board-feed-v1.json
+      - name: Commit changed daily feed only
+        run: |
+          git add daily-board-feed-v1.json
+          if git diff --cached --quiet; then
+            echo 'Daily feed unchanged; no commit or duplicate validation.'
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Update daily entries and results snapshot [skip ci]'
+          git push
