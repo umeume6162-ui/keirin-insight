@@ -234,6 +234,7 @@ def candidate(key, rows, collect_fn=collect):
     if second_source not in ("chariloto-day-results", "lotoplace-day-results"):
         raise ValueError("Unexpected second result source")
     return {"entries": [], "results": payload,
+            "sourcePairMode": observation.get("sourcePairMode", "NETKEIRIN_DAY_RESULTS"),
             "sourceNote": ("Content matched on two sites, upstream independence not verified; "
                            "secondSourceId=" + second_source)}
 
@@ -356,6 +357,7 @@ def process(entries, results, start, end, limit=4, write=False,
                 data = {**data, **safe_missing_result_payload(data, by_stored[key], rows)}
             expected_delta = len(data["results"])
             second_source = data["sourceNote"].rsplit("secondSourceId=", 1)[-1]
+            item["sourcePairMode"] = data["sourcePairMode"]
             if second_source in ("chariloto-day-results", "lotoplace-day-results"):
                 item["secondSourceId"] = second_source
                 item["alternateSourceUsed"] = second_source == "lotoplace-day-results"
@@ -390,7 +392,7 @@ def process(entries, results, start, end, limit=4, write=False,
                         reviewRoute=review_route(reason))
             if getattr(exc, "source_stage", None) in (
                     "PRIMARY_NETKEIRIN", "SECONDARY_EXPLICIT",
-                    "SECONDARY_BOTH_UNAVAILABLE"):
+                    "SECONDARY_BOTH_UNAVAILABLE", "ALTERNATE_PAIR_UNAVAILABLE"):
                 item["sourceStage"] = exc.source_stage
         reports.append(item)
     return {"schema": "ki-daily-result-intake-v1", "formalPass": False,
@@ -467,6 +469,16 @@ def self_test():
     actual = {"observations": [left, right], "comparison": compare({"observations": [left, right]})}
     mixed_result = candidate(day+"|26|1", mixed, collect_fn=lambda *a: actual)
     assert [r["className"] for r in mixed_result["results"]] == [r[4] for r in mixed]
+    fallback_pair = {"observations": [
+        {**left, "sourceId": "chariloto-day-results",
+         "sourceUrl": "https://www.chariloto.com/keirin/results/26/2026-11-23"},
+        {**right, "sourceId": "lotoplace-day-results",
+         "sourceUrl": "https://www.lotoplace.jp/keirin/results/26/2026-11-23/"}
+    ], "comparison": actual["comparison"],
+       "sourcePairMode": "CHARILOTO_LOTOPLACE_FALLBACK"}
+    fallback_candidate = candidate(day+"|26|1", records, collect_fn=lambda *a: fallback_pair)
+    assert fallback_candidate["sourcePairMode"] == "CHARILOTO_LOTOPLACE_FALLBACK"
+    assert "secondSourceId=lotoplace-day-results" in fallback_candidate["sourceNote"]
     calls = []
     def pretend_apply(data, dry_run=True):
         calls.append(dry_run)

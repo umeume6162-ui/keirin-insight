@@ -49,7 +49,29 @@ def collect(day, code, track, number, class_name, cars, left_url=None, right_url
         left = netkeirin.extract(netkeirin.fetch(left_url), day, code, track,
                                 number, class_name, cars, left_url)
     except (ValueError, requests.exceptions.RequestException) as exc:
-        raise SourceStageError("PRIMARY_NETKEIRIN") from exc
+        if explicit_right_url or left_url != (
+                "https://keirin.netkeiba.com/race/result/?race_id="
+                + day.replace("-", "") + code + str(number).zfill(2)):
+            # An explicitly selected source pair must never be silently replaced.
+            raise SourceStageError("PRIMARY_NETKEIRIN") from exc
+        # V99 collected Chariloto HTML directly. If netkeirin cannot supply a
+        # full result, try the two OTHER permitted public publications, each
+        # with its own robots gate and a complete 7/9-car source parser.
+        alt_url = f"https://www.lotoplace.jp/keirin/results/{int(code)}/{day}/"
+        try:
+            day_results.validate_url(alt_url, day, code)
+            first = day_results.parse_result(day_results.fetch(right_url), day, code,
+                                             track, number, class_name, cars, right_url)
+            second = day_results.parse_result(day_results.fetch(alt_url), day, code,
+                                              track, number, class_name, cars, alt_url)
+        except (ValueError, requests.exceptions.RequestException) as alt_exc:
+            raise SourceStageError("ALTERNATE_PAIR_UNAVAILABLE") from alt_exc
+        # Keep content disagreement distinct from a source outage.
+        alt_comparison = compare({"observations": [first, second]})
+        assert alt_comparison["formalPass"] is False
+        return {"observations": [first, second],
+                "comparison": alt_comparison,
+                "sourcePairMode": "CHARILOTO_LOTOPLACE_FALLBACK"}
     try:
         right = day_results.parse_result(day_results.fetch(right_url), day, code,
                                          track, number, class_name, cars, right_url)
@@ -102,14 +124,36 @@ def self_test():
             raise AssertionError("Explicit right URL was silently changed")
         assert fetched.call_count == 1
     with (patch.object(netkeirin, "fetch", side_effect=ValueError("Robots rules prohibit this page")),
-          patch.object(day_results, "fetch") as second):
+          patch.object(day_results, "fetch", return_value="html") as fetched,
+          patch.object(day_results, "parse_result", side_effect=read_right) as parsed):
         try:
             collect(day, code, track, number, cls, cars)
         except SourceStageError as exc:
-            assert exc.source_stage == "PRIMARY_NETKEIRIN"
-            assert isinstance(exc.__cause__, ValueError)
+            assert exc.source_stage == "ALTERNATE_PAIR_UNAVAILABLE"
         else:
-            raise AssertionError("Primary result source error was not classified")
+            raise AssertionError("Incomplete alternate pair was accepted")
+        assert fetched.call_count == 1 and parsed.call_count == 1
+    alt_obs = {"sourceUrl": f"https://www.lotoplace.jp/keirin/results/27/{day}/",
+               "sourceId": "lotoplace-day-results"}
+    char_obs = {"sourceUrl": f"https://www.chariloto.com/keirin/results/27/{day}",
+                "sourceId": "chariloto-day-results"}
+    with (patch.object(netkeirin, "fetch", side_effect=ValueError("Robots rules prohibit this page")),
+          patch.object(day_results, "fetch", return_value="html") as fetched,
+          patch.object(day_results, "parse_result", side_effect=[char_obs, alt_obs]),
+          patch(__name__ + ".compare", return_value=comparison)):
+        fallback = collect(day, code, track, number, cls, cars)
+        assert fallback["sourcePairMode"] == "CHARILOTO_LOTOPLACE_FALLBACK"
+        assert fallback["comparison"]["formalPass"] is False
+        assert fetched.call_count == 2
+    with (patch.object(netkeirin, "fetch", side_effect=ValueError("Robots rules prohibit this page")),
+          patch.object(day_results, "fetch") as second):
+        try:
+            collect(day, code, track, number, cls, cars,
+                    right_url=f"https://www.chariloto.com/keirin/results/27/{day}")
+        except SourceStageError as exc:
+            assert exc.source_stage == "PRIMARY_NETKEIRIN"
+        else:
+            raise AssertionError("Explicit source pair was silently replaced")
         second.assert_not_called()
     with (patch.object(netkeirin, "fetch", return_value="html"),
           patch.object(netkeirin, "extract", return_value=left_obs),
