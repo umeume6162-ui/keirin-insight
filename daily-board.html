@@ -36,6 +36,36 @@
 .race-title{font-size:17px;font-weight:800;display:block;line-height:1.3}
 .race-meta{display:block;font-size:12px;color:var(--muted);margin-top:4px}
 .race-body{border-top:1px solid var(--stroke);padding:14px}
+.race-overview{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.result-hero{padding:14px 12px;background:#0a2736;border:1px solid #3e6973;border-radius:12px;text-align:center}
+.result-hero small{display:block;color:var(--muted);font-weight:750}
+.result-order{font-size:clamp(26px,5vw,38px);font-weight:850;letter-spacing:.04em;font-variant-numeric:tabular-nums;line-height:1.45}
+.result-order .car-badge{font-size:.8em;margin:0 2px;vertical-align:middle}
+.car-badge{display:inline-flex;min-width:29px;height:29px;padding:0 6px;align-items:center;justify-content:center;border-radius:8px;font-weight:850;border:1px solid #718391;background:#e8eff3;color:#101820}
+.car-badge[data-car="1"]{background:#fafafa;color:#141414}
+.car-badge[data-car="2"]{background:#202429;color:#fff}
+.car-badge[data-car="3"]{background:#ca4745;color:#fff}
+.car-badge[data-car="4"]{background:#345ab9;color:#fff}
+.car-badge[data-car="5"]{background:#e3cb48;color:#171717}
+.car-badge[data-car="6"]{background:#358452;color:#fff}
+.car-badge[data-car="7"]{background:#df8934;color:#151515}
+.car-badge[data-car="8"]{background:#d56cad;color:#1b0d16}
+.car-badge[data-car="9"]{background:#754aad;color:#fff}
+.line-panel{background:#0e2635;border:1px solid #31536a;border-radius:12px;padding:13px;margin:10px 0}
+.line-group{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;border:1px solid #3b566c;border-radius:10px;padding:7px;background:#143144;margin:3px 6px 3px 0}
+.line-group .car-badge{min-width:28px;height:28px}
+.line-sep{font-weight:800;color:#becdd9}
+.section-subtitle{font-size:14px;font-weight:800;margin:16px 0 9px}
+.race-stat-table{width:100%;border-collapse:collapse;font-size:13px}
+.race-stat-table th,.race-stat-table td{padding:8px 5px;text-align:left;border-bottom:1px solid #2c4859;vertical-align:middle}
+.race-stat-table th{font-size:11px;color:var(--muted)}
+.race-stat-table td:last-child,.race-stat-table th:last-child{text-align:right}
+.race-stat-table .time-cell{font-variant-numeric:tabular-nums}
+.source-caption{font-size:12px;color:var(--muted);line-height:1.55}
+.race-detail-more{margin-top:12px;border-top:1px solid #365266;padding-top:8px}
+.race-detail-more summary{min-height:40px!important;padding:8px 0!important;color:var(--mint);font-size:13px;display:list-item!important}
+.race-detail-more summary::after{content:none!important}
+
 .race-body h3{font-size:14px;margin:10px 0 7px}
 .race-table{width:100%;border-collapse:collapse;font-size:13px}
 .race-table th,.race-table td{padding:8px 5px;text-align:left;border-bottom:1px solid #284456;vertical-align:top}
@@ -128,23 +158,120 @@ function table(headers, rows){
  rows.forEach(record=>{const tr=node("tr");record.forEach((value,i)=>{const td=node("td");if(i===0)td.className="car-no";if(i===1)td.className="name";td.textContent=String(value??"—");tr.append(td)});tbody.append(tr)});
  tbl.append(tbody);return tbl;
 }
+function badge(number){
+ const b=node("span",number,"car-badge");b.dataset.car=String(number);return b;
+}
+function allLines(entries){
+ // A pre-race source's complete car-group claims may be displayed only when
+ // every rider is covered exactly once. Missing data is NOT a singleton.
+ const known=entries.map(e=>Number(e.number)).sort((a,b)=>a-b);
+ if(![7,9].includes(known.length)||new Set(known).size!==known.length)return null;
+ const claims=entries.map(e=>String(e.preRaceLine||"").trim());
+ if(claims.some(v=>!v))return null;
+ const groups=new Map();
+ for(let i=0;i<entries.length;i++){
+  const tokens=claims[i]==="単騎"||claims[i]==="単独" ? [String(entries[i].number)] : claims[i].split(/[-－ー−–→＞>・\s]+/).filter(Boolean);
+  if(!tokens.length||tokens.some(n=>!/^[1-9]$/.test(n)))return null;
+  const cars=tokens.map(Number);
+  if(new Set(cars).size!==cars.length||!cars.includes(Number(entries[i].number)))return null;
+  const sorted=[...cars].sort((a,b)=>a-b).join(",");
+  // Same group can appear in a different rider's record, with a
+  // different order: that is a source conflict, not a confirmed line.
+  const existing=groups.get(sorted);
+  if(existing&&existing.join(",")!==cars.join(","))return null;
+  groups.set(sorted,cars);
+ }
+ const result=[...groups.values()];
+ const flattened=result.flat();
+ if(flattened.length!==known.length||new Set(flattened).size!==known.length||flattened.sort((a,b)=>a-b).join(",")!==known.join(","))return null;
+ return result;
+}
+function linePanel(r,entries){
+ const wrapper=node("section",undefined,"line-panel");
+ wrapper.append(node("h3","事前ライン構成（予想）"));
+ const lines=allLines(entries);
+ if(lines){
+  const list=node("div");list.setAttribute("aria-label","発走前ライン");
+  lines.forEach(group=>{
+   const item=node("span",undefined,"line-group");
+   group.forEach((car,i)=>{if(i)item.append(node("span","－","line-sep"));item.append(badge(car))});
+   if(group.length===1)item.setAttribute("aria-label","単騎 "+group[0]+"番");
+   list.append(item);
+  });
+  wrapper.append(list);
+  const singles=lines.filter(g=>g.length===1).map(g=>g[0]);
+  if(singles.length)wrapper.append(node("p","単騎予想："+singles.map(x=>x+"番").join("、"),"source-caption"));
+ }else wrapper.append(node("p","事前ライン：未取得または全車の構成未確認。単騎も未判定です。","source-caption"));
+ const origin=entries.find(x=>x.preRaceLine&&x.sourceUrl)?.sourceUrl||r.lineSourceUrl;
+ if(lines&&origin){
+  const link=node("a","並び予想の掲載元");
+  link.href=origin;link.target="_blank";link.rel="noopener noreferrer";
+  wrapper.append(link);
+ }
+ wrapper.append(node("p","媒体による予想の違いがあります。実際の隊列を確定したものではありません。","source-caption"));
+ return wrapper;
+}
+function topThree(results){
+ if(results.length!==7&&results.length!==9)return null;
+ const set=new Set(results.map(x=>Number(x.number)));
+ if(set.size!==results.length)return null;
+ const found=[1,2,3].map(rank=>results.filter(x=>String(x.finish)===String(rank)));
+ if(found.some(a=>a.length!==1))return null;
+ return found.map(a=>Number(a[0].number));
+}
 function buildRace(r){
  const details=node("details",undefined,"race-card"),summary=node("summary");
- const text=node("div"),head=node("span",r.race+"R", "race-title"),parts=[r.className||"級班未記録"];
  const entries=Array.isArray(r.entries)?r.entries:[],results=Array.isArray(r.results)?r.results:[];
+ const text=node("div"),head=node("span",r.race+"R","race-title"),parts=[r.className||"級班未記録"];
+ const start=String(r.startTime||r.scheduledStart||"");
+ if(/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(start))parts.push("発走 "+start);
  parts.push(entries.length?entries.length+"車":"出走表未取得");
  text.append(head,node("span",parts.join(" ・ "),"race-meta"));
  const pending=node("span",results.length?"結果記録あり":"出走表のみ","pill pending");
  summary.append(text,pending);details.append(summary);
  const body=node("div",undefined,"race-body");
- if(entries.length){body.append(node("h3","出走予定 "+entries.length+"車"));
-  body.append(table(["車番","選手","府県・期別"],entries.map(p=>[p.number,p.name,(p.prefecture||"—")+"／"+(p.period||"—")+"期"])));
-  body.append(node("p",entries.some(p=>p.preRaceLine)?"事前ラインは原資料の収録状況に依存します。":"事前ライン：未収録","race-subnote"));
- }else body.append(node("p","出走表は未取得です。","muted"));
- if(results.length){body.append(node("h3","収録結果 "+results.length+"車"));
-  body.append(table(["車番","選手","着順／状態","決まり手"],results.map(p=>[p.number,p.name,p.finish||"—",p.method||"—"])));
-  body.append(node("p","結果は台帳記録です。正式照合済みの結果とは区別しています。","race-subnote"));
- }else body.append(node("p","結果はまだ収録されていません。","muted"));
+ if(results.length){
+  const top=topThree(results);
+  if(top){
+   const overview=node("div",undefined,"race-overview"),hero=node("div",undefined,"result-hero");
+   hero.append(node("small","記録された上位3車"));
+   const order=node("div",undefined,"result-order");
+   top.forEach((n,i)=>{if(i)order.append(node("span","－"));order.append(badge(n))});
+   hero.append(order);overview.append(hero);body.append(overview);
+  }else body.append(node("p","上位3車：全車の1～3着が一意に揃うまで未確定","source-caption"));
+  body.append(node("h3","着順・決まり手"));
+  const ordered=[...results].sort((a,b)=>{
+   const fa=Number(a.finish),fb=Number(b.finish);
+   return (Number.isInteger(fa)&&fa>0?fa:99)-(Number.isInteger(fb)&&fb>0?fb:99);
+  });
+  const tableEl=node("table",undefined,"race-stat-table"),headRow=node("tr");
+  ["着順","車番","選手名","上がり"].forEach(label=>headRow.append(node("th",label)));
+  const thead=node("thead");thead.append(headRow);tableEl.append(thead);
+  const tbody=node("tbody");
+  ordered.forEach(p=>{
+   const tr=node("tr");
+   tr.append(node("td",p.finish||"—"));
+   const car=node("td");car.append(badge(p.number));tr.append(car);
+   const rider=node("td");rider.append(node("strong",p.name||"—"));
+   if(p.method)rider.append(node("div","決まり手："+p.method,"source-caption"));
+   if(p.exception)rider.append(node("div",p.exception,"source-caption"));
+   tr.append(rider);
+   tr.append(node("td",p.ascent||p.agari||"—","time-cell"));
+   tbody.append(tr);
+  });tableEl.append(tbody);body.append(tableEl);
+  body.append(node("p","上がり・着差・S/Bなどの未収録項目は推測で補いません。結果は台帳記録で、正式照合済みとは限りません。","source-caption"));
+ }else body.append(node("p","結果はまだ収録されていません。","source-caption"));
+ if(entries.length){
+  body.append(linePanel(r,entries));
+  const extra=node("details",undefined,"race-detail-more");
+  extra.append(node("summary","出走選手・競走データを表示"));
+  extra.append(table(["車番","選手名","府県・期別"],entries.map(p=>[p.number,p.name,(p.prefecture||"—")+"／"+(p.period||"—")+"期"])));
+  extra.append(node("p","競走得点・S/B・勝率・2連対率・3連対率・近走成績は、データ取得・照合が完了した項目から追加します。","source-caption"));
+  body.append(extra);
+ }else body.append(node("p","事前出走表・ライン：未収録","source-caption"));
+ if(r.weather||r.windSpeed)body.append(node("p",[r.weather||"",r.windSpeed?"風速 "+r.windSpeed:""].filter(Boolean).join("・"),"source-caption"));
+ if(r.raceCommentVerified)body.append(node("p",r.raceCommentVerified,"source-caption"));
+ else body.append(node("p","展開短評：映像または根拠となる記録の確認後に掲載します。","source-caption"));
  details.append(body);return details;
 }
 function render(){
