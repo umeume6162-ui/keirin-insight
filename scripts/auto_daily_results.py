@@ -99,7 +99,11 @@ def eligible_races(entries, results, start, end):
             continue
         tracks = {clean(r[2]) for r in rows}
         classes = {clean(r[4]) for r in rows}
-        if len(tracks) != 1 or len(classes) != 1 or "" in tracks or "" in classes:
+        # A1/A2 and S1/S2 are rider grades, not proof of different races.
+        # They legitimately coexist in one A- or S-class event.
+        permitted_groups = ({"A1", "A2"}, {"S1", "S2"}, {"A3"}, {"L1"})
+        if (len(tracks) != 1 or "" in tracks or "" in classes or
+                not any(classes <= group for group in permitted_groups)):
             continue
         eligible.append((key, rows))
     return eligible
@@ -219,7 +223,7 @@ def candidate(key, rows, collect_fn=collect):
                 or clean(old[8]).removesuffix("期") != clean(source["period"]).removesuffix("期")):
             raise ValueError("Rider identity does not match pre-race sheet")
         payload.append(dict(date=day, trackCode=code, track=track, race=int(race),
-                            className=cls, number=number, name=old[6],
+                            className=old[4], number=number, name=old[6],
                             prefecture=old[7], period=old[8],
                             finish=source["finish"], method=canonical_method(source["method"]),
                             exception=source["exception"], sourceUrl=left["sourceUrl"],
@@ -407,6 +411,20 @@ def self_test():
     keys = eligible_races(records, [], datetime.strptime(day, "%Y-%m-%d").date(),
                           datetime.strptime(day, "%Y-%m-%d").date())
     assert len(keys) == 1
+    # Production-shape regression: Tamano A1/A2 races have mixed rider
+    # grades, yet every rider must retain their own grade in the result row.
+    mixed = [list(r) for r in records]
+    for i in (1, 3, 5):
+        mixed[i][4] = "A1"
+    assert len(eligible_races(mixed, [], start := datetime.strptime(
+        day, "%Y-%m-%d").date(), start)) == 1
+    mixed_other = [list(r) for r in mixed]
+    mixed_other[0][4] = "S1"
+    assert eligible_races(mixed_other, [], start, start) == []
+    s_mix = [list(r) for r in records]
+    for i, row in enumerate(s_mix):
+        row[4] = "S1" if i % 2 else "S2"
+    assert len(eligible_races(s_mix, [], start, start)) == 1
     # A race missed several days ago must remain eligible for the bounded retry.
     older = [list(row) for row in records]
     older_day = (datetime.strptime(day, "%Y-%m-%d") - timedelta(days=6)).date()
@@ -428,6 +446,8 @@ def self_test():
                  sourceId="chariloto-day-results", race=race_data, results=riders)
     from compare_race_results import compare
     actual = {"observations": [left, right], "comparison": compare({"observations": [left, right]})}
+    mixed_result = candidate(day+"|26|1", mixed, collect_fn=lambda *a: actual)
+    assert [r["className"] for r in mixed_result["results"]] == [r[4] for r in mixed]
     calls = []
     def pretend_apply(data, dry_run=True):
         calls.append(dry_run)
