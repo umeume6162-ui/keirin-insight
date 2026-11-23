@@ -98,6 +98,7 @@ for(const race of official.races){
   assert.equal(row.length,full.columns.length,'result row width');
   assert.ok(rs.includes(row[fieldIndex.sourceUrl]),'rider result URL not in verified result sources');
   if(isKD)assert.ok(kdSource(row[fieldIndex.sourceUrl]),'K-Dreams result has foreign source');
+  if(isFallback)assert.equal(row[fieldIndex.sourceUrl],race.officialVerification.source,'fallback result URL must be observed source');
   for(const mandatory of (isSingle?['name','prefecture','period','finishRaw','riderClass']:['name','prefecture','period','finishRaw','riderClass','lastLapRaw'])){
    assert.ok(String(row[fieldIndex[mandatory]]??'').trim(),'missing verified rider field: '+mandatory);
   }

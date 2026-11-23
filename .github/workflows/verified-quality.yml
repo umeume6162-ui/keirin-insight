@@ -24,5 +24,12 @@ jobs:
           python-version: '3.12'
       - name: Compile validation scripts
         run: python -m compileall -q tools
+      - name: Check fallback and browser guard JavaScript syntax
+        run: |
+          node --check tools/check_publication_completeness.cjs
+          node --check verified-publication-guard-v138.js
+          node --check tools/test_fallback_publication.cjs
+      - name: Test real-data fallback schema and rejection cases
+        run: node tools/test_fallback_publication.cjs
       - name: Run isolated synthetic regression tests
         run: python -m unittest discover -s tools -p 'test_*.py' -v
