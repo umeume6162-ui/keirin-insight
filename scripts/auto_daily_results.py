@@ -607,7 +607,6 @@ def self_test():
     assert summary["results"][0]["failurePhase"] == "COLLECT_COMPARE"
     assert summary["results"][0]["reasonCode"] == "ENTRY_RIDER_IDENTITY_MISMATCH"
     assert summary["results"][0]["reviewRoute"] == "RIDER_OR_CLASS_EVIDENCE_REVIEW"
-    from collect_historical_pair import SourceStageError
     def fail_primary(*args):
         try:
             raise ValueError("Robots rules prohibit this page")
