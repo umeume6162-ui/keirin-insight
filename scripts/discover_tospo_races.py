@@ -76,13 +76,36 @@ def collect(date, track, code, list_html, loader):
             "sourceNote": "Tokyo Sports preview; not independent PASS"}, failed
 
 
+def self_test():
+    # Synthetic index mirrors the site's venue-labelled 1R links.
+    index = ('<a href="/list/race/20261122_31332">'
+             'FⅡ 西武園 初日 1R 10:00発走</a>')
+    page = ('<h1>西武園 2026年11月23日 1R</h1>'
+            '<a href="/list/race/20261122_31333">2R A級戦</a>')
+    urls, cache = discover(index, "西武園", lambda url: page)
+    assert len(urls) == 2 and 1 in urls and 2 in urls
+    assert len(cache) == 1
+    try:
+        discover(index, "前橋", lambda url: page)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Accepted wrong venue")
+    print("SELF_TEST_OK: venue index regex and bounded race navigation")
+
+
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--date", required=True)
-    p.add_argument("--track", required=True)
-    p.add_argument("--track-code", required=True)
+    p.add_argument("--self-test", action="store_true")
+    p.add_argument("--date")
+    p.add_argument("--track")
+    p.add_argument("--track-code")
     p.add_argument("--out", default="/tmp/ki-tospo-discovery.json")
     a = p.parse_args()
+    if a.self_test:
+        return self_test()
+    if not all((a.date, a.track, a.track_code)):
+        p.error("--date --track --track-code required")
     datetime.strptime(a.date, "%Y-%m-%d")
     if not (a.track_code.isdigit() and 1 <= int(a.track_code) <= 99):
         raise ValueError("Invalid track code")
