@@ -94,7 +94,7 @@ def collect(day, code, track, number, class_name, cars, left_url=None, right_url
 
 
 
-def collect_auto(day, code, track, number, class_name, cars, sources=None):
+def collect_auto(day, code, track, number, class_name, cars, sources=None, source_urls=None):
     """Compare any two available validated result publications, not a fixed primary.
 
     The default pool currently contains three supported adapters. New publicly
@@ -136,7 +136,31 @@ def collect_auto(day, code, track, number, class_name, cars, sources=None):
                 return kdreams.extract(kdreams.fetch(kd_url), day, code, track,
                                       number, class_name, cars, kd_url)
             sources.append(("kdreams", read_kdreams))
-    if not sources or len(sources) > 12:
+    # Discovery is unrestricted, but extraction is limited to evidence-backed
+    # public URLs and implemented, strict source-specific parsers. Unknown sites
+    # are candidates for research, not guessed HTML extraction or a PASS.
+    if source_urls is not None:
+        from urllib.parse import urlsplit
+        if (sources is not None and not isinstance(sources, list)
+                or not isinstance(source_urls, list)
+                or not 1 <= len(source_urls) <= 10
+                or len(source_urls) != len(set(source_urls))):
+            raise ValueError("Invalid observed source URL list")
+        if sources is None:
+            sources = []
+        for index, url in enumerate(source_urls):
+            if not isinstance(url, str) or len(url) > 2048:
+                raise ValueError("Invalid observed source URL")
+            host = urlsplit(url).hostname
+            if host == "keirin.kdreams.jp":
+                kdreams.validate_url(url, day, code, track, number)
+                def read_observed_kdreams(link=url):
+                    return kdreams.extract(kdreams.fetch(link), day, code,
+                                           track, number, class_name, cars, link)
+                sources.append((f"observed_kdreams_{index}", read_observed_kdreams))
+            else:
+                raise ValueError("Observed source lacks a verified result adapter")
+    if not sources or len(sources) > 22:
         raise ValueError("Invalid bounded result source pool")
     collected = []
     matched = None
@@ -237,6 +261,26 @@ def self_test_auto():
         assert e.source_attempts[1]["reasonCode"] == "SOURCE_VALIDATION_REJECTED"
     else:
         raise AssertionError("Single source was accepted")
+    # An explicitly discovered venue URL is validated, not guessed.
+    observed = "https://keirin.kdreams.jp/kurume/racedetail/8320261001010002/?pageType=showResult"
+    def fake_observed(url):
+        assert url == observed
+        return journalist
+    with (patch.object(kdreams, "fetch", return_value="<html>") as fetched,
+          patch.object(kdreams, "extract", return_value=journalist)):
+        item = collect_auto("2026-09-10", "27", "京王閣", 2, "A3", 7,
+                            sources=[("independent", read("independent", official))],
+                            source_urls=["https://keirin.kdreams.jp/keio/racedetail/2720260910010002/?pageType=showResult"])
+        assert item["comparison"]["formalPass"] is False
+        assert fetched.call_count == 1
+    try:
+        collect_auto("2026-09-10", "27", "京王閣", 2, "A3", 7,
+                     sources=[("independent", read("independent", official))],
+                     source_urls=["https://unverified.example/r"])
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Unverified source adapter was accepted")
     print("SELF_TEST_OK: publisher-neutral bounded result pool and full-field matching")
 
 
