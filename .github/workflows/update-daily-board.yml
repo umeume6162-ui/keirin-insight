@@ -417,17 +417,18 @@ jobs:
       # One explicitly tagged main push may retry bounded, guarded results without
       # re-running entry collection. Never enable this for PRs or ordinary pushes.
       - name: Collect two-source daily results for completed stored races
-        if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.retry_daily_results && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url == '') || (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))) }}
+        if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.retry_daily_results && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url == '') || (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))) }}
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          RETRY_RESULT_DATE: ${{ inputs.retry_result_date }}
         run: |
           set -o pipefail
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.retry_result_date }}" ]; then
-            if ! [[ "${{ inputs.retry_result_date }}" =~ ^20[0-9]{2}-[0-9]{2}-[0-9]{2}$ ]]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "$RETRY_RESULT_DATE" ]; then
+            if ! [[ "$RETRY_RESULT_DATE" =~ ^20[0-9]{2}-[0-9]{2}-[0-9]{2}$ ]]; then
               echo "::error::Invalid retry_result_date; no result writes"
               exit 1
             fi
-            python scripts/auto_daily_results.py --apply --date "${{ inputs.retry_result_date }}" --max-races 12 --max-seconds 720 | tee /tmp/ki-daily-result-intake.json
+            python scripts/auto_daily_results.py --apply --date "$RETRY_RESULT_DATE" --max-races 12 --max-seconds 720 | tee /tmp/ki-daily-result-intake.json
           else
             python scripts/auto_daily_results.py --apply --max-races 12 --max-seconds 720 --lookback-days 7 | tee /tmp/ki-daily-result-intake.json
           fi
