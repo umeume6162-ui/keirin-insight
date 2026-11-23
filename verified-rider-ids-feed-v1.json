@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-23",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "固定本人識別4項目を公式＋別媒体で照合。現在179件。選手個別の取得方法・確認URLは各officialVerificationを参照し、ページ上流独立性を無条件に断定しない。",
+  "verificationNote": "KEIRIN.JP と別媒体の固定4項目照合 182件。全件の原資料と取得法は各選手officialVerificationを参照。ライブ取得や上流独立性を推定しない。",
   "summary": {
-    "rows": 179
+    "rows": 182
   },
   "riders": [
     {
@@ -4311,6 +4311,81 @@
           "https://www.chariloto.com/keirin_athletes/13827"
         ],
         "note": "2026-11-23 JST KEIRIN.JP cached full official profile updated 2026-07-25, secondary WINTICKET and another athlete/news profile. Four fixed fields match after whitespace/prefecture normalization; cache/search indexed vs live retrieval distinguished. Independently generated upstream not proven. Google Sheet row 422 G:K saved and reread."
+      }
+    },
+    {
+      "id": "015935",
+      "name": "佐藤 魁皇",
+      "prefecture": "熊本",
+      "period": "127",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015935",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015935",
+        "method": "two_distinct_sites_agree",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015935",
+          "https://www.chariloto.com/keirin_athletes/15935",
+          "https://www.kumamotokeirin.jp/race-info/players/%E4%BD%90%E8%97%A4%E9%AD%81%E7%9A%87/"
+        ],
+        "note": "2026-11-23 KEIRIN.JP official profile date 2026-07-31 and other profiles incl official track/local sources show 4 identity fields matching after whitespace/prefecture normalizations. Indexed/cached snapshots, not guaranteed live. Upstream source independence not proven. Sheet row 423 G:K readback."
+      }
+    },
+    {
+      "id": "014058",
+      "name": "佐藤 謙",
+      "prefecture": "栃木",
+      "period": "90",
+      "source": "https://keirin.jp/sp/racerprofile?snum=014058",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=014058",
+        "method": "two_distinct_sites_agree",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=014058",
+          "https://www.winticket.jp/keirin/cyclist/014058",
+          "https://keirin.life/athletes/14058"
+        ],
+        "note": "2026-11-23 KEIRIN.JP official profile date 2026-06-06 and other profiles incl official track/local sources show 4 identity fields matching after whitespace/prefecture normalizations. Indexed/cached snapshots, not guaranteed live. Upstream source independence not proven. Sheet row 424 G:K readback."
+      }
+    },
+    {
+      "id": "012786",
+      "name": "佐藤 康紀",
+      "prefecture": "青森",
+      "period": "73",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=012786",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=012786",
+        "method": "two_distinct_sites_agree",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=012786",
+          "https://aomorikeirin.com/player/",
+          "https://www.yen-joy.net/racer/data/012786/3"
+        ],
+        "note": "2026-11-23 KEIRIN.JP official profile date 2025-04-01 and other profiles incl official track/local sources show 4 identity fields matching after whitespace/prefecture normalizations. Indexed/cached snapshots, not guaranteed live. Upstream source independence not proven. Sheet row 425 G:K readback."
       }
     }
   ],
