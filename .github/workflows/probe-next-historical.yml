@@ -8,41 +8,48 @@ permissions:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: pip install 'requests==2.32.3' 'beautifulsoup4==4.14.2'
-      - name: Observe all cars and compare to saved V99 or V98 candidate
+      - name: Fetch real race results and compare 42 V99 riders
         run: |
           python - <<'PY'
-          import sys,json
+          import sys, json
           sys.path.insert(0,'scripts')
           import collect_lotoplace_result as char
-          from compare_race_results import normalized_name,normalized_prefecture,canonical_method
-          baselines=json.loads('''{"2026-10-04|75|11":[{"number":2,"name":"佐々木亮太","prefecture":"青森","period":"125","finish":"1","method":"逃げ","exception":""},{"number":7,"name":"福永大智","prefecture":"大阪","period":"113","finish":"2","method":"マーク","exception":""},{"number":6,"name":"金成和幸","prefecture":"福島","period":"88","finish":"3","method":"","exception":""},{"number":4,"name":"中川勝貴","prefecture":"福井","period":"109","finish":"4","method":"","exception":""},{"number":1,"name":"水谷良和","prefecture":"愛知","period":"70","finish":"5","method":"","exception":""},{"number":5,"name":"磯川勝裕","prefecture":"東京","period":"113","finish":"6","method":"","exception":""},{"number":3,"name":"内田玄希","prefecture":"東京","period":"94","finish":"7","method":"","exception":""}],"2026-10-01|22|1":[{"number":1,"name":"松本一志","prefecture":"宮崎","period":"117","finish":"1","method":"逃げ","exception":""},{"number":4,"name":"福田悠航","prefecture":"福島","period":"129","finish":"2","method":"マーク","exception":""},{"number":2,"name":"永田修一","prefecture":"熊本","period":"90","finish":"3","method":"","exception":""},{"number":3,"name":"山崎光展","prefecture":"京都","period":"93","finish":"4","method":"","exception":""},{"number":6,"name":"遠澤健二","prefecture":"神奈","period":"57","finish":"5","method":"","exception":""},{"number":5,"name":"小川辰徳","prefecture":"埼玉","period":"100","finish":"6","method":"","exception":""},{"number":7,"name":"井上典善","prefecture":"千葉","period":"66","finish":"7","method":"","exception":""}]}''')
-          jobs=[
-            ('2026-10-04|75|11','松山','S2','https://www.chariloto.com/keirin/results/75/2026-10-04'),
-            ('2026-10-01|22|1','前橋','A3','https://www.chariloto.com/keirin/results/22/2026-10-01/'),
-          ]
-          for key,track,grade,url in jobs:
-            date,code,r=key.split('|')
-            try:
-              source=char.fetch(url)
-              obj=char.parse_result(source,date,code,track,int(r),grade,7,url)
-              parsed={int(a['number']):a for a in obj['results']}
-              diffs=[]
-              for exp in baselines[key]:
-                a=parsed.get(exp['number'])
-                if not a:
-                  diffs.append((exp['number'],'missing_car'))
-                  continue
-                for field,norm in (('name',normalized_name),('prefecture',normalized_prefecture),('period',str),('finish',str),('method',canonical_method),('exception',str)):
-                  if norm(a.get(field,'') or '')!=norm(exp[field]):
-                    diffs.append((exp['number'],field))
-              print('NEXT_HISTORICAL_COMPARE',key,'PASS' if not diffs else 'HOLD','cars',len(parsed),'mismatch',len(diffs),'details',diffs[:10])
-            except Exception as e:
-              print('NEXT_HISTORICAL_HOLD',key,type(e).__name__,str(e)[:160])
+          from compare_race_results import normalized_name, normalized_prefecture, canonical_method
+          baselines=json.loads("{\"2026-10-07|38|1\":[{\"number\":3,\"name\":\"早坂 道義\",\"prefecture\":\"栃木\",\"period\":\"88\",\"finish\":\"1\",\"method\":\"差し\",\"exception\":\"\"},{\"number\":7,\"name\":\"佐藤譲士郎\",\"prefecture\":\"埼玉\",\"period\":\"123\",\"finish\":\"2\",\"method\":\"逃げ\",\"exception\":\"\"},{\"number\":4,\"name\":\"磯村 蓮太\",\"prefecture\":\"愛知\",\"period\":\"115\",\"finish\":\"3\",\"method\":\"\",\"exception\":\"\"},{\"number\":1,\"name\":\"吉野 猛\",\"prefecture\":\"愛知\",\"period\":\"74\",\"finish\":\"4\",\"method\":\"\",\"exception\":\"\"},{\"number\":2,\"name\":\"野口 修平\",\"prefecture\":\"神奈\",\"period\":\"105\",\"finish\":\"5\",\"method\":\"\",\"exception\":\"\"},{\"number\":5,\"name\":\"竜門 孝宗\",\"prefecture\":\"兵庫\",\"period\":\"95\",\"finish\":\"6\",\"method\":\"\",\"exception\":\"\"},{\"number\":6,\"name\":\"井上 典善\",\"prefecture\":\"千葉\",\"period\":\"66\",\"finish\":\"7\",\"method\":\"\",\"exception\":\"\"}],\"2026-10-07|38|2\":[{\"number\":4,\"name\":\"木曽田晃大\",\"prefecture\":\"京都\",\"period\":\"129\",\"finish\":\"1\",\"method\":\"捲くり\",\"exception\":\"\"},{\"number\":3,\"name\":\"山崎 功也\",\"prefecture\":\"宮城\",\"period\":\"95\",\"finish\":\"2\",\"method\":\"差し\",\"exception\":\"\"},{\"number\":1,\"name\":\"木下 章\",\"prefecture\":\"長野\",\"period\":\"61\",\"finish\":\"3\",\"method\":\"\",\"exception\":\"\"},{\"number\":5,\"name\":\"山田 祐太\",\"prefecture\":\"福島\",\"period\":\"113\",\"finish\":\"4\",\"method\":\"\",\"exception\":\"\"},{\"number\":2,\"name\":\"南 大輔\",\"prefecture\":\"京都\",\"period\":\"76\",\"finish\":\"5\",\"method\":\"\",\"exception\":\"\"},{\"number\":7,\"name\":\"伊狩 知人\",\"prefecture\":\"奈良\",\"period\":\"85\",\"finish\":\"6\",\"method\":\"\",\"exception\":\"\"},{\"number\":6,\"name\":\"茂木 和臣\",\"prefecture\":\"埼玉\",\"period\":\"63\",\"finish\":\"7\",\"method\":\"\",\"exception\":\"\"}],\"2026-10-07|38|3\":[{\"number\":4,\"name\":\"北村 篤\",\"prefecture\":\"岐阜\",\"period\":\"94\",\"finish\":\"1\",\"method\":\"差し\",\"exception\":\"\"},{\"number\":6,\"name\":\"天沼 雅貴\",\"prefecture\":\"埼玉\",\"period\":\"96\",\"finish\":\"2\",\"method\":\"マーク\",\"exception\":\"\"},{\"number\":3,\"name\":\"片岡 遼真\",\"prefecture\":\"福井\",\"period\":\"129\",\"finish\":\"3\",\"method\":\"\",\"exception\":\"\"},{\"number\":1,\"name\":\"相澤 恵一\",\"prefecture\":\"宮城\",\"period\":\"95\",\"finish\":\"4\",\"method\":\"\",\"exception\":\"\"},{\"number\":7,\"name\":\"桂馬 将人\",\"prefecture\":\"福島\",\"period\":\"89\",\"finish\":\"5\",\"method\":\"\",\"exception\":\"\"},{\"number\":5,\"name\":\"高木 隆弘\",\"prefecture\":\"神奈\",\"period\":\"64\",\"finish\":\"6\",\"method\":\"\",\"exception\":\"\"},{\"number\":2,\"name\":\"伊藤 翼\",\"prefecture\":\"神奈\",\"period\":\"94\",\"finish\":\"7\",\"method\":\"\",\"exception\":\"\"}],\"2026-11-01|24|2\":[{\"number\":1,\"name\":\"齋藤 輝彦\",\"prefecture\":\"神奈\",\"period\":\"93\",\"finish\":\"1\",\"method\":\"差し\",\"exception\":\"\"},{\"number\":7,\"name\":\"鈴木 広人\",\"prefecture\":\"神奈\",\"period\":\"99\",\"finish\":\"2\",\"method\":\"逃げ\",\"exception\":\"\"},{\"number\":4,\"name\":\"柴田 健\",\"prefecture\":\"神奈\",\"period\":\"71\",\"finish\":\"3\",\"method\":\"\",\"exception\":\"\"},{\"number\":3,\"name\":\"永橋 武司\",\"prefecture\":\"大阪\",\"period\":\"90\",\"finish\":\"4\",\"method\":\"\",\"exception\":\"\"},{\"number\":5,\"name\":\"斎藤 敦\",\"prefecture\":\"大阪\",\"period\":\"103\",\"finish\":\"5\",\"method\":\"\",\"exception\":\"\"},{\"number\":2,\"name\":\"大越 啓介\",\"prefecture\":\"栃木\",\"period\":\"97\",\"finish\":\"6\",\"method\":\"\",\"exception\":\"\"},{\"number\":6,\"name\":\"鈴木雄一朗\",\"prefecture\":\"東京\",\"period\":\"94\",\"finish\":\"7\",\"method\":\"\",\"exception\":\"\"}],\"2026-11-01|24|3\":[{\"number\":1,\"name\":\"梶原 秀庸\",\"prefecture\":\"大阪\",\"period\":\"77\",\"finish\":\"1\",\"method\":\"差し\",\"exception\":\"\"},{\"number\":5,\"name\":\"窪田 陽介\",\"prefecture\":\"滋賀\",\"period\":\"90\",\"finish\":\"2\",\"method\":\"捲くり\",\"exception\":\"\"},{\"number\":4,\"name\":\"吉川 誠\",\"prefecture\":\"神奈\",\"period\":\"86\",\"finish\":\"3\",\"method\":\"\",\"exception\":\"\"},{\"number\":2,\"name\":\"小林 宏年\",\"prefecture\":\"静岡\",\"period\":\"55\",\"finish\":\"4\",\"method\":\"\",\"exception\":\"\"},{\"number\":3,\"name\":\"堀内 昇\",\"prefecture\":\"茨城\",\"period\":\"95\",\"finish\":\"5\",\"method\":\"\",\"exception\":\"\"},{\"number\":7,\"name\":\"櫻井 紀幸\",\"prefecture\":\"群馬\",\"period\":\"68\",\"finish\":\"6\",\"method\":\"\",\"exception\":\"\"},{\"number\":6,\"name\":\"和泉田喜一\",\"prefecture\":\"千葉\",\"period\":\"59\",\"finish\":\"7\",\"method\":\"\",\"exception\":\"\"}],\"2026-11-01|24|4\":[{\"number\":4,\"name\":\"川本 恵二\",\"prefecture\":\"兵庫\",\"period\":\"78\",\"finish\":\"1\",\"method\":\"差し\",\"exception\":\"\"},{\"number\":7,\"name\":\"西川 弘資\",\"prefecture\":\"三重\",\"period\":\"66\",\"finish\":\"2\",\"method\":\"差し\",\"exception\":\"\"},{\"number\":5,\"name\":\"吉田 英二\",\"prefecture\":\"東京\",\"period\":\"76\",\"finish\":\"3\",\"method\":\"\",\"exception\":\"\"},{\"number\":3,\"name\":\"永田 吏玖\",\"prefecture\":\"岐阜\",\"period\":\"129\",\"finish\":\"4\",\"method\":\"\",\"exception\":\"\"},{\"number\":2,\"name\":\"青木 亮太\",\"prefecture\":\"群馬\",\"period\":\"89\",\"finish\":\"5\",\"method\":\"\",\"exception\":\"\"},{\"number\":6,\"name\":\"煤賀 隆幸\",\"prefecture\":\"秋田\",\"period\":\"75\",\"finish\":\"6\",\"method\":\"\",\"exception\":\"\"},{\"number\":1,\"name\":\"長田 彰人\",\"prefecture\":\"宮城\",\"period\":\"95\",\"finish\":\"7\",\"method\":\"\",\"exception\":\"\"}]}")
+          jobs=json.loads("[[\"2026-10-07|38|1\",\"静岡\"],[\"2026-10-07|38|2\",\"静岡\"],[\"2026-10-07|38|3\",\"静岡\"],[\"2026-11-01|24|2\",\"宇都宮\"],[\"2026-11-01|24|3\",\"宇都宮\"],[\"2026-11-01|24|4\",\"宇都宮\"]]")
+          passed=0
+          for key,track in jobs:
+              day,code,r=key.split('|')
+              url=f'https://www.chariloto.com/keirin/results/{int(code)}/{day}'
+              try:
+                  html=char.fetch(url)
+                  obj=char.parse_result(html,day,code,track,int(r),'A3',7,url)
+                  observed={int(x['number']):x for x in obj['results']}
+                  diffs=[]
+                  for exp in baselines[key]:
+                      real=observed.get(exp['number'])
+                      if real is None:
+                          diffs.append((exp['number'],'missing_car'))
+                          continue
+                      for f,norm in (('name',normalized_name),('prefecture',normalized_prefecture),
+                                     ('period',lambda v:str(v).removesuffix('期')),
+                                     ('finish',str),('method',canonical_method),('exception',str)):
+                          if norm(real.get(f,'') or '')!=norm(exp[f]):
+                              diffs.append((exp['number'],f))
+                  if len(observed)!=7:
+                      diffs.append(('all','incomplete_car_count'))
+                  if not diffs: passed+=1
+                  print('V99_NEW_SOURCE_COMPARE',key,'PASS' if not diffs else 'HOLD',
+                        'cars',len(observed),'mismatchCount',len(diffs),'fields',diffs[:12],
+                        'source',url,'original_html_archived',False,flush=True)
+              except Exception as exc:
+                  print('V99_NEW_SOURCE_HOLD',key,type(exc).__name__,str(exc)[:140],flush=True)
+          print('V99_NEW_SOURCE_SUMMARY','passed',passed,'attempted',len(jobs),flush=True)
           PY
