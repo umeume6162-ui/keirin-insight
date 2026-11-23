@@ -21,13 +21,12 @@ def norm(s):
 def parse(html,date,track_code,track,race,url,now=None):
     from bs4 import BeautifulSoup
     soup=BeautifulSoup(html,"html.parser")
-    head=norm(soup.get_text(" ",strip=True))
-    yyyy,mm,dd=date.split("-")
-    # Verify event identity on source; no inferred event/date assignments.
-    if track not in head or not re.search(rf"{int(yyyy)}年\s*{int(mm)}月\s*{int(dd)}日",head):
-        raise ValueError("Race track/date not independently visible on source")
-    # Navigation links can show unrelated races. Prove the requested R via title/heading.
     heading=" ".join(norm(x.get_text(" ",strip=True)) for x in soup.select("title,h1"))
+    yyyy,mm,dd=date.split("-")
+    # Only document title and primary heading establish identity. Body navigation
+    # may mention a different venue, date, or race number.
+    if track not in heading or not re.search(rf"{int(yyyy)}年\s*{int(mm)}月\s*{int(dd)}日",heading):
+        raise ValueError("Race track/date not proven by source title/heading")
     if not re.search(rf"{re.escape(track)}(?:競輪)?[^\n]{{0,45}}?{int(race)}\s*R(?!\d)",heading):
         raise ValueError("Requested race number absent from main document heading")
     now=now or datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")
@@ -85,7 +84,7 @@ def fetch(url):
 def self_test():
     header="<tr><th>車番</th><th>選手名 年齢/府県/期別</th><th>級 脚</th></tr>"
     rows="".join(f"<tr><td>{n}</td><td>テスト選手{chr(64+n)} 40歳 / 京都 / ９３期</td><td>Ａ３ 両</td></tr>" for n in range(1,8))
-    html="<html><body><h1>西武園 2026年11月23日 1R</h1><table>"+header+rows+"</table></body></html>"
+    html="<html><head><title>2026年11月23日 西武園競輪 1R 出走表</title></head><body><h1>西武園 2026年11月23日 1R</h1><table>"+header+rows+"</table></body></html>"
     kwargs=dict(date="2026-11-23",track_code="26",track="西武園",race=1,
                 url="https://keirin.tokyo-sports.co.jp/list/race/test",now="2026-11-23 07:00 JST")
     parsed=parse(html,**kwargs)
@@ -96,6 +95,12 @@ def self_test():
         pass
     else:
         raise ValueError("Duplicate car accepted")
+    try:
+        parse(html.replace(" 1R", " 2R"), **kwargs)
+    except ValueError:
+        pass
+    else:
+        raise ValueError("Wrong race number accepted")
     print("SELF_TEST_OK: Tospo full-width and duplicate car validation")
 def main():
     p=argparse.ArgumentParser()
