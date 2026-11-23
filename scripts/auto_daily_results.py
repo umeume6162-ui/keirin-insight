@@ -14,7 +14,7 @@ import sys
 import time
 import unicodedata
 from collections import defaultdict
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -461,6 +461,32 @@ def self_test():
     assert due_result_races([(day+"|26|1", gate_rows)], stale, after)[0] == []
     assert len(due_result_races([(day+"|26|1", gate_rows)], stale,
                               after + timedelta(days=1))[0]) == 1
+    # At JST 00:10 on Nov 24, all seven Nov 23 midnight races are due,
+    # while Nov 24 racecards must remain withheld without source-bound time.
+    night_entries = []
+    for rnum in range(1, 8):
+        for row in records:
+            copy_row = list(row)
+            copy_row[0], copy_row[1], copy_row[2], copy_row[3] = (
+                "2026-11-23", "61", "玉野", str(rnum))
+            night_entries.append(copy_row)
+    next_day = []
+    for row in records:
+        copy_row = list(row)
+        copy_row[0], copy_row[1], copy_row[2], copy_row[3] = (
+            "2026-11-24", "61", "玉野", "1")
+        next_day.append(copy_row)
+    all_night = eligible_races(night_entries + next_day, [],
+                               date(2026, 11, 23), date(2026, 11, 24))
+    assert len(all_night) == 8
+    midnight = datetime(2026, 11, 24, 0, 10, tzinfo=JST)
+    ready, withheld = due_result_races(
+        all_night, {"schema": "ki-daily-start-times-v1", "races": {}},
+        midnight)
+    assert [k for k, _ in ready] == [
+        f"2026-11-23|61|{rnum}" for rnum in range(1, 8)]
+    assert withheld == ["2026-11-24|61|1"]
+    assert len(select_rotating_races(ready, 12, midnight)) == 7
     gated = process(gate_rows, [], start, start, collect_fn=lambda *a: actual,
                     apply_fn=pretend_apply, start_times=cache, now=before)
     assert gated["notYetDueCount"] == 1 and gated["eligibleExamined"] == 0
