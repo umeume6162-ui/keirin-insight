@@ -95,6 +95,16 @@ on:
         required: false
         default: false
         type: boolean
+      retry_daily_results:
+        description: 'Manually retry completed stored races using existing 2-source validation'
+        required: false
+        default: false
+        type: boolean
+      retry_result_date:
+        description: 'Optional single result date YYYY-MM-DD for targeted retry'
+        required: false
+        default: ''
+        type: string
   schedule:
     # Explicit [refresh-daily-feed] main push rebuilds only the daily viewer feed from Sheets.
     # One-time daily viewer refresh after first verified two-site content-matched result intake.
@@ -407,12 +417,20 @@ jobs:
       # One explicitly tagged main push may retry bounded, guarded results without
       # re-running entry collection. Never enable this for PRs or ordinary pushes.
       - name: Collect two-source daily results for completed stored races
-        if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))) }}
+        if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.retry_daily_results && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url == '') || (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))) }}
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
           set -o pipefail
-          python scripts/auto_daily_results.py --apply --max-races 12 --max-seconds 720 --lookback-days 7 | tee /tmp/ki-daily-result-intake.json
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.retry_result_date }}" ]; then
+            if ! [[ "${{ inputs.retry_result_date }}" =~ ^20[0-9]{2}-[0-9]{2}-[0-9]{2}$ ]]; then
+              echo "::error::Invalid retry_result_date; no result writes"
+              exit 1
+            fi
+            python scripts/auto_daily_results.py --apply --date "${{ inputs.retry_result_date }}" --max-races 12 --max-seconds 720 | tee /tmp/ki-daily-result-intake.json
+          else
+            python scripts/auto_daily_results.py --apply --max-races 12 --max-seconds 720 --lookback-days 7 | tee /tmp/ki-daily-result-intake.json
+          fi
           python - <<'PY'
           import collections, json, os, re
           from pathlib import Path
