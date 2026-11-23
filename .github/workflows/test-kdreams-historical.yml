@@ -85,4 +85,13 @@ jobs:
                         'mismatchCount',len(diffs),'details',diffs[:10])
               except Exception as exc:
                   print('HISTORICAL_KDREAMS_HOLD',key,type(exc).__name__,str(exc)[:120])
+                  if 'html' in locals():
+                      from bs4 import BeautifulSoup
+                      import re
+                      page=BeautifulSoup(html,'html.parser')
+                      title=page.title.get_text(' ',strip=True) if page.title else 'NO_TITLE'
+                      print('HISTORICAL_TITLE',key,title[:140])
+                      print('HISTORICAL_TITLE_DATES',key,re.findall(r'\\d{4}年\\d{1,2}月\\d{1,2}日',title))
+                      html=None
+
           PY
