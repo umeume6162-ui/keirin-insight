@@ -22,6 +22,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from discover_tospo_races import VENUE_CODES
+from auto_daily_results import canonical_rider_name, canonical_prefecture
 
 JST=ZoneInfo("Asia/Tokyo")
 SCHEMA="ki-daily-rider-statistics-v1"
@@ -103,7 +104,9 @@ def extract(html,race,url):
         labels=[clean(c.get_text(" ",strip=True)).replace(" ","").replace("｜","ー")
                 for c in head.find_all(["th","td"],recursive=False)]
         check=[clean(x).replace(" ","").replace("｜","ー") for x in HEADERS]
-        if labels==check:
+        if (len(labels)==len(check) and labels[4].startswith("選手名")
+                and "府県" in labels[4] and "期別" in labels[4]
+                and all(labels[i]==check[i] for i in range(len(check)) if i!=4)):
             tables.append(table)
     if len(tables)!=1:
         raise ValueError("Unique full-name racecard table not found")
@@ -148,10 +151,12 @@ def extract(html,race,url):
         raise ValueError("Car number coverage conflict")
     for source in recorded:
         original=expected[source["number"]]
-        if (compare_name(source["name"])!=compare_name(original["name"]) or
-            clean(source["prefecture"])!=clean(original["prefecture"]) or
-            clean(source["period"])!=clean(original["period"]).removesuffix("期")):
-            raise ValueError("Rider identity mismatch in source")
+        mismatches=[]
+        if canonical_rider_name(source["name"])!=canonical_rider_name(original["name"]):mismatches.append("name")
+        if canonical_prefecture(source["prefecture"])!=canonical_prefecture(original["prefecture"]):mismatches.append("prefecture")
+        if clean(source["period"])!=clean(original["period"]).removesuffix("期"):mismatches.append("period:"+clean(source["period"])+" / "+clean(original["period"]))
+        if mismatches:
+            raise ValueError("Rider identity mismatch in source car "+str(source["number"])+": "+",".join(mismatches))
     return {str(x["number"]):{k:v for k,v in x.items()
              if k not in ("number","name","prefecture","period")} for x in recorded}
 
@@ -194,7 +199,8 @@ def enrich(board,cache,loader=fetch,limit=4):
             attach(race,record)
             next_cache[race["key"]]=record
             counts["fetched"]+=1
-        except Exception:
+        except Exception as exc:
+            print("RIDER_STATS_HOLD",race["key"],type(exc).__name__,str(exc)[:120],file=sys.stderr)
             counts["held"]+=1
     counts["deferred"]=max(0,len(pending)-limit)
     cache["races"]=dict(sorted(next_cache.items()))
@@ -210,7 +216,7 @@ def self_test():
     url="https://keirin.netkeiba.com/race/entry/?race_id=202611233403"
     race={"key":"2026-11-23|川崎|3","date":"2026-11-23","track":"川崎","race":3,
           "entries":[{"number":n,"name":f"テスト太郎{n}","prefecture":"宮城","period":"98"} for n in range(1,8)]}
-    header="<tr class='Header'>"+"".join("<th>"+h+"</th>" for h in HEADERS)+"</tr>"
+    header="<tr class='Header'>"+"".join("<th>"+("選手名 府県 年齢 期別 級班" if i==4 else h)+"</th>" for i,h in enumerate(HEADERS))+"</tr>"
     items=[]
     for n in range(1,8):
         values=["1",str(n),"","1",f"テストタロウ テスト太郎{n} お気に入り選手 宮城 46歳 98期 A3",
@@ -221,6 +227,8 @@ def self_test():
     cache={"schema":SCHEMA,"races":{}}
     result=enrich(board,cache,lambda _:html,1)
     assert result["fetched"]==1 and race["entries"][0]["riderStats"]["b"]==5
+    assert canonical_rider_name("國井裕樹")==canonical_rider_name("国井裕樹")
+    assert canonical_prefecture("神奈")==canonical_prefecture("神奈川")
     assert race["entries"][0]["riderStats"]["winRate"]=="25.9%"
     assert enrich(board,cache,lambda _:(_ for _ in ()).throw(AssertionError("no fetch")),1)["cached"]==1
     race["entries"][0]["name"]="別選手"
