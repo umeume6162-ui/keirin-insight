@@ -44,6 +44,15 @@ def validate_url(url, day, code):
     return url
 
 
+def race_number_from_label(label):
+    """Recognize the published '第2レース' as well as shorthand '2R'."""
+    label = compact(label)
+    m = re.search(r"(?<!\d)(\d{1,2})R(?!\d)", label)
+    if not m:
+        m = re.search(r"第(\d{1,2})レース", label)
+    return int(m.group(1)) if m else None
+
+
 def closest_race_number(table):
     # A whole-day page can contain many result tables. Never choose by table
     # order; look for an enclosing race section or preceding heading.
@@ -58,17 +67,16 @@ def closest_race_number(table):
         if parent.name in ("section", "article"):
             headings = parent.find_all(["h2", "h3", "h4"], recursive=False)
             candidates = [compact(x.get_text(" ", strip=True)) for x in headings]
-            nums = [int(m.group(1)) for text in candidates
-                    if (m := re.search(r"(?<!\d)(\d{1,2})R(?!\d)", text))]
+            nums = [n for text in candidates if (n := race_number_from_label(text)) is not None]
             if len(set(nums)) == 1:
                 return nums[0]
     # Only a preceding explicit heading is evidence; row navigation is not.
     prev = table.find_previous(["h2", "h3", "h4"])
     if prev:
         label = compact(prev.get_text(" ", strip=True))
-        match = re.search(r"(?<!\d)(\d{1,2})R(?!\d)", label)
-        if match:
-            return int(match.group(1))
+        number = race_number_from_label(label)
+        if number is not None:
+            return number
     return None
 
 
@@ -170,10 +178,11 @@ def self_test():
     html = "<html><head><title>京王閣2026年9月10日レース経過･結果</title></head><body>" + (
         "<section><h2>2R チャレンジ一般</h2><table>" + header
         + "".join(row(n) for n in range(1, 8)) + "</table></section></body></html>")
+    html = html.replace("<h2>2R チャレンジ一般</h2>", "<h2>第2レース A級</h2>")
     observation = parse_result(html, day, code, track, race, grade, cars, url)
     assert len(observation["results"]) == 7
-    for altered in (html.replace("<td>7</td>", "<td>6</td>"),
-                    html.replace("<h2>2R", "<h2>3R")):
+    for altered in (html.replace("<td>7</td><td>7</td>", "<td>7</td><td>6</td>"),
+                    html.replace("<h2>第2レース", "<h2>第3レース")):
         try:
             parse_result(altered, day, code, track, race, grade, cars, url)
         except ValueError:
