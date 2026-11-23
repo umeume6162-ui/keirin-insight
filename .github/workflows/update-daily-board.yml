@@ -104,20 +104,6 @@ jobs:
           python scripts/collect_netkeirin_result.py --self-test
           python scripts/collect_lotoplace_result.py --self-test
           python scripts/build_daily_board.py --self-test
-      - name: TEMP live netkeirin + Chariloto result comparison (PR only)
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
-        run: |
-          set -e
-          python scripts/collect_netkeirin_result.py --date 2026-09-10 --track-code 27 --track 京王閣 --race 2 --class-name A3 --expected-cars 7 --url 'https://keirin.netkeiba.com/race/result/?race_id=202609102702' --out /tmp/ki-live-netkeirin.json
-          python scripts/collect_lotoplace_result.py --date 2026-09-10 --track-code 27 --track 京王閣 --race 2 --class-name A3 --expected-cars 7 --url 'https://www.chariloto.com/keirin/results/27/2026-09-10' --out /tmp/ki-live-chariloto.json
-          python scripts/compare_race_results.py --left /tmp/ki-live-netkeirin.json --right /tmp/ki-live-chariloto.json --out /tmp/ki-live-compare.json
-          python - <<'PY'
-          import json
-          data=json.load(open('/tmp/ki-live-compare.json',encoding='utf-8'))
-          assert data['carCount']==7 and not data['formalPass']
-          print('LIVE_TWO_SOURCE_COMPARISON',data['status'],'disagreements=',len(data['disagreements']))
-          PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.source_url != ''
         env:
