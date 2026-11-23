@@ -66,7 +66,7 @@ def parse(html,date,track_code,track,race,url,now=None):
 def fetch(url):
     import requests
     u=urlsplit(url)
-    if u.scheme!="https" or u.netloc!="keirin.tokyo-sports.co.jp" or not u.path.startswith("/list/race/"):
+    if u.scheme!="https" or u.netloc!="keirin.tokyo-sports.co.jp" or not (u.path == "/list/race" or u.path.startswith("/list/race/")):
         raise ValueError("Unsupported source URL")
     agent="KEIRIN-INSIGHT-Research/1.0 (single race read-only)"
     robots=requests.get(f"{u.scheme}://{u.netloc}/robots.txt",headers={"User-Agent":agent},timeout=15)
