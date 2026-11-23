@@ -37,6 +37,15 @@ PREFECTURE_ALIASES = {"神奈": "神奈川", "北海": "北海道", "鹿児": "�
 RIDER_NAME_ALIASES = {"国井裕樹": "國井裕樹", "斎藤輝彦": "齋藤輝彦"}
 
 
+class RiderIdentityMismatch(ValueError):
+    """Finite identity discrepancy markers; never emit raw names or page text."""
+
+    def __init__(self, car, fields):
+        super().__init__("Rider identity does not match pre-race sheet")
+        self.car = int(car)
+        self.fields = tuple(fields)
+
+
 def canonical_rider_name(value):
     value = normalized_name(value)
     return RIDER_NAME_ALIASES.get(value, value)
@@ -224,10 +233,15 @@ def candidate(key, rows, collect_fn=collect):
     for source in left["results"]:
         number = int(source["number"])
         old = snapshots[number]
-        if (canonical_rider_name(old[6]) != canonical_rider_name(source["name"])
-                or canonical_prefecture(old[7]) != canonical_prefecture(source["prefecture"])
-                or clean(old[8]).removesuffix("期") != clean(source["period"]).removesuffix("期")):
-            raise ValueError("Rider identity does not match pre-race sheet")
+        mismatches = []
+        if canonical_rider_name(old[6]) != canonical_rider_name(source["name"]):
+            mismatches.append("name")
+        if canonical_prefecture(old[7]) != canonical_prefecture(source["prefecture"]):
+            mismatches.append("prefecture")
+        if clean(old[8]).removesuffix("期") != clean(source["period"]).removesuffix("期"):
+            mismatches.append("period")
+        if mismatches:
+            raise RiderIdentityMismatch(number, mismatches)
         payload.append(dict(date=day, trackCode=code, track=track, race=int(race),
                             className=old[4], number=number, name=old[6],
                             prefecture=old[7], period=old[8],
@@ -408,6 +422,9 @@ def process(entries, results, start, end, limit=4, write=False,
                         failurePhase=phase,
                         reasonCode=reason,
                         reviewRoute=review_route(reason))
+            if isinstance(underlying, RiderIdentityMismatch):
+                item["identityMismatch"] = {"car": underlying.car,
+                                            "fields": list(underlying.fields)}
             if getattr(exc, "source_attempts", None):
                 item["sourceAttempts"] = exc.source_attempts
             if getattr(exc, "source_stage", None) in (
@@ -488,6 +505,12 @@ def self_test():
     right = dict(sourceUrl="https://www.chariloto.com/keirin/results/26/2026-11-23",
                  sourceId="chariloto-day-results", race=race_data, results=riders)
     actual = {"observations": [left, right], "comparison": compare({"observations": [left, right]})}
+    broken = [list(row) for row in records]
+    broken[2][6], broken[2][8] = "別人", "999"
+    probe = process(broken, [], date(2026, 11, 23), date(2026, 11, 23),
+                    collect_fn=lambda *a: actual, apply_fn=lambda *a, **k: None)
+    assert probe["results"][0]["identityMismatch"] == {
+        "car": 3, "fields": ["name", "period"]}
     mixed_result = candidate(day+"|26|1", mixed, collect_fn=lambda *a: actual)
     assert [r["className"] for r in mixed_result["results"]] == [r[4] for r in mixed]
     fallback_pair = {"observations": [
