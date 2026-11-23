@@ -26,3 +26,22 @@ jobs:
         run: python -m py_compile scripts/collect_kdreams_historical.py
       - name: Test URL guards and full 7-car extraction (offline only)
         run: python scripts/collect_kdreams_historical.py --self-test
+      - name: Read-only one-race live K-Dreams probe (not an acceptance gate)
+        continue-on-error: true
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, 'scripts')
+          from collect_kdreams_historical import validate_historical_url, parse_historical_html
+          import collect_kdreams_result as source
+          url='https://keirin.kdreams.jp/tamano/racedetail/6120261123010001/?pageType=showResult'
+          validate_historical_url(url,'2026-11-23','61','玉野',1)
+          try:
+              html=source.fetch(url)  # robots check, one public page, no evasion
+              result=parse_historical_html(html,url=url,day='2026-11-23',code='61',track='玉野',race=1,grade='L1',cars=7)
+          except Exception as exc:
+              print('LIVE_PROBE_HOLD',type(exc).__name__,str(exc)[:120])
+              raise SystemExit(1)
+          print('LIVE_PROBE_OBSERVED',len(result['observation']['results']),
+                result['verificationState'])
+          PY
