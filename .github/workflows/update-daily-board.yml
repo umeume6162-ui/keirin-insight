@@ -211,6 +211,17 @@ jobs:
               except Exception as e:
                   print('STATS_FUTURE_SOURCE_HOLD',race['key'],type(e).__name__)
           PY
+          python - <<'PY'
+          import requests
+          from bs4 import BeautifulSoup
+          u='https://keirin.netkeiba.com/race/entry/?race_id=202611243812'
+          soup=BeautifulSoup(requests.get(u,timeout=20).text,'html.parser')
+          for t in soup.select('table.RaceCard_Table'):
+              if len(t.select('tr.Header th'))==7:
+                  tr=t.select_one('tr.PlayerList')
+                  cells=tr.find_all(['td','th'],recursive=False) if tr else []
+                  print('SHORT_STATS_ROW_CELLS',len(cells),[(i,x.get_text(' ',strip=True)[:130]) for i,x in enumerate(cells)])
+          PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
