@@ -111,6 +111,37 @@ def ensure_write_allowed(response):
     response.raise_for_status()
 
 
+def verify_writer():
+    """Permission probe: rewrite the existing daily header with identical text.
+
+    Never creates a race, changes a rider row, or reveals the credential.
+    Requires live Sheets write permission and confirms the cell on re-read.
+    """
+    session, token = remote_client()
+    import urllib.parse
+    url = ("https://sheets.googleapis.com/v4/spreadsheets/" + SHEET_ID +
+           "/values/" + urllib.parse.quote("'KI｜日次出走表'!A1", safe=""))
+    headers = {"Authorization": "Bearer " + token}
+    first = session.get(url, headers=headers, timeout=30)
+    first.raise_for_status()
+    if first.json().get("values") != [["開催日"]]:
+        raise ValueError("Daily intake A1 header mismatch; write probe aborted")
+    response = session.put(
+        url, headers={**headers, "Content-Type": "application/json"},
+        params={"valueInputOption": "RAW"},
+        json={"range": "'KI｜日次出走表'!A1", "majorDimension": "ROWS",
+              "values": [["開催日"]]},
+        timeout=30
+    )
+    ensure_write_allowed(response)
+    confirm = session.get(url, headers=headers, timeout=30)
+    confirm.raise_for_status()
+    if confirm.json().get("values") != [["開催日"]]:
+        raise ValueError("Daily intake A1 re-read differs; probe unsuccessful")
+    return {"status": "SHEETS_WRITER_VERIFIED",
+            "scope": "daily entry A1 unchanged", "secret_exposed": False}
+
+
 def apply(input_data, dry_run=True):
     records = prepare(input_data)
     if not any(records.values()):
@@ -191,10 +222,18 @@ def apply(input_data, dry_run=True):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--input", required=True)
+    p.add_argument("--input")
+    p.add_argument("--verify-write-access", action="store_true", help="Verify editor permission by idempotently rewriting daily A1 header")
     p.add_argument("--apply", action="store_true", help="Write to Sheets; default is dry run")
     p.add_argument("--validate-only", action="store_true", help="Validate input without credentials or network")
     args = p.parse_args()
+    if args.verify_write_access:
+        if args.input or args.apply or args.validate_only:
+            p.error("--verify-write-access must be used alone")
+        print(json.dumps(verify_writer(), ensure_ascii=False))
+        return
+    if not args.input:
+        p.error("--input required unless --verify-write-access")
     data = json.loads(Path(args.input).read_text(encoding="utf-8"))
     if args.validate_only:
         if args.apply:
