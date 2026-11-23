@@ -30,7 +30,7 @@ def clean(value):
 
 def normalized_name(value):
     # Spaces between Japanese surname and given name are presentation differences.
-    return re.sub(r"\\s+", "", clean(value))
+    return re.sub(r"\s+", "", clean(value))
 
 
 def require_source(observation):
@@ -201,7 +201,7 @@ def main():
         p.error("--input required")
     payload = json.loads(Path(args.input).read_text(encoding="utf-8"))
     result = compare(payload)
-    serialized = json.dumps(result, ensure_ascii=False, indent=2) + "\\n"
+    serialized = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
     if args.out:
         Path(args.out).write_text(serialized, encoding="utf-8")
     print(serialized)
