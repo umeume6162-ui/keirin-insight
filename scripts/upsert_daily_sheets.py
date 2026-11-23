@@ -99,6 +99,18 @@ def remote_client():
     credentials.refresh(google.auth.transport.requests.Request())
     return requests.Session(), credentials.token
 
+def ensure_write_allowed(response):
+    """Explain Sheets write denials without exposing credentials."""
+    if response.status_code == 403:
+        raise PermissionError(
+            "Google Sheets HTTP 403 on write. Check whether the private GitHub "
+            "service account has Editor permission to this spreadsheet and "
+            "whether the Sheets API is enabled. Do not print credentials "
+            "or change public link permissions."
+        )
+    response.raise_for_status()
+
+
 def apply(input_data, dry_run=True):
     records = prepare(input_data)
     if not any(records.values()):
@@ -137,6 +149,14 @@ def apply(input_data, dry_run=True):
                 continue
             row_number, previous = found
             # Do not silently erase existing attributes when new source omits them.
+            # Reject contradictory rider/meeting identity rather than silently
+            # modifying an already recorded car-number observation.
+            for j in (0, 1, 2, 3, 4, 5, 6, 7, 8):
+                if previous[j] and values[j] and previous[j] != values[j]:
+                    raise ValueError(
+                        "Identity/meeting conflict for " + key +
+                        " at column " + str(j + 1) + "; review source"
+                    )
             merged = [new if new != "" else old for old,new in zip(previous, values)]
             # A repeated identical observation should not update only its capture clock.
             time_idx = 11 if kind == "entries" else 13
@@ -156,7 +176,7 @@ def apply(input_data, dry_run=True):
     if planned:
         resp = session.post(base + ":batchUpdate", headers={**headers,"Content-Type":"application/json"},
                             json={"valueInputOption":"RAW","data":planned}, timeout=45)
-        resp.raise_for_status()
+        ensure_write_allowed(resp)
     for kind in CONFIG:
         new = summary[kind]["append"]
         if not new:
@@ -166,7 +186,7 @@ def apply(input_data, dry_run=True):
                             headers={**headers,"Content-Type":"application/json"},
                             params={"valueInputOption":"RAW","insertDataOption":"INSERT_ROWS"},
                             json={"values":new}, timeout=45)
-        resp.raise_for_status()
+        ensure_write_allowed(resp)
     return {"status":"SAVED","summary":{k:{p:v for p,v in s.items() if p!="append"} for k,s in summary.items()}}
 
 def main():
