@@ -1,5 +1,8 @@
 name: Update daily race board
 on:
+  push:
+    paths:
+      - '.github/workflows/update-daily-board.yml'
   pull_request:
     paths:
       - 'scripts/collect_chariloto_entry.py'
@@ -54,7 +57,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check read-only Sheets credential
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[verify-sheets-writer]'))
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
@@ -117,6 +120,23 @@ jobs:
           python scripts/discover_tospo_races.py --date "$RACE_DATE" --track-code "$TRACK_CODE" --track "$TRACK_NAME" --out /tmp/ki-manual-racecard.json
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --validate-only
           python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json
+      - name: Verify Sheets writer permission on explicitly tagged main push
+        if: github.event_name == 'push' && contains(github.event.head_commit.message, '[verify-sheets-writer]')
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python - <<'PY'
+          import json, os, sys
+          expected = "keirin-insight-sheets-reader@possible-helix-433523-q9.iam.gserviceaccount.com"
+          try:
+              actual = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"])["client_email"]
+          except (KeyError, TypeError, ValueError):
+              sys.exit("Missing or invalid credential; no write")
+          if actual != expected:
+              sys.exit("Credential identity mismatches approved editor; no write")
+          print("SERVICE_ACCOUNT_IDENTITY_MATCH; email and credential withheld")
+          PY
+          python scripts/upsert_daily_sheets.py --verify-write-access
       - name: Verify private Sheets service-account identity before write
         if: github.event_name == 'workflow_dispatch' && inputs.apply_intake
         env:
@@ -139,12 +159,12 @@ jobs:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --apply
       - name: Build daily board
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/build_daily_board.py --out daily-board-feed-v1.json
       - name: Commit changed daily feed only
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
           git add daily-board-feed-v1.json
           if git diff --cached --quiet; then
