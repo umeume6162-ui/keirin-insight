@@ -694,11 +694,67 @@
       "nextRetryAt": "2026-11-23T22:29:48+09:00",
       "reasonType": "ValueError"
     },
+    "2026-11-24|奈良|10": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611245310",
+      "signature": "6f928f8b4a68363e9ff590c7d7fc25e7cdc8f2e244253be752bcd364e5805862",
+      "lastAttemptAt": "2026-11-23T19:04:11+09:00",
+      "nextRetryAt": "2026-11-24T07:04:11+09:00",
+      "reasonType": "ValueError"
+    },
+    "2026-11-24|奈良|11": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611245311",
+      "signature": "e21ecad369d70da83a9a8001f5c972620100bde8ee01e34543376c3387a513e8",
+      "lastAttemptAt": "2026-11-23T19:04:11+09:00",
+      "nextRetryAt": "2026-11-24T07:04:11+09:00",
+      "reasonType": "ValueError"
+    },
     "2026-11-24|奈良|3": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611245303",
       "signature": "30d58ae05a601739928f781ff25874f785e2ccd4656613417a1b37fe594ba374",
       "lastAttemptAt": "2026-11-23T18:29:48+09:00",
       "nextRetryAt": "2026-11-24T06:29:48+09:00",
+      "reasonType": "ValueError"
+    },
+    "2026-11-24|奈良|4": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611245304",
+      "signature": "47c5c4a6689bd3cf257a47996d7b868db556ca5b85d16adb1d2eab4e0ceeab63",
+      "lastAttemptAt": "2026-11-23T19:04:11+09:00",
+      "nextRetryAt": "2026-11-24T07:04:11+09:00",
+      "reasonType": "ValueError"
+    },
+    "2026-11-24|奈良|6": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611245306",
+      "signature": "adb95fb3836ab0ceac03cdf27b539a3e30af6e43c2d16bd296c852268bb9748a",
+      "lastAttemptAt": "2026-11-23T19:04:11+09:00",
+      "nextRetryAt": "2026-11-24T07:04:11+09:00",
+      "reasonType": "ValueError"
+    },
+    "2026-11-24|奈良|7": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611245307",
+      "signature": "dbd4fcf8926bcc11b58d349e95514635e95680192a86c5c1f965fedcff5abcb9",
+      "lastAttemptAt": "2026-11-23T19:04:11+09:00",
+      "nextRetryAt": "2026-11-24T07:04:11+09:00",
+      "reasonType": "ValueError"
+    },
+    "2026-11-24|奈良|8": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611245308",
+      "signature": "0bdfde8526016a8dec6d0c965835da81963bfeabe713e64e873468af2e805ba8",
+      "lastAttemptAt": "2026-11-23T19:04:11+09:00",
+      "nextRetryAt": "2026-11-24T07:04:11+09:00",
+      "reasonType": "ValueError"
+    },
+    "2026-11-24|奈良|9": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611245309",
+      "signature": "4650221bc15a633c25137cbad7e86412d50b10595ef1acc3d04a12e407d8454f",
+      "lastAttemptAt": "2026-11-23T19:04:11+09:00",
+      "nextRetryAt": "2026-11-24T07:04:11+09:00",
+      "reasonType": "ValueError"
+    },
+    "2026-11-24|松山|1": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611247501",
+      "signature": "10e7f258096bbe3158eea9236762bded4df005f16af992ff625178fbb9f6853d",
+      "lastAttemptAt": "2026-11-23T19:04:11+09:00",
+      "nextRetryAt": "2026-11-24T07:04:11+09:00",
       "reasonType": "ValueError"
     }
   }
