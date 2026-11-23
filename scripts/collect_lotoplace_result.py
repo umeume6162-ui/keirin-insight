@@ -229,6 +229,10 @@ def self_test():
     seen = parse_result(falling, day, code, track, race, grade, cars, url)
     assert seen["results"][-1]["finish"] == "落車棄権" and seen["results"][-1]["exception"] == "落車棄権"
 
+    mixed = html.replace("<td>A3</td>", "<td>A1</td>")
+    mixed = mixed.replace("<td>A1</td>", "<td>A2</td>", 1)
+    observed_mixed = parse_result(mixed, day, code, track, race, "A2", cars, url)
+    assert len(observed_mixed["results"]) == 7
     assert grade_matches("A1", "A2") and grade_matches("A2", "A1")
     assert grade_matches("A3", "A3") and not grade_matches("A3", "A2")
     assert not grade_matches("S1", "A1") and not grade_matches("L1", "A2")
