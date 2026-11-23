@@ -25,3 +25,6 @@ assert.ok(!home.includes('function verifyPublication(a,b,i,l){'),'home must not 
 for(const label of ['媒体の並び予想','脚見せ','他媒体との一致も要求しません','forecastGroups'])assert.ok(forecast.includes(label),'forecast page missing '+label);
 assert.ok(forecast.includes('results.has(r.id)'),'orphan forecast must be visible without result');
 console.log('OK: mobile UI labels, numbered car colors, pre-race forecast rendering guards (static HTML checks only; published feed validation is handled by check_publication_completeness.cjs).');
+
+// Additional one-source orphan-forecast runtime test; still the same UI CI step.
+require('./test_single_source_forecast.cjs');
