@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-24",
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
-  "verificationNote": "選手登録番号は2掲載元4項目照合。2026-11-24 ラモスレオ、阿久津浩之、阿部英斗を既存照合証拠から追加。",
+  "verificationNote": "選手登録番号は2掲載元の氏名・府県・期別・6桁番号照合。2026-11-24に阿竹智史・阿部英光・阿部兼士の3名を追加。",
   "summary": {
-    "rows": 237
+    "rows": 240
   },
   "riders": [
     {
@@ -5709,6 +5709,78 @@
           "https://keirin.netkeiba.com/db/profile/?id=15840"
         ],
         "note": "KI｜公式照合証拠 AUTO-V4-20261123-RESCUE-015840を再検証。公開ページの索引/キャッシュ4項目一致（原HTML全文保存なし）。元台帳も公式照合済、対象のみ再読。"
+      }
+    },
+    {
+      "id": "014105",
+      "name": "阿竹 智史",
+      "prefecture": "徳島",
+      "period": "90",
+      "source": "https://keirin.jp/pc/racerprofile?snum=014105",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=014105",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=014105",
+          "https://www.winticket.jp/keirin/cyclist/014105"
+        ],
+        "note": "KI｜公式照合証拠 MANUAL-KD-V4-20261124-014105: KEIRIN.JPとWINTICKETの公開プロフィールを2サイト照合、原HTML永続保存なし。"
+      }
+    },
+    {
+      "id": "013988",
+      "name": "阿部 英光",
+      "prefecture": "宮城",
+      "period": "89",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013988",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013988",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013988",
+          "https://www.winticket.jp/keirin/cyclist/013988"
+        ],
+        "note": "KI｜公式照合証拠 MANUAL-KD-V4-20261124-013988: KEIRIN.JPとWINTICKETの公開プロフィールを2サイト照合、原HTML永続保存なし。"
+      }
+    },
+    {
+      "id": "014333",
+      "name": "阿部 兼士",
+      "prefecture": "福岡",
+      "period": "93",
+      "source": "https://keirin.jp/sp/racerprofile?snum=014333",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=014333",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=014333",
+          "https://www.winticket.jp/keirin/cyclist/014333"
+        ],
+        "note": "KI｜公式照合証拠 MANUAL-KD-V4-20261124-014333: KEIRIN.JPとWINTICKETの公開プロフィールを2サイト照合、原HTML永続保存なし。"
       }
     }
   ],
