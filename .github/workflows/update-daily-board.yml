@@ -45,7 +45,7 @@ on:
         required: false
         type: string
       historical_second_url:
-        description: 'Optional LotoPlace event-day results URL for comparison'
+        description: 'Optional Chariloto or LotoPlace event-day results URL'
         required: false
         type: string
       historical_class:
@@ -104,78 +104,20 @@ jobs:
           python scripts/collect_netkeirin_result.py --self-test
           python scripts/collect_lotoplace_result.py --self-test
           python scripts/build_daily_board.py --self-test
-      - name: TEMP live two-source historical preview (PR only, no writes)
+      - name: TEMP live netkeirin + Chariloto result comparison (PR only)
         if: github.event_name == 'pull_request'
         continue-on-error: true
         run: |
-          set +e
+          set -e
           python scripts/collect_netkeirin_result.py --date 2026-09-10 --track-code 27 --track 京王閣 --race 2 --class-name A3 --expected-cars 7 --url 'https://keirin.netkeiba.com/race/result/?race_id=202609102702' --out /tmp/ki-live-netkeirin.json
-          left=$?
-          python scripts/collect_lotoplace_result.py --date 2026-09-10 --track-code 27 --track 京王閣 --race 2 --class-name A3 --expected-cars 7 --url 'https://www.lotoplace.jp/keirin/results/27/2026-09-10/' --out /tmp/ki-live-lotoplace.json
-          right=$?
-          echo "LIVE_SOURCE_STATUS netkeirin=$left lotoplace=$right"
+          python scripts/collect_lotoplace_result.py --date 2026-09-10 --track-code 27 --track 京王閣 --race 2 --class-name A3 --expected-cars 7 --url 'https://www.chariloto.com/keirin/results/27/2026-09-10' --out /tmp/ki-live-chariloto.json
+          python scripts/compare_race_results.py --left /tmp/ki-live-netkeirin.json --right /tmp/ki-live-chariloto.json --out /tmp/ki-live-compare.json
           python - <<'PY'
-          import requests
-          from urllib.robotparser import RobotFileParser
-          sources = {
-              "kdreams": ("https://keirin.kdreams.jp/robots.txt",
-                  "https://keirin.kdreams.jp/keiokaku/racedetail/2720260908030002/?pageType=result"),
-              "chariloto": ("https://www.chariloto.com/robots.txt",
-                  "https://www.chariloto.com/keirin/results/27/2026-09-10")
-          }
-          agent = "KEIRIN-INSIGHT-Research/1.0 (single race read-only)"
-          for name, (robots_url, target) in sources.items():
-              try:
-                  r = requests.get(robots_url, headers={"User-Agent": agent}, timeout=12)
-                  if r.status_code == 200:
-                      rp = RobotFileParser()
-                      rp.parse(r.text.splitlines())
-                      allowed = rp.can_fetch(agent, target)
-                  elif r.status_code in (404, 410):
-                      allowed = True
-                  else:
-                      allowed = False
-                  print(f"ALT_SOURCE_ROBOTS {name} status={r.status_code} allowed={allowed}")
-                  if allowed:
-                      page = requests.get(target, headers={"User-Agent": agent}, timeout=18)
-                      print(f"ALT_SOURCE_HTML {name} status={page.status_code} bytes={len(page.content)}")
-                      if page.status_code == 200:
-                          from bs4 import BeautifulSoup
-                          soup = BeautifulSoup(page.text, "html.parser")
-                          candidates=[]
-                          for table in soup.select("table"):
-                              rows=table.select("tr")
-                              labels=[r.get_text(" ", strip=True)[:120] for r in rows]
-                              if any("田村" in x or "篠田" in x for x in labels):
-                                  candidates.append({"classes": str(table.get("class",[]))[:90],
-                                      "nrows": len(rows),
-                                      "headers": [c.get_text(" ",strip=True)[:32] for c in table.select("th")[:15]],
-                                      "sample":labels[:3], "riderRows":[x for x in labels if "田村" in x or "篠田" in x][:3]})
-                          print("ALT_TABLE_SHAPES",name,str(candidates[:4])[:2500])
-                          if name == "chariloto":
-                              for table in soup.select("table"):
-                                  if "田村" not in table.get_text(" ",strip=True):
-                                      continue
-                                  par=table
-                                  ancestors=[]
-                                  for i in range(5):
-                                      par=par.parent
-                                      if par is None:
-                                          break
-                                      ancestors.append((par.name,str(par.get("id",""))[:60],str(par.get("class",[]))[:120],str(par.get("data-race",""))))
-                                  prev=table.find_previous(["h1","h2","h3","h4","h5"])
-                                  print("CHARILOTO_CONTEXT",str({"title":soup.title.get_text(" ",strip=True)[:120] if soup.title else "",
-                                    "previous_heading":prev.get_text(" ",strip=True)[:100] if prev else "",
-                                    "ancestors":ancestors})[:1200])
-                                  break
-
-
-              except requests.RequestException as exc:
-                  print(f"ALT_SOURCE_NETWORK_ERROR {name} kind={type(exc).__name__}")
+          import json
+          data=json.load(open('/tmp/ki-live-compare.json',encoding='utf-8'))
+          assert data['carCount']==7 and not data['formalPass']
+          print('LIVE_TWO_SOURCE_COMPARISON',data['status'],'disagreements=',len(data['disagreements']))
           PY
-          if [ "$left" -eq 0 ] && [ "$right" -eq 0 ]; then
-            python scripts/compare_race_results.py --left /tmp/ki-live-netkeirin.json --right /tmp/ki-live-lotoplace.json --out /tmp/ki-live-compare.json
-          fi
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.source_url != ''
         env:
@@ -245,7 +187,7 @@ jobs:
           assert x['sourceId']=='netkeirin-result' and len(x['results']) in (7,9)
           print('HISTORICAL_SOURCE_OBSERVATION_OK: full-car candidate, not formal PASS')
           PY
-      - name: Collect second historical result and compare full fields
+      - name: Collect second historical result from approved day-page and compare full fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url != '' && inputs.historical_second_url != ''
         env:
           RACE_DATE: ${{ inputs.race_date }}
