@@ -51,10 +51,11 @@ def grade_matches(source_grade, expected_class):
     accepted = {
         "A3": {"A3"}, "A1A2": {"A1", "A2"},
         "S": {"S1", "S2"}, "L1": {"L1"},
-        "A1": {"A1", "A2"}, "A2": {"A1", "A2"}, "S1": {"S1"}, "S2": {"S2"}
+        "A1": {"A1", "A2"}, "A2": {"A1", "A2"}, "S1": {"S1", "S2"}, "S2": {"S1", "S2"}
     }
     # A1/A2 競走 can contain both rider grades even when the sheet label is A1 or A2.
-    # Keep A3, S and L groups separate; never relax rider identity or race keys.
+    # S1/S2 races also mix rider grades. Keep A, S and L groups separate;
+    # never relax rider identity or race keys.
     if target not in accepted:
         raise ValueError("Unsupported race class for source verification")
     return from_source in accepted[target]
@@ -177,7 +178,12 @@ def self_test():
     observed_mixed = extract(mixed, "2026-09-10", "27", "京王閣", 2,
                              "A2", 7, url)
     assert len(observed_mixed["results"]) == 7
+    mixed_s = html.replace("83期 A3", "83期 S1").replace(
+        "テスト選手2 福島 48歳 83期 S1", "テスト選手2 福島 48歳 83期 S2")
+    assert len(extract(mixed_s, "2026-09-10", "27", "京王閣", 2, "S2", 7, url)["results"]) == 7
     assert grade_matches("A1", "A2") and grade_matches("A2", "A1")
+    assert grade_matches("S1", "S2") and grade_matches("S2", "S1")
+    assert not grade_matches("A1", "S2") and not grade_matches("A3", "S1")
     assert grade_matches("A3", "A3") and not grade_matches("A3", "A2")
     assert not grade_matches("S1", "A1") and not grade_matches("L1", "A2")
     try:
