@@ -519,6 +519,22 @@ jobs:
                        "|---|---|---|---:|"]
               rows += [f"| {src} | {status} | {reason} | {count} |"
                        for (src, status, reason), count in sorted(source_attempts.items())]
+          rider_discrepancies = [
+              (item.get("raceKey", ""), item["identityMismatch"])
+              for item in report["results"]
+              if isinstance(item.get("identityMismatch"), dict)
+          ]
+          if rider_discrepancies:
+              rows += ["", "| Rider identity hold | Car | Fields |",
+                       "|---|---:|---|"]
+              for race_key, mismatch in rider_discrepancies[:20]:
+                  car = mismatch.get("car")
+                  fields = mismatch.get("fields")
+                  if (re.fullmatch(r"20\d{2}-\d{2}-\d{2}\|\d{2}\|(?:[1-9]|1[0-2])", race_key)
+                          and type(car) is int and 1 <= car <= 9
+                          and isinstance(fields, list) and fields
+                          and set(fields) <= {"name", "prefecture", "period"}):
+                      rows.append(f"| {race_key} | {car} | {','.join(fields)} |")
           if report.get("partialExisting"):
               rows += ["", "| Stored-result review | Missing cars | Duplicate cars | Identity mismatch |",
                        "|---|---|---|---|"]
