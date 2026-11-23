@@ -4,8 +4,8 @@
   "sourceTab": "VERIFIED publication",
   "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence.",
   "summary": {
-    "races": 5,
-    "rider_rows": 35
+    "races": 6,
+    "rider_rows": 42
   },
   "races": [
     {
@@ -583,6 +583,120 @@
           "line": [
             7,
             2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-05|75|7",
+      "key": "2026-10-05|75|7",
+      "date": "2026-10-05",
+      "track": "松山",
+      "trackCode": "75",
+      "race": 7,
+      "size": 7,
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020007/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020007/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+          "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_7.html"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ]
+      },
+      "forecastGroups": [
+        [
+          4,
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3,
+          7,
+          5
+        ],
+        [
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "森本桂太郎",
+          "prefecture": "愛媛",
+          "period": "121",
+          "line": [
+            4,
+            1
+          ]
+        },
+        {
+          "number": 2,
+          "name": "荻原 尚人",
+          "prefecture": "宮城",
+          "period": "89",
+          "line": [
+            2
+          ]
+        },
+        {
+          "number": 6,
+          "name": "福元 啓太",
+          "prefecture": "大阪",
+          "period": "119",
+          "line": [
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "岡 光良",
+          "prefecture": "埼玉",
+          "period": "94",
+          "line": [
+            3,
+            7,
+            5
+          ]
+        },
+        {
+          "number": 5,
+          "name": "内田 玄希",
+          "prefecture": "東京",
+          "period": "94",
+          "line": [
+            3,
+            7,
+            5
+          ]
+        },
+        {
+          "number": 4,
+          "name": "保田 浩輔",
+          "prefecture": "岡山",
+          "period": "123",
+          "line": [
+            4,
+            1
+          ]
+        },
+        {
+          "number": 3,
+          "name": "早坂 秀悟",
+          "prefecture": "茨城",
+          "period": "90",
+          "line": [
+            3,
+            7,
+            5
           ]
         }
       ]
