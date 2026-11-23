@@ -12,7 +12,7 @@ const fake=audit(candidate,fixture);
 assert.equal(fake.publicationPassed,false);assert.equal(fake.status,'NOT_READY');assert.ok(fake.errors.some(x=>x.includes('synthetic')));
 const absent=audit(candidate,{});
 assert.equal(absent.publicationPassed,false);assert.equal(absent.status,'NOT_READY');
-assert.ok(absent.errors.some(x=>x.includes('original full result')));
+assert.ok(absent.errors.some(x=>x.includes('official full result rows not supplied')));
 const mismatch=JSON.parse(JSON.stringify(fixture));delete mismatch.exampleOnly;
 mismatch.results[0].finishRaw='2';mismatch.results[0].finish=2;
 const bad=audit(candidate,mismatch);
