@@ -1,7 +1,10 @@
 name: Update daily race board
 on:
-  push:
+  pull_request:
     paths:
+      - 'scripts/collect_chariloto_entry.py'
+      - 'scripts/upsert_daily_sheets.py'
+      - 'scripts/build_daily_board.py'
       - '.github/workflows/update-daily-board.yml'
   workflow_dispatch:
   schedule:
@@ -22,6 +25,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check read-only Sheets credential
+        if: github.event_name != 'pull_request'
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
@@ -36,11 +40,17 @@ jobs:
           python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py
           python scripts/collect_chariloto_entry.py --self-test
           python scripts/build_daily_board.py --self-test
+      - name: Safe preview of one public racecard (not a save)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: python scripts/collect_chariloto_entry.py --date 2026-11-23 --track-code 26 --track 西武園 --race 1
       - name: Build daily board
+        if: github.event_name != 'pull_request'
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/build_daily_board.py --out daily-board-feed-v1.json
       - name: Commit changed daily feed only
+        if: github.event_name != 'pull_request'
         run: |
           git add daily-board-feed-v1.json
           if git diff --cached --quiet; then
