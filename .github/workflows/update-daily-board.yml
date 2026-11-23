@@ -184,18 +184,6 @@ jobs:
           python scripts/collect_historical_batch.py --self-test
           python scripts/classify_historical_candidates.py --self-test
           python scripts/build_daily_board.py --self-test
-      - name: PR-only live start-time source preview
-        if: github.event_name == 'pull_request'
-        run: |
-          cp daily-board-feed-v1.json /tmp/ki-start-times-preview.json
-          python scripts/enrich_daily_start_times.py --feed /tmp/ki-start-times-preview.json --cache /tmp/ki-start-times-cache.json --limit 3
-          python - <<'PY'
-          import json
-          board=json.load(open('/tmp/ki-start-times-preview.json',encoding='utf-8'))
-          has=[(r['date'],r['track'],r['race'],r['startTime']) for r in board['races'] if r.get('startTime')]
-          print('START_TIME_LIVE_PREVIEW',has[:5])
-          if not has:raise SystemExit('No source-confirmed race time; hold live enrichment')
-          PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
