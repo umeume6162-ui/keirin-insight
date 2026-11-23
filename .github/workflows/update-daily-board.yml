@@ -1,7 +1,12 @@
 name: Update daily race board
 on:
-  push:
+  pull_request:
     paths:
+      - 'scripts/collect_chariloto_entry.py'
+      - 'scripts/probe_daily_source.py'
+      - 'scripts/collect_tospo_entry.py'
+      - 'scripts/upsert_daily_sheets.py'
+      - 'scripts/build_daily_board.py'
       - '.github/workflows/update-daily-board.yml'
   workflow_dispatch:
   schedule:
@@ -22,6 +27,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check read-only Sheets credential
+        if: github.event_name != 'pull_request'
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
@@ -33,14 +39,17 @@ jobs:
         run: pip install 'google-auth==2.38.0' 'requests==2.32.3' 'beautifulsoup4==4.14.2'
       - name: Check daily intake script syntax
         run: |
-          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py
+          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py
           python scripts/collect_chariloto_entry.py --self-test
+          python scripts/collect_tospo_entry.py --self-test
           python scripts/build_daily_board.py --self-test
       - name: Build daily board
+        if: github.event_name != 'pull_request'
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/build_daily_board.py --out daily-board-feed-v1.json
       - name: Commit changed daily feed only
+        if: github.event_name != 'pull_request'
         run: |
           git add daily-board-feed-v1.json
           if git diff --cached --quiet; then
