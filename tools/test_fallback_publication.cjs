@@ -32,4 +32,16 @@ const proof=record.officialVerification.sourceProof;const originalTier=proof.sou
 assert.throws(browserVerify,/掲載検査/);offlineVerify(false);
 proof.sourceTier=originalTier;
 browserVerify();offlineVerify(true);
-console.log('FALLBACK_PUBLICATION_TEST_OK: 7-car single source accepted, wrong row URL and source tier rejected; original data untouched');
+// The second proven provider must pass the same provenance and car-row checks.
+const net='https://keirin.netkeiba.com/race/result/?race_id=202610018303';
+record.officialVerification.source=net;
+record.officialVerification.matchingSources=[net];
+rows.forEach(r=>{r[col.sourceUrl]=net});
+browserVerify();offlineVerify(true);
+record.officialVerification.source='https://malicious.example/race/result/';
+record.officialVerification.matchingSources=[record.officialVerification.source];
+assert.throws(browserVerify,/掲載検査/);offlineVerify(false);
+record.officialVerification.source=net;
+record.officialVerification.matchingSources=[net];
+browserVerify();offlineVerify(true);
+console.log('FALLBACK_PUBLICATION_TEST_OK: Chariloto and netkeirin accepted, wrong row URL/provider/source tier rejected; original data untouched');
