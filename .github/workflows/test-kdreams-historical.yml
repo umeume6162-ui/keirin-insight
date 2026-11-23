@@ -45,53 +45,43 @@ jobs:
           print('LIVE_PROBE_OBSERVED',len(result['observation']['results']),
                 result['verificationState'])
           PY
-      - name: Inspect next three pending historical races read-only
+      - name: Probe different venue Kurume 3R historical result against V99
         continue-on-error: true
         run: |
           python - <<'PY'
           import sys,json
           sys.path.insert(0,'scripts')
-          from collect_kdreams_historical import parse_historical_html,validate_historical_url
+          from collect_kdreams_historical import parse_historical_html
           import collect_kdreams_result as source
           from compare_race_results import normalized_name,normalized_prefecture,canonical_method
-          cases=json.loads('''[["2026-10-05","75","松山",5,"A1A2",7,"https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020005/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"],["2026-10-05","75","松山",8,"S",7,"https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020008/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"],["2026-10-05","75","松山",9,"S",7,"https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020009/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"]]''')
-          baseline=json.loads('''{"2026-10-05|75|5":[{"number":7,"name":"齊藤英伊須","prefecture":"青森","period":"125","finish":"1","method":"捲くり","exception":""},{"number":3,"name":"高橋秀吉","prefecture":"秋田","period":"88","finish":"2","method":"マーク","exception":""},{"number":2,"name":"曽我圭佑","prefecture":"熊本","period":"113","finish":"3","method":"","exception":""},{"number":4,"name":"池田浩士","prefecture":"佐賀","period":"86","finish":"4","method":"","exception":""},{"number":5,"name":"黒滝大翔","prefecture":"茨城","period":"117","finish":"5","method":"","exception":""},{"number":6,"name":"武田良太","prefecture":"愛媛","period":"88","finish":"6","method":"","exception":""},{"number":1,"name":"木村浩宣","prefecture":"香川","period":"97","finish":"7","method":"","exception":""}],"2026-10-05|75|8":[{"number":7,"name":"掛水泰範","prefecture":"高知","period":"98","finish":"1","method":"差し","exception":""},{"number":3,"name":"藤岡隆治","prefecture":"徳島","period":"98","finish":"2","method":"マーク","exception":""},{"number":2,"name":"中川勝貴","prefecture":"福井","period":"109","finish":"3","method":"","exception":""},{"number":4,"name":"佐々木翔一","prefecture":"佐賀","period":"93","finish":"4","method":"","exception":""},{"number":1,"name":"磯島成介","prefecture":"青森","period":"115","finish":"5","method":"","exception":""},{"number":5,"name":"水谷良和","prefecture":"愛知","period":"70","finish":"6","method":"","exception":""},{"number":6,"name":"佐藤大地","prefecture":"三重","period":"125","finish":"7","method":"","exception":""}],"2026-10-05|75|9":[{"number":4,"name":"宮崎大空","prefecture":"熊本","period":"115","finish":"1","method":"差し","exception":""},{"number":1,"name":"森山智徳","prefecture":"熊本","period":"98","finish":"2","method":"逃げ","exception":""},{"number":2,"name":"坂本修一","prefecture":"岡山","period":"99","finish":"3","method":"","exception":""},{"number":5,"name":"三澤優樹","prefecture":"福島","period":"127","finish":"4","method":"","exception":""},{"number":3,"name":"丸山啓一","prefecture":"静岡","period":"74","finish":"5","method":"","exception":""},{"number":7,"name":"山崎泰己","prefecture":"岡山","period":"101","finish":"6","method":"","exception":""},{"number":6,"name":"金成和幸","prefecture":"福島","period":"88","finish":"7","method":"","exception":""}]}''')
-          for day,code,track,race,grade,cars,url in cases:
-              key=f'{day}|{code}|{race}'
-              try:
-                  validate_historical_url(url,day,code,track,race)
-                  html=source.fetch(url)
-                  obs=parse_historical_html(html,url=url,day=day,code=code,track=track,
-                                            race=race,grade=grade,cars=cars)
-                  observed={int(x['number']):x for x in obs['observation']['results']}
-                  diffs=[]
-                  for row in baseline[key]:
-                      actual=observed.get(row['number'])
-                      if actual is None:
-                          diffs.append((row['number'],'missing'));continue
-                      for field,normalizer in (
-                          ('name',normalized_name),
-                          ('prefecture',normalized_prefecture),
-                          ('period',str),
-                          ('finish',str),
-                          ('method',canonical_method),
-                          ('exception',str),
-                      ):
-                          if normalizer(actual.get(field,'') or '')!=normalizer(row[field]):
-                              diffs.append((row['number'],field))
-                  print('HISTORICAL_KDREAMS_OBSERVED',key,len(observed))
-                  print('HISTORICAL_V99_COMPARE',key,
-                        'PASS' if not diffs else 'HOLD',
-                        'mismatchCount',len(diffs),'details',diffs[:10])
-              except Exception as exc:
-                  print('HISTORICAL_KDREAMS_HOLD',key,type(exc).__name__,str(exc)[:120])
-                  if 'html' in locals():
-                      from bs4 import BeautifulSoup
-                      import re
-                      page=BeautifulSoup(html,'html.parser')
-                      title=page.title.get_text(' ',strip=True) if page.title else 'NO_TITLE'
-                      print('HISTORICAL_TITLE',key,title[:140])
-                      print('HISTORICAL_TITLE_DATES',key,re.findall(r'\\d{4}年\\d{1,2}月\\d{1,2}日',title))
-                      html=None
-
+          day,code,track,race,grade,cars='2026-10-01','83','久留米',3,'A3',7
+          url='https://keirin.kdreams.jp/kurume/racedetail/8320261001010003/?pageType=showResult'
+          expected=json.loads('''[{"number":1,"name":"久保田智之","prefecture":"福岡","period":"129","finish":"1","method":"捲くり","exception":""},{"number":4,"name":"秋山貴宏","prefecture":"佐賀","period":"89","finish":"2","method":"マーク","exception":""},{"number":3,"name":"森佑樹","prefecture":"岡山","period":"94","finish":"3","method":"","exception":""},{"number":6,"name":"小野祐作","prefecture":"岡山","period":"72","finish":"4","method":"","exception":""},{"number":7,"name":"斎藤敦","prefecture":"大阪","period":"103","finish":"5","method":"","exception":""},{"number":5,"name":"岡崎和久","prefecture":"奈良","period":"78","finish":"6","method":"","exception":""},{"number":2,"name":"樫村伸平","prefecture":"兵庫","period":"99","finish":"7","method":"","exception":""}]''')
+          key=f'{day}|{code}|{race}'
+          try:
+              html=source.fetch(url)
+              obj=parse_historical_html(html,url=url,day=day,code=code,track=track,
+                                        race=race,grade=grade,cars=cars)
+              results={int(r['number']):r for r in obj['observation']['results']}
+              issues=[]
+              for row in expected:
+                  actual=results.get(row['number'])
+                  if actual is None:
+                      issues.append((row['number'],'missing'));continue
+                  for field,normal in (
+                      ('name',normalized_name),('prefecture',normalized_prefecture),
+                      ('period',str),('finish',str),('method',canonical_method),
+                      ('exception',str),
+                  ):
+                      if normal(actual.get(field,'') or '')!=normal(row[field]):
+                          issues.append((row['number'],field))
+              print('KURUME_KDREAMS_OBSERVED',key,len(results))
+              print('KURUME_V99_COMPARE',key,'PASS' if not issues else 'HOLD',
+                    'mismatchCount',len(issues),'details',issues[:7])
+          except Exception as exc:
+              print('KURUME_KDREAMS_HOLD',key,type(exc).__name__,str(exc)[:120])
+              if 'html' in locals():
+                  from bs4 import BeautifulSoup
+                  page=BeautifulSoup(html,'html.parser')
+                  print('KURUME_TITLE',key,(page.title.get_text(' ',strip=True) if page.title else 'NO_TITLE')[:140])
           PY
