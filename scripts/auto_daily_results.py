@@ -373,11 +373,19 @@ def process(entries, results, start, end, limit=4, write=False,
                 item.update(status="DRY_RUN_TWO_SOURCES_MATCH", cars=expected_delta,
                             partialCompleted=was_partial)
         except Exception as exc:
+            # Return only finite source stage/reason codes, never source HTML or
+            # raw exception strings. Preserve original failure cause for routing.
+            underlying = exc.__cause__ if getattr(exc, "source_stage", None) and exc.__cause__ else exc
+            reason = classify_result_hold(underlying, phase)
             item.update(status="SOURCE_OR_IDENTITY_REVIEW_NO_WRITE",
-                        errorType=type(exc).__name__,
+                        errorType=type(underlying).__name__,
                         failurePhase=phase,
-                        reasonCode=classify_result_hold(exc, phase),
-                        reviewRoute=review_route(classify_result_hold(exc, phase)))
+                        reasonCode=reason,
+                        reviewRoute=review_route(reason))
+            if getattr(exc, "source_stage", None) in (
+                    "PRIMARY_NETKEIRIN", "SECONDARY_EXPLICIT",
+                    "SECONDARY_BOTH_UNAVAILABLE"):
+                item["sourceStage"] = exc.source_stage
         reports.append(item)
     return {"schema": "ki-daily-result-intake-v1", "formalPass": False,
             "eligibleTotal": len(all_due_candidates), "eligibleExamined": len(reports),
@@ -476,6 +484,25 @@ def self_test():
     assert summary["results"][0]["failurePhase"] == "COLLECT_COMPARE"
     assert summary["results"][0]["reasonCode"] == "ENTRY_RIDER_IDENTITY_MISMATCH"
     assert summary["results"][0]["reviewRoute"] == "RIDER_OR_CLASS_EVIDENCE_REVIEW"
+    from collect_historical_pair import SourceStageError
+    def fail_primary(*args):
+        try:
+            raise ValueError("Robots rules prohibit this page")
+        except ValueError as exc:
+            raise SourceStageError("PRIMARY_NETKEIRIN") from exc
+    source_hold = process(records, [], start, start, collect_fn=fail_primary,
+                          apply_fn=pretend_apply)
+    assert source_hold["results"][0]["sourceStage"] == "PRIMARY_NETKEIRIN"
+    assert source_hold["results"][0]["reasonCode"] == "SOURCE_ROBOTS_DISALLOWED"
+    def fail_secondary(*args):
+        try:
+            raise ValueError("Exactly one complete target-race result table required")
+        except ValueError as exc:
+            raise SourceStageError("SECONDARY_BOTH_UNAVAILABLE") from exc
+    source_hold = process(records, [], start, start, collect_fn=fail_secondary,
+                          apply_fn=pretend_apply)
+    assert source_hold["results"][0]["sourceStage"] == "SECONDARY_BOTH_UNAVAILABLE"
+    assert source_hold["results"][0]["reasonCode"] == "SOURCE_INCOMPLETE_OR_AMBIGUOUS_TABLE"
     assert classify_result_hold(ValueError("Rider class conflicts with requested race class"), "COLLECT_COMPARE") == "SOURCE_RIDER_CLASS_MISMATCH"
     assert classify_result_hold(ValueError("Unexpected Sheet response"), "SHEETS_DRY_RUN") == "SHEETS_OTHER_ERROR"
     assert eligible_races(records, [[""] * 14 + ["2026-11-23|26|1"]], start, start) == []
