@@ -117,6 +117,29 @@ jobs:
           python scripts/collect_historical_batch.py --self-test
           python scripts/classify_historical_candidates.py --self-test
           python scripts/build_daily_board.py --self-test
+      - name: TEMP live next-day Shizuoka 1R first insert with fail-closed guards
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python scripts/collect_tospo_entry.py --date 2026-11-24 --track-code 38 --track 静岡 --race 1 --url 'https://keirin.tokyo-sports.co.jp/list/race/20261123_30926' --out /tmp/ki-shizuoka-20261124-one-race.json
+          python scripts/upsert_daily_sheets.py --input /tmp/ki-shizuoka-20261124-one-race.json --validate-only
+          python scripts/upsert_daily_sheets.py --input /tmp/ki-shizuoka-20261124-one-race.json > /tmp/ki-shizuoka-dry-run.json
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/ki-shizuoka-dry-run.json',encoding='utf-8'))
+          print("SHIZUOKA_FIRST_DRY_RUN",json.dumps(x,ensure_ascii=False))
+          e=x['summary']['entries']
+          assert e['new']==7 and e['changed']==0 and e['unchanged']==0
+          assert x['summary']['results']['new']==0 and x['planned_updates']==0
+          c=json.load(open('/tmp/ki-shizuoka-20261124-one-race.json',encoding='utf-8'))
+          rows=c['entries']
+          assert len(rows)==7 and sorted(v['number'] for v in rows)==list(range(1,8))
+          assert all(v['date']=='2026-11-24' and v['trackCode']=='38' and v['track']=='静岡' and v['race']==1 for v in rows)
+          print("SHIZUOKA_NEW_RACE_GUARD_OK: only target 7 cars")
+          PY
+          python scripts/upsert_daily_sheets.py --input /tmp/ki-shizuoka-20261124-one-race.json --apply
+          python scripts/upsert_daily_sheets.py --input /tmp/ki-shizuoka-20261124-one-race.json --apply
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
