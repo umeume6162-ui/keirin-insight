@@ -84,6 +84,7 @@ def run(plan, output):
                 result = existing.get("comparison", {})
                 if (meta.get("specHash") == spec_sha and result.get("raceKey") == key
                         and result.get("formalPass") is False
+                        and result.get("status") == "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING"
                         and result.get("carCount") == row["expectedCars"]
                         and isinstance(existing.get("observations"), list)
                         and len(existing["observations"]) == 2):
@@ -180,6 +181,22 @@ def self_test():
         with patch.object(sys.modules[__name__], "collect_auto", side_effect=AssertionError("must not overwrite")):
             corrupted = run({"races": [demo]}, directory)
             assert corrupted["results"][0]["status"] == "EXISTING_FILE_CONFLICT_REVIEW"
+
+    # A complete but conflicting stored comparison must remain under review,
+    # not be silently treated as an already verified reusable candidate.
+    with TemporaryDirectory() as directory:
+        differing = make_obs("https://two.example/r", "b")
+        differing["results"][0]["finish"] = "7"
+        conflicting = {"observations": [a, differing]}
+        conflicting["comparison"] = compare(conflicting)
+        assert conflicting["comparison"]["status"] == "SOURCE_CONFLICT_REVIEW_REQUIRED"
+        conflicting["batchMeta"] = {"schema": "ki-historical-candidate-batch-v1",
+                                    "specHash": digest_spec(demo)}
+        store(Path(directory) / "2026-09-10_27_2.json", conflicting)
+        with patch.object(sys.modules[__name__], "collect_auto",
+                          side_effect=AssertionError("must not replace disagreement")):
+            reviewed = run({"races": [demo]}, directory)
+            assert reviewed["results"][0]["status"] == "EXISTING_FILE_CONFLICT_REVIEW"
 
     # A pinned publication pair must never be silently replaced by a pool.
     with TemporaryDirectory() as directory:
