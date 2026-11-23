@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
   "verificationNote": "KEIRIN.JPと異なる別掲載元で氏名・府県・期別・6桁IDの一致。2026-11-24阿部弘、阿部充宏の2名を追加。 2026-11-24阿部蒼大015960、阿部大樹014370を公式証拠2元一致で追加。",
   "summary": {
-    "rows": 246
+    "rows": 249
   },
   "riders": [
     {
@@ -5926,6 +5926,78 @@
           "https://www.chariloto.com/keirin_athletes/12717"
         ],
         "note": "V4証拠台帳 MANUAL-V4-20261124-012717（2媒体で氏名・府県・期別・6桁登録番号を確認、原HTML全文永続保存なし）"
+      }
+    },
+    {
+      "id": "015035",
+      "name": "阿部 拓真",
+      "prefecture": "宮城",
+      "period": "107",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015035",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015035",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015035",
+          "https://www.winticket.jp/keirin/cyclist/015035"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-015035（公開2媒体の氏名/府県/期別/登録番号4項目一致。元HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "015971",
+      "name": "阿部 凪汰",
+      "prefecture": "埼玉",
+      "period": "129",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015971",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015971",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015971",
+          "https://www.winticket.jp/keirin/cyclist/015971"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-015971（公開2媒体の氏名/府県/期別/登録番号4項目一致。元HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "013080",
+      "name": "阿部 利光",
+      "prefecture": "宮城",
+      "period": "77",
+      "source": "https://keirin.jp/pc/racerprofile?snum=013080",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=013080",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=013080",
+          "https://www.winticket.jp/keirin/cyclist/013080"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-013080（公開2媒体の氏名/府県/期別/登録番号4項目一致。元HTML全文は保存せず）"
       }
     }
   ],
