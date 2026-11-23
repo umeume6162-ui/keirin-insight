@@ -12,7 +12,7 @@ import json
 import re
 import sys
 import unicodedata
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urlsplit
 from urllib.robotparser import RobotFileParser
@@ -167,9 +167,16 @@ def enrich(board,cache,loader=fetch,limit=4):
         raise ValueError("Unknown stats cache schema")
     if not 1<=limit<=30:raise ValueError("Invalid per-run limit")
     old=cache["races"]
+    # Failed source rows are retried after a bounded cooldown; entry changes
+    # invalidate holds immediately. This cache never represents a "no race".
+    old_holds=cache.get("holds",{})
+    if not isinstance(old_holds,dict):
+        raise ValueError("Invalid source hold cache")
+    now=datetime.now(JST)
     next_cache={}
+    next_holds={}
     pending=[]
-    counts={"cached":0,"fetched":0,"held":0,"notApplicable":0}
+    counts={"cached":0,"fetched":0,"held":0,"notApplicable":0,"cooldown":0}
     for race in board["races"]:
         for entry in race.get("entries",[]):
             entry.pop("riderStats",None)
@@ -188,6 +195,16 @@ def enrich(board,cache,loader=fetch,limit=4):
             next_cache[race["key"]]=record
             counts["cached"]+=1
         else:
+            blocked=old_holds.get(race.get("key"))
+            if (isinstance(blocked,dict) and blocked.get("sourceUrl")==url and
+                blocked.get("signature")==sig and isinstance(blocked.get("nextRetryAt"),str)):
+                try:
+                    if datetime.fromisoformat(blocked["nextRetryAt"])>now:
+                        next_holds[race["key"]]=blocked
+                        counts["cooldown"]+=1
+                        continue
+                except (ValueError,TypeError):
+                    pass
             pending.append((race,url,sig))
     # Prefer the current meeting over future cards that may not yet contain
     # rider statistics. Never let tomorrow repeatedly starve todays races.
@@ -205,8 +222,16 @@ def enrich(board,cache,loader=fetch,limit=4):
         except Exception as exc:
             print("RIDER_STATS_HOLD",race["key"],type(exc).__name__,str(exc)[:120],file=sys.stderr)
             counts["held"]+=1
+            # Current-day sources change more quickly than future schedules.
+            race_date=datetime.strptime(race["date"],"%Y-%m-%d").date()
+            hours=4 if race_date==now.date() else 12
+            next_holds[race["key"]]={"sourceUrl":url,"signature":sig,
+               "lastAttemptAt":now.isoformat(timespec="seconds"),
+               "nextRetryAt":(now+timedelta(hours=hours)).isoformat(timespec="seconds"),
+               "reasonType":type(exc).__name__}
     counts["deferred"]=max(0,len(pending)-limit)
     cache["races"]=dict(sorted(next_cache.items()))
+    cache["holds"]=dict(sorted(next_holds.items()))
     return counts
 
 def attach(race,record):
@@ -237,8 +262,19 @@ def self_test():
     race["entries"][0]["name"]="別選手"
     hold=enrich(board,cache,lambda _:html,1)
     assert hold["held"]==1 and all("riderStats" not in x for x in race["entries"])
-    assert cache["races"]=={}
-    print("SELF_TEST_OK: full 7-car stats, identity-binding, source window and stale-cache rejection")
+    assert cache["races"]=={} and cache["holds"][race["key"]]["reasonType"]=="ValueError"
+    blocked=enrich(board,cache,lambda _:(_ for _ in ()).throw(AssertionError("cooldown fail")),1)
+    assert blocked["cooldown"]==1 and blocked["fetched"]==0
+    assert not any(e.get("riderStats") for e in race["entries"])
+    # A further rider change must invalidate a hold rather than keep it forever.
+    race["entries"][0]["name"]="新しい別選手"
+    called=[0]
+    def check_retry(_):
+        called[0]+=1
+        return html
+    recheck=enrich(board,cache,check_retry,1)
+    assert recheck["held"]==1 and called==[1]
+    print("SELF_TEST_OK: full 7-car stats, identity-binding, stale cache, bounded source cooldown")
 
 def main():
     p=argparse.ArgumentParser()
