@@ -152,6 +152,23 @@ jobs:
                                       "headers": [c.get_text(" ",strip=True)[:32] for c in table.select("th")[:15]],
                                       "sample":labels[:3], "riderRows":[x for x in labels if "田村" in x or "篠田" in x][:3]})
                           print("ALT_TABLE_SHAPES",name,str(candidates[:4])[:2500])
+                          if name == "chariloto":
+                              for table in soup.select("table"):
+                                  if "田村" not in table.get_text(" ",strip=True):
+                                      continue
+                                  par=table
+                                  ancestors=[]
+                                  for i in range(5):
+                                      par=par.parent
+                                      if par is None:
+                                          break
+                                      ancestors.append((par.name,str(par.get("id",""))[:60],str(par.get("class",[]))[:120],str(par.get("data-race",""))))
+                                  prev=table.find_previous(["h1","h2","h3","h4","h5"])
+                                  print("CHARILOTO_CONTEXT",str({"title":soup.title.get_text(" ",strip=True)[:120] if soup.title else "",
+                                    "previous_heading":prev.get_text(" ",strip=True)[:100] if prev else "",
+                                    "ancestors":ancestors})[:1200])
+                                  break
+
 
               except requests.RequestException as exc:
                   print(f"ALT_SOURCE_NETWORK_ERROR {name} kind={type(exc).__name__}")
