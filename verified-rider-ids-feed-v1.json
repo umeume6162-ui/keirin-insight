@@ -2,9 +2,9 @@
   "schema": "ki-official-rider-ids-v1",
   "snapshotDate": "2026-11-23",
   "sourceTab": "KI｜手動照合受付",
-  "verificationNote": "KEIRIN.JPと別掲載元の固定4項目照合 187件。各officialVerificationに根拠を保持。直接ライブ取得・上流独立性の証明とは区別。",
+  "verificationNote": "公開選手IDの4必須項目を2掲載サイト照合 194件。各officialVerificationに証拠参照。検索キャッシュの転記と直接ライブ取得、サイトごとの上流独立性を区別。",
   "summary": {
-    "rows": 187
+    "rows": 194
   },
   "riders": [
     {
@@ -4506,6 +4506,174 @@
           "https://www.winticket.jp/keirin/cyclist/015534"
         ],
         "note": "既存AUTO受付と2026-11-23公式・WINTICKETの検索キャッシュ照合。4必須項目一致／元選手ID台帳row260 G:K再読済。検索キャッシュの項目転記でありライブ全文取得ではない。掲載サイト間の上流独立性は未立証。"
+      }
+    },
+    {
+      "id": "015883",
+      "name": "吉田夢希斗",
+      "prefecture": "埼玉",
+      "period": "127",
+      "source": "https://keirin.jp/sp/racerprofile?snum=015883",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=015883",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=015883",
+          "https://www.winticket.jp/keirin/cyclist/015883"
+        ],
+        "note": "既存の取得済み公式照合証拠 AUTO-20261123T040638JST-233 に記録された2媒体4必須項目一致。元選手台帳row233 G:Kへ救済保存・再読済。検索インデックス/キャッシュからの項目転記でありライブ直接取得ではない。媒体の上流独立性は未立証。"
+      }
+    },
+    {
+      "id": "014463",
+      "name": "久保 将史",
+      "prefecture": "神奈",
+      "period": "95",
+      "source": "https://keirin.jp/sp/racerprofile?snum=014463",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=014463",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=014463",
+          "https://www.winticket.jp/keirin/cyclist/014463"
+        ],
+        "note": "既存の取得済み公式照合証拠 AUTO-20261123T0504JST-246 に記録された2媒体4必須項目一致。元選手台帳row246 G:Kへ救済保存・再読済。検索インデックス/キャッシュからの項目転記でありライブ直接取得ではない。媒体の上流独立性は未立証。"
+      }
+    },
+    {
+      "id": "013331",
+      "name": "橋本 大祐",
+      "prefecture": "岐阜",
+      "period": "80",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013331",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013331",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013331",
+          "https://www.winticket.jp/keirin/cyclist/013331"
+        ],
+        "note": "既存の取得済み公式照合証拠 AUTO-20261123T060819JST-267 に記録された2媒体4必須項目一致。元選手台帳row267 G:Kへ救済保存・再読済。検索インデックス/キャッシュからの項目転記でありライブ直接取得ではない。媒体の上流独立性は未立証。"
+      }
+    },
+    {
+      "id": "015606",
+      "name": "近藤 圭佑",
+      "prefecture": "埼玉",
+      "period": "121",
+      "source": "https://keirin.jp/pc/racerprofile?snum=015606",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=015606",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=015606",
+          "https://www.winticket.jp/keirin/cyclist/015606"
+        ],
+        "note": "既存の取得済み公式照合証拠 AUTO-20261123T070432JST-273 に記録された2媒体4必須項目一致。元選手台帳row273 G:Kへ救済保存・再読済。検索インデックス/キャッシュからの項目転記でありライブ直接取得ではない。媒体の上流独立性は未立証。"
+      }
+    },
+    {
+      "id": "015494",
+      "name": "近澤 諒香",
+      "prefecture": "三重",
+      "period": "118",
+      "source": "https://keirin.jp/sp/racerprofile?snum=015494",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=015494",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=015494",
+          "https://www.winticket.jp/keirin/cyclist/015494"
+        ],
+        "note": "既存の取得済み公式照合証拠 AUTO-20261123T0807JST-283 に記録された2媒体4必須項目一致。元選手台帳row283 G:Kへ救済保存・再読済。検索インデックス/キャッシュからの項目転記でありライブ直接取得ではない。媒体の上流独立性は未立証。"
+      }
+    },
+    {
+      "id": "011712",
+      "name": "金田健一郎",
+      "prefecture": "大阪",
+      "period": "60",
+      "source": "https://keirin.jp/pc/racerprofile?snum=011712",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/pc/racerprofile?snum=011712",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/pc/racerprofile?snum=011712",
+          "https://www.winticket.jp/keirin/cyclist/011712"
+        ],
+        "note": "既存の取得済み公式照合証拠 AUTO-20261123T090547JST-291 に記録された2媒体4必須項目一致。元選手台帳row291 G:Kへ救済保存・再読済。検索インデックス/キャッシュからの項目転記でありライブ直接取得ではない。媒体の上流独立性は未立証。"
+      }
+    },
+    {
+      "id": "016032",
+      "name": "栗山 百花",
+      "prefecture": "神奈",
+      "period": "130",
+      "source": "https://www.winticket.jp/keirin/cyclist/016032",
+      "verifiedDate": "2026-11-23",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.winticket.jp/keirin/cyclist/016032",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.winticket.jp/keirin/cyclist/016032",
+          "https://keirin.netkeiba.com/db/profile/?id=16032"
+        ],
+        "note": "既存の取得済み公式照合証拠 AUTO-20261123T100717JST-296 に記録された2媒体4必須項目一致。元選手台帳row296 G:Kへ救済保存・再読済。検索インデックス/キャッシュからの項目転記でありライブ直接取得ではない。媒体の上流独立性は未立証。"
       }
     }
   ],
