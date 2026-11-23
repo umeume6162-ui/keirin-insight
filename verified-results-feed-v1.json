@@ -1,17 +1,17 @@
 {
   "schema": "ki-public-results-index-v1",
   "origin_sheet": "VERIFIED publication",
-  "source_snapshot_date": "2026-11-23",
+  "source_snapshot_date": "2026-11-24",
   "latest_race_date": "2026-10-05",
-  "official_result_independent_audit": "two_qualifying_publishers_all_fields_agree",
-  "notes": "Two qualified publisher result sources and two publisher forecast sources agree for full seven-car race. Third primary source not required.",
+  "official_result_independent_audit": "legacy_two_publishers_or_kdreams_single_source_provenance_per_race",
+  "notes": "既存2媒体照合の7レースに、Kドリームス原文をGitHub Actionsで全7車取得しV99全必須項目一致した松山3R/4R/6Rを追加。単一元記録を2媒体独立一致とは表示しない。",
   "summary": {
-    "races": 7,
-    "rider_rows": 49,
+    "races": 10,
+    "rider_rows": 70,
     "by_grade": {
-      "A1/A2": 3,
+      "A1/A2": 5,
       "A3": 0,
-      "S級": 4,
+      "S級": 5,
       "ガールズ": 0
     }
   },
@@ -455,6 +455,117 @@
         "basisNote": "K-Dreams and Oddspark seven-car pre-race forecast agrees by ordered groups (group presentation order differs). Cached/search-index text and saved source transcript; not actual race formation."
       },
       "sourceEvidenceFile": "tools/reconstruction-candidates/2026-10-05_75_10.research.json"
+    },
+    {
+      "key": "2026-10-05|75|3",
+      "date": "2026-10-05",
+      "track": "松山",
+      "track_code": "75",
+      "race": 3,
+      "size": 7,
+      "grade": "A1/A2",
+      "non_numeric": 0,
+      "className": "A級準決勝",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020003/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "method": "kdreams_single_source_verified",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020003/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "RACE-MANUAL-V4-20261122T161050-75-3",
+          "runUrl": "https://github.com/umeume6162-ui/keirin-insight/actions/runs/45210802591",
+          "comparisonResult": "V99 all 7 cars / required items mismatchCount 0",
+          "originalHtmlArchived": false
+        }
+      }
+    },
+    {
+      "key": "2026-10-05|75|4",
+      "date": "2026-10-05",
+      "track": "松山",
+      "track_code": "75",
+      "race": 4,
+      "size": 7,
+      "grade": "A1/A2",
+      "non_numeric": 0,
+      "className": "A級準決勝",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020004/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "method": "kdreams_single_source_verified",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020004/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "RACE-MANUAL-V4-20261122T161512-75-4",
+          "runUrl": "https://github.com/umeume6162-ui/keirin-insight/actions/runs/45210802591",
+          "comparisonResult": "V99 all 7 cars / required items mismatchCount 0",
+          "originalHtmlArchived": false
+        }
+      }
+    },
+    {
+      "key": "2026-10-05|75|6",
+      "date": "2026-10-05",
+      "track": "松山",
+      "track_code": "75",
+      "race": 6,
+      "size": 7,
+      "grade": "S級",
+      "non_numeric": 0,
+      "className": "S級一般",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020006/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+        "method": "kdreams_single_source_verified",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/matsuyama/racedetail/7520261004020006/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "RACE-MANUAL-V4-20261122T163401-75-6",
+          "runUrl": "https://github.com/umeume6162-ui/keirin-insight/actions/runs/45210802591",
+          "comparisonResult": "V99 all 7 cars / required items mismatchCount 0",
+          "originalHtmlArchived": false
+        }
+      }
     }
   ],
   "publicationPolicy": "ki-verified-only-v1"
