@@ -77,7 +77,7 @@ on:
         default: false
         type: boolean
   schedule:
-    # One-time credential verification uses an explicit tagged main push; routine schedules remain read-only.
+    # Explicit [refresh-daily-feed] main push rebuilds only the daily viewer feed from Sheets.
     # UTC corresponds to JST 07:10, 12:10, 17:10, 22:10.
     - cron: '10 22,3,8,13 * * *'
 permissions:
@@ -95,7 +95,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check read-only Sheets credential
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[verify-sheets-writer]'))
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[verify-sheets-writer]') || contains(github.event.head_commit.message, '[refresh-daily-feed]')))
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
@@ -309,12 +309,12 @@ jobs:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/upsert_daily_sheets.py --input /tmp/ki-manual-racecard.json --apply
       - name: Build daily board
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '')
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/build_daily_board.py --out daily-board-feed-v1.json
       - name: Commit changed daily feed only
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '')
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
         run: |
           git add daily-board-feed-v1.json
           if git diff --cached --quiet; then
