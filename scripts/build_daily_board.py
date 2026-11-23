@@ -179,12 +179,25 @@ def merge_new(board, entry_values, result_values, today):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--self-test", action="store_true", help="Offline fresh-intake merge check")
     parser.add_argument("--entries-fixture", help="JSON array-of-rows for local testing")
     parser.add_argument("--results-fixture", help="JSON array-of-rows for local testing")
     parser.add_argument("--out", default="daily-board-feed-v1.json")
     parser.add_argument("--date", default=datetime.now(JST).date().isoformat())
     args = parser.parse_args()
     today = datetime.strptime(args.date, "%Y-%m-%d").date()
+    if args.self_test:
+        entry_header=["開催日","場コード","競輪場","R","級班","車番","選手名","府県","期別","発走前ライン","元URL","取得日時JST","収集状態","レースキー","ソースID"]
+        result_header=["開催日","場コード","競輪場","R","級班","車番","選手名","府県","期別","着順原文","決まり手","個人状況・例外","元URL","取得日時JST","レースキー"]
+        entry=["2026-11-23","26","西武園","1","A3","1","テスト選手A","埼玉","100","","https://example.org/entry","2026-11-23 07:00 JST","取得済","2026-11-23|26|1","offline-test"]
+        result=["2026-11-23","26","西武園","1","A3","1","テスト選手A","埼玉","100","1","差し","","https://example.org/result","2026-11-23 15:00 JST","2026-11-23|26|1"]
+        out=merge_new(build([["header"]*15],[["header"]*23],today),
+                      [entry_header,entry],[result_header,result],today)
+        r=out["races"]
+        assert len(r)==1 and len(r[0]["entries"])==1 and len(r[0]["results"])==1
+        assert r[0]["status"]=="results_partial" and out["sourceLatest"]["entries"]=="2026-11-23"
+        print("SELF_TEST_OK: daily entry/result source merge; no live data or Sheets modified")
+        return
     if bool(args.entries_fixture) != bool(args.results_fixture):
         raise ValueError("Provide both fixture files")
     if args.entries_fixture:
