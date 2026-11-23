@@ -5,6 +5,7 @@ on:
       - 'scripts/discover_tospo_races.py'
       - 'scripts/auto_daily_tospo_intake.py'
       - 'scripts/auto_daily_results.py'
+      - 'scripts/enrich_daily_start_times.py'
       - '.github/workflows/update-daily-board.yml'
       - 'scripts/compare_race_results.py'
       - 'scripts/collect_netkeirin_result.py'
@@ -24,6 +25,7 @@ on:
       - 'scripts/discover_tospo_races.py'
       - 'scripts/auto_daily_tospo_intake.py'
       - 'scripts/auto_daily_results.py'
+      - 'scripts/enrich_daily_start_times.py'
       - 'scripts/compare_race_results.py'
       - 'scripts/collect_netkeirin_result.py'
       - 'scripts/collect_lotoplace_result.py'
@@ -169,12 +171,13 @@ jobs:
         run: node scripts/test_daily_board_ui.js
       - name: Check daily intake script syntax
         run: |
-          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py scripts/collect_historical_pair.py scripts/collect_historical_batch.py scripts/classify_historical_candidates.py scripts/auto_daily_tospo_intake.py scripts/auto_daily_results.py
+          python -m py_compile scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py scripts/collect_historical_pair.py scripts/collect_historical_batch.py scripts/classify_historical_candidates.py scripts/auto_daily_tospo_intake.py scripts/auto_daily_results.py scripts/enrich_daily_start_times.py
           python scripts/collect_chariloto_entry.py --self-test
           python scripts/collect_tospo_entry.py --self-test
           python scripts/discover_tospo_races.py --self-test
           python scripts/auto_daily_tospo_intake.py --self-test
           python scripts/auto_daily_results.py --self-test
+          python scripts/enrich_daily_start_times.py --self-test
           python scripts/compare_race_results.py --self-test
           python scripts/collect_netkeirin_result.py --self-test
           python scripts/collect_lotoplace_result.py --self-test
@@ -391,10 +394,13 @@ jobs:
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/build_daily_board.py --out daily-board-feed-v1.json
+      - name: Enrich daily start times using the original racecard sources
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
+        run: python scripts/enrich_daily_start_times.py --limit 24
       - name: Commit changed daily feed only
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
         run: |
-          git add daily-board-feed-v1.json
+          git add daily-board-feed-v1.json daily-race-start-times-v1.json
           if git diff --cached --quiet; then
             echo 'Daily feed unchanged; no commit or duplicate validation.'
             exit 0
