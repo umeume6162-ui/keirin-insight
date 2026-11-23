@@ -63,6 +63,62 @@ def audit(rows, sample_limit=20):
                             "Check the complete starting field and cancellations.")}
 
 
+
+def meeting_coverage(v99_rows, v100_rows, cancelled_rows):
+    """Read-only cross-ledger checks; never infer a missing race from V99 alone."""
+    if not v100_rows or v100_rows[0][:3] != ["開催キー", "開催日", "競輪場"]:
+        raise ValueError("V100 source header mismatch")
+    if not cancelled_rows or cancelled_rows[0][:2] != ["レースキー", "開催日"]:
+        raise ValueError("Cancelled-race source header mismatch")
+    by_meeting = defaultdict(set)
+    for row in v99_rows[1:]:
+        if len(row) < 8 or not row[0] or not str(row[2]).isdigit() or not str(row[4]).isdigit():
+            continue
+        key = f"{row[0]}|{int(row[2]):02d}"
+        by_meeting[key].add(int(row[4]))
+    cancelled = set()
+    for row in cancelled_rows[1:]:
+        if len(row) >= 7 and str(row[6]).strip() == "中止":
+            cancelled.add(str(row[0]).strip())
+    v100_only = []
+    missing_candidates = []
+    cancelled_covered = 0
+    reviewed = 0
+    for row in v100_rows[1:]:
+        if len(row) < 9 or not str(row[0]).strip():
+            continue
+        key = str(row[0]).strip()
+        if key not in by_meeting:
+            # V100 summarizes V95-V99, not just the V99 sheet.
+            v100_only.append(key)
+            continue
+        last = str(row[8]).strip()
+        if not last.isdigit() or not 1 <= int(last) <= 12:
+            missing_candidates.append({"meetingKey": key, "status": "INVALID_V100_RACE_LIMIT"})
+            continue
+        reviewed += 1
+        for race in range(1, int(last) + 1):
+            if race in by_meeting[key]:
+                continue
+            if f"{key}|{race}" in cancelled:
+                cancelled_covered += 1
+            else:
+                missing_candidates.append({"meetingKey": key, "race": race,
+                                           "status": "REVIEW_SOURCE_MEETING_AND_CANCELLATION"})
+    return {
+        "readOnly": True, "formalPass": False,
+        "v100MeetingsNotInV99": len(v100_only),
+        "v100OnlyMeetingSample": v100_only[:10],
+        "v100MeetingsComparedToV99": reviewed,
+        "cancelledRacesExplainingGaps": cancelled_covered,
+        "unexplainedRaceNumberGapCount": len(missing_candidates),
+        "unexplainedRaceNumberGapSample": missing_candidates[:20],
+        "limitation": ("V100 covers older V95-V98 sources as well as V99. "
+                       "A V100-only meeting is not proof of a missing race.")
+    }
+
+
+
 def live_rows():
     from upsert_daily_sheets import SHEET_ID, remote_client
     session, token = remote_client()
@@ -104,7 +160,19 @@ def self_test():
     data[-1][7] = "5"
     assert audit(data)["duplicateCarRaceCount"] == 1
     assert audit(data + [row("3", 10)])["invalidKeyRows"] == 1
-    print("SELF_TEST_OK: V99 read-only shape audit and duplicate detection")
+    v100 = [["開催キー", "開催日", "競輪場", "場コード", "グレード",
+             "通常結果R", "中止R", "選手行", "最終保存R"],
+            ["2026-11-01|24", "2026-11-01", "試験場", "24", "F2", "2", "1", "13", "3"],
+            ["2026-10-01|22", "2026-10-01", "旧テスト場", "22", "F2", "1", "0", "7", "1"]]
+    cancelled = [["レースキー", "開催日"], ["2026-11-01|24|3", "2026-11-01",
+                 "試験場", "24", "3", "F2", "中止"]]
+    scope = meeting_coverage([HEADER] + data[1:], v100, cancelled)
+    assert scope["v100MeetingsNotInV99"] == 1
+    assert scope["cancelledRacesExplainingGaps"] == 1
+    assert scope["unexplainedRaceNumberGapCount"] == 0
+    assert meeting_coverage(data, v100, [cancelled[0]])["unexplainedRaceNumberGapCount"] == 1
+    assert scope["formalPass"] is False
+    print("SELF_TEST_OK: V99 read-only shape and cross-ledger coverage checks")
 
 
 def main():
