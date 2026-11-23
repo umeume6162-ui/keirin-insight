@@ -403,7 +403,7 @@ jobs:
           set -o pipefail
           python scripts/auto_daily_results.py --apply --max-races 12 --max-seconds 720 --lookback-days 7 | tee /tmp/ki-daily-result-intake.json
           python - <<'PY'
-          import collections, json, os
+          import collections, json, os, re
           from pathlib import Path
           report = json.loads(Path("/tmp/ki-daily-result-intake.json").read_text())
           if (report.get("schema") != "ki-daily-result-intake-v1" or
@@ -440,6 +440,22 @@ jobs:
           rows += [f"| {lane} | {count} |" for lane, count in sorted(lanes.items())]
           rows += ["", "| Failed source stage | Races |", "|---|---:|"]
           rows += [f"| {stage} | {count} |" for stage, count in sorted(stages.items())]
+          held = [r for r in report["results"] if not r.get("saved") and r.get("reasonCode")]
+          if held:
+              rows += ["", "| Pending race | Source stage | Reason | Review lane |",
+                       "|---|---|---|---|"]
+              # Bounded job-local diagnostic. Never publish raw exceptions,
+              # untrusted HTML, source tokens or person identifiers.
+              for item in held[:20]:
+                  race_key = item.get("raceKey", "")
+                  if not re.fullmatch(r"20\\d{2}-\\d{2}-\\d{2}\\|\\d{2}\\|(?:[1-9]|1[0-2])", race_key):
+                      continue
+                  values = [race_key,
+                            item.get("sourceStage") or "OTHER",
+                            item.get("reasonCode") or "UNCLASSIFIED",
+                            item.get("reviewRoute") or "UNCLASSIFIED"]
+                  if all(re.fullmatch(r"[A-Z0-9_]+", str(v)) for v in values[1:]):
+                      rows.append("| " + " | ".join(values) + " |")
           if report.get("partialExisting"):
               rows += ["", "| Stored-result review | Missing cars | Duplicate cars | Identity mismatch |",
                        "|---|---|---|---|"]
