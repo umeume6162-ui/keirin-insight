@@ -377,81 +377,12 @@ jobs:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
           python scripts/auto_daily_tospo_intake.py --apply --days 2 --max-venues 43
-      - name: TEMP live today Seibuen 1R two-source result preview (no writes)
-        if: github.event_name == 'pull_request'
+      - name: Collect two-source daily results for completed stored races
+        if: github.event_name == 'schedule'
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
-          python scripts/auto_daily_results.py --date 2026-11-23 --max-races 1
-          python - <<'PY'
-          import sys
-          sys.path.insert(0,"scripts")
-          from collect_netkeirin_result import fetch as net_fetch, extract
-          from collect_lotoplace_result import fetch as char_fetch, parse_result
-          from compare_race_results import compare
-          date,code,venue,race,grade,cars="2026-11-23","26","西武園",1,"A3",7
-          sources=[
-            ("netkeirin","https://keirin.netkeiba.com/race/result/?race_id=202611232601",net_fetch,extract),
-            ("chariloto","https://www.chariloto.com/keirin/results/26/2026-11-23",char_fetch,parse_result)]
-          observations=[]
-          for name,url,fetch,parser in sources:
-            try:
-              html=fetch(url)
-              print("RESULT_SOURCE_FETCH_OK",name,"bytes",len(html))
-              try:
-                obs=parser(html,date,code,venue,race,grade,cars,url)
-                print("RESULT_SOURCE_PARSE_OK",name,"cars",len(obs["results"]))
-                observations.append(obs)
-              except Exception as exc:
-                print("RESULT_SOURCE_PARSE_HOLD",name,type(exc).__name__,str(exc)[:120])
-            except Exception as exc:
-              print("RESULT_SOURCE_FETCH_HOLD",name,type(exc).__name__,str(exc)[:120])
-          if len(observations)==2:
-            d=compare({"observations":observations})
-            print("RESULT_PAIR",d["status"],"disagreements",len(d["disagreements"]))
-          PY
-          python - <<'PY'
-          import sys
-          sys.path.insert(0,"scripts")
-          from auto_daily_results import read_existing, eligible_races, clean
-          from collect_historical_pair import collect
-          from compare_race_results import normalized_name
-          from datetime import date
-          entries, results=read_existing()
-          group=eligible_races(entries,results,date(2026,11,23),date(2026,11,23))
-          if group:
-            key,rows=group[0]
-            obs=collect("2026-11-23","26","西武園",1,"A3",7)
-            expected={int(x[5]):x for x in rows}
-            for rider in obs["observations"][0]["results"]:
-              x=expected[rider["number"]]
-              mismatches=[]
-              if normalized_name(x[6])!=normalized_name(rider["name"]):mismatches.append("name")
-              if clean(x[7])!=clean(rider["prefecture"]):mismatches.append("prefecture")
-              if clean(x[8]).removesuffix("期")!=clean(rider["period"]).removesuffix("期"):mismatches.append("period")
-              if mismatches:print("RESULT_ENTRY_IDENTITY_REVIEW",rider["number"],",".join(mismatches),
-                "sheetPref",clean(x[7]),"resultPref",clean(rider["prefecture"]))
-          PY
-      - name: TEMP save today's confirmed seven-car result to unverified daily Sheets and check replay
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
-        env:
-          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-        run: |
-          python scripts/auto_daily_results.py --date 2026-11-23 --max-races 1 --apply > /tmp/ki-daily-result-first.json
-          python - <<'PY'
-          import json
-          d=json.load(open('/tmp/ki-daily-result-first.json',encoding='utf-8'))
-          print('DAILY_RESULT_FIRST_SAVE',json.dumps(d,ensure_ascii=False))
-          assert d['eligibleExamined']==1 and d['results'][0]['status']=='SAVED_UNVERIFIED_RESULTS'
-          assert d['results'][0]['cars']==7 and d['results'][0]['saved'] is True
-          PY
-          python scripts/auto_daily_results.py --date 2026-11-23 --max-races 1 --apply > /tmp/ki-daily-result-replay.json
-          python - <<'PY'
-          import json
-          d=json.load(open('/tmp/ki-daily-result-replay.json',encoding='utf-8'))
-          print('DAILY_RESULT_REPLAY',json.dumps(d,ensure_ascii=False))
-          assert d['eligibleExamined']==0
-          PY
+          python scripts/auto_daily_results.py --apply --max-races 4
       - name: Build daily board
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))
         env:
