@@ -16,7 +16,7 @@ from pathlib import Path
 import collect_netkeirin_result as netkeirin
 import collect_lotoplace_result as day_results
 import collect_kdreams_result as kdreams
-from compare_race_results import compare
+from compare_race_results import compare, require_source, normalized_race, normalized_results
 from result_hold_diagnostics import classify_result_hold
 
 
@@ -94,14 +94,11 @@ def collect(day, code, track, number, class_name, cars, left_url=None, right_url
 
 
 
-def collect_auto(day, code, track, number, class_name, cars, sources=None, source_urls=None):
-    """Compare any two available validated result publications, not a fixed primary.
+def collect_auto(day, code, track, number, class_name, cars, sources=None, source_urls=None, allow_single=False):
+    """Collect validated publications; historical default still requires two.
 
-    The default pool currently contains three supported adapters. New publicly
-    permitted source adapters can be added without changing the pair selector.
-    Each source is fetched at most once. Full-field validation, two distinct
-    publication hosts and rider identity are enforced downstream by compare().
-    This is not unrestricted website scraping or proof of upstream independence.
+    Daily callers may explicitly allow one source, but must independently
+    match all cars to a complete stored pre-race entry before saving.
     """
     date.fromisoformat(day)
     if (not day.startswith("20") or not code.isdigit()
@@ -179,6 +176,20 @@ def collect_auto(day, code, track, number, class_name, cars, sources=None, sourc
             attempts.append({"source": source_name, "status": "FAILED",
                              "reasonCode": reason})
             continue
+        try:
+            require_source(observation)
+            meta = normalized_race(observation)
+            if (meta["date"] != day or meta["trackCode"] != code or
+                    meta["track"] != track or meta["race"] != number or
+                    meta["expectedCars"] != cars):
+                raise ValueError("Observed race identity mismatch")
+            normalized_results(observation, cars)
+            if not isinstance(observation.get("sourceId"), str) or not observation["sourceId"].strip():
+                raise ValueError("Missing source identifier")
+        except (ValueError, TypeError, AttributeError):
+            attempts.append({"source": source_name, "status": "FAILED",
+                             "reasonCode": "SOURCE_VALIDATION_REJECTED"})
+            continue
         # Record only bounded stage codes, never private HTML/URLs or raw errors.
         attempts.append({"source": source_name, "status": "OBSERVED"})
         # Recompute every pair, including when earlier publications disagreed.
@@ -200,6 +211,9 @@ def collect_auto(day, code, track, number, class_name, cars, sources=None, sourc
         collected.append(observation)
     if matched:
         return matched
+    if allow_single and len(collected) == 1:
+        return {"observations": collected, "sourcePairMode": "SINGLE_SOURCE_ENTRY_MATCH",
+                "sourceAttempts": attempts}
     if len(collected) < 2:
         exc = SourceStageError("SOURCE_POOL_UNAVAILABLE")
     else:
@@ -261,6 +275,29 @@ def self_test_auto():
         assert e.source_attempts[1]["reasonCode"] == "SOURCE_VALIDATION_REJECTED"
     else:
         raise AssertionError("Single source was accepted")
+    one = collect_auto("2026-09-10", "27", "京王閣", 2, "A3", 7,
+                       sources=[("only", read("only", net)),
+                                ("missing", read("missing", None))],
+                       allow_single=True)
+    assert len(one["observations"]) == 1 and "comparison" not in one
+    assert one["sourcePairMode"] == "SINGLE_SOURCE_ENTRY_MATCH"
+    wrong = make("wrong.example", "bad")
+    wrong["race"] = {**wrong["race"], "race": 3}
+    try:
+        collect_auto("2026-09-10", "27", "京王閣", 2, "A3", 7,
+                     sources=[("bad", read("bad", wrong))], allow_single=True)
+    except SourceStageError:
+        pass
+    else:
+        raise AssertionError("Wrong race accepted")
+    try:
+        collect_auto("2026-09-10", "27", "京王閣", 2, "A3", 7,
+                     sources=[("a", read("a", changed)),
+                              ("b", read("b", official))], allow_single=True)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Conflicting publications accepted")
     # An explicitly discovered venue URL is validated, not guessed.
     observed = "https://keirin.kdreams.jp/kurume/racedetail/8320261001010002/?pageType=showResult"
     def fake_observed(url):

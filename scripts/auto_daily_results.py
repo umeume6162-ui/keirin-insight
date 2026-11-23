@@ -2,11 +2,10 @@
 """Conservative current-day results collection from Google daily entry records.
 
 Only complete 7/9-car races already in KI｜日次出走表 are eligible.
-Two separately collected, source-validated public observations must match
-in all result fields AND every rider identity must match the pre-race entry.
-No specific publisher is mandatory at the comparison/saving stage. Observations
-remain UNVERIFIED, never formal PASS. Each race is saved separately;
-incomplete sources and mismatches are logged as hold/no write.
+A source-validated single result may be matched to each saved pre-race
+rider/car. When two public results are available, they must agree.
+Missing cars, rider mismatches, or conflicting sources are held.
+Saved daily results remain UNVERIFIED, never historical formal PASS.
 """
 import argparse
 import json
@@ -21,9 +20,10 @@ from zoneinfo import ZoneInfo
 
 import requests
 
-from collect_historical_pair import collect_auto as collect, SourceStageError
+from collect_historical_pair import collect_auto, SourceStageError
 from result_hold_diagnostics import classify_result_hold, review_route
-from compare_race_results import normalized_name, canonical_method, compare
+from compare_race_results import (normalized_name, canonical_method, compare,
+                                  require_source, normalized_race, normalized_results)
 from upsert_daily_sheets import (
     SHEET_ID, HEADERS, CONFIG, apply, remote_client
 )
@@ -31,6 +31,11 @@ from auto_daily_tospo_intake import verify_approved_editor
 from enrich_daily_start_times import source_identity
 
 JST = ZoneInfo("Asia/Tokyo")
+
+
+def collect(*args):
+    """Daily-only single-source opt-in; historical comparison unchanged."""
+    return collect_auto(*args, allow_single=True)
 
 # Evidence-scoped source display differences; do not generalize all kanji.
 PREFECTURE_ALIASES = {"神奈": "神奈川", "北海": "北海道", "鹿児": "鹿児島"}
@@ -224,18 +229,32 @@ def candidate(key, rows, collect_fn=collect):
     day, code, race = key.split("|")
     track, cls = clean(rows[0][2]), clean(rows[0][4])
     observation = collect_fn(day, code, track, int(race), cls, len(rows))
-    # Revalidate source identity, HTTPS origin, full 7/9-car content and all
-    # rider fields on the actual observations, regardless of adapter/publisher.
-    verified = compare({"observations": observation["observations"]})
-    comparison = observation["comparison"]
-    if comparison != verified:
-        raise ValueError("Source observations and comparison report differ")
-    if (comparison["raceKey"] != key or
-            comparison["status"] != "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING" or
-            comparison["disagreements"] or comparison["formalPass"] is not False):
-        raise ValueError("Two result publications do not agree")
+    observations = observation.get("observations")
+    if not isinstance(observations, list) or len(observations) not in (1, 2):
+        raise ValueError("Expected one or two complete results")
+    expected_race = dict(date=day, trackCode=code, track=track,
+                         race=int(race), expectedCars=len(rows))
+    for item in observations:
+        require_source(item)
+        meta = normalized_race(item)
+        if any(meta[field] != value for field, value in expected_race.items()):
+            raise ValueError("Result race identity differs from saved entry")
+        normalized_results(item, len(rows))
+        if not clean(item.get("sourceId")):
+            raise ValueError("Missing result source ID")
+    if len(observations) == 2:
+        verified = compare({"observations": observations})
+        if observation.get("comparison") != verified:
+            raise ValueError("Source observations and comparison differ")
+        if (verified["raceKey"] != key or
+                verified["status"] != "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING" or
+                verified["disagreements"] or verified["formalPass"] is not False):
+            raise ValueError("Result publishers disagree")
+    elif ("comparison" in observation or
+          observation.get("sourcePairMode") != "SINGLE_SOURCE_ENTRY_MATCH"):
+        raise ValueError("Unverified single-source mode")
     snapshots = {int(r[5]): r for r in rows}
-    left = observation["observations"][0]
+    left = observations[0]
     payload = []
     capture = datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")
     for source in left["results"]:
@@ -257,15 +276,22 @@ def candidate(key, rows, collect_fn=collect):
                             exception=source["exception"], sourceUrl=left["sourceUrl"],
                             capturedAt=capture))
     if len(payload) != len(rows):
-        raise ValueError("Incomplete pair result")
-    second_source = clean(observation["observations"][1]["sourceId"])
-    if not re.fullmatch(r"[a-zA-Z0-9_-]{1,64}", second_source):
-        raise ValueError("Invalid second result source identifier")
+        raise ValueError("Incomplete result")
+    if len(observations) == 1:
+        sid = clean(left["sourceId"])
+        if not re.fullmatch(r"[a-zA-Z0-9_-]{1,64}", sid):
+            raise ValueError("Invalid source identifier")
+        mode = "SINGLE_SOURCE_ENTRY_MATCH"
+        note = "One published result matched all stored pre-race riders; not formal PASS; sourceId=" + sid
+    else:
+        sid = clean(observations[1]["sourceId"])
+        if not re.fullmatch(r"[a-zA-Z0-9_-]{1,64}", sid):
+            raise ValueError("Invalid second source identifier")
+        mode = observation.get("sourcePairMode", "TWO_PUBLISHED_SOURCES")
+        note = "Two publication results agree; upstream independence unverified; secondSourceId=" + sid
     return {"entries": [], "results": payload,
             "sourceAttempts": observation.get("sourceAttempts", []),
-            "sourcePairMode": observation.get("sourcePairMode", "TWO_PUBLISHED_SOURCES"),
-            "sourceNote": ("Content matched on two sites, upstream independence not verified; "
-                           "secondSourceId=" + second_source)}
+            "sourcePairMode": mode, "sourceNote": note}
 
 
 
@@ -393,11 +419,14 @@ def process(entries, results, start, end, limit=4, write=False,
             if was_partial:
                 data = {**data, **safe_missing_result_payload(data, by_stored[key], rows)}
             expected_delta = len(data["results"])
-            second_source = data["sourceNote"].rsplit("secondSourceId=", 1)[-1]
             item["sourcePairMode"] = data["sourcePairMode"]
-            if second_source in ("chariloto-day-results", "lotoplace-day-results"):
-                item["secondSourceId"] = second_source
-                item["alternateSourceUsed"] = second_source == "lotoplace-day-results"
+            if "secondSourceId=" in data["sourceNote"]:
+                second_source = data["sourceNote"].rsplit("secondSourceId=", 1)[-1]
+                if second_source in ("chariloto-day-results", "lotoplace-day-results"):
+                    item["secondSourceId"] = second_source
+                    item["alternateSourceUsed"] = second_source == "lotoplace-day-results"
+            else:
+                item["singleSourceUsed"] = True
             # Source-attempt diagnostics are report-only metadata, not Sheets columns.
             # The writer permits exactly entries, results and sourceNote.
             sheet_payload = {k: data[k] for k in ("entries", "results", "sourceNote")}
@@ -418,7 +447,9 @@ def process(entries, results, start, end, limit=4, write=False,
                 item.update(status="SAVED_UNVERIFIED_RESULTS", saved=True,
                             cars=expected_delta, partialCompleted=was_partial)
             else:
-                item.update(status="DRY_RUN_TWO_SOURCES_MATCH", cars=expected_delta,
+                item.update(status=("DRY_RUN_SINGLE_SOURCE_ENTRY_MATCH"
+                                    if data["sourcePairMode"] == "SINGLE_SOURCE_ENTRY_MATCH"
+                                    else "DRY_RUN_TWO_SOURCES_MATCH"), cars=expected_delta,
                             partialCompleted=was_partial)
         except Exception as exc:
             # Return only finite source stage/reason codes, never source HTML or
@@ -530,6 +561,27 @@ def self_test():
         "car": 3, "fields": ["name", "period"]}
     mixed_result = candidate(day+"|26|1", mixed, collect_fn=lambda *a: actual)
     assert [r["className"] for r in mixed_result["results"]] == [r[4] for r in mixed]
+    single = {"observations": [left], "sourcePairMode": "SINGLE_SOURCE_ENTRY_MATCH"}
+    one = candidate(day+"|26|1", records, collect_fn=lambda *a: single)
+    assert one["sourcePairMode"] == "SINGLE_SOURCE_ENTRY_MATCH"
+    assert one["results"][0]["sourceUrl"] == left["sourceUrl"]
+    wrong = {**left, "results": [dict(x) for x in riders]}
+    wrong["results"][0]["name"] = "別人"
+    try:
+        candidate(day+"|26|1", records, collect_fn=lambda *a: {
+            "observations": [wrong], "sourcePairMode": "SINGLE_SOURCE_ENTRY_MATCH"})
+    except RiderIdentityMismatch:
+        pass
+    else:
+        raise AssertionError("Wrong rider accepted as single source")
+    short = {**left, "results": riders[:-1]}
+    try:
+        candidate(day+"|26|1", records, collect_fn=lambda *a: {
+            "observations": [short], "sourcePairMode": "SINGLE_SOURCE_ENTRY_MATCH"})
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Incomplete single-source results accepted")
     fallback_pair = {"observations": [
         {**left, "sourceId": "chariloto-day-results",
          "sourceUrl": "https://www.chariloto.com/keirin/results/26/2026-11-23"},
@@ -771,7 +823,7 @@ def self_test():
            day0.replace(hour=0))] == ["race-12"]
     assert [k for k, _ in select_rotating_races(rotation, 4,
            day0)] == ["race-0", "race-1", "race-2", "race-3"]
-    print("SELF_TEST_OK: seven-car two-source result intake, identity guard and duplicate skip")
+    print("SELF_TEST_OK: one/two-source result intake, identity and conflict guards")
 
 
 def main():

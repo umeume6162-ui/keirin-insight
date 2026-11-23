@@ -438,7 +438,7 @@ jobs:
       # Explicit main-only retry tag: [collect-daily-results] is never a PR credential path.
       # One explicitly tagged main push may retry bounded, guarded results without
       # re-running entry collection. Never enable this for PRs or ordinary pushes.
-      - name: Collect two-source daily results for completed stored races
+      - name: Collect source-and-entry validated daily results for completed stored races
         if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.retry_daily_results && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url == '') || (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))) }}
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
@@ -487,13 +487,14 @@ jobs:
               for attempt in item.get("sourceAttempts", [])
               if isinstance(attempt, dict))
           rows = [
-              "## Daily two-source result intake",
+              "## Daily source-and-entry validated result intake",
               f"- Pending stored races: {report['eligibleTotal']}",
               f"- Due for results: {report['eligibleDueTotal']}",
               f"- Attempted: {report['eligibleExamined']}",
               f"- Deferred: {report['eligibleDeferred']}",
               f"- Not yet due (no verified start time or before start+20m): {report.get('notYetDueCount', 0)}",
               f"- Saved: {report['savedCount']}",
+              f"- Single-source matches: {sum(r.get('sourcePairMode') == 'SINGLE_SOURCE_ENTRY_MATCH' for r in report['results'])}",
               f"- LotoPlace fallback comparisons: {sum(bool(r.get('alternateSourceUsed')) for r in report['results'])}",
               f"- Chariloto + LotoPlace complete-pair fallback: {sum(r.get('sourcePairMode') == 'CHARILOTO_LOTOPLACE_FALLBACK' for r in report['results'])}",
               f"- Time budget reached: {report['timeBudgetExceeded']}",
