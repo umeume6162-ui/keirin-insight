@@ -2,8 +2,9 @@
 """Conservative current-day results collection from Google daily entry records.
 
 Only complete 7/9-car races already in KI｜日次出走表 are eligible.
-netkeirin + Chariloto observations must match in all result fields AND
-each rider identity must match the stored pre-race entry. These observations
+Two separately collected, source-validated public observations must match
+in all result fields AND every rider identity must match the pre-race entry.
+No specific publisher is mandatory at the comparison/saving stage. Observations
 remain UNVERIFIED, never formal PASS. Each race is saved separately;
 incomplete sources and mismatches are logged as hold/no write.
 """
@@ -22,7 +23,7 @@ import requests
 
 from collect_historical_pair import collect
 from result_hold_diagnostics import classify_result_hold, review_route
-from compare_race_results import normalized_name, canonical_method
+from compare_race_results import normalized_name, canonical_method, compare
 from upsert_daily_sheets import (
     SHEET_ID, HEADERS, CONFIG, apply, remote_client
 )
@@ -206,7 +207,12 @@ def candidate(key, rows, collect_fn=collect):
     day, code, race = key.split("|")
     track, cls = clean(rows[0][2]), clean(rows[0][4])
     observation = collect_fn(day, code, track, int(race), cls, len(rows))
+    # Revalidate source identity, HTTPS origin, full 7/9-car content and all
+    # rider fields on the actual observations, regardless of adapter/publisher.
+    verified = compare({"observations": observation["observations"]})
     comparison = observation["comparison"]
+    if comparison != verified:
+        raise ValueError("Source observations and comparison report differ")
     if (comparison["raceKey"] != key or
             comparison["status"] != "SOURCE_CONTENT_MATCH_INDEPENDENCE_PENDING" or
             comparison["disagreements"] or comparison["formalPass"] is not False):
@@ -230,11 +236,11 @@ def candidate(key, rows, collect_fn=collect):
                             capturedAt=capture))
     if len(payload) != len(rows):
         raise ValueError("Incomplete pair result")
-    second_source = observation["observations"][1]["sourceId"]
-    if second_source not in ("chariloto-day-results", "lotoplace-day-results"):
-        raise ValueError("Unexpected second result source")
+    second_source = clean(observation["observations"][1]["sourceId"])
+    if not re.fullmatch(r"[a-zA-Z0-9_-]{1,64}", second_source):
+        raise ValueError("Invalid second result source identifier")
     return {"entries": [], "results": payload,
-            "sourcePairMode": observation.get("sourcePairMode", "NETKEIRIN_DAY_RESULTS"),
+            "sourcePairMode": observation.get("sourcePairMode", "TWO_PUBLISHED_SOURCES"),
             "sourceNote": ("Content matched on two sites, upstream independence not verified; "
                            "secondSourceId=" + second_source)}
 
@@ -465,7 +471,6 @@ def self_test():
                 sourceId="netkeirin-result", race=race_data, results=riders)
     right = dict(sourceUrl="https://www.chariloto.com/keirin/results/26/2026-11-23",
                  sourceId="chariloto-day-results", race=race_data, results=riders)
-    from compare_race_results import compare
     actual = {"observations": [left, right], "comparison": compare({"observations": [left, right]})}
     mixed_result = candidate(day+"|26|1", mixed, collect_fn=lambda *a: actual)
     assert [r["className"] for r in mixed_result["results"]] == [r[4] for r in mixed]
@@ -474,11 +479,26 @@ def self_test():
          "sourceUrl": "https://www.chariloto.com/keirin/results/26/2026-11-23"},
         {**right, "sourceId": "lotoplace-day-results",
          "sourceUrl": "https://www.lotoplace.jp/keirin/results/26/2026-11-23/"}
-    ], "comparison": actual["comparison"],
-       "sourcePairMode": "CHARILOTO_LOTOPLACE_FALLBACK"}
+    ], "sourcePairMode": "CHARILOTO_LOTOPLACE_FALLBACK"}
+    fallback_pair["comparison"] = compare({"observations": fallback_pair["observations"]})
     fallback_candidate = candidate(day+"|26|1", records, collect_fn=lambda *a: fallback_pair)
     assert fallback_candidate["sourcePairMode"] == "CHARILOTO_LOTOPLACE_FALLBACK"
     assert "secondSourceId=lotoplace-day-results" in fallback_candidate["sourceNote"]
+    # An unregistered fourth publisher can be compared without allowing
+    # a forged comparison, duplicate host, incomplete cars, or false PASS.
+    fourth = {**right, "sourceId": "official-venue-result",
+              "sourceUrl": "https://official-venue.example/results/20261123/1"}
+    open_pair = {"observations": [fourth, left]}
+    open_pair["comparison"] = compare(open_pair)
+    neutral = candidate(day+"|26|1", records, collect_fn=lambda *a: open_pair)
+    assert "secondSourceId=netkeirin-result" in neutral["sourceNote"]
+    corrupt = {**open_pair, "comparison": actual["comparison"]}
+    try:
+        candidate(day+"|26|1", records, collect_fn=lambda *a: corrupt)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Stale/forged comparison was accepted")
     calls = []
     def pretend_apply(data, dry_run=True):
         calls.append(dry_run)
