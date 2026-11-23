@@ -85,3 +85,34 @@ jobs:
                   page=BeautifulSoup(html,'html.parser')
                   print('KURUME_TITLE',key,(page.title.get_text(' ',strip=True) if page.title else 'NO_TITLE')[:140])
           PY
+
+      - name: Inspect alternate publisher URL forms on other historical meetings
+        continue-on-error: true
+        run: |
+          python - <<'PY'
+          import sys,re
+          sys.path.insert(0,'scripts')
+          import collect_kdreams_result as source
+          from bs4 import BeautifulSoup
+          cases=[
+              ('2026-10-01|22|1','https://keirin.kdreams.jp/maebashi/racedetail/2220260930020001/?pageType=result'),
+              ('2026-10-04|75|11','https://keirin.kdreams.jp/matsuyama/racedetail/7520261004010011/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT'),
+          ]
+          for key,url in cases:
+              try:
+                  html=source.fetch(url)
+                  soup=BeautifulSoup(html,'html.parser')
+                  title=soup.title.get_text(' ',strip=True) if soup.title else 'NO_TITLE'
+                  tables=[]
+                  for table in soup.select('table'):
+                      tr=table.find('tr')
+                      if not tr: continue
+                      headers=[re.sub(r'\\s+','',a.get_text(' ',strip=True)) for a in tr.find_all('th',recursive=False)]
+                      if {'着順','車番','選手名','決まり手'}<=set(headers):
+                          tables.append((len(table.select('tr'))-1,'RESULT'))
+                      if {'車番','選手名府県/年齢/期別','級班','直近4ヶ月の成績'}<=set(headers):
+                          tables.append((len(table.select('tr'))-1,'ENTRY'))
+                  print('ALTERNATE_SOURCE_PAGE',key,'title',title[:130],'tables',tables)
+              except Exception as exc:
+                  print('ALTERNATE_SOURCE_HOLD',key,type(exc).__name__,str(exc)[:90])
+          PY
