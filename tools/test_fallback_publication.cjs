@@ -6,6 +6,8 @@ const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),cp=r
 const read=n=>JSON.parse(fs.readFileSync(n,'utf8'));
 const files=['verified-rider-ids-feed-v1.json','comparison-races-v1.json','verified-results-feed-v1.json','verified-rider-results-feed-v1.json','verified-line-snapshots-feed-v1.json'];
 const [ids,comparison,races,riders,lines]=files.map(read);
+// Isolate the fallback-result contract from unrelated historical rider-ID records.
+ids.riders=ids.riders.slice(0,1);ids.summary.rows=ids.riders.length;
 const record=races.races.find(r=>r.officialVerification?.method==='kdreams_single_source_verified'&&r.size===7);
 assert.ok(record,'known verified source fixture');
 const source='https://www.chariloto.com/keirin/results/75/2026-10-05/';
