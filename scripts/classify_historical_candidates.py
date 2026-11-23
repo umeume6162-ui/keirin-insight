@@ -99,6 +99,20 @@ def ledger_records(snapshot, racekey):
     return found
 
 
+
+def rider_grade_compatible(race_class, rider_grade):
+    """Match a rider's V99 grade to a race family, not to the headline subgrade."""
+    allowed = {
+        "A3": {"A3"},
+        "A1": {"A1", "A2"}, "A2": {"A1", "A2"},
+        "A1A2": {"A1", "A2"},
+        "S": {"S1", "S2"}, "S1": {"S1", "S2"}, "S2": {"S1", "S2"},
+        "L1": {"L1"},
+    }
+    return rider_grade in allowed.get(race_class, set())
+
+
+
 def classify(candidate, snapshot):
     observations = candidate.get("observations")
     if not isinstance(observations, list) or len(observations) != 2:
@@ -130,8 +144,9 @@ def classify(candidate, snapshot):
         record = existing[car]
         if record["track"] != track:
             problems.append({"car": car, "field": "track"})
-        # V99 grade is per-rider (A3/A2/S1...), A1A2/S can contain subgrades.
-        if grade in ("A3", "A1", "A2", "S1", "S2", "L1") and record["grade"] and record["grade"] != grade:
+        # V99 grade is per rider; A1/A2 and S1/S2 may legitimately mix.
+        # Other families stay incompatible, including A3 versus A1/A2.
+        if record["grade"] and not rider_grade_compatible(grade, record["grade"]):
             problems.append({"car": car, "field": "grade"})
         entry = observed[car]
         comparisons = {
@@ -176,6 +191,31 @@ def self_test():
         rows.append(row)
     snapshot = {"schema": "ki-v99-snapshot-v1", "coverage": ["2026-09-10|27|2"], "rows": rows}
     assert classify(candidate, snapshot)["classification"] == "REGISTERED_CONTENT_MATCH"
+    assert rider_grade_compatible("A1", "A2") and rider_grade_compatible("A2", "A1")
+    assert rider_grade_compatible("S1", "S2") and rider_grade_compatible("S2", "S1")
+    assert rider_grade_compatible("A1A2", "A1") and rider_grade_compatible("S", "S2")
+    assert not rider_grade_compatible("A3", "A2")
+    assert not rider_grade_compatible("S1", "A1")
+    assert not rider_grade_compatible("L1", "S2")
+    # End-to-end scoped V99 comparison: mixed rider subgrades are valid,
+    # but an out-of-family rider grade still creates a review finding.
+    for race_grade, rider_a, rider_b in (("A1", "A1", "A2"),
+                                           ("A2", "A1", "A2"),
+                                           ("S1", "S1", "S2"),
+                                           ("S2", "S1", "S2"),
+                                           ("A1A2", "A1", "A2"),
+                                           ("S", "S1", "S2")):
+        mixed_a = dict(a, race=dict(race, className=race_grade))
+        mixed_b = dict(b, race=dict(race, className=race_grade))
+        mixed_candidate = {"observations": [mixed_a, mixed_b],
+                           "comparison": compare({"observations": [mixed_a, mixed_b]})}
+        mixed_rows = [list(row) for row in rows]
+        for ix, row in enumerate(mixed_rows[1:]):
+            row[12] = rider_a if ix % 2 == 0 else rider_b
+        mixed_snapshot = {**snapshot, "rows": mixed_rows}
+        assert classify(mixed_candidate, mixed_snapshot)["classification"] == "REGISTERED_CONTENT_MATCH", race_grade
+        mixed_rows[1][12] = "A3" if race_grade.startswith("S") else "S1"
+        assert classify(mixed_candidate, mixed_snapshot)["classification"] == "LEDGER_CONFLICT_OR_MISSING_FIELDS", race_grade
     assert classify(candidate, {**snapshot, "coverage": []})["classification"] == "LEDGER_COVERAGE_UNCONFIRMED"
     assert classify(candidate, {**snapshot, "rows": [rows[0]]})["classification"] == "NOT_IN_SCOPED_LEDGER"
     assert classify(candidate, {**snapshot, "rows": rows[:-1]})["classification"] == "PARTIAL_OR_INVALID_LEDGER_RACE"
