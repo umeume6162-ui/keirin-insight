@@ -157,7 +157,8 @@ def process(entries, results, start, end, limit=4, write=False,
             collect_fn=collect, apply_fn=apply):
     if not 1 <= limit <= 20:
         raise ValueError("limit must be 1..20")
-    selected = select_rotating_races(eligible_races(entries, results, start, end), limit)
+    eligible = eligible_races(entries, results, start, end)
+    selected = select_rotating_races(eligible, limit)
     reports = []
     for key, rows in selected:
         item = {"raceKey": key, "saved": False}
@@ -184,7 +185,10 @@ def process(entries, results, start, end, limit=4, write=False,
                         errorType=type(exc).__name__)
         reports.append(item)
     return {"schema": "ki-daily-result-intake-v1", "formalPass": False,
-            "eligibleExamined": len(selected), "results": reports}
+            "eligibleTotal": len(eligible), "eligibleExamined": len(selected),
+            "eligibleDeferred": len(eligible) - len(selected),
+            "savedCount": sum(bool(r["saved"]) for r in reports),
+            "results": reports}
 
 
 def self_test():
@@ -217,6 +221,7 @@ def self_test():
     summary = process(records, [], start, start, collect_fn=lambda *a: actual,
                       apply_fn=pretend_apply)
     assert summary["results"][0]["status"] == "DRY_RUN_TWO_SOURCES_MATCH" and calls == [True]
+    assert (summary["eligibleTotal"], summary["eligibleExamined"], summary["eligibleDeferred"], summary["savedCount"]) == (1, 1, 0, 0)
     broken = [list(x) for x in records]
     broken[0][6] = "別人"
     summary = process(broken, [], start, start, collect_fn=lambda *a: actual,
