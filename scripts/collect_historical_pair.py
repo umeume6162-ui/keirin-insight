@@ -16,6 +16,7 @@ from pathlib import Path
 import collect_netkeirin_result as netkeirin
 import collect_lotoplace_result as day_results
 from compare_race_results import compare
+from result_hold_diagnostics import classify_result_hold
 
 
 
@@ -130,15 +131,23 @@ def collect_auto(day, code, track, number, class_name, cars, sources=None):
         raise ValueError("Invalid bounded result source pool")
     collected = []
     matched = None
-    source_failed = 0
+    attempts = []
     for source_name, read_source in sources:
-        if not callable(read_source) or not isinstance(source_name, str):
+        if (not callable(read_source) or not isinstance(source_name, str)
+                or not source_name.isascii() or len(source_name) > 48
+                or not all(ch.isalnum() or ch in "_-" for ch in source_name)):
             raise ValueError("Invalid result source adapter")
         try:
             observation = read_source()
-        except (ValueError, requests.exceptions.RequestException):
-            source_failed += 1
+        except (ValueError, requests.exceptions.RequestException) as exc:
+            reason = classify_result_hold(exc, "COLLECT_COMPARE")
+            if reason == "SOURCE_OTHER_ERROR" and isinstance(exc, ValueError):
+                reason = "SOURCE_VALIDATION_REJECTED"
+            attempts.append({"source": source_name, "status": "FAILED",
+                             "reasonCode": reason})
             continue
+        # Record only bounded stage codes, never private HTML/URLs or raw errors.
+        attempts.append({"source": source_name, "status": "OBSERVED"})
         # Recompute every pair, including when earlier publications disagreed.
         for earlier in collected:
             candidate = {"observations": [earlier, observation]}
@@ -150,7 +159,8 @@ def collect_auto(day, code, track, number, class_name, cars, sources=None):
                     and comparison["formalPass"] is False
                     and not comparison["disagreements"]):
                 matched = {**candidate, "comparison": comparison,
-                           "sourcePairMode": "SOURCE_POOL_MATCH"}
+                           "sourcePairMode": "SOURCE_POOL_MATCH",
+                           "sourceAttempts": attempts}
                 break
         if matched:
             break
@@ -158,8 +168,11 @@ def collect_auto(day, code, track, number, class_name, cars, sources=None):
     if matched:
         return matched
     if len(collected) < 2:
-        raise SourceStageError("SOURCE_POOL_UNAVAILABLE")
-    raise ValueError("Two result publications do not agree")
+        exc = SourceStageError("SOURCE_POOL_UNAVAILABLE")
+    else:
+        exc = ValueError("Two result publications do not agree")
+    exc.source_attempts = attempts
+    raise exc
 
 
 def self_test_auto():
@@ -193,6 +206,10 @@ def self_test_auto():
     assert report["sourcePairMode"] == "SOURCE_POOL_MATCH"
     assert report["comparison"]["formalPass"] is False
     assert calls == ["first", "venue", "press"]
+    assert report["sourceAttempts"] == [
+        {"source": "first", "status": "FAILED", "reasonCode": "SOURCE_VALIDATION_REJECTED"},
+        {"source": "venue", "status": "OBSERVED"},
+        {"source": "press", "status": "OBSERVED"}]
     changed = make("source-a.example", "net", altered=True)
     calls.clear()
     report2 = collect_auto("2026-09-10", "27", "京王閣", 2, "A3", 7,
@@ -207,6 +224,8 @@ def self_test_auto():
                               ("missing", read("missing", None))])
     except SourceStageError as e:
         assert e.source_stage == "SOURCE_POOL_UNAVAILABLE"
+        assert e.source_attempts[0]["status"] == "OBSERVED"
+        assert e.source_attempts[1]["reasonCode"] == "SOURCE_VALIDATION_REJECTED"
     else:
         raise AssertionError("Single source was accepted")
     print("SELF_TEST_OK: publisher-neutral bounded result pool and full-field matching")

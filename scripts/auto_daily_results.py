@@ -21,7 +21,7 @@ from zoneinfo import ZoneInfo
 
 import requests
 
-from collect_historical_pair import collect_auto as collect
+from collect_historical_pair import collect_auto as collect, SourceStageError
 from result_hold_diagnostics import classify_result_hold, review_route
 from compare_race_results import normalized_name, canonical_method, compare
 from upsert_daily_sheets import (
@@ -240,6 +240,7 @@ def candidate(key, rows, collect_fn=collect):
     if not re.fullmatch(r"[a-zA-Z0-9_-]{1,64}", second_source):
         raise ValueError("Invalid second result source identifier")
     return {"entries": [], "results": payload,
+            "sourceAttempts": observation.get("sourceAttempts", []),
             "sourcePairMode": observation.get("sourcePairMode", "TWO_PUBLISHED_SOURCES"),
             "sourceNote": ("Content matched on two sites, upstream independence not verified; "
                            "secondSourceId=" + second_source)}
@@ -358,6 +359,8 @@ def process(entries, results, start, end, limit=4, write=False,
         phase = "COLLECT_COMPARE"
         try:
             data = candidate(key, rows, collect_fn=collect_fn)
+            if data.get("sourceAttempts"):
+                item["sourceAttempts"] = data["sourceAttempts"]
             was_partial = key in by_stored
             if was_partial:
                 data = {**data, **safe_missing_result_payload(data, by_stored[key], rows)}
@@ -396,6 +399,8 @@ def process(entries, results, start, end, limit=4, write=False,
                         failurePhase=phase,
                         reasonCode=reason,
                         reviewRoute=review_route(reason))
+            if getattr(exc, "source_attempts", None):
+                item["sourceAttempts"] = exc.source_attempts
             if getattr(exc, "source_stage", None) in (
                     "PRIMARY_NETKEIRIN", "SECONDARY_EXPLICIT",
                     "SECONDARY_BOTH_UNAVAILABLE", "ALTERNATE_PAIR_UNAVAILABLE",
@@ -567,6 +572,24 @@ def self_test():
     assert (summary["eligibleTotal"], summary["eligibleExamined"], summary["eligibleDeferred"], summary["savedCount"]) == (1, 1, 0, 0)
     assert summary["results"][0]["secondSourceId"] == "chariloto-day-results"
     assert summary["results"][0]["alternateSourceUsed"] is False
+    with_attempts = {**actual, "sourceAttempts": [
+        {"source": "netkeirin", "status": "FAILED", "reasonCode": "SOURCE_VALIDATION_REJECTED"},
+        {"source": "chariloto", "status": "OBSERVED"},
+        {"source": "lotoplace", "status": "OBSERVED"}]}
+    traced = process(records, [], start, start, collect_fn=lambda *a: with_attempts,
+                     apply_fn=pretend_apply)
+    assert len(traced["results"][0]["sourceAttempts"]) == 3
+    calls.pop()  # diagnostics probe must not change subsequent write-call expectations
+    missing_sources = SourceStageError("SOURCE_POOL_UNAVAILABLE")
+    missing_sources.source_attempts = [
+        {"source": "netkeirin", "status": "FAILED", "reasonCode": "SOURCE_ROBOTS_DISALLOWED"},
+        {"source": "chariloto", "status": "FAILED", "reasonCode": "SOURCE_NETWORK_ERROR"}]
+    def fail_sources(*_args):
+        raise missing_sources
+    held_sources = process(records, [], start, start, collect_fn=fail_sources,
+                           apply_fn=pretend_apply)
+    assert held_sources["results"][0]["sourceAttempts"] == missing_sources.source_attempts
+    assert held_sources["savedCount"] == 0
     alternate = {"observations": [left, dict(right, sourceId="lotoplace-day-results",
                                            sourceUrl="https://www.lotoplace.jp/keirin/results/26/2026-11-23/")],
                  "comparison": compare({"observations": [left, dict(right, sourceId="lotoplace-day-results",
@@ -584,7 +607,6 @@ def self_test():
     assert summary["results"][0]["failurePhase"] == "COLLECT_COMPARE"
     assert summary["results"][0]["reasonCode"] == "ENTRY_RIDER_IDENTITY_MISMATCH"
     assert summary["results"][0]["reviewRoute"] == "RIDER_OR_CLASS_EVIDENCE_REVIEW"
-    from collect_historical_pair import SourceStageError
     def fail_primary(*args):
         try:
             raise ValueError("Robots rules prohibit this page")
