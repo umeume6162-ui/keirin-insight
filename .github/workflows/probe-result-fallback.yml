@@ -116,3 +116,31 @@ jobs:
             except Exception as e:
               print('FALLBACK_V99_HOLD',key,type(e).__name__,str(e)[:120])
           PY
+
+      - name: Probe three pending Kurume races against actual Chariloto results
+        run: |
+          python - <<'PY'
+          import sys,json
+          sys.path.insert(0,'scripts')
+          import collect_lotoplace_result as char
+          from compare_race_results import normalized_name,normalized_prefecture,canonical_method
+          expected=json.loads('''{"1":[{"number":7,"name":"杉山正和","prefecture":"三重","period":"59","finish":"1","method":"差し","exception":""},{"number":3,"name":"鰐渕正利","prefecture":"愛知","period":"65","finish":"2","method":"差し","exception":""},{"number":4,"name":"古川大輔","prefecture":"広島","period":"99","finish":"3","method":"","exception":""},{"number":1,"name":"住村実","prefecture":"徳島","period":"82","finish":"4","method":"","exception":""},{"number":2,"name":"ラモスレオ","prefecture":"沖縄","period":"113","finish":"5","method":"","exception":""},{"number":5,"name":"花田雄飛","prefecture":"愛知","period":"127","finish":"6","method":"","exception":""},{"number":6,"name":"吉田悟","prefecture":"熊本","period":"119","finish":"7","method":"","exception":""}],"2":[{"number":7,"name":"西澤優聖","prefecture":"岐阜","period":"129","finish":"1","method":"逃げ","exception":""},{"number":1,"name":"窪田陽介","prefecture":"滋賀","period":"90","finish":"2","method":"マーク","exception":""},{"number":5,"name":"陶器一馬","prefecture":"大阪","period":"86","finish":"3","method":"","exception":""},{"number":3,"name":"水木裕聡","prefecture":"高知","period":"96","finish":"4","method":"","exception":""},{"number":6,"name":"武智尚之","prefecture":"愛媛","period":"70","finish":"5","method":"","exception":""},{"number":2,"name":"篠田樹","prefecture":"大分","period":"113","finish":"6","method":"","exception":"故"},{"number":4,"name":"喜納隆志","prefecture":"沖縄","period":"92","finish":"7","method":"","exception":"故"}],"4":[{"number":1,"name":"近藤雄太","prefecture":"岡山","period":"121","finish":"1","method":"捲くり","exception":""},{"number":5,"name":"大林亮介","prefecture":"香川","period":"86","finish":"2","method":"マーク","exception":""},{"number":3,"name":"中井修","prefecture":"滋賀","period":"75","finish":"3","method":"","exception":""},{"number":2,"name":"仙石淳","prefecture":"沖縄","period":"73","finish":"4","method":"","exception":""},{"number":7,"name":"中嶋樹","prefecture":"大阪","period":"119","finish":"5","method":"","exception":""},{"number":6,"name":"滝川秀嗣","prefecture":"愛知","period":"71","finish":"6","method":"","exception":""},{"number":4,"name":"白濱蓮","prefecture":"長崎","period":"129","finish":"7","method":"","exception":""}]}''')
+          day,code,track='2026-10-01','83','久留米'
+          url=f'https://www.chariloto.com/keirin/results/83/{day}/'
+          for race in (1,2,4):
+            key=f'{day}|{code}|{race}'
+            try:
+              obs=char.parse_result(char.fetch(url),day,code,track,race,'A3',7,url)
+              got={int(x['number']):x for x in obs['results']}
+              differences=[]
+              for rider in expected[str(race)]:
+                actual=got.get(rider['number'])
+                if not actual:
+                  differences.append((rider['number'],'missing_car'));continue
+                for field,normal in (('name',normalized_name),('prefecture',normalized_prefecture),('period',str),('finish',str),('method',canonical_method),('exception',str)):
+                  if normal(actual.get(field,'') or '')!=normal(rider[field]):
+                    differences.append((rider['number'],field,actual.get(field,''),rider[field]))
+              print('KURUME_CHARILOTO_VERIFY',key,'PASS' if not differences else 'HOLD','cars',len(got),'mismatchCount',len(differences),'details',differences[:7])
+            except Exception as exc:
+              print('KURUME_CHARILOTO_HOLD',key,type(exc).__name__,str(exc)[:160])
+          PY
