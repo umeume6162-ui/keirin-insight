@@ -118,6 +118,17 @@ jobs:
           python scripts/collect_historical_batch.py --self-test
           python scripts/classify_historical_candidates.py --self-test
           python scripts/build_daily_board.py --self-test
+      - name: TEMP preview active next-day venues from current index
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: |
+          python scripts/discover_tospo_races.py --date 2026-11-24 --all-venues --max-venues 8 --out /tmp/ki-active-venues-preview.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/ki-active-venues-preview.json', encoding='utf-8'))
+          print("ACTIVE_VENUES_PREVIEW_ENTRIES", len(d["entries"]))
+          print("ACTIVE_VENUES_PREVIEW_TRACKS", sorted(set(x["track"] for x in d["entries"])))
+          PY
       - name: Validate manually supplied racecard fields
         if: github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '' && inputs.source_url != ''
         env:
