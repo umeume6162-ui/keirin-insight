@@ -54,7 +54,7 @@ def validate_url(url, day, code, track, race):
     code = str(code).zfill(2)
     match = re.fullmatch(
         r"/[a-z][a-z0-9-]*/racedetail/(" + re.escape(code)
-        + r"\\d{12}(\\d{2}))/", parsed.path
+        + r"\d{12}(\d{2}))/", parsed.path
     )
     if (parsed.scheme != "https" or parsed.netloc != "keirin.kdreams.jp"
             or parsed.username or parsed.password or parsed.fragment
@@ -183,6 +183,9 @@ def self_test():
     # The published URL is evidence: never infer meeting day from race day.
     another = "https://keirin.kdreams.jp/kurume/racedetail/8320261001010003/?pageType=showResult"
     validate_url(another, "2026-10-01", "83", "久留米", 3)
+    # Regression: a valid observed multi-venue result URL must survive the guard.
+    assert re.fullmatch(r"/kurume/racedetail/83\d{12}(\d{2})/", urlsplit(another).path)
+
     for bad in (another.replace("0003/", "0004/"),
                 another.replace("keirin.kdreams.jp", "evil.example"),
                 another + "&other=1"):
