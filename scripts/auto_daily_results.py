@@ -376,8 +376,11 @@ def process(entries, results, start, end, limit=4, write=False,
             if second_source in ("chariloto-day-results", "lotoplace-day-results"):
                 item["secondSourceId"] = second_source
                 item["alternateSourceUsed"] = second_source == "lotoplace-day-results"
+            # Source-attempt diagnostics are report-only metadata, not Sheets columns.
+            # The writer permits exactly entries, results and sourceNote.
+            sheet_payload = {k: data[k] for k in ("entries", "results", "sourceNote")}
             phase = "SHEETS_DRY_RUN"
-            dry = apply_fn(data, dry_run=True)
+            dry = apply_fn(sheet_payload, dry_run=True)
             result_delta = dry["summary"]["results"]
             if (result_delta["new"] != expected_delta or result_delta["changed"] != 0 or
                     dry["summary"]["entries"]["new"] or
@@ -386,7 +389,7 @@ def process(entries, results, start, end, limit=4, write=False,
             elif write:
                 phase = "SHEETS_APPLY"
                 verify_approved_editor()
-                saved = apply_fn(data, dry_run=False)
+                saved = apply_fn(sheet_payload, dry_run=False)
                 if (saved["summary"]["results"]["new"] != expected_delta or
                         saved["summary"]["results"]["changed"] != 0):
                     raise RuntimeError("Saved result row count differs from dry-run")
@@ -514,6 +517,7 @@ def self_test():
         raise AssertionError("Stale/forged comparison was accepted")
     calls = []
     def pretend_apply(data, dry_run=True):
+        assert set(data) == {"entries", "results", "sourceNote"}
         calls.append(dry_run)
         return {"summary": {"entries": {"new": 0, "changed": 0},
                             "results": {"new": 7, "changed": 0}}}
