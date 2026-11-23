@@ -34,6 +34,19 @@ jobs:
               key=f'{day}|{code}|{race}'
               if len(base[str(race)])!=7:
                   print('OMIYA_ARCHIVE_INCOMPLETE',key,'storedRows',len(base[str(race)]))
+                  # Read all seven original results to identify the actual missing riders.
+                  # These observations remain HOLD until the missing V99 data is reconciled.
+                  try:
+                      grade='A1A2' if race<=5 else 'S'
+                      ob=src.parse_result(html,day,code,track,race,grade,7,url)
+                      observed={int(z['number']):z for z in ob['results']}
+                      saved={int(z['number']) for z in base[str(race)]}
+                      missing=[observed[k] for k in sorted(observed) if k not in saved]
+                      overlap=[(z['number'],observed.get(z['number'],{}).get('name'),observed.get(z['number'],{}).get('finish'),z['finish']) for z in base[str(race)]]
+                      print('OMIYA_MISSING_ORIGINAL_RIDERS',key,'count',len(missing),'riders',json.dumps(missing,ensure_ascii=False))
+                      print('OMIYA_PRESERVED_OVERLAP',key,'rows',json.dumps(overlap,ensure_ascii=False))
+                  except Exception as exc:
+                      print('OMIYA_MISSING_SOURCE_HOLD',key,type(exc).__name__,str(exc)[:120])
                   continue
               grade='A1A2' if race<=5 else 'S'
               try:
@@ -49,6 +62,10 @@ jobs:
                           if norm(found.get(k,'') or '')!=norm(rider[k]):
                               mismatches.append((rider['number'],k))
                   print('OMIYA_V99_COMPARE',key,'PASS' if not mismatches else 'HOLD','cars',len(got),'mismatchCount',len(mismatches),'details',mismatches[:7])
+                  if race==3 and mismatches:
+                      row=got.get(1)
+                      print('OMIYA_RACE3_CONFLICT',key,'observed',json.dumps(row,ensure_ascii=False),
+                            'stored',json.dumps([z for z in base[str(race)] if z['number']==1],ensure_ascii=False))
               except Exception as exc:
                   print('OMIYA_V99_HOLD',key,type(exc).__name__,str(exc)[:120])
           PY
