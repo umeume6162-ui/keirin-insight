@@ -330,7 +330,9 @@
       "status": "results_recorded",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
-      "expectedCount": 7
+      "expectedCount": 7,
+      "startTime": "15:28",
+      "startTimeSourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332"
     },
     {
       "key": "2026-11-24|奈良|3",
@@ -414,7 +416,9 @@
       "status": "entry_only",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
-      "expectedCount": 7
+      "expectedCount": 7,
+      "startTime": "12:07",
+      "startTimeSourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261123_32325"
     },
     {
       "key": "2026-11-24|奈良|4",
@@ -498,7 +502,9 @@
       "status": "entry_only",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
-      "expectedCount": 7
+      "expectedCount": 7,
+      "startTime": "12:33",
+      "startTimeSourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261123_32324"
     },
     {
       "key": "2026-11-24|奈良|6",
@@ -582,7 +588,9 @@
       "status": "entry_only",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
-      "expectedCount": 7
+      "expectedCount": 7,
+      "startTime": "13:29",
+      "startTimeSourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261123_32321"
     },
     {
       "key": "2026-11-24|奈良|7",
@@ -666,7 +674,9 @@
       "status": "entry_only",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
-      "expectedCount": 7
+      "expectedCount": 7,
+      "startTime": "13:57",
+      "startTimeSourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261123_32319"
     },
     {
       "key": "2026-11-24|奈良|8",
@@ -750,7 +760,9 @@
       "status": "entry_only",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
-      "expectedCount": 7
+      "expectedCount": 7,
+      "startTime": "14:25",
+      "startTimeSourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261123_32314"
     },
     {
       "key": "2026-11-24|奈良|9",
@@ -834,7 +846,9 @@
       "status": "entry_only",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
-      "expectedCount": 7
+      "expectedCount": 7,
+      "startTime": "14:53",
+      "startTimeSourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261123_32310"
     },
     {
       "key": "2026-11-24|奈良|10",
@@ -918,7 +932,9 @@
       "status": "entry_only",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
-      "expectedCount": 7
+      "expectedCount": 7,
+      "startTime": "15:21",
+      "startTimeSourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261123_32309"
     },
     {
       "key": "2026-11-24|奈良|11",
@@ -1002,7 +1018,9 @@
       "status": "entry_only",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
-      "expectedCount": 7
+      "expectedCount": 7,
+      "startTime": "15:52",
+      "startTimeSourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261123_32307"
     },
     {
       "key": "2026-11-24|松山|1",
