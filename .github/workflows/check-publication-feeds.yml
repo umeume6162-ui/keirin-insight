@@ -23,16 +23,6 @@ on:
       - 'tools/test_mobile_result_contract.cjs'
       - 'race-result-detail.html'
       - 'reconstruction-status.html'
-      - 'tools/reconcile_reconstructed_race.cjs'
-      - 'tools/test_audit_official_primary_candidate.cjs'
-      - 'tools/audit_official_primary_candidate.cjs'
-      - 'tools/test_reconcile_reconstructed_race.cjs'
-      - 'tools/reconstruction-candidates/**'
-      - 'tools/audits/**'
-      - 'tools/test_audit_all_acquired_races.cjs'
-      - 'tools/check_legacy_rechecks.cjs'
-      - 'tools/source-origin-audits/**'
-      - 'tools/audit_all_acquired_races.cjs'
       - '.github/workflows/check-publication-feeds.yml'
   workflow_dispatch:
 
