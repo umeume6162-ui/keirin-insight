@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
   "verificationNote": "KEIRIN.JPと異なる別掲載元で氏名・府県・期別・6桁IDの一致。2026-11-24阿部弘、阿部充宏の2名を追加。 2026-11-24阿部蒼大015960、阿部大樹014370を公式証拠2元一致で追加。",
   "summary": {
-    "rows": 260
+    "rows": 264
   },
   "riders": [
     {
@@ -6262,6 +6262,102 @@
           "https://keirin.netkeiba.com/db/profile/?id=14208"
         ],
         "note": "V4証拠台帳 MANUAL-V4-20261124-014208（保存済みPASS証拠と元台帳を再照合。原HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "014418",
+      "name": "安部 龍文",
+      "prefecture": "大分",
+      "period": "94",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014418",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014418",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014418",
+          "https://keirin.netkeiba.com/db/profile/?id=14418"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-014418（保存済みPASS証拠と元台帳を再照合。原HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "014178",
+      "name": "伊原 克彦",
+      "prefecture": "福井",
+      "period": "91",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014178",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014178",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014178",
+          "https://keirin.netkeiba.com/db/profile/?id=14178"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-014178（保存済みPASS証拠と元台帳を再照合。原HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "013550",
+      "name": "安部 達也",
+      "prefecture": "埼玉",
+      "period": "83",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013550",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013550",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013550",
+          "https://keirin.netkeiba.com/db/profile/?id=13550"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-013550（保存済みPASS証拠と元台帳を再照合。原HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "014091",
+      "name": "伊原 弘幸",
+      "prefecture": "福井",
+      "period": "90",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014091",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014091",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014091",
+          "https://keirin.netkeiba.com/db/profile/?id=14091"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-014091（保存済みPASS証拠と元台帳を再照合。原HTML全文は保存せず）"
       }
     }
   ],
