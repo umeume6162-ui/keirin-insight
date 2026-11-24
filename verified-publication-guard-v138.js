@@ -22,6 +22,8 @@
   if(!(evidence(x)||forecastSource(x)||(kdResult(x)&&e?.method==='kdreams_single_source_verified'))||!date(x.date)||!x.track||!/^\d{2}$/.test(String(x.trackCode||''))||!Number.isInteger(Number(x.race))||Number(x.race)<1||Number(x.race)>12||!x.id||x.id!==[x.date,String(x.trackCode),Number(x.race)].join('|')||lineKeys.has(x.id)||!Array.isArray(x.riders)||![7,9].includes(x.riders.length)||x.size!==x.riders.length)fail('ライン予想の出典・レース識別・重複');
   lineKeys.add(x.id);
   const groups=x.forecastGroups;
+  if(x.lineMode!==undefined&&!['no_line','line'].includes(x.lineMode))fail('競走形式不明');
+  if(x.lineMode==='no_line'&&(!(x.lineMode==='no_line'&&['girls','advance','other_individual'].includes(x.raceFormat)&&typeof x.originalFormation==='string'&&x.originalFormation.trim().length>0&&typeof x.formatEvidenceUrl==='string'&&/^https:\/\//.test(x.formatEvidenceUrl))||!Array.isArray(groups)||groups.some(q=>!Array.isArray(q)||q.length!==1)))fail('ラインなし競走の証拠・全車独立不備');
   if(!Array.isArray(groups)||!groups.length||groups.some(g=>!Array.isArray(g)||!g.length)||groups.flat().length!==x.size)fail('ライン全車グループ不備');
   const nums=groups.flat().map(Number),expected=Array.from({length:x.size},(_,i)=>i+1);
   if(new Set(nums).size!==x.size||nums.some(n=>!Number.isInteger(n))||nums.slice().sort((a,b)=>a-b).join(',')!==expected.join(','))fail('ライン車番の不足・重複');

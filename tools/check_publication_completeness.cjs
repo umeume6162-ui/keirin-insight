@@ -129,6 +129,8 @@ for(const line of lines.races){
  if(e.method==='kdreams_single_source_verified')assert.ok(kdSource(e.source),'legacy K-Dreams source');
  sourceList.forEach(requireUrl);
  assert.ok(groupsAreValid(line.forecastGroups),'line groups incomplete');
+ assert.ok(line.lineMode===undefined||['no_line','line'].includes(line.lineMode),'unknown line mode');
+ if(line.lineMode==='no_line'){const x=line;assert.ok(x.lineMode==='no_line'&&['girls','advance','other_individual'].includes(x.raceFormat)&&typeof x.originalFormation==='string'&&x.originalFormation.trim().length>0&&typeof x.formatEvidenceUrl==='string'&&/^https:\/\//.test(x.formatEvidenceUrl),'no-line race format proof missing');assert.ok(line.forecastGroups.every(g=>g.length===1),'individual race must use singleton groups');}
  const cars=line.forecastGroups.flat().map(Number),expected=Array.from({length:line.size},(_,i)=>i+1);
  assert.equal(cars.length,line.size,'forecast must cover all cars');
  assert.deepEqual(cars.slice().sort((a,b)=>a-b),expected,'missing/duplicate forecast cars');
