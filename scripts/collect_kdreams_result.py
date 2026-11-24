@@ -13,7 +13,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from collect_lotoplace_result import EXCEPTION_LABELS, grade_matches
-from compare_race_results import normalized_name, normalized_prefecture
+from compare_race_results import normalized_name, normalized_prefecture, normalized_results
 from result_robots import require_robots_access
 
 PREFECTURES = (
@@ -66,6 +66,10 @@ def validate_url(url, day, code, track, race):
 def parse_identity(text):
     # The HTML presents "渡口 まりあ 山　口/32/114".
     parts = compact(text).split("/")
+    if len(parts) == 3 and parts[0].endswith("外国") and len(parts[0]) > 2:
+        if not re.fullmatch(r"\d{1,3}|[-—－]?", parts[1]) or not re.fullmatch(r"\d{1,3}|[-—－]?", parts[2]):
+            raise ValueError("Unexpected foreign rider identity format")
+        return parts[0][:-2], "外国", parts[2] if parts[2].isdigit() else ""
     if len(parts) != 3 or not parts[1].isdigit() or not parts[2].isdigit():
         raise ValueError("Missing rider age/period in racecard")
     pre = parts[0]
@@ -111,7 +115,7 @@ def extract(html, day, code, track, race, class_name, cars, url):
         # The public table omits an empty prediction cell for some riders.
         # Anchor to the source-labelled identity cell, not a fragile td index.
         identities = [i for i, cell in enumerate(cells)
-                      if re.fullmatch(r".+/\d{1,3}/\d{2,3}",
+                      if re.fullmatch(r"(?:.+/\d{1,3}/\d{2,3}|.+外国/(?:\d{1,3}|[-—－]?)/(?:\d{1,3}|[-—－]?))",
                                       compact(cell.get_text(" ", strip=True)))]
         if not identities:
             continue  # heading/guide/footer row, not a rider
@@ -126,7 +130,7 @@ def extract(html, day, code, track, race, class_name, cars, url):
             raise ValueError("Duplicate car in racecard")
         name, pref, period = parse_identity(cells[i].get_text(" ", strip=True))
         grade = compact(cells[i + 1].get_text(" ", strip=True))
-        if not grade_matches(grade, class_name):
+        if not grade_matches(grade, class_name) and not (pref == "外国" and grade in ("", "-", "—", "外国")):
             raise ValueError("Rider class conflicts with requested race class")
         expected[num] = (normalized_name(name), normalized_prefecture(pref), period)
     if sorted(expected) != list(range(1, cars + 1)):
@@ -154,10 +158,18 @@ def extract(html, day, code, track, race, class_name, cars, url):
         name, pref, period = expected[num]
         if normalized_name(raw_name) != name:
             raise ValueError("Rider identity does not match pre-race source")
-        results.append(dict(number=num, name=name, prefecture=pref,
-                            period=period, finish=finish,
-                            method=compact(cells[idx["決まり手"]].get_text(" ", strip=True)),
-                            exception=state))
+        result = dict(number=num, name=name, prefecture=pref,
+                      period=period, finish=finish,
+                      method=compact(cells[idx["決まり手"]].get_text(" ", strip=True)),
+                      exception=state)
+        if pref == "外国":
+            result["invitedEvidence"] = dict(
+                kind="foreign_invited", number=num, entryName=name,
+                raceKey=f"{day}|{str(code).zfill(2)}|{int(race)}",
+                entryUrl=url, statusSourceUrl=url,
+                evidenceRef=f"K-Dreams racecard car {num}: 府県=外国",
+                rawPrefecture=pref, rawPeriod=period)
+        results.append(result)
     if (len(results) != cars or
             sorted(x["number"] for x in results) != list(range(1, cars + 1))):
         raise ValueError("Exactly one complete target-race result table required")
@@ -209,6 +221,24 @@ def self_test():
     obs = extract(html, day, code, track, race, grade, cars, url)
     assert len(obs["results"]) == 7 and obs["results"][0]["prefecture"] == "埼玉"
     assert obs["results"][0]["method"] == "差"
+    # Synthetic fixtures exercise the explicit row-level foreign marker only.
+    for original in ("外国/30/999", "外国/30/-", "外国//"):
+        guest_html = html.replace("埼　玉/30/90", original, 1)
+        guest = extract(guest_html, day, code, track, race, grade, cars, url)
+        assert guest["results"][0]["prefecture"] == "外国"
+        assert guest["results"][0]["invitedEvidence"]["raceKey"] == day+"|61|1"
+        assert len(normalized_results(guest, cars)) == cars
+    domestic = extract(html.replace("埼　玉/30/90", "埼　玉/30/999", 1),
+                       day, code, track, race, grade, cars, url)
+    assert "invitedEvidence" not in domestic["results"][0]
+    for bad in (html.replace("埼　玉/30/90", "埼　玉/30/-", 1),
+                html.replace("埼　玉/30/90", "外国/30/999", 1).replace("選手 1</td>", "別人</td>")):
+        try:
+            extract(bad, day, code, track, race, grade, cars, url)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("Unproved or mismatched rider accepted")
     for invalid in (html.replace("選手 7</td>", "別人</td>"),
                     html.replace("<td>7</td><td>7</td>", "<td>7</td><td>6</td>"),
                     html.replace("1R |", "2R |")):
