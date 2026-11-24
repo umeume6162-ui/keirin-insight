@@ -86,6 +86,9 @@ const contestedGroups=x=>{
 const groupsAreValid=groups=>Array.isArray(groups)&&groups.every(g=>Array.isArray(g)&&g.length&&g.every(n=>Number.isInteger(Number(n))));
 const guest=(race,n,name)=>{const list=race?.invitedRiders;if(!Array.isArray(list))return false;const p=list.find(x=>Number(x.number)===Number(n));const norm=v=>String(v??'').replace(/[\s\u3000]/g,'');return !!p&&p.kind==='foreign_invited'&&!!norm(name)&&norm(p.name)===norm(name)&&norm(p.entryName)===norm(name)&&/^https:\/\//.test(String(p.entryUrl||''))&&/^https:\/\//.test(String(p.statusSourceUrl||''))&&typeof p.evidenceRef==='string'&&p.evidenceRef.trim().length>8};
 const fieldIndex=Object.fromEntries(full.columns.map((k,i)=>[k,i]));
+// Match rider-records-live.html: distinct name (without whitespace), prefecture and period.
+const uniqueResultRiders=new Set(full.rows.map(row=>[String(row[fieldIndex.name]??'').replace(/[\s\u3000]/g,''),row[fieldIndex.prefecture],row[fieldIndex.period]].join('|')));
+assert.equal(full.summary.riders,uniqueResultRiders.size,'published unique rider count mismatch');
 const raceByKey=new Map(official.races.map(r=>[r.key,r]));
 const verifiedRaceKeys=new Set();
 for(const race of official.races){
