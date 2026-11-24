@@ -106,6 +106,37 @@ def gamboo_groups(soup, size):
         groups.append(current)
     return groups if sorted(n for g in groups for n in g) == list(range(1, size+1)) else None
 
+def netkeirin_groups(soup, size):
+    blocks = soup.select(".DeployYosoIn .DeployYosoWrap > .DeployBox")
+    if len(blocks) != 1 or size not in (7, 9):
+        return None
+    groups, current = [], []
+    for item in blocks[0].find_all(recursive=False):
+        if item.name != "div" or item.get("class") != ["DeployInBox"]:
+            return None
+        children = item.find_all(recursive=False)
+        if len(children) != 1 or children[0].get("class") != ["Shaban_InBox"]:
+            return None
+        box = children[0]
+        numbers = box.select(".Shaban_Num")
+        separators = box.select(".WakuSeparat")
+        if len(separators) == 1 and not numbers and not box.get_text(strip=True):
+            if not current:
+                return None
+            groups.append(current)
+            current = []
+        elif len(numbers) == 1 and not separators:
+            n = numbers[0].get_text(strip=True)
+            if not re.fullmatch(r"[1-9]", n):
+                return None
+            current.append(int(n))
+        else:
+            return None
+    if not current:
+        return None
+    groups.append(current)
+    return groups if sorted(n for g in groups for n in g) == list(range(1, size+1)) else None
+
 def inspect(html, candidate=None):
     soup = BeautifulSoup(html, "html.parser")
     title = soup.title.get_text(" ", strip=True) if soup.title else ""
@@ -138,7 +169,9 @@ def inspect(html, candidate=None):
         tables.append({"headers":heads,"rows":rows})
         if len(tables) >= 3:
             break
-    return {"title": title, "gambooGroupCandidate": gamboo_groups(soup, candidate.get("size")) if candidate else None, "forecastLabelContexts": excerpts,
+    # Also retain explicit source links to same-race racecard and visible identity cells.
+    identity_links = [a.get("href") for a in soup.select("a[href]") if "/race/shutuba/" in a.get("href", "")][:20]
+    return {"identityLinks": identity_links, "title": title, "gambooGroupCandidate": gamboo_groups(soup, candidate.get("size")) if candidate else None, "netkeirinGroupCandidate": netkeirin_groups(soup, candidate.get("size")) if candidate else None, "forecastLabelContexts": excerpts,
             "forecastElementHtml": structures, "riderTableObservations": tables}
 
 def main():
@@ -165,6 +198,9 @@ def main():
         fixture = '<dl class="line_position"><dd><div class="line_position_inner">' + ''.join('<span class="icon_p"><span class="p00'+str(n)+'">'+str(n)+'</span><span class="p201">先行</span></span>' + ('<span class="icon_p space"></span>' if n in (3,5) else '') for n in range(1,8)) + '</div></dd></dl>'
         assert inspect(fixture, {"size":7})["gambooGroupCandidate"] == [[1,2,3],[4,5],[6,7]]
         assert inspect(fixture.replace('p003','p002'), {"size":7})["gambooGroupCandidate"] is None
+        nk = '<div class="DeployYosoIn"><div class="DeployYosoWrap"><div class="DeployBox">' + "".join('<div class="DeployInBox"><div class="Shaban_InBox"><span class="Shaban_Num">'+str(n)+'</span></div></div>' + ('<div class="DeployInBox"><div class="Shaban_InBox"><span class="WakuSeparat"></span></div></div>' if n in (2,5) else "") for n in range(1,8)) + "</div></div></div>"
+        assert inspect(nk, {"size":7})["netkeirinGroupCandidate"] == [[1,2],[3,4,5],[6,7]]
+        assert inspect(nk.replace(">7<", ">6<"), {"size":7})["netkeirinGroupCandidate"] is None
         print("SELF_TEST_OK")
         return
     lines = load("verified-line-snapshots-feed-v1.json")
