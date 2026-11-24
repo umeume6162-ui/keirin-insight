@@ -33,6 +33,9 @@ on:
       - 'reconstruction-status.html'
       - '.github/workflows/check-publication-feeds.yml'
   workflow_dispatch:
+  schedule:
+    # Check deployed data after the usual publication/propagation window.
+    - cron: '45 * * * *'
 
 permissions:
   contents: read
@@ -52,3 +55,51 @@ jobs:
       - name: Check mobile race-result presentation contract
         if: ${{ success() || failure() }}
         run: node tools/test_mobile_result_contract.cjs
+
+  deployed:
+    # Scheduled/manual checks use current main, never a PR's unmerged files.
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare deployed JSON with the checked-out main revision
+        run: |
+          python - <<'PY'
+          import json
+          import time
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+          from urllib.error import URLError
+          base = 'https://umeume6162-ui.github.io/keirin-insight/'
+          feeds = ('verified-results-feed-v1.json', 'verified-rider-results-feed-v1.json',
+                   'verified-rider-ids-feed-v1.json', 'verified-line-snapshots-feed-v1.json',
+                   'daily-board-feed-v1.json', 'collection-status-snapshot-v1.json',
+                   'ledger-status-snapshot-v1.json')
+          pending = list(feeds)
+          for attempt in range(3):
+              failures = []
+              for name in pending:
+                  try:
+                      url = base + name + '?audit=' + str(time.time_ns())
+                      req = Request(url, headers={'Cache-Control': 'no-cache', 'User-Agent': 'KEIRIN-INSIGHT-Deployment-Audit/1.0'})
+                      with urlopen(req, timeout=8) as resp:
+                          if not resp.geturl().startswith(base):
+                              raise ValueError('unexpected redirect')
+                          remote = json.load(resp)
+                      local = json.loads(Path(name).read_text(encoding='utf-8'))
+                      if remote != local:
+                          raise ValueError('deployed JSON differs from checked-out main')
+                      print('PAGES_MATCH', name, flush=True)
+                  except (OSError, ValueError, URLError) as exc:
+                      print('PAGES_PENDING', name, type(exc).__name__, str(exc)[:160], flush=True)
+                      failures.append(name)
+              pending = failures
+              if not pending:
+                  break
+              if attempt < 2:
+                  time.sleep(15)
+          if pending:
+              raise SystemExit('Pages not synchronized or unavailable: ' + ', '.join(pending))
+          print('PAGES_JSON_MATCH_ALL; browser/device rendering not verified')
+          PY
