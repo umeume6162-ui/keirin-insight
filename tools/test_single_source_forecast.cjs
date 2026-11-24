@@ -45,6 +45,11 @@ async function check(edit,success){
  await check(x=>{individual(x);x.raceFormat='advance'},true);
  const unordered=x=>{individual(x);x.originalFormation='3517246';x.forecastGroups=[3,5,1,7,2,4,6].map(n=>[n])};
  await check(unordered,true);
+ const invited=x=>{unordered(x);x.raceFormat='advance';const r=x.riders[0];r.prefecture='';r.period='';x.invitedRiders=[{number:r.number,name:r.name,entryName:r.name,kind:'foreign_invited',entryUrl:x.officialVerification.source,statusSourceUrl:x.formatEvidenceUrl,evidenceRef:'SYNTHETIC-GUEST-TEST'}]};
+ await check(invited,true);
+ await check(x=>{invited(x);delete x.invitedRiders},false);
+ await check(x=>{invited(x);x.invitedRiders[0].entryName='different'},false);
+ await check(x=>{invited(x);x.invitedRiders[0].statusSourceUrl=''},false);
  await check(x=>{unordered(x);x.raceFormat='advance'},true);
  await check(x=>{unordered(x);x.forecastGroups[6]=[2]},false);
  await check(x=>{individual(x);delete x.formatEvidenceUrl},false);

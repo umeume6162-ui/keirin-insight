@@ -73,6 +73,7 @@ assert.equal(lines.summary.rider_rows,lines.races.reduce((n,r)=>n+r.riders.lengt
 assert.equal(full.summary.races,official.summary.races);
 assert.equal(official.summary.rider_rows,full.rows.length);
 const groupsAreValid=groups=>Array.isArray(groups)&&groups.every(g=>Array.isArray(g)&&g.length&&g.every(n=>Number.isInteger(Number(n))));
+const guest=(race,n,name)=>{const list=race?.invitedRiders;if(!Array.isArray(list))return false;const p=list.find(x=>Number(x.number)===Number(n));const norm=v=>String(v??'').replace(/[\s\u3000]/g,'');return !!p&&p.kind==='foreign_invited'&&!!norm(name)&&norm(p.name)===norm(name)&&norm(p.entryName)===norm(name)&&/^https:\/\//.test(String(p.entryUrl||''))&&/^https:\/\//.test(String(p.statusSourceUrl||''))&&typeof p.evidenceRef==='string'&&p.evidenceRef.trim().length>8};
 const fieldIndex=Object.fromEntries(full.columns.map((k,i)=>[k,i]));
 const raceByKey=new Map(official.races.map(r=>[r.key,r]));
 const verifiedRaceKeys=new Set();
@@ -100,6 +101,7 @@ for(const race of official.races){
   if(isKD)assert.ok(kdSource(row[fieldIndex.sourceUrl]),'K-Dreams result has foreign source');
   if(isFallback)assert.equal(row[fieldIndex.sourceUrl],race.officialVerification.source,'fallback result URL must be observed source');
   for(const mandatory of (isSingle?['name','prefecture','period','finishRaw','riderClass']:['name','prefecture','period','finishRaw','riderClass','lastLapRaw'])){
+   if(guest(race,row[fieldIndex.number],row[fieldIndex.name])&&['prefecture','period','riderClass'].includes(mandatory))continue;
    assert.ok(String(row[fieldIndex[mandatory]]??'').trim(),'missing verified rider field: '+mandatory);
   }
  }
@@ -136,7 +138,7 @@ for(const line of lines.races){
  assert.deepEqual(cars.slice().sort((a,b)=>a-b),expected,'missing/duplicate forecast cars');
  assert.deepEqual(line.riders.map(x=>Number(x.number)).sort((a,b)=>a-b),expected,'missing/duplicate riders');
  for(const rider of line.riders){
-  assert.ok(String(rider.name||'').trim()&&String(rider.prefecture||'').trim()&&/^\d+$/.test(String(rider.period)));
+  assert.ok(String(rider.name||'').trim()&&(guest(line,rider.number,rider.name)||(String(rider.prefecture||'').trim()&&/^\d+$/.test(String(rider.period)))));
   const grp=line.forecastGroups.find(g=>g.map(Number).includes(Number(rider.number)));
   assert.ok(grp&&Array.isArray(rider.line),'rider group missing');
   assert.deepEqual(rider.line.map(Number),grp.map(Number),'rider forecast order differs');
@@ -150,7 +152,7 @@ for(const line of lines.races){
    const row=linkedRows.find(row=>Number(row[fieldIndex.number])===Number(rider.number));
    assert.ok(row,'linked rider missing');
    assert.equal(String(row[fieldIndex.name]).replace(/\s/g,''),String(rider.name).replace(/\s/g,''));
-   assert.equal(String(row[fieldIndex.period]),String(rider.period));
+   if(!(guest(race,rider.number,row[fieldIndex.name])&&guest(line,rider.number,rider.name)))assert.equal(String(row[fieldIndex.period]),String(rider.period));
   }
  }
 }
