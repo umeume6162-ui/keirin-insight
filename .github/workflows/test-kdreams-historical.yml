@@ -1,13 +1,15 @@
-name: Test historical K-Dreams reader (offline)
+name: Historical reader tests and forecast retrieval
 on:
   push:
     paths:
       - 'scripts/collect_kdreams_historical.py'
+      - 'scripts/read_forecast_candidates.py'
       - 'scripts/collect_kdreams_result.py'
       - '.github/workflows/test-kdreams-historical.yml'
   pull_request:
     paths:
       - 'scripts/collect_kdreams_historical.py'
+      - 'scripts/read_forecast_candidates.py'
       - 'scripts/collect_kdreams_result.py'
       - '.github/workflows/test-kdreams-historical.yml'
   workflow_dispatch:
@@ -16,7 +18,7 @@ permissions:
 jobs:
   historical-offline-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -30,3 +32,8 @@ jobs:
         run: python scripts/collect_kdreams_result.py
       - name: Test URL guards and full 7-car extraction (offline)
         run: python scripts/collect_kdreams_historical.py --self-test
+      - name: Test forecast retrieval helpers (offline)
+        run: python scripts/read_forecast_candidates.py --self-test
+      - name: Retrieve forecast source observations (read only)
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[read-forecast-sources]'))
+        run: python scripts/read_forecast_candidates.py --limit 5 --offset 0
