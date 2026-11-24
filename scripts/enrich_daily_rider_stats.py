@@ -169,6 +169,27 @@ def extract(html,race,url):
     return {str(x["number"]):{k:v for k,v in x.items()
              if k not in ("number","name","prefecture","period")} for x in recorded}
 
+def hold_reason(exc):
+    """Stable diagnostic category; never store exception text or page content."""
+    message=str(exc)
+    if "Race title does not prove" in message:
+        return "race_identity_unproven"
+    if "Unique full-name racecard table not found" in message or "Racecard column count changed" in message:
+        return "source_table_shape"
+    if "Full rider identity not exposed" in message:
+        return "source_rider_identity_missing"
+    if "Rider identity mismatch" in message or "Car number coverage conflict" in message:
+        return "rider_identity_conflict"
+    if "Rider row count does not match" in message:
+        return "incomplete_source_field"
+    if "Missing " in message or "No score" in message or "No valid riding style" in message:
+        return "source_stat_missing"
+    if "robots" in message.lower() or "permission" in message.lower():
+        return "source_access_policy"
+    if isinstance(exc,requests.exceptions.RequestException):
+        return "source_transport"
+    return "unclassified_source_error"
+
 def enrich(board,cache,loader=fetch,limit=16):
     if board.get("schema")!="ki-daily-board-v1" or not isinstance(board.get("races"),list):
         raise ValueError("Unknown daily feed schema")
@@ -237,7 +258,8 @@ def enrich(board,cache,loader=fetch,limit=16):
             next_holds[race["key"]]={"sourceUrl":url,"signature":sig,
                "lastAttemptAt":now.isoformat(timespec="seconds"),
                "nextRetryAt":(now+timedelta(hours=hours)).isoformat(timespec="seconds"),
-               "reasonType":type(exc).__name__}
+               "reasonType":type(exc).__name__,
+               "reasonCode":hold_reason(exc)}
     counts["deferred"]=max(0,len(pending)-limit)
     cache["races"]=dict(sorted(next_cache.items()))
     cache["holds"]=dict(sorted(next_holds.items()))
@@ -272,6 +294,11 @@ def self_test():
     hold=enrich(board,cache,lambda _:html,1)
     assert hold["held"]==1 and all("riderStats" not in x for x in race["entries"])
     assert cache["races"]=={} and cache["holds"][race["key"]]["reasonType"]=="ValueError"
+    assert cache["holds"][race["key"]]["reasonCode"]=="rider_identity_conflict"
+    assert hold_reason(ValueError("Race title does not prove meeting/date/race"))=="race_identity_unproven"
+    assert hold_reason(ValueError("Unique full-name racecard table not found"))=="source_table_shape"
+    assert hold_reason(ValueError("No score"))=="source_stat_missing"
+    assert hold_reason(requests.exceptions.Timeout("test"))=="source_transport"
     blocked=enrich(board,cache,lambda _:(_ for _ in ()).throw(AssertionError("cooldown fail")),1)
     assert blocked["cooldown"]==1 and blocked["fetched"]==0
     assert not any(e.get("riderStats") for e in race["entries"])
