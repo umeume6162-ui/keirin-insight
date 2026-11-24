@@ -23,7 +23,7 @@ import requests
 from collect_historical_pair import collect_auto, SourceStageError
 from result_hold_diagnostics import classify_result_hold, review_route
 from compare_race_results import (normalized_name, canonical_method, compare,
-                                  require_source, normalized_race, normalized_results, invited_identity)
+                                  require_source, normalized_race, normalized_results, invited_identity, foreign_source_marker)
 from upsert_daily_sheets import (
     SHEET_ID, HEADERS, CONFIG, apply, remote_client
 )
@@ -263,7 +263,13 @@ def candidate(key, rows, collect_fn=collect):
         mismatches = []
         if canonical_rider_name(old[6]) != canonical_rider_name(source["name"]):
             mismatches.append("name")
-        guest = invited_identity(left, source)
+        # Result-only marker is insufficient without a stored matching entry.
+        guest = invited_identity(left, source) or (
+            foreign_source_marker(left, source) and clean(old[7]) == "外国"
+            and bool(re.fullmatch(r"https://[^\s]+", clean(old[10])))
+            and canonical_rider_name(old[6]) == canonical_rider_name(source["name"]))
+        if foreign_source_marker(left, source) and not guest:
+            mismatches.append("foreign_entry_evidence")
         if not guest and canonical_prefecture(old[7]) != canonical_prefecture(source["prefecture"]):
             mismatches.append("prefecture")
         if not guest and clean(old[8]).removesuffix("期") != clean(source["period"]).removesuffix("期"):
@@ -584,6 +590,19 @@ def self_test():
         else:
             raise AssertionError("Unproved invited rider accepted")
         guest_row["invitedEvidence"] = original_proof
+    marker_observation = {**left, "results": [dict(x) for x in riders]}
+    marker_observation["results"][0].update(prefecture="外国", period="", foreignSourceMarker=dict(
+        rawPrefecture="外国", number=1, sourceUrl=left["sourceUrl"], raceKey=day+"|26|1"))
+    marker_single = {"observations":[marker_observation], "sourcePairMode":"SINGLE_SOURCE_ENTRY_MATCH"}
+    guest_records = [list(row) for row in records]
+    guest_records[0][7:9] = ["外国", "999"]
+    assert len(candidate(day+"|26|1", guest_records, collect_fn=lambda *a: marker_single)["results"]) == 7
+    try:
+        candidate(day+"|26|1", records, collect_fn=lambda *a: marker_single)
+    except RiderIdentityMismatch:
+        pass
+    else:
+        raise AssertionError("Result-only foreign marker accepted without entry evidence")
     wrong = {**left, "results": [dict(x) for x in riders]}
     wrong["results"][0]["name"] = "別人"
     try:

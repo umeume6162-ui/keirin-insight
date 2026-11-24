@@ -115,17 +115,27 @@ def extract(html, event_date, code, track, race, class_name, expected_cars, url)
                     rider_text
                 )
                 if not match:
+                    match = re.fullmatch(
+                        r"(.+?)\s+(外国)\s+\d{1,2}歳\s+([-—]?)\s*(A[123]|S[12]|SS|L[12])",
+                        rider_text)
+                if not match:
                     raise ValueError("Name/prefecture/period not fully visible for car " + car)
                 name, prefecture, period, source_grade = match.groups()
                 if not grade_matches(source_grade, class_name):
                     raise ValueError("Rider class conflicts with requested race class")
                 method = (compact(cells[headers["method"]].get_text(" ", strip=True))
                           if "method" in headers else "")
-                found.append({
+                result = {
                     "number": int(car), "name": name, "prefecture": prefecture,
                     "period": period, "finish": finish, "method": method,
                     "exception": exception
-                })
+                }
+                if prefecture == "外国":
+                    result["period"] = period if period.isdigit() else ""
+                    result["foreignSourceMarker"] = dict(
+                        rawPrefecture="外国", number=int(car), sourceUrl=url,
+                        raceKey=f"{event_date}|{str(code).zfill(2)}|{race}")
+                found.append(result)
             if len(found) == expected_cars and sorted(x["number"] for x in found) == list(range(1, expected_cars + 1)):
                 matched_tables.append(sorted(found, key=lambda x: x["number"]))
     if len(matched_tables) != 1:
@@ -165,6 +175,11 @@ def self_test():
     args = ("2026-09-10", "27", "京王閣", 2, "A3", 7, url)
     r = extract(html, *args)
     assert len(r["results"]) == 7 and r["results"][0]["finish"] == "1"
+    from compare_race_results import normalized_results, invited_identity
+    guest = extract(html.replace("福島 48歳 83期", "外国 48歳 —", 1), *args)
+    assert len(normalized_results(guest, 7)) == 7
+    assert not invited_identity(guest, guest["results"][0])
+    assert guest["results"][0]["period"] == ""
     mixed = html.replace("83期 A3", "83期 A1").replace(
         "テスト選手2 福島 48歳 83期 A1", "テスト選手2 福島 48歳 83期 A2")
     observed_mixed = extract(mixed, "2026-09-10", "27", "京王閣", 2,

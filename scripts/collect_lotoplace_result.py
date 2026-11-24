@@ -165,11 +165,18 @@ def parse_result(html, day, code, track, race, class_name, cars, url):
                 raise ValueError("Rider class conflicts with requested race class")
             period = get("period").removesuffix("期")
             name, pref = norm(cells[headers["name"]].get_text(" ", strip=True)), get("prefecture")
-            if len(compact(name)) < 2 or not pref or not period.isdigit():
+            if pref == "外国" and period in ("", "-", "—"):
+                period = ""
+            if len(compact(name)) < 2 or not pref or (not period.isdigit() and not (pref == "外国" and period == "")):
                 raise ValueError("Missing rider identity in target race")
-            parsed.append(dict(number=int(car_raw), name=name, prefecture=pref,
-                               period=period, finish=finish,
-                               method=get("method"), exception=ex))
+            result = dict(number=int(car_raw), name=name, prefecture=pref,
+                          period=period, finish=finish,
+                          method=get("method"), exception=ex)
+            if pref == "外国":
+                result["foreignSourceMarker"] = dict(
+                    rawPrefecture="外国", number=int(car_raw), sourceUrl=url,
+                    raceKey=f"{day}|{str(code).zfill(2)}|{race}")
+            parsed.append(result)
         if len(parsed) == cars and sorted(x["number"] for x in parsed) == list(range(1, cars + 1)):
             candidate_tables.append(sorted(parsed, key=lambda r: r["number"]))
     if len(candidate_tables) != 1:
@@ -212,6 +219,10 @@ def self_test():
     html = html.replace("<h2>2R チャレンジ一般</h2>", "<h2>第2レース A級</h2>")
     observation = parse_result(html, day, code, track, race, grade, cars, url)
     assert len(observation["results"]) == 7
+    from compare_race_results import normalized_results, invited_identity
+    guest = parse_result(html.replace("<td>京都</td><td>93</td>", "<td>外国</td><td>—</td>", 1), day, code, track, race, grade, cars, url)
+    assert len(normalized_results(guest, cars)) == cars
+    assert not invited_identity(guest, guest["results"][0])
     chariloto_url = f"https://www.chariloto.com/keirin/results/27/{day}"
     chariloto_html = html.replace("<section>", '<section id="race2">')
     chariloto_observation = parse_result(chariloto_html, day, code, track, race, grade, cars, chariloto_url)

@@ -110,6 +110,22 @@ def invited_identity(observation, row):
     return True
 
 
+def foreign_source_marker(observation, row):
+    """Result-side source marker only: never substitute for an entry identity."""
+    marker = row.get("foreignSourceMarker")
+    if not isinstance(marker, dict) or marker.get("rawPrefecture") != "外国":
+        return False
+    if clean(row.get("prefecture")) != "外国" or not normalized_name(row.get("name")):
+        return False
+    if clean(marker.get("number")) != clean(row.get("number")):
+        return False
+    race = normalized_race(observation)
+    if marker.get("raceKey") != f'{race["date"]}|{race["trackCode"]}|{race["race"]}':
+        return False
+    url, _ = require_source(observation)
+    return marker.get("sourceUrl") == url
+
+
 def normalized_results(observation, expected):
     rows = observation.get("results")
     if not isinstance(rows, list) or len(rows) != expected:
@@ -129,7 +145,7 @@ def normalized_results(observation, expected):
         attrs["prefecture"] = normalized_prefecture(attrs["prefecture"])
         attrs["period"] = re.sub(r"期$", "", attrs["period"])
         attrs["method"] = canonical_method(attrs["method"])
-        if not attrs["name"] or (not invited_identity(observation, r) and (not attrs["prefecture"] or not attrs["period"].isdigit())):
+        if not attrs["name"] or (not (invited_identity(observation, r) or foreign_source_marker(observation, r)) and (not attrs["prefecture"] or not attrs["period"].isdigit())):
             raise ValueError("Unidentified rider in result observation")
         finish, ex = attrs["finish"], attrs["exception"]
         if finish in EXCEPTIONS and not ex:
