@@ -149,10 +149,10 @@ def parse_result(html, day, code, track, race, class_name, cars, url):
             get = lambda field: compact(cells[headers[field]].get_text(" ", strip=True)) if field in headers else ""
             finished = get("finish")
             ex = get("exception")
-            if finished.isdigit() and 1 <= int(finished) <= cars and ex in ("", "故"):
-                # Published 個人状況『故』 coexists with a numeric placing.
-                # Retain it verbatim as a separate condition; never convert
-                # numeric placement to loss, disqualification or withdrawal.
+            if finished.isdigit() and 1 <= int(finished) <= cars and ex in ("", "故", "落"):
+                # Published numeric placing can coexist with rider conditions
+                # 『故』 or 『落』. Keep both columns; 『落』 is not necessarily
+                # a non-finishing status when the source retains a numeric place.
                 finish = str(int(finished))
             elif finished in EXCEPTION_LABELS:
                 normalized_status = EXCEPTION_LABELS[finished]
@@ -226,6 +226,12 @@ def self_test():
     with_fault = parse_result(numeric_fault, day, code, track, race, grade, cars, url)
     assert sum(x["exception"] == "故" for x in with_fault["results"]) == 1
     assert [x["finish"] for x in with_fault["results"]] == [str(n) for n in range(1,8)]
+    # Observed Nara 2026-10-02 4R: numeric 6th and rider-status 『落』 coexist.
+    # Preserve this separately from another car's nonnumeric 『落』 result.
+    numeric_fall = numeric_fault.replace("<td>故</td>", "<td>落</td>", 1)
+    with_fall = parse_result(numeric_fall, day, code, track, race, grade, cars, url)
+    assert sum(x["exception"] == "落" for x in with_fall["results"]) == 1
+    assert [x["finish"] for x in with_fall["results"]] == [str(n) for n in range(1, 8)]
     # Other unverified non-finisher conditions alongside a numeric finish stay blocked.
     contradictory = numeric_fault.replace("<td>故</td>", "<td>失</td>", 1)
     try:
