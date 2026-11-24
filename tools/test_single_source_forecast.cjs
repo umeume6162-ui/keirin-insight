@@ -43,6 +43,10 @@ async function check(edit,success){
  const individual=x=>{x.lineMode='no_line';x.raceFormat='girls';x.originalFormation='1234567';x.formatEvidenceUrl=x.officialVerification.source;x.forecastGroups=x.riders.map(r=>[r.number]);x.riders.forEach(r=>r.line=[r.number])};
  await check(individual,true);
  await check(x=>{individual(x);x.raceFormat='advance'},true);
+ const unordered=x=>{individual(x);x.originalFormation='3517246';x.forecastGroups=[3,5,1,7,2,4,6].map(n=>[n])};
+ await check(unordered,true);
+ await check(x=>{unordered(x);x.raceFormat='advance'},true);
+ await check(x=>{unordered(x);x.forecastGroups[6]=[2]},false);
  await check(x=>{individual(x);delete x.formatEvidenceUrl},false);
  await check(x=>{x.lineMode='no_line';x.raceFormat='girls';x.originalFormation='1234567';x.formatEvidenceUrl=x.officialVerification.source},false);
  console.log('OK: one-media pre-race forecast without a verified result; missing/duplicate cars, false sources and rearranged rider groups rejected');
