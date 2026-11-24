@@ -303,16 +303,20 @@ def enrich(board,cache,loader=fetch,limit=16):
 def attach(race,record):
     for entry in race["entries"]:
         entry["riderStats"]=record["rows"][str(entry["number"])]
+    race.pop("lineSourceUrl",None)
+    race.pop("lineCapturedAt",None)
     groups=record.get("forecastGroups")
     entries=race["entries"]
     if (isinstance(groups,list) and groups and all(isinstance(g,list) and g and all(type(n) is int for n in g) for g in groups)
             and sorted(n for g in groups for n in g)==sorted(e["number"] for e in entries)
-            and not any(e.get("preRaceLine") for e in entries)
             and not clean(race.get("className")).startswith("L")):
-        for entry in entries:
-            entry["preRaceLine"]="-".join(map(str,next(g for g in groups if entry["number"] in g)))
-        race["lineSourceUrl"]=record["sourceUrl"]
-        race["lineCapturedAt"]=record["capturedAt"]
+        expected={n:"-".join(map(str,g)) for g in groups for n in g}
+        if all(not e.get("preRaceLine") or e["preRaceLine"]==expected[e["number"]] for e in entries):
+            for entry in entries:
+                if not entry.get("preRaceLine"):
+                    entry["preRaceLine"]=expected[entry["number"]]
+            race["lineSourceUrl"]=record["sourceUrl"]
+            race["lineCapturedAt"]=record["capturedAt"]
     race["riderStatsSource"]={"url":record["sourceUrl"],"capturedAt":record["capturedAt"],
                               "period":record["period"],"status":"single_source_unverified"}
 
@@ -332,6 +336,17 @@ def self_test():
     html+='<div class="DeployYosoIn"><div class="DeployYosoWrap"><div class="DeployBox">' + "".join('<div class="DeployInBox"><div class="Shaban_InBox"><span class="Shaban_Num">'+str(n)+'</span></div></div>'+('<div class="DeployInBox"><div class="Shaban_InBox"><span class="WakuSeparat"></span></div></div>' if n in (3,5) else "") for n in range(1,8)) + "</div></div></div>"
     result=enrich(board,cache,lambda _:html,1)
     assert race["entries"][0]["preRaceLine"]=="1-2-3" and race["lineSourceUrl"]==url
+    # Rebuilt board already contains Google lines; restore only matching provenance.
+    saved_record=cache["races"][race["key"]]
+    race.pop("lineSourceUrl",None)
+    race.pop("lineCapturedAt",None)
+    attach(race,saved_record)
+    assert race["lineSourceUrl"]==url and race["lineCapturedAt"]==saved_record["capturedAt"]
+    race["entries"][0]["preRaceLine"]="1"
+    attach(race,saved_record)
+    assert race["entries"][0]["preRaceLine"]=="1" and "lineSourceUrl" not in race
+    race["entries"][0]["preRaceLine"]="1-2-3"
+    attach(race,saved_record)
     assert cache["races"][race["key"]]["forecastGroups"]==[[1,2,3],[4,5],[6,7]]
     assert result["fetched"]==1 and race["entries"][0]["riderStats"]["b"]==5
     assert canonical_rider_name("國井裕樹")==canonical_rider_name("国井裕樹")
