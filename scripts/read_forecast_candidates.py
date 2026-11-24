@@ -67,6 +67,11 @@ def source_urls(c, slugs, meetings):
     odds = candidate_url(c,slugs)
     if odds:
         urls.append(odds)
+    # Netkeirin race IDs use the actual race date, venue code and race number.
+    # This is a candidate URL only, not evidence of a published forecast.
+    date_key = datetime.strptime(day, "%Y-%m-%d").strftime("%Y%m%d")
+    if re.fullmatch(r"\d{2}", code):
+        urls.append(f"https://keirin.netkeiba.com/race/yoso/?race_id={date_key}{code}{int(race):02d}")
     return urls
 
 def gamboo_groups(soup, size):
@@ -152,7 +157,8 @@ def main():
         lines["races"].append({"id":"2026-01-02|85|3","officialVerification":{"source":"https://keirin.kdreams.jp/gamboo/keirin-kaisai/race-card/yoso/8520260101/85202601010200/3/"}})
         meetings = meeting_prefixes(lines)
         assert source_urls({"key":"2026-01-02|85|6"},slugs,meetings)[0].endswith("/85202601010200/6/")
-        assert len(source_urls({"key":"2026-01-03|85|6"},slugs,meetings)) == 1
+        assert len(source_urls({"key":"2026-01-03|85|6"},slugs,meetings)) == 2
+        assert source_urls({"key":"2026-01-02|22|6"},slugs,meetings) == ["https://keirin.netkeiba.com/race/yoso/?race_id=202601022206"]
         observed = inspect('<div><b>並び予想</b><span class="test-group">①②</span><span>③</span></div><table><tr><th>選手名</th></tr><tr><td>試験選手</td></tr></table>')
         assert 'class="test-group"' in observed["forecastElementHtml"][0]
         assert observed["riderTableObservations"][0]["rows"][1] == ["試験選手"]
@@ -200,7 +206,7 @@ def main():
                 record.update(state="HOLD",reason=str(e))
             time.sleep(1)
             print(json.dumps(record,ensure_ascii=False),flush=True)
-            if record.get("forecastLabelContexts"):
+            if record.get("gambooGroupCandidate") and record.get("riderTableObservations"):
                 break
 
 if __name__ == "__main__":
