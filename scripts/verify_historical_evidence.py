@@ -158,6 +158,8 @@ def main():
             print("HISTORICAL_PROOF_HOLD", row[3], type(exc).__name__, str(exc)[:150])
     print("HISTORICAL_PROOF_SUMMARY", passed, "/", len(pending),
           "read-only; no formal publication or Google writes")
+    if passed != len(pending):
+        raise SystemExit(2)  # Incomplete proof must not report a successful workflow.
 
 
 if __name__ == "__main__":
