@@ -152,7 +152,7 @@ jobs:
       - name: Install Google reader
         run: pip install 'google-auth==2.38.0' 'requests==2.32.3' 'beautifulsoup4==4.14.2'
       - name: Recheck unpublished historical evidence (read only)
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[refresh-historical-proof]') }}
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[refresh-historical-proof]')) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login == github.repository_owner && contains(github.event.pull_request.title, '[refresh-historical-proof]')) }}
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
