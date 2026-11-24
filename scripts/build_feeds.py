@@ -240,13 +240,90 @@ def write_atomic(path, payload):
     os.replace(temp,path)
 
 
+
+def refresh_status_snapshots(secret, root):
+    """Read the existing four ledgers in one request; publish aggregates only."""
+    from google.oauth2 import service_account
+    from google.auth.transport.requests import AuthorizedSession
+    from zoneinfo import ZoneInfo
+    creds = service_account.Credentials.from_service_account_info(
+        json.loads(secret), scopes=['https://www.googleapis.com/auth/spreadsheets.readonly'])
+    names = [('V100収集状態台帳', 'A1:L'), ('AIレース品質監査', 'G1:H7'),
+             ('AIライン接続監査', 'A5:B7'), ('選手ID照合台帳', 'A1:H')]
+    response = AuthorizedSession(creds).get(
+        'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID + '/values:batchGet',
+        params=[('ranges', "'" + n + "'!" + span) for n, span in names] +
+               [('valueRenderOption', 'FORMATTED_VALUE')], timeout=45)
+    response.raise_for_status()
+    ranges = response.json()['valueRanges']
+    if len(ranges) != 4:
+        raise ValueError('Status source ranges missing')
+    v100, quality, line, ledger = [x['values'] for x in ranges]
+    def number(v):
+        raw = str(v).replace(',', '').strip()
+        if not re.fullmatch(r'\d+', raw):
+            raise ValueError('Invalid aggregate number')
+        return int(raw)
+    def labelled(rows, labels):
+        pairs = {row[0]: number(row[1]) for row in rows if len(row) >= 2 and row[0] in labels}
+        if set(pairs) != set(labels):
+            raise ValueError('Status summary label mismatch')
+        return [pairs[k] for k in labels]
+    if v100[0] != ['開催キー','開催日','競輪場','場コード','グレード','通常結果R','中止R','選手行','最終保存R','途中欠落R','収集状態','独立照合状態']:
+        raise ValueError('V100 header mismatch')
+    meetings = [r for r in v100[1:] if r and r[0]]
+    if not meetings or any(len(r) < 12 for r in meetings) or len({r[0] for r in meetings}) != len(meetings):
+        raise ValueError('Incomplete or duplicate V100 meeting')
+    q = labelled(quality, ['レースキー数','7車・着順整合（暫定）','勝者数または着順に要確認','出走人数が7人以外（追加確認）'])
+    l = labelled(line, ['監査対象数','並び記録あり・V99未接続','V99にレース行あり'])
+    if q[0] != sum(q[1:]) or l[1] + l[2] > l[0]:
+        raise ValueError('Status totals inconsistent')
+    if ledger[0] != ID_HEADERS[:8]:
+        raise ValueError('ID ledger status header mismatch')
+    people = [r for r in ledger[1:] if r and r[0]]
+    labels = ['公式照合済','照合済','未照合']
+    if not people or any(len(r) < 8 or r[7] not in labels for r in people):
+        raise ValueError('Unknown ID ledger state')
+    counts = Counter(r[7] for r in people)
+    stamp = datetime.now(ZoneInfo('Asia/Tokyo')).strftime('%Y-%m-%d')
+    collection = dict(source='V100収集状態台帳', meetings=len(meetings),
+                      regularRaces=sum(number(r[5]) for r in meetings),
+                      cancelledRaces=sum(number(r[6]) for r in meetings),
+                      riderRows=sum(number(r[7]) for r in meetings),
+                      independentReviewNotPerformed=sum(r[11]=='未実施' for r in meetings))
+    updates = {
+        'collection-status-snapshot-v1.json': dict(collection=collection,
+            quality=dict(source='AIレース品質監査',scope='V99',races=q[0],provisional=q[1],needsFinishReview=q[2],otherFieldSize=q[3]),
+            line=dict(source='AIライン接続監査',targets=l[0],unconnectedWithFormation=l[1],matchedV99=l[2])),
+        'ledger-status-snapshot-v1.json': dict(total=len(people),states=[dict(label=k,count=counts[k]) for k in labels])
+    }
+    staged = []
+    for name, fields in updates.items():
+        path = root/name
+        old = json.loads(path.read_text(encoding='utf-8'))
+        if not set(fields).issubset(old) or 'snapshotDate' not in old or 'mode' not in old:
+            raise ValueError('Status baseline schema mismatch')
+        new = dict(old, **fields, mode='automated-read-only-snapshot')
+        if new != old:
+            new['snapshotDate'] = stamp
+            staged.append((path, new))
+    for path, payload in staged:
+        write_atomic(path, payload)
+        print('STATUS_UPDATED', path.name)
+    print('STATUS_CHANGED_FILES', len(staged))
+
+
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--fixtures',help='Local CSV test file (not for scheduled publishing)')
     parser.add_argument('--root',default='.')
+    parser.add_argument('--status-only', action='store_true', help='Refresh existing ledger aggregates only')
     parser.add_argument('--allow-rebuild',action='store_true',help='Manual repair only, not used by automation')
     args=parser.parse_args()
     root=Path(args.root)
+    if args.status_only:
+        refresh_status_snapshots(os.environ['GOOGLE_SERVICE_ACCOUNT_JSON'], root)
+        return
     if args.fixtures:
         with open(args.fixtures,encoding='utf-8-sig',newline='') as f: values=list(csv.reader(f))
     else:
