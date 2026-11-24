@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
   "verificationNote": "KEIRIN.JPと異なる別掲載元で氏名・府県・期別・6桁IDの一致。2026-11-24阿部弘、阿部充宏の2名を追加。 2026-11-24阿部蒼大015960、阿部大樹014370を公式証拠2元一致で追加。",
   "summary": {
-    "rows": 249
+    "rows": 251
   },
   "riders": [
     {
@@ -5998,6 +5998,54 @@
           "https://www.winticket.jp/keirin/cyclist/013080"
         ],
         "note": "V4証拠台帳 MANUAL-V4-20261124-013080（公開2媒体の氏名/府県/期別/登録番号4項目一致。元HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "014794",
+      "name": "阿部 力也",
+      "prefecture": "宮城",
+      "period": "100",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014794",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014794",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014794",
+          "https://keirin.netkeiba.com/db/profile/?id=14794"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-014794（公開2媒体のプロフィール本文4項目一致。キャッシュ本文利用、原HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "015327",
+      "name": "阿部 架惟都",
+      "prefecture": "宮城",
+      "period": "115",
+      "source": "https://keirin.jp/sp/racerprofile?snum=015327",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=015327",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=015327",
+          "https://keirin.netkeiba.com/db/profile/?id=15327"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-015327（公開2媒体のプロフィール本文4項目一致。キャッシュ本文利用、原HTML全文は保存せず）"
       }
     }
   ],
