@@ -41,6 +41,34 @@ def candidate_url(c, slugs):
     suffix = "" if int(race) == 1 else "_" + str(int(race))
     return f"https://{HOST}/keirin/yosou/{slugs[code]}/{d:%Y}/{d:%m%d}{suffix}.html"
 
+def meeting_prefixes(lines):
+    found = {}
+    for item in lines["races"]:
+        day, code, race = (item.get("key") or item["id"]).split("|")
+        p = urlsplit(item.get("officialVerification", {}).get("source", ""))
+        if p.scheme != "https" or p.netloc != "keirin.kdreams.jp":
+            continue
+        m = re.fullmatch(r"(/gamboo/keirin-kaisai/race-card/yoso/"+code+r"\d{8}/"+code+r"\d{12}/)(\d{1,2})/", p.path)
+        if m and int(m.group(2)) == int(race):
+            found.setdefault((day,code),set()).add((m.group(1),"/"))
+        m = re.fullmatch(r"(/[a-z][a-z0-9-]*/racedetail/"+code+r"\d{12})(\d{2})/", p.path)
+        if m and int(m.group(2)) == int(race):
+            found.setdefault((day,code),set()).add((m.group(1),"padded"))
+    return found
+
+def source_urls(c, slugs, meetings):
+    day, code, race = c["key"].split("|")
+    if not 1 <= int(race) <= 12:
+        return []
+    urls = []
+    for prefix, style in sorted(meetings.get((day,code),set())):
+        suffix = f"{int(race):02d}/" if style == "padded" else f"{int(race)}/"
+        urls.append("https://keirin.kdreams.jp"+prefix+suffix)
+    odds = candidate_url(c,slugs)
+    if odds:
+        urls.append(odds)
+    return urls
+
 def inspect(html):
     soup = BeautifulSoup(html, "html.parser")
     title = soup.title.get_text(" ", strip=True) if soup.title else ""
@@ -71,19 +99,37 @@ def main():
         assert candidate_url({"key":"2026-01-02|85|6"},slugs).endswith("/0102_6.html")
         assert candidate_url({"key":"2026-01-02|22|6"},slugs) is None
         assert inspect("<title>sample</title><div><b>並び予想</b>①②／③</div>")["forecastLabelContexts"]
+        lines["races"].append({"id":"2026-01-02|85|3","officialVerification":{"source":"https://keirin.kdreams.jp/gamboo/keirin-kaisai/race-card/yoso/8520260101/85202601010200/3/"}})
+        meetings = meeting_prefixes(lines)
+        assert source_urls({"key":"2026-01-02|85|6"},slugs,meetings)[0].endswith("/85202601010200/6/")
+        assert len(source_urls({"key":"2026-01-03|85|6"},slugs,meetings)) == 1
         print("SELF_TEST_OK")
         return
     lines = load("verified-line-snapshots-feed-v1.json")
     q = queue(load("verified-results-feed-v1.json"),lines,a.limit,a.offset,load("verified-rider-results-feed-v1.json"))
     slugs = venue_slugs(lines)
+    meetings = meeting_prefixes(lines)
+    blocked_hosts = set()
     for c in q["candidates"]:
-        url = candidate_url(c,slugs)
-        record = {"key":c["key"],"candidateUrl":url,"formalPass":False}
-        if not url:
-            record["state"] = "NO_KNOWN_URL_PATTERN"
-        else:
+        urls = source_urls(c,slugs,meetings)
+        if not urls:
+            print(json.dumps({"key":c["key"],"state":"NO_KNOWN_URL_PATTERN","formalPass":False}),flush=True)
+        for url in urls:
+            host = urlsplit(url).netloc
+            record = {"key":c["key"],"candidateUrl":url,"formalPass":False}
+            if host in blocked_hosts:
+                record.update(state="HOLD",reason="Host policy unavailable earlier in this run")
+                print(json.dumps(record,ensure_ascii=False),flush=True)
+                continue
             try:
-                require_robots_access(url, HOST, AGENT)
+                require_robots_access(url,host,AGENT)
+            except (requests.RequestException,ValueError) as e:
+                if "prohibit" not in str(e):
+                    blocked_hosts.add(host)
+                record.update(state="HOLD",reason=str(e))
+                print(json.dumps(record,ensure_ascii=False),flush=True)
+                continue
+            try:
                 with requests.get(url,headers={"User-Agent":AGENT},timeout=15,allow_redirects=False,stream=True) as r:
                     if r.status_code != 200:
                         raise ValueError(f"HTTP {r.status_code}")
@@ -97,7 +143,9 @@ def main():
             except (requests.RequestException,ValueError) as e:
                 record.update(state="HOLD",reason=str(e))
             time.sleep(1)
-        print(json.dumps(record,ensure_ascii=False),flush=True)
+            print(json.dumps(record,ensure_ascii=False),flush=True)
+            if record.get("forecastLabelContexts"):
+                break
 
 if __name__ == "__main__":
     main()
