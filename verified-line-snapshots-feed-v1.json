@@ -4,8 +4,8 @@
   "sourceTab": "VERIFIED publication",
   "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence. 2026-11-21福井3Rは既存Google発走前スナップ7車とKドリームス掲載の媒体並び予想を照合し、結果から逆算せず単一元の予想として公開。 2026-11-21福井4RはGoogle発走前スナップの全7車ラインとKドリームス並び予想を確認し、出走表で府県/期別を補完。結果とは独立した媒体予想。 2026-10-05松山3R/4R: オッズパーク掲載の発走前予想グループを全7車・選手名で照合し、それぞれ単一媒体予想として公開。 2026-10-05松山5/6/8/9R オッズパーク発走前予想4レース全28車と正式結果の本人情報を照合、単騎を維持。 2026-10-01久留米1～4R・2026-10-04松山11R: オッズパーク発走前予想の全7車と正式結果の本人情報を照合して5レース追加。 2026-10-01久留米8～11R オッズパーク掲載の全7車発走前ラインを正式結果の本人情報と照合。7Rは番手競りのため単純な同ライン配列にできず保留。 2026-10-01佐世保3RはKドリームス系GambooBET、4Rはオッズパークの発走前予想で検証。掲載元を区別し全7車照合。",
   "summary": {
-    "races": 79,
-    "rider_rows": 553
+    "races": 90,
+    "rider_rows": 630
   },
   "races": [
     {
@@ -9596,6 +9596,1337 @@
             7,
             4,
             1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-02|25|8",
+      "key": "2026-10-02|25|8",
+      "date": "2026-10-02",
+      "track": "大宮",
+      "trackCode": "25",
+      "race": 8,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.netkeiba.com/race/yoso/?race_id=202610022508",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.netkeiba.com/race/yoso/?race_id=202610022508"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "netkeirin",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "NETKEIRIN-LINE-2026-10-02-25-8-20261124",
+          "comparison": "Published DOM groups and same-race entry all seven identities matched formal results; Google evidence U53."
+        }
+      },
+      "forecastGroups": [
+        [
+          5,
+          1,
+          4
+        ],
+        [
+          3
+        ],
+        [
+          7
+        ],
+        [
+          2,
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 7,
+          "name": "磯田 旭",
+          "prefecture": "栃木",
+          "period": "96",
+          "line": [
+            7
+          ]
+        },
+        {
+          "number": 5,
+          "name": "稲毛 知也",
+          "prefecture": "和歌",
+          "period": "123",
+          "line": [
+            5,
+            1,
+            4
+          ]
+        },
+        {
+          "number": 1,
+          "name": "山本 伸一",
+          "prefecture": "奈良",
+          "period": "101",
+          "line": [
+            5,
+            1,
+            4
+          ]
+        },
+        {
+          "number": 3,
+          "name": "志村 太賀",
+          "prefecture": "山梨",
+          "period": "90",
+          "line": [
+            3
+          ]
+        },
+        {
+          "number": 2,
+          "name": "坂本 周輝",
+          "prefecture": "青森",
+          "period": "100",
+          "line": [
+            2,
+            6
+          ]
+        },
+        {
+          "number": 6,
+          "name": "佐藤 康紀",
+          "prefecture": "青森",
+          "period": "73",
+          "line": [
+            2,
+            6
+          ]
+        },
+        {
+          "number": 4,
+          "name": "山口 貴嗣",
+          "prefecture": "福岡",
+          "period": "82",
+          "line": [
+            5,
+            1,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-02|25|9",
+      "key": "2026-10-02|25|9",
+      "date": "2026-10-02",
+      "track": "大宮",
+      "trackCode": "25",
+      "race": 9,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.netkeiba.com/race/yoso/?race_id=202610022509",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.netkeiba.com/race/yoso/?race_id=202610022509"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "netkeirin",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "NETKEIRIN-LINE-2026-10-02-25-9-20261124",
+          "comparison": "Published DOM groups and same-race entry all seven identities matched formal results; Google evidence U54."
+        }
+      },
+      "forecastGroups": [
+        [
+          6,
+          1,
+          4
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "riders": [
+        {
+          "number": 5,
+          "name": "久米 康平",
+          "prefecture": "徳島",
+          "period": "100",
+          "line": [
+            3,
+            5
+          ]
+        },
+        {
+          "number": 3,
+          "name": "遠藤 拓巳",
+          "prefecture": "香川",
+          "period": "125",
+          "line": [
+            3,
+            5
+          ]
+        },
+        {
+          "number": 2,
+          "name": "高橋 広大",
+          "prefecture": "埼玉",
+          "period": "99",
+          "line": [
+            7,
+            2
+          ]
+        },
+        {
+          "number": 4,
+          "name": "桐山敬太郎",
+          "prefecture": "神奈",
+          "period": "88",
+          "line": [
+            6,
+            1,
+            4
+          ]
+        },
+        {
+          "number": 1,
+          "name": "近藤 俊明",
+          "prefecture": "神奈",
+          "period": "87",
+          "line": [
+            6,
+            1,
+            4
+          ]
+        },
+        {
+          "number": 6,
+          "name": "栗本 武典",
+          "prefecture": "千葉",
+          "period": "119",
+          "line": [
+            6,
+            1,
+            4
+          ]
+        },
+        {
+          "number": 7,
+          "name": "西岡 利起",
+          "prefecture": "奈良",
+          "period": "125",
+          "line": [
+            7,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-02|25|10",
+      "key": "2026-10-02|25|10",
+      "date": "2026-10-02",
+      "track": "大宮",
+      "trackCode": "25",
+      "race": 10,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.netkeiba.com/race/yoso/?race_id=202610022510",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.netkeiba.com/race/yoso/?race_id=202610022510"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "netkeirin",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "NETKEIRIN-LINE-2026-10-02-25-10-20261124",
+          "comparison": "Published DOM groups and same-race entry all seven identities matched formal results; Google evidence U55."
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          7,
+          5
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "riders": [
+        {
+          "number": 3,
+          "name": "坂井 洋",
+          "prefecture": "栃木",
+          "period": "115",
+          "line": [
+            6,
+            3
+          ]
+        },
+        {
+          "number": 7,
+          "name": "星野 洋輝",
+          "prefecture": "福島",
+          "period": "115",
+          "line": [
+            2,
+            7,
+            5
+          ]
+        },
+        {
+          "number": 4,
+          "name": "山内 卓也",
+          "prefecture": "愛知",
+          "period": "77",
+          "line": [
+            1,
+            4
+          ]
+        },
+        {
+          "number": 2,
+          "name": "大石 剣士",
+          "prefecture": "静岡",
+          "period": "109",
+          "line": [
+            2,
+            7,
+            5
+          ]
+        },
+        {
+          "number": 5,
+          "name": "櫻井 正孝",
+          "prefecture": "宮城",
+          "period": "100",
+          "line": [
+            2,
+            7,
+            5
+          ]
+        },
+        {
+          "number": 1,
+          "name": "河端 朋之",
+          "prefecture": "岡山",
+          "period": "95",
+          "line": [
+            1,
+            4
+          ]
+        },
+        {
+          "number": 6,
+          "name": "熊崎 麻人",
+          "prefecture": "埼玉",
+          "period": "123",
+          "line": [
+            6,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-02|25|11",
+      "key": "2026-10-02|25|11",
+      "date": "2026-10-02",
+      "track": "大宮",
+      "trackCode": "25",
+      "race": 11,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.netkeiba.com/race/yoso/?race_id=202610022511",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.netkeiba.com/race/yoso/?race_id=202610022511"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "netkeirin",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "NETKEIRIN-LINE-2026-10-02-25-11-20261124",
+          "comparison": "Published DOM groups and same-race entry all seven identities matched formal results; Google evidence U56."
+        }
+      },
+      "forecastGroups": [
+        [
+          5,
+          1,
+          4
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "簗田 一輝",
+          "prefecture": "静岡",
+          "period": "107",
+          "line": [
+            5,
+            1,
+            4
+          ]
+        },
+        {
+          "number": 4,
+          "name": "松坂 洋平",
+          "prefecture": "神奈",
+          "period": "89",
+          "line": [
+            5,
+            1,
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "根田 空史",
+          "prefecture": "千葉",
+          "period": "94",
+          "line": [
+            5,
+            1,
+            4
+          ]
+        },
+        {
+          "number": 7,
+          "name": "櫻井祐太郎",
+          "prefecture": "宮城",
+          "period": "117",
+          "line": [
+            7,
+            2
+          ]
+        },
+        {
+          "number": 6,
+          "name": "中川 聖大",
+          "prefecture": "福岡",
+          "period": "121",
+          "line": [
+            6,
+            3
+          ]
+        },
+        {
+          "number": 3,
+          "name": "岩谷 拓磨",
+          "prefecture": "福岡",
+          "period": "115",
+          "line": [
+            6,
+            3
+          ]
+        },
+        {
+          "number": 2,
+          "name": "伊東 翔貴",
+          "prefecture": "福島",
+          "period": "100",
+          "line": [
+            7,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-02|25|12",
+      "key": "2026-10-02|25|12",
+      "date": "2026-10-02",
+      "track": "大宮",
+      "trackCode": "25",
+      "race": 12,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.netkeiba.com/race/yoso/?race_id=202610022512",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.netkeiba.com/race/yoso/?race_id=202610022512"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "netkeirin",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "NETKEIRIN-LINE-2026-10-02-25-12-20261124",
+          "comparison": "Published DOM groups and same-race entry all seven identities matched formal results; Google evidence U57."
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          7,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "森田 優弥",
+          "prefecture": "埼玉",
+          "period": "113",
+          "line": [
+            1,
+            7,
+            4
+          ]
+        },
+        {
+          "number": 7,
+          "name": "宿口 陽一",
+          "prefecture": "埼玉",
+          "period": "91",
+          "line": [
+            1,
+            7,
+            4
+          ]
+        },
+        {
+          "number": 2,
+          "name": "伊藤 旭",
+          "prefecture": "熊本",
+          "period": "117",
+          "line": [
+            2,
+            5
+          ]
+        },
+        {
+          "number": 5,
+          "name": "上田 尭弥",
+          "prefecture": "熊本",
+          "period": "113",
+          "line": [
+            2,
+            5
+          ]
+        },
+        {
+          "number": 4,
+          "name": "竹村 勇祐",
+          "prefecture": "秋田",
+          "period": "96",
+          "line": [
+            1,
+            7,
+            4
+          ]
+        },
+        {
+          "number": 6,
+          "name": "鈴木 裕",
+          "prefecture": "千葉",
+          "period": "92",
+          "line": [
+            3,
+            6
+          ]
+        },
+        {
+          "number": 3,
+          "name": "格清 洋介",
+          "prefecture": "静岡",
+          "period": "111",
+          "line": [
+            3,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-02|34|7",
+      "key": "2026-10-02|34|7",
+      "date": "2026-10-02",
+      "track": "川崎",
+      "trackCode": "34",
+      "race": 7,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.netkeiba.com/race/yoso/?race_id=202610023407",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.netkeiba.com/race/yoso/?race_id=202610023407"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "netkeirin",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "NETKEIRIN-LINE-2026-10-02-34-7-20261124",
+          "comparison": "Published DOM groups and same-race entry all seven identities matched formal results; Google evidence U64."
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          7
+        ],
+        [
+          2
+        ],
+        [
+          4
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 2,
+          "name": "村上 直久",
+          "prefecture": "神奈",
+          "period": "95",
+          "line": [
+            2
+          ]
+        },
+        {
+          "number": 1,
+          "name": "黒瀬浩太郎",
+          "prefecture": "広島",
+          "period": "123",
+          "line": [
+            1,
+            7
+          ]
+        },
+        {
+          "number": 6,
+          "name": "小榑 佑弥",
+          "prefecture": "群馬",
+          "period": "121",
+          "line": [
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "西田 雅志",
+          "prefecture": "広島",
+          "period": "82",
+          "line": [
+            1,
+            7
+          ]
+        },
+        {
+          "number": 3,
+          "name": "谷津田将吾",
+          "prefecture": "福島",
+          "period": "83",
+          "line": [
+            5,
+            3
+          ]
+        },
+        {
+          "number": 5,
+          "name": "立花 昌也",
+          "prefecture": "青森",
+          "period": "123",
+          "line": [
+            5,
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "荒川 仁",
+          "prefecture": "千葉",
+          "period": "121",
+          "line": [
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-02|34|8",
+      "key": "2026-10-02|34|8",
+      "date": "2026-10-02",
+      "track": "川崎",
+      "trackCode": "34",
+      "race": 8,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.netkeiba.com/race/yoso/?race_id=202610023408",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.netkeiba.com/race/yoso/?race_id=202610023408"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "netkeirin",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "NETKEIRIN-LINE-2026-10-02-34-8-20261124",
+          "comparison": "Published DOM groups and same-race entry all seven identities matched formal results; Google evidence U65."
+        }
+      },
+      "forecastGroups": [
+        [
+          7,
+          3,
+          4
+        ],
+        [
+          2,
+          5,
+          1
+        ],
+        [
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 3,
+          "name": "片岡 迪之",
+          "prefecture": "岡山",
+          "period": "93",
+          "line": [
+            7,
+            3,
+            4
+          ]
+        },
+        {
+          "number": 7,
+          "name": "佐伯 亮輔",
+          "prefecture": "岡山",
+          "period": "113",
+          "line": [
+            7,
+            3,
+            4
+          ]
+        },
+        {
+          "number": 4,
+          "name": "戸田 洋平",
+          "prefecture": "岡山",
+          "period": "92",
+          "line": [
+            7,
+            3,
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "渡辺 十夢",
+          "prefecture": "福井",
+          "period": "85",
+          "line": [
+            2,
+            5,
+            1
+          ]
+        },
+        {
+          "number": 2,
+          "name": "川村 晃司",
+          "prefecture": "京都",
+          "period": "85",
+          "line": [
+            2,
+            5,
+            1
+          ]
+        },
+        {
+          "number": 1,
+          "name": "牧 剛央",
+          "prefecture": "大分",
+          "period": "80",
+          "line": [
+            2,
+            5,
+            1
+          ]
+        },
+        {
+          "number": 6,
+          "name": "中園 和剛",
+          "prefecture": "福岡",
+          "period": "89",
+          "line": [
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-02|34|9",
+      "key": "2026-10-02|34|9",
+      "date": "2026-10-02",
+      "track": "川崎",
+      "trackCode": "34",
+      "race": 9,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.netkeiba.com/race/yoso/?race_id=202610023409",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.netkeiba.com/race/yoso/?race_id=202610023409"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "netkeirin",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "NETKEIRIN-LINE-2026-10-02-34-9-20261124",
+          "comparison": "Published DOM groups and same-race entry all seven identities matched formal results; Google evidence U66."
+        }
+      },
+      "forecastGroups": [
+        [
+          6,
+          4,
+          1
+        ],
+        [
+          2
+        ],
+        [
+          7,
+          3,
+          5
+        ]
+      ],
+      "riders": [
+        {
+          "number": 4,
+          "name": "田中 晴基",
+          "prefecture": "千葉",
+          "period": "90",
+          "line": [
+            6,
+            4,
+            1
+          ]
+        },
+        {
+          "number": 6,
+          "name": "幸田 望夢",
+          "prefecture": "栃木",
+          "period": "115",
+          "line": [
+            6,
+            4,
+            1
+          ]
+        },
+        {
+          "number": 3,
+          "name": "高久保雄介",
+          "prefecture": "京都",
+          "period": "100",
+          "line": [
+            7,
+            3,
+            5
+          ]
+        },
+        {
+          "number": 1,
+          "name": "三浦 翔大",
+          "prefecture": "宮城",
+          "period": "98",
+          "line": [
+            6,
+            4,
+            1
+          ]
+        },
+        {
+          "number": 2,
+          "name": "高木 和仁",
+          "prefecture": "福岡",
+          "period": "76",
+          "line": [
+            2
+          ]
+        },
+        {
+          "number": 5,
+          "name": "大崎飛雄馬",
+          "prefecture": "愛媛",
+          "period": "88",
+          "line": [
+            7,
+            3,
+            5
+          ]
+        },
+        {
+          "number": 7,
+          "name": "小森 貴大",
+          "prefecture": "福井",
+          "period": "111",
+          "line": [
+            7,
+            3,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-02|34|10",
+      "key": "2026-10-02|34|10",
+      "date": "2026-10-02",
+      "track": "川崎",
+      "trackCode": "34",
+      "race": 10,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.netkeiba.com/race/yoso/?race_id=202610023410",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.netkeiba.com/race/yoso/?race_id=202610023410"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "netkeirin",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "NETKEIRIN-LINE-2026-10-02-34-10-20261124",
+          "comparison": "Published DOM groups and same-race entry all seven identities matched formal results; Google evidence U67."
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 7,
+          "name": "山崎 芳仁",
+          "prefecture": "福島",
+          "period": "88",
+          "line": [
+            2,
+            7
+          ]
+        },
+        {
+          "number": 5,
+          "name": "小岩 大介",
+          "prefecture": "大分",
+          "period": "90",
+          "line": [
+            3,
+            5
+          ]
+        },
+        {
+          "number": 3,
+          "name": "林 大悟",
+          "prefecture": "福岡",
+          "period": "109",
+          "line": [
+            3,
+            5
+          ]
+        },
+        {
+          "number": 1,
+          "name": "太田 竜馬",
+          "prefecture": "徳島",
+          "period": "109",
+          "line": [
+            1,
+            4
+          ]
+        },
+        {
+          "number": 4,
+          "name": "久米 良",
+          "prefecture": "徳島",
+          "period": "96",
+          "line": [
+            1,
+            4
+          ]
+        },
+        {
+          "number": 6,
+          "name": "柴崎 俊光",
+          "prefecture": "三重",
+          "period": "91",
+          "line": [
+            6
+          ]
+        },
+        {
+          "number": 2,
+          "name": "大川 剛",
+          "prefecture": "青森",
+          "period": "121",
+          "line": [
+            2,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-02|34|11",
+      "key": "2026-10-02|34|11",
+      "date": "2026-10-02",
+      "track": "川崎",
+      "trackCode": "34",
+      "race": 11,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.netkeiba.com/race/yoso/?race_id=202610023411",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.netkeiba.com/race/yoso/?race_id=202610023411"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "netkeirin",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "NETKEIRIN-LINE-2026-10-02-34-11-20261124",
+          "comparison": "Published DOM groups and same-race entry all seven identities matched formal results; Google evidence U68."
+        }
+      },
+      "forecastGroups": [
+        [
+          7,
+          5,
+          1
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "riders": [
+        {
+          "number": 2,
+          "name": "小林 泰正",
+          "prefecture": "群馬",
+          "period": "113",
+          "line": [
+            2,
+            6
+          ]
+        },
+        {
+          "number": 6,
+          "name": "志村 龍己",
+          "prefecture": "山梨",
+          "period": "98",
+          "line": [
+            2,
+            6
+          ]
+        },
+        {
+          "number": 1,
+          "name": "上田 国広",
+          "prefecture": "三重",
+          "period": "89",
+          "line": [
+            7,
+            5,
+            1
+          ]
+        },
+        {
+          "number": 3,
+          "name": "室井蓮太朗",
+          "prefecture": "徳島",
+          "period": "121",
+          "line": [
+            3,
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "山口 富生",
+          "prefecture": "岐阜",
+          "period": "68",
+          "line": [
+            7,
+            5,
+            1
+          ]
+        },
+        {
+          "number": 4,
+          "name": "真鍋 智寛",
+          "prefecture": "愛媛",
+          "period": "121",
+          "line": [
+            3,
+            4
+          ]
+        },
+        {
+          "number": 7,
+          "name": "尾方 祐仁",
+          "prefecture": "岐阜",
+          "period": "123",
+          "line": [
+            7,
+            5,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-02|34|12",
+      "key": "2026-10-02|34|12",
+      "date": "2026-10-02",
+      "track": "川崎",
+      "trackCode": "34",
+      "race": 12,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.netkeiba.com/race/yoso/?race_id=202610023412",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.netkeiba.com/race/yoso/?race_id=202610023412"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "netkeirin",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "NETKEIRIN-LINE-2026-10-02-34-12-20261124",
+          "comparison": "Published DOM groups and same-race entry all seven identities matched formal results; Google evidence U69."
+        }
+      },
+      "forecastGroups": [
+        [
+          5,
+          4,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          2,
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "石毛 克幸",
+          "prefecture": "千葉",
+          "period": "84",
+          "line": [
+            5,
+            4,
+            1
+          ]
+        },
+        {
+          "number": 4,
+          "name": "小原 太樹",
+          "prefecture": "神奈",
+          "period": "95",
+          "line": [
+            5,
+            4,
+            1
+          ]
+        },
+        {
+          "number": 2,
+          "name": "市橋司優人",
+          "prefecture": "福岡",
+          "period": "103",
+          "line": [
+            2,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "雨谷 一樹",
+          "prefecture": "栃木",
+          "period": "96",
+          "line": [
+            3,
+            7
+          ]
+        },
+        {
+          "number": 5,
+          "name": "小原 佑太",
+          "prefecture": "青森",
+          "period": "115",
+          "line": [
+            5,
+            4,
+            1
+          ]
+        },
+        {
+          "number": 6,
+          "name": "高原 仁志",
+          "prefecture": "徳島",
+          "period": "85",
+          "line": [
+            2,
+            6
+          ]
+        },
+        {
+          "number": 3,
+          "name": "治田 知也",
+          "prefecture": "新潟",
+          "period": "121",
+          "line": [
+            3,
+            7
           ]
         }
       ]
