@@ -2,10 +2,10 @@
   "schema": "ki-line-snapshots-v1",
   "snapshotDate": "2026-11-23",
   "sourceTab": "VERIFIED publication",
-  "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence. 2026-11-21福井3Rは既存Google発走前スナップ7車とKドリームス掲載の媒体並び予想を照合し、結果から逆算せず単一元の予想として公開。",
+  "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence. 2026-11-21福井3Rは既存Google発走前スナップ7車とKドリームス掲載の媒体並び予想を照合し、結果から逆算せず単一元の予想として公開。 2026-11-21福井4RはGoogle発走前スナップの全7車ラインとKドリームス並び予想を確認し、出走表で府県/期別を補完。結果とは独立した媒体予想。",
   "summary": {
-    "races": 8,
-    "rider_rows": 56
+    "races": 9,
+    "rider_rows": 63
   },
   "races": [
     {
@@ -934,6 +934,133 @@
           "line": [
             7,
             4,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-21|51|4",
+      "key": "2026-11-21|51|4",
+      "date": "2026-11-21",
+      "track": "福井",
+      "trackCode": "51",
+      "race": 4,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/fukui/racedetail/5120261119030004/",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/fukui/racedetail/5120261119030004/"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス（並び予想）",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "KI-PRE-RACE-SNAPSHOT-20261121-51-04",
+          "sourceSnapshot": "AI事前出走スナップ!A9:O15",
+          "preRaceCapturedAt": "2026-11-21 07:16 JST",
+          "supplementalRiderIdentitySource": "https://keirin.tokyo-sports.co.jp/list/race/20261120_30914",
+          "archivedOriginalHtml": false,
+          "comparison": "7/7 pre-race media lineup; names matched Google snapshot, prefecture/period matched published racecard; no inferred race-result lineup"
+        }
+      },
+      "forecastGroups": [
+        [
+          5,
+          3,
+          6
+        ],
+        [
+          2
+        ],
+        [
+          4,
+          7,
+          1
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "荒木 真慈",
+          "prefecture": "熊本",
+          "period": "69",
+          "line": [
+            4,
+            7,
+            1
+          ]
+        },
+        {
+          "number": 2,
+          "name": "上原 直樹",
+          "prefecture": "岡山",
+          "period": "75",
+          "line": [
+            2
+          ]
+        },
+        {
+          "number": 3,
+          "name": "藤井 準也",
+          "prefecture": "岐阜",
+          "period": "105",
+          "line": [
+            5,
+            3,
+            6
+          ]
+        },
+        {
+          "number": 4,
+          "name": "白濱 蓮",
+          "prefecture": "長崎",
+          "period": "129",
+          "line": [
+            4,
+            7,
+            1
+          ]
+        },
+        {
+          "number": 5,
+          "name": "永田 吏玖",
+          "prefecture": "岐阜",
+          "period": "129",
+          "line": [
+            5,
+            3,
+            6
+          ]
+        },
+        {
+          "number": 6,
+          "name": "竹田 慎一",
+          "prefecture": "富山",
+          "period": "94",
+          "line": [
+            5,
+            3,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "瓦田 勝也",
+          "prefecture": "福岡",
+          "period": "77",
+          "line": [
+            4,
+            7,
             1
           ]
         }
