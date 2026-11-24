@@ -73,7 +73,18 @@ def signature(race):
 # Only exact, source-observed abbreviations are normalized for daily stat attachment.
 # This does NOT change V99, formal rider ID verification, or result acceptance.
 STAT_PREFECTURE_ALIASES={"和歌":"和歌山"}
-STAT_NAME_ALIASES={"桜井太士":"櫻井太士"}
+# Exact identity-preserving spellings checked against KEIRIN.JP individual profiles.
+# Never apply a blanket kanji replacement to unrelated riders.
+STAT_NAME_ALIASES={
+    "桜井太士":"櫻井太士",
+    "滝本匡平":"瀧本匡平",  # 014595 / 愛知 / 97期
+    "中野楚楽":"中野楚樂",  # 015959 / 宮城 / 129期
+    "斎藤昌弘":"齋藤昌弘",  # 014062 / 群馬 / 90期
+    "宮沢晃":"宮澤晃",      # 012957 / 山梨 / 75期
+    "三ツ井武":"三ッ井武",  # 014525 / 神奈川 / 96期
+    "斎藤友幸":"齋藤友幸",  # 014086 / 静岡 / 90期
+    "浜口健二":"濱口健二",  # 011734 / 高知 / 60期
+}
 
 def stats_name(value):
     name=canonical_rider_name(value)
@@ -304,6 +315,9 @@ def self_test():
     assert stats_prefecture("和歌")==stats_prefecture("和歌山")
     assert stats_name("桜井太士")==stats_name("櫻井太士")
     assert stats_name("桜井太士")!=stats_name("桜井太郎")
+    for short,formal in STAT_NAME_ALIASES.items():
+        assert stats_name(short)==stats_name(formal),(short,formal)
+    assert stats_name("斎藤別人")!=stats_name("齋藤別人")
     assert stats_prefecture("和歌")!=stats_prefecture("大阪")
     assert race["entries"][0]["riderStats"]["winRate"]=="25.9%"
     assert enrich(board,cache,lambda _:(_ for _ in ()).throw(AssertionError("no fetch")),1)["cached"]==1
