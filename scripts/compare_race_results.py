@@ -89,6 +89,27 @@ def canonical_method(value):
     }.get(raw, raw)
 
 
+def invited_identity(observation, row):
+    """Evidence-scoped guest exception; absence of domestic data alone is not proof."""
+    proof = row.get("invitedEvidence")
+    if not isinstance(proof, dict) or proof.get("kind") != "foreign_invited":
+        return False
+    name = normalized_name(row.get("name"))
+    if not name or normalized_name(proof.get("entryName")) != name:
+        return False
+    if clean(proof.get("number")) != clean(row.get("number")):
+        return False
+    race = normalized_race(observation)
+    key = f'{race["date"]}|{race["trackCode"]}|{race["race"]}'
+    if proof.get("raceKey") != key or not clean(proof.get("evidenceRef")):
+        return False
+    for field in ("entryUrl", "statusSourceUrl"):
+        parsed = urlparse(clean(proof.get(field)))
+        if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
+            return False
+    return True
+
+
 def normalized_results(observation, expected):
     rows = observation.get("results")
     if not isinstance(rows, list) or len(rows) != expected:
@@ -108,7 +129,7 @@ def normalized_results(observation, expected):
         attrs["prefecture"] = normalized_prefecture(attrs["prefecture"])
         attrs["period"] = re.sub(r"期$", "", attrs["period"])
         attrs["method"] = canonical_method(attrs["method"])
-        if not attrs["name"] or not attrs["prefecture"] or not attrs["period"].isdigit():
+        if not attrs["name"] or (not invited_identity(observation, r) and (not attrs["prefecture"] or not attrs["period"].isdigit())):
             raise ValueError("Unidentified rider in result observation")
         finish, ex = attrs["finish"], attrs["exception"]
         if finish in EXCEPTIONS and not ex:
@@ -157,7 +178,12 @@ def compare(payload):
     disagreements = []
     for number in sorted(rows_a):
         a, b = rows_a[number], rows_b[number]
+        raw_a = next(r for r in observations[0]["results"] if int(r["number"]) == number)
+        raw_b = next(r for r in observations[1]["results"] if int(r["number"]) == number)
+        guest = invited_identity(observations[0], raw_a) and invited_identity(observations[1], raw_b)
         for field in RIDER_FIELDS:
+            if guest and field in ("prefecture", "period"):
+                continue
             if a[field] != b[field]:
                 disagreements.append({"number": number, "field": field,
                                       "left": a[field], "right": b[field]})

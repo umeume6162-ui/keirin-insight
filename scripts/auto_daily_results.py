@@ -23,7 +23,7 @@ import requests
 from collect_historical_pair import collect_auto, SourceStageError
 from result_hold_diagnostics import classify_result_hold, review_route
 from compare_race_results import (normalized_name, canonical_method, compare,
-                                  require_source, normalized_race, normalized_results)
+                                  require_source, normalized_race, normalized_results, invited_identity)
 from upsert_daily_sheets import (
     SHEET_ID, HEADERS, CONFIG, apply, remote_client
 )
@@ -263,9 +263,10 @@ def candidate(key, rows, collect_fn=collect):
         mismatches = []
         if canonical_rider_name(old[6]) != canonical_rider_name(source["name"]):
             mismatches.append("name")
-        if canonical_prefecture(old[7]) != canonical_prefecture(source["prefecture"]):
+        guest = invited_identity(left, source)
+        if not guest and canonical_prefecture(old[7]) != canonical_prefecture(source["prefecture"]):
             mismatches.append("prefecture")
-        if clean(old[8]).removesuffix("期") != clean(source["period"]).removesuffix("期"):
+        if not guest and clean(old[8]).removesuffix("期") != clean(source["period"]).removesuffix("期"):
             mismatches.append("period")
         if mismatches:
             raise RiderIdentityMismatch(number, mismatches)
@@ -565,6 +566,24 @@ def self_test():
     one = candidate(day+"|26|1", records, collect_fn=lambda *a: single)
     assert one["sourcePairMode"] == "SINGLE_SOURCE_ENTRY_MATCH"
     assert one["results"][0]["sourceUrl"] == left["sourceUrl"]
+    guest_observation = {**left, "results": [dict(x) for x in riders]}
+    guest_row = guest_observation["results"][0]
+    guest_row.update(prefecture="", period="", invitedEvidence=dict(
+        kind="foreign_invited", number=1, entryName=guest_row["name"],
+        raceKey=day+"|26|1", entryUrl=left["sourceUrl"],
+        statusSourceUrl=left["sourceUrl"], evidenceRef="SYNTHETIC-TEST"))
+    guest_single = {"observations": [guest_observation], "sourcePairMode": "SINGLE_SOURCE_ENTRY_MATCH"}
+    assert len(candidate(day+"|26|1", records, collect_fn=lambda *a: guest_single)["results"]) == 7
+    for change in ({"entryName":"別人"}, {"raceKey":day+"|26|2"}, {"statusSourceUrl":""}):
+        original_proof = guest_row["invitedEvidence"]
+        guest_row["invitedEvidence"] = {**original_proof, **change}
+        try:
+            candidate(day+"|26|1", records, collect_fn=lambda *a: guest_single)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("Unproved invited rider accepted")
+        guest_row["invitedEvidence"] = original_proof
     wrong = {**left, "results": [dict(x) for x in riders]}
     wrong["results"][0]["name"] = "別人"
     try:
