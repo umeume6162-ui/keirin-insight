@@ -19,7 +19,7 @@
 .session-filter button[aria-pressed=true]{background:#24544b;border-color:#7bcbb2;color:#f4fff9}
 .session-group{border-top:1px solid var(--stroke);padding-top:15px;margin-top:15px}
 .session-head{font-weight:800;font-size:15px;color:var(--mint);margin:0 0 12px}
-.day-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0}
+.day-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:14px 0}
 .day-stat{padding:12px;background:#0a1e2c;border:1px solid #284657;border-radius:12px}
 .day-stat strong{font-size:22px;font-variant-numeric:tabular-nums;display:block;color:var(--mint);line-height:1.35}
 .day-stat small{font-size:12px}
@@ -131,6 +131,7 @@
 <div class="day-stat"><strong id="race-count">—</strong><small>表示レース</small></div>
 <div class="day-stat"><strong id="entry-count">—</strong><small>出走表の車数</small></div>
 <div class="day-stat"><strong id="result-count">—</strong><small>結果記録の車数</small></div>
+<div class="day-stat"><strong id="stats-count">—</strong><small>選手統計ありのR数</small></div>
 </div>
 </section>
 <div id="races" aria-label="開催場・レース一覧"></div>
@@ -154,7 +155,7 @@ function syncSessionButtons(){
  document.querySelectorAll("[data-session]").forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.session===selectedSession)));
 }
 function node(tag,text,cls){const x=document.createElement(tag);if(text!==undefined)x.textContent=String(text);if(cls)x.className=cls;return x}
-function stats(races){el("race-count").textContent=String(races.length);el("entry-count").textContent=String(races.reduce((n,r)=>n+(Array.isArray(r.entries)?r.entries.length:0),0));el("result-count").textContent=String(races.reduce((n,r)=>n+(Array.isArray(r.results)?r.results.length:0),0))}
+function stats(races){el("race-count").textContent=String(races.length);el("entry-count").textContent=String(races.reduce((n,r)=>n+(Array.isArray(r.entries)?r.entries.length:0),0));el("result-count").textContent=String(races.reduce((n,r)=>n+(Array.isArray(r.results)?r.results.length:0),0));el("stats-count").textContent=String(races.filter(r=>Array.isArray(r.entries)&&r.entries.length>0&&r.entries.every(e=>e.riderStats&&r.riderStatsSource?.url)).length)+"/"+races.length}
 function syncQuickButtons(){const day=el("day").value;document.querySelectorAll("[data-day-offset]").forEach(btn=>btn.setAttribute("aria-pressed",String(day===changeJst(Number(btn.dataset.dayOffset)))))}
 function updateVenues(){
  const old=el("track").value, select=el("track"), day=el("day").value;
