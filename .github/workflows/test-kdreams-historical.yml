@@ -44,7 +44,7 @@ jobs:
       - name: Test forecast retrieval helpers (offline)
         run: python scripts/read_forecast_candidates.py --self-test
       - name: Retrieve forecast source observations (read only)
-        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main' && (contains(github.event.head_commit.message, '[read-forecast-sources]') || contains(github.event.head_commit.message, 'Publish ')))
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main' && (contains(github.event.head_commit.message, '[read-forecast-sources]') || contains(github.event.head_commit.message, 'Publish '))) || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.title, '[read-forecast-sources]'))
         env:
           LIMIT: ${{ inputs.limit || '20' }}
           OFFSET: ${{ inputs.offset || '0' }}
