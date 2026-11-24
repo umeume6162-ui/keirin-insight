@@ -17,6 +17,7 @@ on:
       - 'scripts/collect_lotoplace_result.py'
       - 'scripts/collect_historical_pair.py'
       - 'scripts/collect_historical_batch.py'
+      - 'scripts/verify_historical_evidence.py'
       - 'scripts/result_hold_diagnostics.py'
       - 'scripts/classify_historical_candidates.py'
       - 'scripts/audit_v99_race_shape.py'
@@ -150,6 +151,12 @@ jobs:
           fi
       - name: Install Google reader
         run: pip install 'google-auth==2.38.0' 'requests==2.32.3' 'beautifulsoup4==4.14.2'
+      - name: Recheck unpublished historical evidence (read only)
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[refresh-historical-proof]') }}
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: python scripts/verify_historical_evidence.py
       - name: Check mobile home and daily-board contracts
         if: github.event_name == 'pull_request'
         run: |
@@ -204,6 +211,7 @@ jobs:
         run: node scripts/test_daily_board_ui.js
       - name: Check daily intake script syntax
         run: |
+          python -m py_compile scripts/verify_historical_evidence.py
           python -m py_compile scripts/build_feeds.py scripts/build_daily_board.py scripts/upsert_daily_sheets.py scripts/collect_chariloto_entry.py scripts/probe_daily_source.py scripts/collect_tospo_entry.py scripts/discover_tospo_races.py scripts/compare_race_results.py scripts/collect_netkeirin_result.py scripts/collect_lotoplace_result.py scripts/collect_kdreams_result.py scripts/result_robots.py scripts/collect_historical_pair.py scripts/collect_historical_batch.py scripts/classify_historical_candidates.py scripts/auto_daily_tospo_intake.py scripts/auto_daily_results.py scripts/result_hold_diagnostics.py scripts/enrich_daily_start_times.py scripts/enrich_daily_rider_stats.py
           python scripts/collect_chariloto_entry.py --self-test
           python scripts/collect_tospo_entry.py --self-test
