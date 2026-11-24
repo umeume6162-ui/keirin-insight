@@ -11,6 +11,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 import requests
+import collect_netkeirin_result as netkeirin
 
 from collect_lotoplace_result import EXCEPTION_LABELS, fetch, parse_result, validate_url
 from compare_race_results import (
@@ -86,9 +87,7 @@ def verify_row(row, reread, cache):
     if any(x[0] != date or str(x[2]).zfill(2) != code or int(x[4]) != race
            or x[1] != track for x in stored):
         raise ValueError("Race identity differs in V99")
-    if url not in cache:
-        cache[url] = fetch(url)
-    observed = parse_result(cache[url], date, code, track, race, grades, count, url)
+    observed = read_observation(row, date, code, track, race, grades, count, url, cache)
     riders = {int(item["number"]): item for item in observed["results"]}
     if len(riders) != count or set(riders) != set(range(1, count + 1)):
         raise ValueError("Missing or duplicate source car")
@@ -117,7 +116,39 @@ def verify_row(row, reread, cache):
             expected = expected[:-1] + (EXCEPTION_LABELS.get(expected[-1], expected[-1]),)
         if actual != expected or str(original[12]) not in ("A3", "A1", "A2", "S1", "S2", "SS", "L1", "L2"):
             raise ValueError(f"Car {car}: original V99 identity/result differs")
-    return count
+    return count, observed["sourceUrl"]
+
+
+def read_observation(row, day, code, track, race, grade, count, url, cache):
+    """Try other supported publications only if acquisition/parsing fails.
+
+    A parsed observation is compared against V99 by verify_row. Any mismatch
+    remains a HOLD; it is not hidden by trying another publication.
+    Existing evidence is rechecked against its original source only.
+    """
+    attempts = [(url, fetch, parse_result)]
+    if row[0].startswith("UNSAVED-V99-"):
+        net_url = "https://keirin.netkeiba.com/race/result/?race_id=" + day.replace("-", "") + code + f"{race:02d}"
+        netkeirin.validate_url(net_url, day, code, race)
+        attempts.append((net_url, netkeirin.fetch, netkeirin.extract))
+    for source_url, reader, parser in attempts:
+        try:
+            if source_url not in cache:
+                try:
+                    cache[source_url] = reader(source_url)
+                except (ValueError, requests.RequestException) as exc:
+                    cache[source_url] = exc
+            html = cache[source_url]
+            if isinstance(html, Exception):
+                raise html
+            observed = parser(html, day, code, track, race, grade, count, source_url)
+        except (ValueError, requests.RequestException) as exc:
+            print("HISTORICAL_SOURCE_HOLD", row[3], urlsplit(source_url).hostname, type(exc).__name__)
+            continue
+        if observed.get("sourceUrl") != source_url:
+            raise ValueError("Parsed source URL differs")
+        return observed
+    raise ValueError("No complete result observation from supported sources")
 
 
 def fresh_candidates(rows, excluded, limit=10, offset=0):
@@ -130,7 +161,7 @@ def fresh_candidates(rows, excluded, limit=10, offset=0):
             continue
         row = [str(v or "") for v in raw] + [""] * max(0, 23 - len(raw))
         day, track, code, number = row[0], row[1], row[2], row[4]
-        if not re.fullmatch(r"20\\d{2}-\\d{2}-\\d{2}", day) or not code.isdecimal() or not number.isdecimal():
+        if not re.fullmatch(r"20\d{2}-\d{2}-\d{2}", day) or not code.isdecimal() or not number.isdecimal():
             continue
         if not 1 <= int(code) <= 99 or not 1 <= int(number) <= 12 or not track:
             continue
@@ -187,7 +218,27 @@ def self_test():
     assert fresh_candidates(rows, set(), limit=1, offset=1)[0][3] == "2026-10-01|83|2"
     assert not fresh_candidates(race(1) + race(1), set())
     assert all(r[0].startswith("UNSAVED-V99-") for r in found)
-    print("SELF_TEST_OK: V99 fallback excludes published, incomplete and duplicate races")
+    from unittest.mock import patch
+    target = found[0]
+    original = json.loads(target[9])
+    observed = {"sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202610018302",
+                "results": [dict(number=int(x[7]), name=x[8], prefecture=x[10], period=x[11],
+                                 finish=x[6], method=x[15], exception=x[17]) for x in original]}
+    with (patch(__name__ + ".fetch", side_effect=ValueError("source unavailable")) as primary,
+          patch.object(netkeirin, "fetch", return_value="fixture") as secondary,
+          patch.object(netkeirin, "extract", return_value=observed)):
+        cache = {}
+        assert verify_row(target, original, cache) == (7, observed["sourceUrl"])
+        assert verify_row(target, original, cache) == (7, observed["sourceUrl"])
+        assert primary.call_count == secondary.call_count == 1
+        observed["results"][0]["name"] = "別人"
+        try:
+            verify_row(target, original, cache)
+        except ValueError as exc:
+            assert "differs" in str(exc)
+        else:
+            raise AssertionError("Mismatched rider accepted")
+    print("SELF_TEST_OK: V99 fallback, source switching, cache reuse, mismatch rejection")
 
 
 def main():
@@ -242,11 +293,11 @@ def main():
     passed = 0
     for row, original in zip(pending, stored_ranges):
         try:
-            count = verify_row(row, original, cache)
+            count, actual_url = verify_row(row, original, cache)
             passed += 1
             run_url = os.environ.get("GITHUB_RUN_URL", "")
             print("HISTORICAL_NEW_CANDIDATE_LIVE_HTML_OK" if row[0].startswith("UNSAVED-V99-") else "HISTORICAL_PROOF_LIVE_HTML_OK", row[3], "cars", count,
-                  "evidenceRef", row[0], "source", row[10], "run", run_url)
+                  "candidateRef", row[0], "source", actual_url, "run", run_url)
         except (ValueError, requests.RequestException, KeyError, IndexError) as exc:
             print("HISTORICAL_PROOF_HOLD", row[3], type(exc).__name__, str(exc)[:150])
     print("HISTORICAL_PROOF_SUMMARY", passed, "/", len(pending),
