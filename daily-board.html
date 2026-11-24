@@ -215,7 +215,7 @@ function linePanel(r,entries){
   const singles=lines.filter(g=>g.length===1).map(g=>g[0]);
   if(singles.length)wrapper.append(node("p","単騎予想："+singles.map(x=>x+"番").join("、"),"source-caption"));
  }else wrapper.append(node("p","事前ライン：未取得または全車の構成未確認。単騎も未判定です。","source-caption"));
- const origin=entries.find(x=>x.preRaceLine&&x.sourceUrl)?.sourceUrl||r.lineSourceUrl;
+ const origin=r.lineSourceUrl||entries.find(x=>x.preRaceLine&&x.sourceUrl)?.sourceUrl;
  if(lines&&origin){
   const link=node("a","並び予想の掲載元");
   link.href=origin;link.target="_blank";link.rel="noopener noreferrer";
