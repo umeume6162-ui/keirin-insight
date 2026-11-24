@@ -2244,10 +2244,159 @@
         ]
       ]
     },
+    "2026-11-24|松山|11": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611247511",
+      "signature": "1057e0facc25db7f4e24a507da2c6b3830b26442bc8de3c86c31e99a2030e814",
+      "capturedAt": "2026-11-24 15:17 JST",
+      "period": "直近4か月（netkeirin掲載値）",
+      "rows": {
+        "1": {
+          "score": "96.30",
+          "style": "追",
+          "s": 0,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 3,
+          "mark": 1,
+          "first": 1,
+          "second": 3,
+          "third": 6,
+          "other": 22,
+          "winRate": "3.1%",
+          "top2Rate": "12.5%",
+          "top3Rate": "31.3%"
+        },
+        "2": {
+          "score": "100.46",
+          "style": "両",
+          "s": 1,
+          "h": 3,
+          "b": 4,
+          "escape": 0,
+          "sprint": 3,
+          "difference": 0,
+          "mark": 1,
+          "first": 3,
+          "second": 1,
+          "third": 5,
+          "other": 17,
+          "winRate": "11.5%",
+          "top2Rate": "15.3%",
+          "top3Rate": "34.6%"
+        },
+        "3": {
+          "score": "107.29",
+          "style": "逃",
+          "s": 2,
+          "h": 7,
+          "b": 10,
+          "escape": 4,
+          "sprint": 4,
+          "difference": 4,
+          "mark": 0,
+          "first": 6,
+          "second": 6,
+          "third": 5,
+          "other": 7,
+          "winRate": "25.0%",
+          "top2Rate": "50.0%",
+          "top3Rate": "70.8%"
+        },
+        "4": {
+          "score": "100.92",
+          "style": "追",
+          "s": 0,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 2,
+          "mark": 1,
+          "first": 1,
+          "second": 2,
+          "third": 4,
+          "other": 19,
+          "winRate": "3.8%",
+          "top2Rate": "11.5%",
+          "top3Rate": "26.9%"
+        },
+        "5": {
+          "score": "98.47",
+          "style": "追",
+          "s": 0,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 4,
+          "mark": 2,
+          "first": 3,
+          "second": 3,
+          "third": 4,
+          "other": 24,
+          "winRate": "8.8%",
+          "top2Rate": "17.6%",
+          "top3Rate": "29.4%"
+        },
+        "6": {
+          "score": "94.27",
+          "style": "逃",
+          "s": 0,
+          "h": 6,
+          "b": 4,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 0,
+          "mark": 1,
+          "first": 0,
+          "second": 1,
+          "third": 2,
+          "other": 23,
+          "winRate": "0.0%",
+          "top2Rate": "3.8%",
+          "top3Rate": "11.5%"
+        },
+        "7": {
+          "score": "103.17",
+          "style": "両",
+          "s": 11,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 1,
+          "difference": 12,
+          "mark": 4,
+          "first": 8,
+          "second": 9,
+          "third": 2,
+          "other": 10,
+          "winRate": "27.5%",
+          "top2Rate": "58.6%",
+          "top3Rate": "65.5%"
+        }
+      },
+      "forecastGroups": [
+        [
+          2,
+          4,
+          5
+        ],
+        [
+          6
+        ],
+        [
+          3,
+          7,
+          1
+        ]
+      ]
+    },
     "2026-11-24|松山|12": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611247512",
       "signature": "35952013b7e0c2b71fef764d8fe0581180db4d073674f88b0fa4ad6441b5fb17",
-      "capturedAt": "2026-11-24 09:44 JST",
+      "capturedAt": "2026-11-24 15:17 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -2376,7 +2525,24 @@
           "top2Rate": "27.5%",
           "top3Rate": "51.7%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          1,
+          7,
+          4
+        ],
+        [
+          2
+        ],
+        [
+          6
+        ],
+        [
+          3,
+          5
+        ]
+      ]
     },
     "2026-11-24|松山|2": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611247502",
@@ -3124,7 +3290,7 @@
     "2026-11-24|玉野|1": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611246101",
       "signature": "ba4f6392c39f6218b603eb14263d9f71f97749fb68d6fea49fbff26764273094",
-      "capturedAt": "2026-11-24 09:44 JST",
+      "capturedAt": "2026-11-24 15:17 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -3253,12 +3419,13 @@
           "top2Rate": "0.0%",
           "top3Rate": "0.0%"
         }
-      }
+      },
+      "forecastGroups": null
     },
     "2026-11-24|玉野|2": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611246102",
       "signature": "b212c17a8866b84a8c1e19a3a7460dc66d3a63981956abdfc0aeda7ecd3af2dc",
-      "capturedAt": "2026-11-24 09:44 JST",
+      "capturedAt": "2026-11-24 15:17 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -3387,12 +3554,13 @@
           "top2Rate": "0.0%",
           "top3Rate": "0.0%"
         }
-      }
+      },
+      "forecastGroups": null
     },
     "2026-11-24|玉野|3": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611246103",
       "signature": "403d28b0d9a34a43aa2267190b8d27b27fb6a3cf8b9609712844e8e0a2b7192f",
-      "capturedAt": "2026-11-24 09:44 JST",
+      "capturedAt": "2026-11-24 15:17 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -3521,12 +3689,29 @@
           "top2Rate": "9.3%",
           "top3Rate": "21.9%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          2,
+          1,
+          6
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4
+        ],
+        [
+          7
+        ]
+      ]
     },
     "2026-11-24|玉野|4": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611246104",
       "signature": "7dcfa37f7b063374fd35998ffea8a334f5a726e59158c3037696136389a8ac51",
-      "capturedAt": "2026-11-24 09:44 JST",
+      "capturedAt": "2026-11-24 15:17 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -3655,12 +3840,29 @@
           "top2Rate": "0.0%",
           "top3Rate": "0.0%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          1
+        ],
+        [
+          5,
+          2,
+          6
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          7
+        ]
+      ]
     },
     "2026-11-24|玉野|5": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611246105",
       "signature": "862beb0842ce612bb12c140591b70b89a76337284558776910e49226f85a6fc5",
-      "capturedAt": "2026-11-24 09:54 JST",
+      "capturedAt": "2026-11-24 15:17 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -3789,12 +3991,27 @@
           "top2Rate": "25.0%",
           "top3Rate": "33.3%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          3,
+          4,
+          6
+        ],
+        [
+          7
+        ]
+      ]
     },
     "2026-11-24|玉野|6": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611246106",
       "signature": "3350321c40d5559887ec34f03ca05a96007018c89989c02d58cedb7f31a7fe59",
-      "capturedAt": "2026-11-24 09:54 JST",
+      "capturedAt": "2026-11-24 15:17 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -3923,12 +4140,29 @@
           "top2Rate": "24.1%",
           "top3Rate": "27.6%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          1,
+          5
+        ],
+        [
+          4
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          6
+        ]
+      ]
     },
     "2026-11-24|玉野|7": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611246107",
       "signature": "a3d2dc7119a0aa7925816a8706825b8a11f5e0babcdf83b6be03292682c3b835",
-      "capturedAt": "2026-11-24 09:54 JST",
+      "capturedAt": "2026-11-24 15:17 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -4057,12 +4291,27 @@
           "top2Rate": "12.5%",
           "top3Rate": "25.0%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          2,
+          1,
+          7
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          4,
+          5
+        ]
+      ]
     },
     "2026-11-24|西武園|1": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611242601",
       "signature": "eb2d6cc1547745a15c8ca136fb3cd8cdf20ef23e073d0f98d74178cf4230d012",
-      "capturedAt": "2026-11-24 09:54 JST",
+      "capturedAt": "2026-11-24 15:17 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -4191,7 +4440,22 @@
           "top2Rate": "23.3%",
           "top3Rate": "40.0%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          5,
+          1,
+          3
+        ],
+        [
+          7,
+          2,
+          4
+        ],
+        [
+          6
+        ]
+      ]
     },
     "2026-11-24|西武園|10": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611242610",
@@ -4330,7 +4594,7 @@
     "2026-11-24|西武園|2": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611242602",
       "signature": "5f35dc6e3665ed2fcbf4feabe38571d61261e86bb607021a3e6a316d45f4e404",
-      "capturedAt": "2026-11-24 09:54 JST",
+      "capturedAt": "2026-11-24 15:17 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -4459,12 +4723,178 @@
           "top2Rate": "11.1%",
           "top3Rate": "44.4%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          3,
+          7,
+          4,
+          6
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          5
+        ]
+      ]
+    },
+    "2026-11-24|西武園|3": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611242603",
+      "signature": "f7bf34b49cbba7850c5cc13e2b650e5f241f47fbb5751376024bcc76b2392bbb",
+      "capturedAt": "2026-11-24 15:17 JST",
+      "period": "直近4か月（netkeirin掲載値）",
+      "rows": {
+        "1": {
+          "score": "73.88",
+          "style": "逃",
+          "s": 5,
+          "h": 14,
+          "b": 11,
+          "escape": 9,
+          "sprint": 1,
+          "difference": 1,
+          "mark": 0,
+          "first": 6,
+          "second": 5,
+          "third": 3,
+          "other": 11,
+          "winRate": "24.0%",
+          "top2Rate": "44.0%",
+          "top3Rate": "56.0%"
+        },
+        "2": {
+          "score": "72.44",
+          "style": "追",
+          "s": 0,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 0,
+          "mark": 2,
+          "first": 0,
+          "second": 2,
+          "third": 6,
+          "other": 10,
+          "winRate": "0.0%",
+          "top2Rate": "11.1%",
+          "top3Rate": "44.4%"
+        },
+        "3": {
+          "score": "70.09",
+          "style": "両",
+          "s": 11,
+          "h": 1,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 6,
+          "mark": 1,
+          "first": 5,
+          "second": 2,
+          "third": 6,
+          "other": 19,
+          "winRate": "15.6%",
+          "top2Rate": "21.8%",
+          "top3Rate": "40.6%"
+        },
+        "4": {
+          "score": "70.82",
+          "style": "両",
+          "s": 2,
+          "h": 6,
+          "b": 9,
+          "escape": 2,
+          "sprint": 4,
+          "difference": 1,
+          "mark": 4,
+          "first": 4,
+          "second": 7,
+          "third": 6,
+          "other": 16,
+          "winRate": "12.1%",
+          "top2Rate": "33.3%",
+          "top3Rate": "51.5%"
+        },
+        "5": {
+          "score": "75.13",
+          "style": "逃",
+          "s": 3,
+          "h": 8,
+          "b": 9,
+          "escape": 4,
+          "sprint": 2,
+          "difference": 1,
+          "mark": 3,
+          "first": 4,
+          "second": 6,
+          "third": 6,
+          "other": 8,
+          "winRate": "16.6%",
+          "top2Rate": "41.6%",
+          "top3Rate": "66.7%"
+        },
+        "6": {
+          "score": "68.96",
+          "style": "追",
+          "s": 5,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 3,
+          "mark": 0,
+          "first": 2,
+          "second": 1,
+          "third": 5,
+          "other": 17,
+          "winRate": "8.0%",
+          "top2Rate": "12.0%",
+          "top3Rate": "32.0%"
+        },
+        "7": {
+          "score": "69.58",
+          "style": "追",
+          "s": 0,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 3,
+          "mark": 4,
+          "first": 1,
+          "second": 6,
+          "third": 3,
+          "other": 21,
+          "winRate": "3.2%",
+          "top2Rate": "22.5%",
+          "top3Rate": "32.3%"
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          6
+        ],
+        [
+          5,
+          2,
+          7
+        ],
+        [
+          4,
+          3
+        ]
+      ]
     },
     "2026-11-24|西武園|4": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611242604",
       "signature": "66e58116d8aa6322491bd0c026c557c89e32cc76f6c30b8d79b52a36dad47f4c",
-      "capturedAt": "2026-11-24 09:54 JST",
+      "capturedAt": "2026-11-24 15:17 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -4593,7 +5023,469 @@
           "top2Rate": "33.3%",
           "top3Rate": "47.6%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          2,
+          7
+        ],
+        [
+          5,
+          4,
+          1
+        ],
+        [
+          3,
+          6
+        ]
+      ]
+    },
+    "2026-11-24|西武園|5": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611242605",
+      "signature": "588c992a000f7b48a4a33cd9fbaf3e791ee6b0ec60a68ed28443210f1ed24461",
+      "capturedAt": "2026-11-24 15:17 JST",
+      "period": "直近4か月（netkeirin掲載値）",
+      "rows": {
+        "1": {
+          "score": "67.96",
+          "style": "追",
+          "s": 0,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 5,
+          "mark": 0,
+          "first": 0,
+          "second": 5,
+          "third": 1,
+          "other": 18,
+          "winRate": "0.0%",
+          "top2Rate": "20.8%",
+          "top3Rate": "25.0%"
+        },
+        "2": {
+          "score": "81.08",
+          "style": "逃",
+          "s": 8,
+          "h": 9,
+          "b": 14,
+          "escape": 10,
+          "sprint": 9,
+          "difference": 3,
+          "mark": 0,
+          "first": 20,
+          "second": 2,
+          "third": 2,
+          "other": 0,
+          "winRate": "83.3%",
+          "top2Rate": "91.6%",
+          "top3Rate": "100.0%"
+        },
+        "3": {
+          "score": "74.00",
+          "style": "追",
+          "s": 4,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 5,
+          "mark": 2,
+          "first": 2,
+          "second": 5,
+          "third": 9,
+          "other": 8,
+          "winRate": "8.3%",
+          "top2Rate": "29.1%",
+          "top3Rate": "66.7%"
+        },
+        "4": {
+          "score": "70.67",
+          "style": "逃",
+          "s": 7,
+          "h": 15,
+          "b": 11,
+          "escape": 6,
+          "sprint": 1,
+          "difference": 1,
+          "mark": 0,
+          "first": 3,
+          "second": 5,
+          "third": 5,
+          "other": 14,
+          "winRate": "11.1%",
+          "top2Rate": "29.6%",
+          "top3Rate": "48.1%"
+        },
+        "5": {
+          "score": "76.70",
+          "style": "追",
+          "s": 7,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 7,
+          "mark": 5,
+          "first": 5,
+          "second": 7,
+          "third": 3,
+          "other": 6,
+          "winRate": "23.8%",
+          "top2Rate": "57.1%",
+          "top3Rate": "71.4%"
+        },
+        "6": {
+          "score": "65.57",
+          "style": "追",
+          "s": 1,
+          "h": 2,
+          "b": 1,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 1,
+          "mark": 0,
+          "first": 1,
+          "second": 0,
+          "third": 0,
+          "other": 22,
+          "winRate": "4.3%",
+          "top2Rate": "4.3%",
+          "top3Rate": "4.3%"
+        },
+        "7": {
+          "score": "73.47",
+          "style": "両",
+          "s": 11,
+          "h": 3,
+          "b": 3,
+          "escape": 2,
+          "sprint": 0,
+          "difference": 6,
+          "mark": 3,
+          "first": 3,
+          "second": 8,
+          "third": 5,
+          "other": 18,
+          "winRate": "8.8%",
+          "top2Rate": "32.3%",
+          "top3Rate": "47.1%"
+        }
+      },
+      "forecastGroups": [
+        [
+          2,
+          5,
+          6
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          4,
+          3
+        ]
+      ]
+    },
+    "2026-11-24|西武園|6": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611242606",
+      "signature": "91c39dc1a546b2b913f9981b7c2fdbdb785a3cf9a47096759cf2ee43be53e19d",
+      "capturedAt": "2026-11-24 15:17 JST",
+      "period": "直近4か月（netkeirin掲載値）",
+      "rows": {
+        "1": {
+          "score": "81.82",
+          "style": "追",
+          "s": 2,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 0,
+          "mark": 0,
+          "first": 0,
+          "second": 0,
+          "third": 7,
+          "other": 21,
+          "winRate": "0.0%",
+          "top2Rate": "0.0%",
+          "top3Rate": "25.0%"
+        },
+        "2": {
+          "score": "80.00",
+          "style": "追",
+          "s": 2,
+          "h": 3,
+          "b": 3,
+          "escape": 1,
+          "sprint": 2,
+          "difference": 1,
+          "mark": 0,
+          "first": 3,
+          "second": 1,
+          "third": 1,
+          "other": 22,
+          "winRate": "11.1%",
+          "top2Rate": "14.8%",
+          "top3Rate": "18.5%"
+        },
+        "3": {
+          "score": "82.07",
+          "style": "追",
+          "s": 0,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 0,
+          "mark": 2,
+          "first": 0,
+          "second": 2,
+          "third": 2,
+          "other": 12,
+          "winRate": "0.0%",
+          "top2Rate": "12.5%",
+          "top3Rate": "25.0%"
+        },
+        "4": {
+          "score": "81.29",
+          "style": "逃",
+          "s": 2,
+          "h": 6,
+          "b": 9,
+          "escape": 4,
+          "sprint": 4,
+          "difference": 1,
+          "mark": 0,
+          "first": 7,
+          "second": 2,
+          "third": 3,
+          "other": 22,
+          "winRate": "20.5%",
+          "top2Rate": "26.4%",
+          "top3Rate": "35.3%"
+        },
+        "5": {
+          "score": "82.48",
+          "style": "追",
+          "s": 4,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 1,
+          "mark": 2,
+          "first": 0,
+          "second": 3,
+          "third": 6,
+          "other": 12,
+          "winRate": "0.0%",
+          "top2Rate": "14.2%",
+          "top3Rate": "42.9%"
+        },
+        "6": {
+          "score": "77.30",
+          "style": "両",
+          "s": 5,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 0,
+          "mark": 1,
+          "first": 0,
+          "second": 1,
+          "third": 0,
+          "other": 22,
+          "winRate": "0.0%",
+          "top2Rate": "4.3%",
+          "top3Rate": "4.3%"
+        },
+        "7": {
+          "score": "85.43",
+          "style": "両",
+          "s": 4,
+          "h": 3,
+          "b": 4,
+          "escape": 1,
+          "sprint": 5,
+          "difference": 3,
+          "mark": 0,
+          "first": 7,
+          "second": 2,
+          "third": 2,
+          "other": 13,
+          "winRate": "29.1%",
+          "top2Rate": "37.5%",
+          "top3Rate": "45.8%"
+        }
+      },
+      "forecastGroups": [
+        [
+          7,
+          3,
+          2
+        ],
+        [
+          6
+        ],
+        [
+          4,
+          5,
+          1
+        ]
+      ]
+    },
+    "2026-11-24|西武園|7": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611242607",
+      "signature": "15b000a9244df2da6a27900da8ea17372510643ee37ad04a2b3cdb5645df6f58",
+      "capturedAt": "2026-11-24 15:17 JST",
+      "period": "直近4か月（netkeirin掲載値）",
+      "rows": {
+        "1": {
+          "score": "81.68",
+          "style": "両",
+          "s": 7,
+          "h": 9,
+          "b": 7,
+          "escape": 2,
+          "sprint": 0,
+          "difference": 2,
+          "mark": 0,
+          "first": 2,
+          "second": 2,
+          "third": 3,
+          "other": 12,
+          "winRate": "10.5%",
+          "top2Rate": "21.0%",
+          "top3Rate": "36.8%"
+        },
+        "2": {
+          "score": "84.40",
+          "style": "追",
+          "s": 0,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 3,
+          "mark": 1,
+          "first": 1,
+          "second": 3,
+          "third": 3,
+          "other": 13,
+          "winRate": "5.0%",
+          "top2Rate": "20.0%",
+          "top3Rate": "35.0%"
+        },
+        "3": {
+          "score": "83.90",
+          "style": "逃",
+          "s": 13,
+          "h": 14,
+          "b": 14,
+          "escape": 4,
+          "sprint": 4,
+          "difference": 0,
+          "mark": 1,
+          "first": 2,
+          "second": 7,
+          "third": 2,
+          "other": 19,
+          "winRate": "6.6%",
+          "top2Rate": "30.0%",
+          "top3Rate": "36.7%"
+        },
+        "4": {
+          "score": "79.93",
+          "style": "追",
+          "s": 0,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 3,
+          "mark": 0,
+          "first": 2,
+          "second": 1,
+          "third": 2,
+          "other": 22,
+          "winRate": "7.4%",
+          "top2Rate": "11.1%",
+          "top3Rate": "18.5%"
+        },
+        "5": {
+          "score": "80.54",
+          "style": "追",
+          "s": 0,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 0,
+          "mark": 1,
+          "first": 0,
+          "second": 1,
+          "third": 3,
+          "other": 20,
+          "winRate": "0.0%",
+          "top2Rate": "4.1%",
+          "top3Rate": "16.7%"
+        },
+        "6": {
+          "score": "77.97",
+          "style": "追",
+          "s": 0,
+          "h": 0,
+          "b": 0,
+          "escape": 0,
+          "sprint": 0,
+          "difference": 0,
+          "mark": 0,
+          "first": 0,
+          "second": 0,
+          "third": 1,
+          "other": 31,
+          "winRate": "0.0%",
+          "top2Rate": "0.0%",
+          "top3Rate": "3.1%"
+        },
+        "7": {
+          "score": "80.22",
+          "style": "逃",
+          "s": 1,
+          "h": 6,
+          "b": 7,
+          "escape": 2,
+          "sprint": 2,
+          "difference": 0,
+          "mark": 0,
+          "first": 2,
+          "second": 2,
+          "third": 1,
+          "other": 19,
+          "winRate": "8.3%",
+          "top2Rate": "16.6%",
+          "top3Rate": "20.8%"
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          4
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          3,
+          5,
+          6
+        ]
+      ]
     },
     "2026-11-24|西武園|8": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611242608",
