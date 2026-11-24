@@ -41,6 +41,12 @@ async function check(edit,success){
  await check(x=>{x.officialVerification.matchingSources=['https://other.example/line']},false);
  await check(x=>{x.riders[0].line=[1,3]},false);
  const individual=x=>{x.lineMode='no_line';x.raceFormat='girls';x.originalFormation='1234567';x.formatEvidenceUrl=x.officialVerification.source;x.forecastGroups=x.riders.map(r=>[r.number]);x.riders.forEach(r=>r.line=[r.number])};
+ const contested=x=>{x.lineMode='contested';x.originalFormation='①（②③）④／⑤⑥／⑦';x.formatEvidenceUrl=x.officialVerification.source;x.forecastSlots=[[1,[2,3],4],[5,6],[7]];delete x.forecastGroups;x.riders.forEach(r=>delete r.line)};
+ await check(contested,true);
+ await check(x=>{contested(x);x.forecastSlots[0][1]=[2,2]},false);
+ await check(x=>{contested(x);x.originalFormation='1234/56/7'},false);
+ await check(x=>{contested(x);x.riders[1].line=[2,3]},false);
+ await check(x=>{contested(x);x.formatEvidenceUrl='https://other.example/'},false);
  await check(individual,true);
  await check(x=>{individual(x);x.raceFormat='advance'},true);
  const unordered=x=>{individual(x);x.originalFormation='3517246';x.forecastGroups=[3,5,1,7,2,4,6].map(n=>[n])};

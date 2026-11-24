@@ -35,6 +35,7 @@ const context={};vm.runInNewContext(audit.slice(from,to)+';this.classify=classif
 const race={key:'test',date:'2026-11-24',track:'test',race:1,className:'A3'};
 const line={forecastGroups:[[1,2,3],[4,5],[6],[7]]};
 const ranks=nums=>nums.map((number,i)=>({number,finishRaw:String(i+1)}));
+assert.equal(context.classify(race,{lineMode:'contested',originalFormation:'①（②③）④／⑤⑥／⑦'},ranks([1,2,3])).kind,'競り・直付け（別集計）');
 assert.equal(context.classify(race,line,ranks([1,2,3])).kind,'ライン独占');
 assert.equal(context.classify(race,line,ranks([1,4,2])).pair,'1-3');
 assert.equal(context.classify(race,line,ranks([4,1,2])).pair,'2-3');

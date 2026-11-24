@@ -22,8 +22,8 @@ function verifyPublication(a,b,i,l){
   const e=x.officialVerification;
   if(!(evidence(x)||forecastSource(x)||(kdResult(x)&&e?.method==='kdreams_single_source_verified'))||!date(x.date)||!x.track||!/^\d{2}$/.test(String(x.trackCode||''))||!Number.isInteger(Number(x.race))||Number(x.race)<1||Number(x.race)>12||!x.id||x.id!==[x.date,String(x.trackCode),Number(x.race)].join('|')||lineKeys.has(x.id)||!Array.isArray(x.riders)||![7,9].includes(x.riders.length)||x.size!==x.riders.length)fail('ライン予想の出典・レース識別・重複');
   lineKeys.add(x.id);
-  const groups=x.forecastGroups;
-  if(x.lineMode!==undefined&&!['no_line','line'].includes(x.lineMode))fail('競走形式不明');
+  const groups=contestedGroups(x)||x.forecastGroups;
+  if(x.lineMode!==undefined&&!['no_line','line','contested'].includes(x.lineMode))fail('競走形式不明');
   if(x.lineMode==='no_line'&&(!(x.lineMode==='no_line'&&['girls','advance','other_individual'].includes(x.raceFormat)&&typeof x.originalFormation==='string'&&x.originalFormation.trim().length>0&&typeof x.formatEvidenceUrl==='string'&&/^https:\/\//.test(x.formatEvidenceUrl))||!Array.isArray(groups)||groups.some(q=>!Array.isArray(q)||q.length!==1)))fail('ラインなし競走の証拠・全車独立不備');
   if(!Array.isArray(groups)||!groups.length||groups.some(g=>!Array.isArray(g)||!g.length)||groups.flat().length!==x.size)fail('ライン全車グループ不備');
   const nums=groups.flat().map(Number),expected=Array.from({length:x.size},(_,i)=>i+1);
@@ -31,7 +31,7 @@ function verifyPublication(a,b,i,l){
   if(new Set(x.riders.map(r=>Number(r.number))).size!==x.size)fail('ライン選手の重複');
   for(const rider of x.riders){
    const n=Number(rider.number),grp=groups.find(g=>g.map(Number).includes(n));
-   if(!Number.isInteger(n)||!grp||!sameName(rider.name,rider.name)||!norm(rider.name)||(!guest(x,n,rider.name)&&(!norm(rider.prefecture)||!/^\d+$/.test(String(rider.period))))||!Array.isArray(rider.line)||rider.line.map(Number).join(',')!==grp.map(Number).join(','))fail('ライン選手・グループ不整合');
+   if(!Number.isInteger(n)||!grp||!sameName(rider.name,rider.name)||!norm(rider.name)||(!guest(x,n,rider.name)&&(!norm(rider.prefecture)||!/^\d+$/.test(String(rider.period))))||(x.lineMode!=='contested'&&(!Array.isArray(rider.line)||rider.line.map(Number).join(',')!==grp.map(Number).join(','))))fail('ライン選手・グループ不整合');
   }
   const connected=keys.get(x.id);
   if(connected){
@@ -50,6 +50,17 @@ const names=['results','rider-results','rider-ids','line-snapshots'];
 const files=names.map(k=>'verified-'+k+'-feed-v1.json');
 let inflight=null,cache=null,checked=0;
 async function bundle(){if(cache&&Date.now()-checked<15000)return cache;if(inflight)return inflight;inflight=(async()=>{const [a,b,i,l]=await Promise.all(files.map(async f=>{const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),15000);try{const r=await originalFetch('./'+f,{cache:'no-store',signal:controller.signal});if(!r.ok)throw Error(f+' HTTP '+r.status);const j=await r.json();if(j.publicationPolicy!=='ki-verified-only-v1')throw Error('掲載基準不一致');return j}finally{clearTimeout(timer)}}));if(a.schema!=='ki-public-results-index-v1'||b.schema!=='ki-rider-results-v1'||i.schema!=='ki-official-rider-ids-v1'||l.schema!=='ki-line-snapshots-v1'||!Array.isArray(a.races)||!Array.isArray(b.rows)||!Array.isArray(i.riders)||!Array.isArray(l.races)||a.source_snapshot_date!==b.snapshotDate||a.latest_race_date!==b.latestEventDate||a.summary?.races!==a.races.length||b.summary?.races!==a.races.length||a.summary?.rider_rows!==b.rows.length||b.summary?.rows!==b.rows.length||i.summary?.rows!==i.riders.length||l.summary?.races!==l.races.length||a.races.reduce((n,r)=>n+r.size,0)!==b.rows.length)throw Error('配信データ整合性不成立'); verifyPublication(a,b,i,l);cache=[a,b,i,l];checked=Date.now();return cache})().catch(e=>{cache=null;checked=0;throw e}).finally(()=>{inflight=null});return inflight}
-window.KIVerified={version:'13.8',bundle,validate:verifyPublication,guest};
+const contestedGroups=x=>{
+ if(x.lineMode!=='contested')return null;
+ if(typeof x.originalFormation!=='string'||!Array.isArray(x.forecastSlots)||!x.forecastSlots.length||!/^https:\/\//.test(String(x.formatEvidenceUrl||''))||!x.officialVerification?.matchingSources?.includes(x.formatEvidenceUrl))throw Error('競り原文・出典不備');
+ const groups=x.forecastSlots;
+ if(groups.some(g=>!Array.isArray(g)||!g.length||Array.isArray(g[0])||g.some(v=>Array.isArray(v)?v.length<2||v.some(n=>!Number.isInteger(n)||n<1||n>x.size):!Number.isInteger(v)||v<1||v>x.size))||!groups.some(g=>g.some(Array.isArray)))throw Error('競り位置不備');
+ const raw=x.originalFormation.replace(/[①②③④⑤⑥⑦⑧⑨]/g,c=>String('①②③④⑤⑥⑦⑧⑨'.indexOf(c)+1)).normalize('NFKC').replace(/\s/g,'');
+ const canonical=groups.map(g=>g.map(v=>Array.isArray(v)?'('+v.join('')+')':String(v)).join('')).join('/');
+ if(raw!==canonical)throw Error('競り元表記不一致');
+ if(x.forecastGroups!==undefined||x.riders.some(r=>r.line!==undefined&&r.line!==null))throw Error('競りを通常ラインに変換不可');
+ return groups.map(g=>g.flat());
+};
+window.KIVerified={version:'13.8',bundle,validate:verifyPublication,guest,contestedGroups};
 window.fetch=async function(input,init){let u;try{u=new URL(typeof input==='string'?input:input.url||String(input),location.href)}catch{return originalFetch(input,init)}const f=u.pathname.split('/').pop(),n=files.indexOf(f);if(n>=0&&u.origin===location.origin){const data=await bundle();return new Response(JSON.stringify(data[n]),{status:200,headers:{'Content-Type':'application/json'}})}if(/^(?:results|rider-results|rider-ids|line-snapshots)-feed-v1\.json$/.test(f)&&u.origin===location.origin)throw Error('未照合配信への接続は禁止されています');return originalFetch(input,init)};
 })();

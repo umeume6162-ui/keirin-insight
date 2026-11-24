@@ -72,6 +72,17 @@ assert.equal(lines.summary.races,lines.races.length);
 assert.equal(lines.summary.rider_rows,lines.races.reduce((n,r)=>n+r.riders.length,0));
 assert.equal(full.summary.races,official.summary.races);
 assert.equal(official.summary.rider_rows,full.rows.length);
+const contestedGroups=x=>{
+ if(x.lineMode!=='contested')return null;
+ if(typeof x.originalFormation!=='string'||!Array.isArray(x.forecastSlots)||!x.forecastSlots.length||!/^https:\/\//.test(String(x.formatEvidenceUrl||''))||!x.officialVerification?.matchingSources?.includes(x.formatEvidenceUrl))throw Error('競り原文・出典不備');
+ const groups=x.forecastSlots;
+ if(groups.some(g=>!Array.isArray(g)||!g.length||Array.isArray(g[0])||g.some(v=>Array.isArray(v)?v.length<2||v.some(n=>!Number.isInteger(n)||n<1||n>x.size):!Number.isInteger(v)||v<1||v>x.size))||!groups.some(g=>g.some(Array.isArray)))throw Error('競り位置不備');
+ const raw=x.originalFormation.replace(/[①②③④⑤⑥⑦⑧⑨]/g,c=>String('①②③④⑤⑥⑦⑧⑨'.indexOf(c)+1)).normalize('NFKC').replace(/\s/g,'');
+ const canonical=groups.map(g=>g.map(v=>Array.isArray(v)?'('+v.join('')+')':String(v)).join('')).join('/');
+ if(raw!==canonical)throw Error('競り元表記不一致');
+ if(x.forecastGroups!==undefined||x.riders.some(r=>r.line!==undefined&&r.line!==null))throw Error('競りを通常ラインに変換不可');
+ return groups.map(g=>g.flat());
+};
 const groupsAreValid=groups=>Array.isArray(groups)&&groups.every(g=>Array.isArray(g)&&g.length&&g.every(n=>Number.isInteger(Number(n))));
 const guest=(race,n,name)=>{const list=race?.invitedRiders;if(!Array.isArray(list))return false;const p=list.find(x=>Number(x.number)===Number(n));const norm=v=>String(v??'').replace(/[\s\u3000]/g,'');return !!p&&p.kind==='foreign_invited'&&!!norm(name)&&norm(p.name)===norm(name)&&norm(p.entryName)===norm(name)&&/^https:\/\//.test(String(p.entryUrl||''))&&/^https:\/\//.test(String(p.statusSourceUrl||''))&&typeof p.evidenceRef==='string'&&p.evidenceRef.trim().length>8};
 const fieldIndex=Object.fromEntries(full.columns.map((k,i)=>[k,i]));
@@ -130,18 +141,19 @@ for(const line of lines.races){
  if(single)assert.deepEqual(sourceList,[e.source],'single forecast source');
  if(e.method==='kdreams_single_source_verified')assert.ok(kdSource(e.source),'legacy K-Dreams source');
  sourceList.forEach(requireUrl);
- assert.ok(groupsAreValid(line.forecastGroups),'line groups incomplete');
- assert.ok(line.lineMode===undefined||['no_line','line'].includes(line.lineMode),'unknown line mode');
+ const groups=contestedGroups(line)||line.forecastGroups;
+ assert.ok(groupsAreValid(groups),'line groups incomplete');
+ assert.ok(line.lineMode===undefined||['no_line','line','contested'].includes(line.lineMode),'unknown line mode');
  if(line.lineMode==='no_line'){const x=line;assert.ok(x.lineMode==='no_line'&&['girls','advance','other_individual'].includes(x.raceFormat)&&typeof x.originalFormation==='string'&&x.originalFormation.trim().length>0&&typeof x.formatEvidenceUrl==='string'&&/^https:\/\//.test(x.formatEvidenceUrl),'no-line race format proof missing');assert.ok(line.forecastGroups.every(g=>g.length===1),'individual race must use singleton groups');}
- const cars=line.forecastGroups.flat().map(Number),expected=Array.from({length:line.size},(_,i)=>i+1);
+ const cars=groups.flat().map(Number),expected=Array.from({length:line.size},(_,i)=>i+1);
  assert.equal(cars.length,line.size,'forecast must cover all cars');
  assert.deepEqual(cars.slice().sort((a,b)=>a-b),expected,'missing/duplicate forecast cars');
  assert.deepEqual(line.riders.map(x=>Number(x.number)).sort((a,b)=>a-b),expected,'missing/duplicate riders');
  for(const rider of line.riders){
   assert.ok(String(rider.name||'').trim()&&(guest(line,rider.number,rider.name)||(String(rider.prefecture||'').trim()&&/^\d+$/.test(String(rider.period)))));
-  const grp=line.forecastGroups.find(g=>g.map(Number).includes(Number(rider.number)));
-  assert.ok(grp&&Array.isArray(rider.line),'rider group missing');
-  assert.deepEqual(rider.line.map(Number),grp.map(Number),'rider forecast order differs');
+  const grp=groups.find(g=>g.map(Number).includes(Number(rider.number)));
+  assert.ok(grp,'rider group missing');
+  if(line.lineMode!=='contested'){assert.ok(Array.isArray(rider.line));assert.deepEqual(rider.line.map(Number),grp.map(Number),'rider forecast order differs');}
  }
  const race=raceByKey.get(key);
  if(race){
