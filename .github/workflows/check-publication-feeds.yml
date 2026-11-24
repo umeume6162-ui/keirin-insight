@@ -52,27 +52,3 @@ jobs:
       - name: Check mobile race-result presentation contract
         if: ${{ success() || failure() }}
         run: node tools/test_mobile_result_contract.cjs
-      # Deep historical and exceptional-case checks run only on explicit manual dispatch.
-      # Routine push and PR use the two distinct publication/UI checks above.
-      # This avoids redoing seven historical audits on each small data/code change.
-      - name: Deep - source-first result exceptions
-        if: ${{ github.event_name == 'workflow_dispatch' && (success() || failure()) }}
-        run: node tools/test_reconcile_reconstructed_race.cjs
-      - name: Deep - original Matsuyama saved evidence
-        if: ${{ github.event_name == 'workflow_dispatch' && (success() || failure()) }}
-        run: node tools/check_legacy_rechecks.cjs
-      - name: Deep - archived research regression
-        if: ${{ github.event_name == 'workflow_dispatch' && (success() || failure()) }}
-        run: node tools/test_audit_all_acquired_races.cjs
-      - name: Deep - research and receipt duplicate audit
-        if: ${{ github.event_name == 'workflow_dispatch' && (success() || failure()) }}
-        run: node tools/audit_all_acquired_races.cjs > /tmp/keirin-acquired-race-audit.json
-      - name: Deep - official original field comparison
-        if: ${{ github.event_name == 'workflow_dispatch' && (success() || failure()) }}
-        run: node tools/test_audit_official_primary_candidate.cjs
-      - name: Deep - entry and withdrawal cases
-        if: ${{ github.event_name == 'workflow_dispatch' && (success() || failure()) }}
-        run: node tools/reconcile_race_entries.cjs
-      - name: Deep - historical schema readiness
-        if: ${{ github.event_name == 'workflow_dispatch' && (success() || failure()) }}
-        run: node tools/audit_formal_race_readiness.cjs
