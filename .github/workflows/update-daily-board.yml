@@ -176,11 +176,11 @@ jobs:
           creds.refresh(google.auth.transport.requests.Request())
           sheet_id='1gCe5q5STYH0T8XKqxJbVawB0Cl8TPsCISFJiRUdA02M'
           response=requests.get(
-              'https://sheets.googleapis.com/v4/spreadsheets/'+sheet_id+'/values',
-              params={'range':"'KI｜レース結果手動照合'!A1:U2000"},
+              'https://sheets.googleapis.com/v4/spreadsheets/'+sheet_id+'/values:batchGet',
+              params={'ranges':"'KI｜レース結果手動照合'!A1:U2000"},
               headers={'Authorization':'Bearer '+creds.token},timeout=45)
           response.raise_for_status()
-          evidence=response.json().get('values',[])[1:]
+          evidence=response.json().get('valueRanges',[{}])[0].get('values',[])[1:]
           formal=json.loads(Path('verified-results-feed-v1.json').read_text(encoding='utf-8'))
           existing={r['key'] for r in formal['races']}
           pending=[]
