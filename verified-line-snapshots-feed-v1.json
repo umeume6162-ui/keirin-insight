@@ -1,11 +1,11 @@
 {
   "schema": "ki-line-snapshots-v1",
-  "snapshotDate": "2026-11-23",
+  "snapshotDate": "2026-11-24",
   "sourceTab": "VERIFIED publication",
-  "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence. 2026-11-21福井3Rは既存Google発走前スナップ7車とKドリームス掲載の媒体並び予想を照合し、結果から逆算せず単一元の予想として公開。 2026-11-21福井4RはGoogle発走前スナップの全7車ラインとKドリームス並び予想を確認し、出走表で府県/期別を補完。結果とは独立した媒体予想。",
+  "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence. 2026-11-21福井3Rは既存Google発走前スナップ7車とKドリームス掲載の媒体並び予想を照合し、結果から逆算せず単一元の予想として公開。 2026-11-21福井4RはGoogle発走前スナップの全7車ラインとKドリームス並び予想を確認し、出走表で府県/期別を補完。結果とは独立した媒体予想。 2026-10-05松山3R/4R: オッズパーク掲載の発走前予想グループを全7車・選手名で照合し、それぞれ単一媒体予想として公開。",
   "summary": {
-    "races": 9,
-    "rider_rows": 63
+    "races": 11,
+    "rider_rows": 77
   },
   "races": [
     {
@@ -1062,6 +1062,246 @@
             4,
             7,
             1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-05|75|3",
+      "key": "2026-10-05|75|3",
+      "date": "2026-10-05",
+      "track": "松山",
+      "trackCode": "75",
+      "race": 3,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_3.html",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_3.html"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "オッズパーク競輪",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "ODDSPARK-20261124-75-03-FULL-LINE",
+          "comparison": "Source page displays all 7 entrants' names, comments and ordered pre-race line groups; rider identities cross-checked with verified rider results."
+        }
+      },
+      "forecastGroups": [
+        [
+          2,
+          5
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 3,
+          "name": "滝本 泰行",
+          "prefecture": "岡山",
+          "period": "107",
+          "line": [
+            7,
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "野中 祐志",
+          "prefecture": "埼玉",
+          "period": "98",
+          "line": [
+            1,
+            4
+          ]
+        },
+        {
+          "number": 7,
+          "name": "吉田 航",
+          "prefecture": "大分",
+          "period": "127",
+          "line": [
+            7,
+            3
+          ]
+        },
+        {
+          "number": 1,
+          "name": "小原 唯志",
+          "prefecture": "茨城",
+          "period": "101",
+          "line": [
+            1,
+            4
+          ]
+        },
+        {
+          "number": 2,
+          "name": "内山 慧大",
+          "prefecture": "福井",
+          "period": "123",
+          "line": [
+            2,
+            5
+          ]
+        },
+        {
+          "number": 5,
+          "name": "水谷 将司",
+          "prefecture": "愛知",
+          "period": "105",
+          "line": [
+            2,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "田中 勝仁",
+          "prefecture": "千葉",
+          "period": "93",
+          "line": [
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-05|75|4",
+      "key": "2026-10-05|75|4",
+      "date": "2026-10-05",
+      "track": "松山",
+      "trackCode": "75",
+      "race": 4,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_4.html",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1005_4.html"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "オッズパーク競輪",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "ODDSPARK-20261124-75-04-FULL-LINE",
+          "comparison": "Source page displays all 7 entrants' names, comments and ordered pre-race line groups; rider identities cross-checked with verified rider results."
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          6
+        ],
+        [
+          2,
+          4,
+          7
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "riders": [
+        {
+          "number": 6,
+          "name": "三好 陽一",
+          "prefecture": "愛媛",
+          "period": "88",
+          "line": [
+            1,
+            6
+          ]
+        },
+        {
+          "number": 1,
+          "name": "田中 和磨",
+          "prefecture": "岡山",
+          "period": "113",
+          "line": [
+            1,
+            6
+          ]
+        },
+        {
+          "number": 3,
+          "name": "石田 拓真",
+          "prefecture": "愛知",
+          "period": "119",
+          "line": [
+            3,
+            5
+          ]
+        },
+        {
+          "number": 5,
+          "name": "小林 信晴",
+          "prefecture": "愛知",
+          "period": "83",
+          "line": [
+            3,
+            5
+          ]
+        },
+        {
+          "number": 4,
+          "name": "岡本 英之",
+          "prefecture": "千葉",
+          "period": "85",
+          "line": [
+            2,
+            4,
+            7
+          ]
+        },
+        {
+          "number": 7,
+          "name": "須賀 和彦",
+          "prefecture": "茨城",
+          "period": "89",
+          "line": [
+            2,
+            4,
+            7
+          ]
+        },
+        {
+          "number": 2,
+          "name": "吉竹 尚城",
+          "prefecture": "静岡",
+          "period": "109",
+          "line": [
+            2,
+            4,
+            7
           ]
         }
       ]
