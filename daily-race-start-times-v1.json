@@ -295,6 +295,26 @@
       "startTime": "14:39",
       "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261123_30910",
       "signature": "991081b61532251445944baed60c549a9f09eec0b83d2b83fd8cfe3e0c64703e"
+    },
+    "2026-11-25|武雄|3": {
+      "startTime": "09:31",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261124_30564",
+      "signature": "bc56c7d704b9b95b4f128e36e9227865acb31d5786d9f3a082286b637c93b70a"
+    },
+    "2026-11-25|武雄|4": {
+      "startTime": "09:52",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261124_30559",
+      "signature": "2c0cd800338b9e8ef1c2867bae710ffe0f475d86f6a97af25657cdb76d1dd084"
+    },
+    "2026-11-25|武雄|6": {
+      "startTime": "10:34",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261124_30557",
+      "signature": "ee000001108fad3c5bf6a66123c5f4007fd8404390efc44a741fa2bfd89fd625"
+    },
+    "2026-11-25|武雄|7": {
+      "startTime": "10:55",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261124_30556",
+      "signature": "0a3f9af26727971da0e811c39a35431b4bf9800b5082f8f109ab68cf078093f3"
     }
   }
 }
