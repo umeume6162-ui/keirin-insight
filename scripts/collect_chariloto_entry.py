@@ -47,7 +47,12 @@ def parse_entries(html, date, track_code, track, race, source):
                 pref = compact(cells[normalized["府県"]].get_text(" ", strip=True))
                 period = compact(cells[normalized["期別"]].get_text(" ", strip=True)).removesuffix("期")
                 grade = compact(cells[normalized["級班"]].get_text(" ", strip=True))
-                if not name or not re.fullmatch(r"\d{1,3}", period) or not pref or not re.fullmatch(r"(?:A[123]|S[12]|L1)", grade):
+                # Only an explicit foreign designation, not a missing period or 999,
+                # permits the invited-rider exception. Preserve the source label.
+                invited = pref == "外国"
+                if invited and period in ("", "-", "—"):
+                    period = ""
+                if not name or not pref or not re.fullmatch(r"(?:A[123]|S[12]|L1)", grade) or (not re.fullmatch(r"\d{1,3}", period) and not (invited and period == "")):
                     failures.append("incomplete rider identity")
                     continue
                 records.append({"date":date,"trackCode":str(track_code).zfill(2),"track":track,
@@ -56,7 +61,7 @@ def parse_entries(html, date, track_code, track, race, source):
                     "sourceUrl":source,"capturedAt":datetime.now(JST).strftime("%Y-%m-%d %H:%M JST"),
                     "state":"取得済・未照合","sourceId":"chariloto-racecard"})
             numbers = [r["number"] for r in records]
-            if len(records) in (7,9) and len(set(numbers)) == len(numbers) and not failures:
+            if len(records) in (7,9) and sorted(numbers) == list(range(1,len(records)+1)) and not failures:
                 return sorted(records,key=lambda x:x["number"])
     diagnostics = []
     for table in soup.select("table")[:8]:
@@ -94,7 +99,18 @@ def main():
             pass
         else:
             raise ValueError("duplicate/invalid seven-car table was not rejected")
-        print("SELF_TEST_OK: synthetic seven-car field and invalid duplicate rejected")
+        guest = parse_entries(html.replace("<td>東京</td><td>１００期</td>", "<td>外国</td><td>—</td>", 1),
+            "2026-11-23","26","西武園",1,"https://www.chariloto.com/keirin/athletes/2026-11-23/26/1")
+        assert guest[0]["prefecture"] == "外国" and guest[0]["period"] == ""
+        for bad in (html.replace("<td>１００期</td>", "<td>—</td>", 1),
+                    html.replace("<tr><td>7</td>", "<tr><td>8</td>")):
+            try:
+                parse_entries(bad,"2026-11-23","26","西武園",1,"https://example.org/race")
+            except ValueError:
+                pass
+            else:
+                raise AssertionError("Missing domestic period or incomplete car coverage accepted")
+        print("SELF_TEST_OK: full field, foreign marker and domestic identity guards")
         return
     if not all([args.date,args.track_code,args.track,args.race]):
         p.error("--date --track-code --track --race are required for live preview")

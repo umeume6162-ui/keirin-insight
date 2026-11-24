@@ -44,6 +44,9 @@ def parse(html,date,track_code,track,race,url,now=None):
                 continue
             combined=norm(td[1].get_text(" ",strip=True))
             match=re.match(r"^(.*?)\s+(\d{1,2})歳\s*/\s*([^/]+?)\s*/\s*(\d{1,3})期(?:\s|$)",combined)
+            if not match:
+                # Explicit foreign marker only; do not infer nationality from name/999.
+                match=re.match(r"^(.*?)\s+(\d{1,2})歳\s*/\s*(外国)\s*/\s*([-—]?)(?:\s|$)",combined)
             grade_text=norm(td[2].get_text(" ",strip=True))
             grade=re.match(r"^(A[123]|S[12]|L1)(?=\s|$)",grade_text)
             if not match or not grade:
@@ -51,6 +54,8 @@ def parse(html,date,track_code,track,race,url,now=None):
             name=match.group(1).strip()
             pref=match.group(3).strip()
             period=match.group(4)
+            if pref == "外国" and period in ("", "-", "—"):
+                period=""
             if len(name)<2 or not pref:
                 raise ValueError("Incomplete rider identity")
             rows.append({"date":date,"trackCode":str(track_code).zfill(2),"track":track,
@@ -101,7 +106,15 @@ def self_test():
         pass
     else:
         raise ValueError("Wrong race number accepted")
-    print("SELF_TEST_OK: Tospo full-width and duplicate car validation")
+    guest=parse(html.replace("京都 / ９３期", "外国 / —", 1), **kwargs)
+    assert guest[0]["prefecture"]=="外国" and guest[0]["period"]==""
+    try:
+        parse(html.replace("京都 / ９３期", "京都 / —", 1), **kwargs)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Domestic missing period accepted")
+    print("SELF_TEST_OK: Tospo full-width, foreign marker and duplicate car validation")
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--self-test",action="store_true")
