@@ -9,7 +9,7 @@
 <style>
 .filter-bar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:10px;align-items:end}
 .filter-bar label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px}
-.filter-bar input,.filter-bar select{width:100%;min-width:0;min-height:46px;border:1px solid var(--stroke);border-radius:10px;background:#081b29;color:var(--text);padding:9px 10px}
+.filter-bar>div{min-width:0}.filter-bar input,.filter-bar select{display:block;box-sizing:border-box;width:100%;max-width:100%;min-width:0;height:46px;min-height:46px;font-size:14px;border:1px solid var(--stroke);border-radius:10px;background:#081b29;color:var(--text);padding:9px 10px}
 .filter-bar button{min-height:46px;padding:9px 16px;background:var(--surface2);color:var(--mint);font-weight:800}
 .quick-days{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 0}
 .quick-days button{min-height:39px;padding:6px 13px;color:var(--text)}
@@ -63,14 +63,14 @@
 .race-stat-table .time-cell{font-variant-numeric:tabular-nums}
 .source-caption{font-size:12px;color:var(--muted);line-height:1.55}
 .entry-stats-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid #345367;border-radius:12px;background:#0b2231}
-.entry-stats-table{width:100%;min-width:680px;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}
-.entry-stats-table th,.entry-stats-table td{padding:9px 7px;border-bottom:1px solid #2e4d60;text-align:center;white-space:nowrap}
+.entry-stats-table{width:441px;min-width:441px;table-layout:fixed;border-collapse:separate;border-spacing:0;font-size:12px;font-variant-numeric:tabular-nums}
+.entry-stats-table th,.entry-stats-table td{box-sizing:border-box;padding:6px 3px;border-bottom:1px solid #2e4d60;text-align:center;white-space:nowrap}
 .entry-stats-table tbody tr:last-child td{border-bottom:0}
 .entry-stats-table thead th{background:#17394b;color:#c5dbe5;font-size:11px}
-.entry-stats-table th:nth-child(1),.entry-stats-table td:nth-child(1){position:sticky;left:0;z-index:2;background:#0b2231;min-width:43px}
-.entry-stats-table th:nth-child(2),.entry-stats-table td:nth-child(2){position:sticky;left:43px;z-index:2;background:#0b2231;text-align:left;min-width:118px}
+.entry-stats-table th:nth-child(1),.entry-stats-table td:nth-child(1){position:sticky;left:0;z-index:2;background:#0b2231;width:34px;min-width:34px}
+.entry-stats-table th:nth-child(2),.entry-stats-table td:nth-child(2){position:sticky;left:34px;z-index:2;background:#0b2231;text-align:left;width:112px;min-width:112px;white-space:normal;overflow-wrap:anywhere}
 .entry-stats-table thead th:nth-child(-n+2){background:#17394b;z-index:3}
-.entry-stats-table .rider-name{font-weight:800;display:block}
+.entry-stats-table th:nth-child(3){width:54px}.entry-stats-table th:nth-child(4),.entry-stats-table th:nth-child(5){width:32px}.entry-stats-table th:nth-child(n+6){width:59px}.entry-stats-table .car-badge{box-sizing:border-box;width:26px;min-width:26px;height:26px;padding:0}.entry-stats-table .rider-name{font-weight:800;display:block}
 .entry-stats-table .rider-meta{font-size:10px;color:var(--muted);display:block;font-variant-numeric:normal}
 .entry-stats-table .num-good{font-weight:800;color:var(--mint)}
 .entry-stats-detail{padding:8px 0}
@@ -90,7 +90,7 @@
 #state{font-weight:700}#source{font-size:12px;overflow-wrap:anywhere}
 .stale{border-left:3px solid var(--gold);padding-left:10px}
 .empty-panel{padding:24px;text-align:center;color:var(--muted);border:1px dashed var(--stroke);border-radius:14px}
-@media(max-width:650px){.race-grid{grid-template-columns:1fr}.filter-bar{grid-template-columns:1fr 1fr}.filter-bar button{grid-column:1/-1}.race-card summary{min-height:76px}.day-stats{gap:6px}.day-stat{padding:10px}}
+@media(max-width:650px){.race-grid{grid-template-columns:1fr}.filter-bar{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.filter-bar button{grid-column:1/-1}.race-card summary{min-height:76px}.day-stats{gap:6px}.day-stat{padding:10px}}
 </style></head>
 <body>
 <a class="skip" href="#main">本文へ移動</a>
@@ -117,7 +117,7 @@
 <button type="button" data-session="midnight" aria-pressed="false">ミッドナイト</button>
 <button type="button" data-session="unknown" aria-pressed="false">時間帯未確認</button>
 </div>
-<p class="muted" style="font-size:12px">時間帯は出典で明示確認できた開催だけ分類します。未確認のレースも「すべて」で表示します。</p>
+<p class="muted" style="font-size:12px">時間帯は掲載情報を優先し、発走時刻からの推定も含みます。未確認のレースも「すべて」で表示します。</p>
 <div class="quick-days" aria-label="日付を素早く選ぶ">
 <button type="button" data-day-offset="-1" aria-pressed="false">昨日</button>
 <button type="button" data-day-offset="0" aria-pressed="false">今日</button>
@@ -259,7 +259,7 @@ function riderEntryList(entries,race){
  const statCount=entries.filter(validStat).length;
  const show=v=>v===null||v===undefined||String(v).trim()===""?"—":String(v);
  wrapper.append(node("h3","出走表｜選手・競走データ"));
- wrapper.append(node("p","左右にスクロールして S/B・勝率・連対率を比較できます →","entry-stats-caption"));
+ wrapper.append(node("p","車番・選手名は固定。数値欄を横スクロール →","entry-stats-caption"));
  const scroller=node("div",undefined,"entry-stats-wrap"),table=node("table",undefined,"entry-stats-table");
  const thead=node("thead"),tr=node("tr");
  ["車番","選手（府県・期別）","得点","S","B","勝率","2連対率","3連対率"].forEach(label=>tr.append(node("th",label)));
