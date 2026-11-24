@@ -23,7 +23,7 @@ const synthetic={
 };
 async function check(edit,success){
  const docs=structuredClone(base);
- docs['verified-line-snapshots-feed-v1.json'].races.push(synthetic);
+ docs['verified-line-snapshots-feed-v1.json'].races.push(structuredClone(synthetic));
  docs['verified-line-snapshots-feed-v1.json'].summary.races++;
  docs['verified-line-snapshots-feed-v1.json'].summary.rider_rows+=7;
  if(edit)edit(docs['verified-line-snapshots-feed-v1.json'].races.at(-1));
