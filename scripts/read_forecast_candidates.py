@@ -74,6 +74,7 @@ def inspect(html):
     title = soup.title.get_text(" ", strip=True) if soup.title else ""
     # Diagnostic excerpts only; never infer line boundaries from whitespace.
     excerpts = []
+    structures = []
     for node in soup.find_all(string=re.compile("並び予想|ライン予想|並び想定")):
         parent = node.parent
         if parent.name in ("script", "style"):
@@ -82,9 +83,26 @@ def inspect(html):
         value = block.get_text(" ", strip=True)
         if value not in excerpts:
             excerpts.append(value[:1200])
+            # Preserve the published element hierarchy, not inferred groups.
+            structures.append(str(block)[:12000])
         if len(excerpts) >= 5:
             break
-    return {"title": title, "forecastLabelContexts": excerpts}
+    # Preserve labelled table rows for subsequent exact identity comparison.
+    tables = []
+    for table in soup.find_all("table"):
+        heads = [th.get_text(" ", strip=True) for th in table.find_all("th")[:30]]
+        if not any("選手名" in h.replace(" ", "") for h in heads):
+            continue
+        rows = []
+        for tr in table.find_all("tr")[:20]:
+            cells = [td.get_text(" ", strip=True) for td in tr.find_all(["th","td"], recursive=False)]
+            if cells:
+                rows.append(cells)
+        tables.append({"headers":heads,"rows":rows})
+        if len(tables) >= 3:
+            break
+    return {"title": title, "forecastLabelContexts": excerpts,
+            "forecastElementHtml": structures, "riderTableObservations": tables}
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
@@ -103,6 +121,9 @@ def main():
         meetings = meeting_prefixes(lines)
         assert source_urls({"key":"2026-01-02|85|6"},slugs,meetings)[0].endswith("/85202601010200/6/")
         assert len(source_urls({"key":"2026-01-03|85|6"},slugs,meetings)) == 1
+        observed = inspect('<div><b>並び予想</b><span class="test-group">①②</span><span>③</span></div><table><tr><th>選手名</th></tr><tr><td>試験選手</td></tr></table>')
+        assert 'class="test-group"' in observed["forecastElementHtml"][0]
+        assert observed["riderTableObservations"][0]["rows"][1] == ["試験選手"]
         print("SELF_TEST_OK")
         return
     lines = load("verified-line-snapshots-feed-v1.json")
