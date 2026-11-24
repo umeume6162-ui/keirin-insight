@@ -266,7 +266,7 @@ def candidate(key, rows, collect_fn=collect):
         # Result-only marker is insufficient without a stored matching entry.
         guest = invited_identity(left, source) or (
             foreign_source_marker(left, source) and clean(old[7]) == "外国"
-            and bool(re.fullmatch(r"https://[^\s]+", clean(old[10])))
+            and len(old) > 10 and bool(re.fullmatch(r"https://[^\s]+", clean(old[10])))
             and canonical_rider_name(old[6]) == canonical_rider_name(source["name"]))
         if foreign_source_marker(left, source) and not guest:
             mismatches.append("foreign_entry_evidence")
@@ -596,6 +596,8 @@ def self_test():
     marker_single = {"observations":[marker_observation], "sourcePairMode":"SINGLE_SOURCE_ENTRY_MATCH"}
     guest_records = [list(row) for row in records]
     guest_records[0][7:9] = ["外国", "999"]
+    guest_records[0].extend([""] * max(0, 11-len(guest_records[0])))
+    guest_records[0][10] = "https://keirin.netkeiba.com/race/racecard/?race_id=202611232601"
     assert len(candidate(day+"|26|1", guest_records, collect_fn=lambda *a: marker_single)["results"]) == 7
     try:
         candidate(day+"|26|1", records, collect_fn=lambda *a: marker_single)
