@@ -13,6 +13,7 @@ import re
 import sys
 import unicodedata
 from datetime import datetime, timedelta
+from functools import lru_cache
 from pathlib import Path
 from urllib.parse import urlsplit
 from urllib.robotparser import RobotFileParser
@@ -69,21 +70,29 @@ def signature(race):
     except (KeyError,TypeError):
         return None
 
+ROBOTS_AGENT="KEIRIN-INSIGHT-Research/1.0 (racecard stat read-only)"
+
+@lru_cache(maxsize=1)
+def robots_policy():
+    """Check this source's robots policy once per batch, not once per race."""
+    resp=requests.get("https://keirin.netkeiba.com/robots.txt",
+                      headers={"User-Agent":ROBOTS_AGENT},timeout=15)
+    if resp.status_code==200:
+        parser=RobotFileParser()
+        parser.parse(resp.text.splitlines())
+        return parser
+    if resp.status_code in (404,410):
+        return None
+    raise ValueError("Source robots permission uncertain")
+
 def fetch(url):
     u=urlsplit(url)
     if u.scheme!="https" or u.netloc!="keirin.netkeiba.com" or u.path!="/race/entry/":
         raise ValueError("Unsupported netkeirin URL")
-    agent="KEIRIN-INSIGHT-Research/1.0 (racecard stat read-only)"
-    robots=requests.get("https://keirin.netkeiba.com/robots.txt",
-                       headers={"User-Agent":agent},timeout=15)
-    if robots.status_code==200:
-        parser=RobotFileParser()
-        parser.parse(robots.text.splitlines())
-        if not parser.can_fetch(agent,url):
-            raise ValueError("Source robots policy does not allow racecard")
-    elif robots.status_code not in (404,410):
-        raise ValueError("Source robots permission uncertain")
-    page=requests.get(url,headers={"User-Agent":agent},timeout=20)
+    parser=robots_policy()
+    if parser is not None and not parser.can_fetch(ROBOTS_AGENT,url):
+        raise ValueError("Source robots policy does not allow racecard")
+    page=requests.get(url,headers={"User-Agent":ROBOTS_AGENT},timeout=20)
     page.raise_for_status()
     if len(page.content)>3_000_000:
         raise ValueError("Racecard too large")
@@ -160,7 +169,7 @@ def extract(html,race,url):
     return {str(x["number"]):{k:v for k,v in x.items()
              if k not in ("number","name","prefecture","period")} for x in recorded}
 
-def enrich(board,cache,loader=fetch,limit=4):
+def enrich(board,cache,loader=fetch,limit=16):
     if board.get("schema")!="ki-daily-board-v1" or not isinstance(board.get("races"),list):
         raise ValueError("Unknown daily feed schema")
     if cache.get("schema")!=SCHEMA or not isinstance(cache.get("races"),dict):
@@ -274,13 +283,35 @@ def self_test():
         return html
     recheck=enrich(board,cache,check_retry,1)
     assert recheck["held"]==1 and called==[1]
-    print("SELF_TEST_OK: full 7-car stats, identity-binding, stale cache, bounded source cooldown")
+    # Verify one robots lookup serves multiple racecards but still gates each URL.
+    import unittest.mock as mock
+    calls=[]
+    class FakeResp:
+        def __init__(self,status,body):
+            self.status_code=status
+            self.text=body
+            self.content=body.encode()
+        def raise_for_status(self):
+            if self.status_code!=200:raise ValueError("HTTP")
+    def fake_get(url,**kwargs):
+        calls.append(url)
+        if url.endswith("/robots.txt"):
+            return FakeResp(200,"User-agent: *\\nDisallow: /blocked/\\nAllow: /race/entry/\\n")
+        return FakeResp(200,"<html>racecard</html>")
+    robots_policy.cache_clear()
+    with mock.patch.object(requests,"get",side_effect=fake_get):
+        first=fetch("https://keirin.netkeiba.com/race/entry/?race_id=202611233403")
+        second=fetch("https://keirin.netkeiba.com/race/entry/?race_id=202611233404")
+        assert first==second=="<html>racecard</html>"
+        assert sum(url.endswith("robots.txt") for url in calls)==1 and len(calls)==3
+    robots_policy.cache_clear()
+    print("SELF_TEST_OK: full 7-car stats, identity-binding, bounded cooldown, robots batch cache")
 
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--feed",default="daily-board-feed-v1.json")
     p.add_argument("--cache",default="daily-rider-stats-v1.json")
-    p.add_argument("--limit",type=int,default=4)
+    p.add_argument("--limit",type=int,default=16)
     p.add_argument("--self-test",action="store_true")
     a=p.parse_args()
     if a.self_test:return self_test()
