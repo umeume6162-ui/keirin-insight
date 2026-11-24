@@ -4,8 +4,8 @@
   "sourceTab": "VERIFIED publication",
   "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence. 2026-11-21福井3Rは既存Google発走前スナップ7車とKドリームス掲載の媒体並び予想を照合し、結果から逆算せず単一元の予想として公開。 2026-11-21福井4RはGoogle発走前スナップの全7車ラインとKドリームス並び予想を確認し、出走表で府県/期別を補完。結果とは独立した媒体予想。 2026-10-05松山3R/4R: オッズパーク掲載の発走前予想グループを全7車・選手名で照合し、それぞれ単一媒体予想として公開。 2026-10-05松山5/6/8/9R オッズパーク発走前予想4レース全28車と正式結果の本人情報を照合、単騎を維持。 2026-10-01久留米1～4R・2026-10-04松山11R: オッズパーク発走前予想の全7車と正式結果の本人情報を照合して5レース追加。 2026-10-01久留米8～11R オッズパーク掲載の全7車発走前ラインを正式結果の本人情報と照合。7Rは番手競りのため単純な同ライン配列にできず保留。 2026-10-01佐世保3RはKドリームス系GambooBET、4Rはオッズパークの発走前予想で検証。掲載元を区別し全7車照合。",
   "summary": {
-    "races": 26,
-    "rider_rows": 182
+    "races": 28,
+    "rider_rows": 196
   },
   "races": [
     {
@@ -3125,6 +3125,248 @@
           "line": [
             2,
             5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-01|85|5",
+      "key": "2026-10-01|85|5",
+      "date": "2026-10-01",
+      "track": "佐世保",
+      "trackCode": "85",
+      "race": 5,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/gamboo/keirin-kaisai/race-card/yoso/8520260930/85202609300200/5/",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/gamboo/keirin-kaisai/race-card/yoso/8520260930/85202609300200/5/"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "GambooBET",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "SASEBO-20261001-R5-GAMBOO-LINE-20261124",
+          "comparison": "Published DOM groups and all seven rider identities matched official rider results; Google evidence U32; not actual race formation."
+        }
+      },
+      "forecastGroups": [
+        [
+          5,
+          1,
+          4
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          3
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "野口 正則",
+          "prefecture": "奈良",
+          "period": "105",
+          "line": [
+            5,
+            1,
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "林 敬宏",
+          "prefecture": "愛知",
+          "period": "117",
+          "line": [
+            5,
+            1,
+            4
+          ]
+        },
+        {
+          "number": 4,
+          "name": "山本 隼人",
+          "prefecture": "大阪",
+          "period": "111",
+          "line": [
+            5,
+            1,
+            4
+          ]
+        },
+        {
+          "number": 6,
+          "name": "高倉 俊宏",
+          "prefecture": "福岡",
+          "period": "93",
+          "line": [
+            6,
+            2
+          ]
+        },
+        {
+          "number": 7,
+          "name": "松下 綾馬",
+          "prefecture": "岡山",
+          "period": "121",
+          "line": [
+            7,
+            3
+          ]
+        },
+        {
+          "number": 2,
+          "name": "梶山裕次郎",
+          "prefecture": "福岡",
+          "period": "87",
+          "line": [
+            6,
+            2
+          ]
+        },
+        {
+          "number": 3,
+          "name": "吉本 哲郎",
+          "prefecture": "広島",
+          "period": "84",
+          "line": [
+            7,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-01|85|6",
+      "key": "2026-10-01|85|6",
+      "date": "2026-10-01",
+      "track": "佐世保",
+      "trackCode": "85",
+      "race": 6,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/gamboo/keirin-kaisai/race-card/yoso/8520260930/85202609300200/6/",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/gamboo/keirin-kaisai/race-card/yoso/8520260930/85202609300200/6/"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "GambooBET",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "SASEBO-20261001-R6-GAMBOO-LINE-20261124",
+          "comparison": "Published DOM groups and all seven rider identities matched official rider results; Google evidence U33; not actual race formation."
+        }
+      },
+      "forecastGroups": [
+        [
+          4,
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3,
+          7,
+          5
+        ],
+        [
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 7,
+          "name": "福島 栄一",
+          "prefecture": "香川",
+          "period": "93",
+          "line": [
+            3,
+            7,
+            5
+          ]
+        },
+        {
+          "number": 3,
+          "name": "高井 流星",
+          "prefecture": "岡山",
+          "period": "113",
+          "line": [
+            3,
+            7,
+            5
+          ]
+        },
+        {
+          "number": 5,
+          "name": "廣川 泰昭",
+          "prefecture": "愛媛",
+          "period": "90",
+          "line": [
+            3,
+            7,
+            5
+          ]
+        },
+        {
+          "number": 2,
+          "name": "吉田 健市",
+          "prefecture": "愛知",
+          "period": "87",
+          "line": [
+            2
+          ]
+        },
+        {
+          "number": 4,
+          "name": "金ヶ江勇気",
+          "prefecture": "佐賀",
+          "period": "111",
+          "line": [
+            4,
+            1
+          ]
+        },
+        {
+          "number": 6,
+          "name": "下岡 将也",
+          "prefecture": "三重",
+          "period": "111",
+          "line": [
+            6
+          ]
+        },
+        {
+          "number": 1,
+          "name": "山口 龍也",
+          "prefecture": "長崎",
+          "period": "111",
+          "line": [
+            4,
+            1
           ]
         }
       ]
