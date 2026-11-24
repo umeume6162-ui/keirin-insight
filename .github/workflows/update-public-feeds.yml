@@ -31,28 +31,37 @@ jobs:
       - name: Install Google authentication client
         run: pip install 'google-auth==2.38.0' 'requests==2.32.3'
       - name: Read Google Sheets and validate result, line and rider ID feeds
+        id: research
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/build_feeds.py --root .
       - name: Refresh existing ledger aggregate snapshots
-        if: ${{ !cancelled() }}
+        id: aggregates
+        if: ${{ !cancelled() && steps.research.outcome != 'skipped' }}
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/build_feeds.py --root . --status-only
-      - name: Publish only validated changes
+      - name: Publish only independently validated changes
+        if: ${{ !cancelled() && (steps.research.outcome == 'success' || steps.aggregates.outcome == 'success') }}
+        env:
+          RESEARCH_OK: ${{ steps.research.outcome == 'success' }}
+          AGGREGATES_OK: ${{ steps.aggregates.outcome == 'success' }}
         run: |
-          git add -- results-feed-v1.json rider-results-feed-v1.json collection-status-snapshot-v1.json ledger-status-snapshot-v1.json
-          if [ -f line-snapshots-feed-v1.json ]; then
-            git add -- line-snapshots-feed-v1.json
+          set -euo pipefail
+          if [ "$RESEARCH_OK" = true ]; then
+            git add -- results-feed-v1.json rider-results-feed-v1.json
+            for file in line-snapshots-feed-v1.json rider-ids-feed-v1.json; do
+              if [ -f "$file" ]; then git add -- "$file"; fi
+            done
           fi
-          if [ -f rider-ids-feed-v1.json ]; then
-            git add -- rider-ids-feed-v1.json
+          if [ "$AGGREGATES_OK" = true ]; then
+            git add -- collection-status-snapshot-v1.json ledger-status-snapshot-v1.json
           fi
           if git diff --cached --quiet; then
-            echo 'No JSON changes.'
+            echo 'No validated JSON changes.'
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Update validated public results, line snapshots and rider IDs'
+          git commit -m 'Update independently validated research feeds and ledger aggregates'
           git push
