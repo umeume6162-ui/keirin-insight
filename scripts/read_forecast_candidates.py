@@ -170,7 +170,7 @@ def inspect(html, candidate=None):
         tables.append({"headers":heads,"rows":rows})
         if len(tables) >= 3:
             break
-    # Preserve published forecast observations and same-race entry identity tables.
+    # Preserve same-race entry identity tables alongside published forecast observations.
     identity_links = [a.get("href") for a in soup.select("a[href]") if "/race/shutuba/" in a.get("href", "") or "/race/entry/" in a.get("href", "")][:20]
     # Keep compact racecard observations including full identity text if published.
     return {"identityLinks": identity_links, "title": title, "gambooGroupCandidate": gamboo_groups(soup, candidate.get("size")) if candidate else None, "netkeirinGroupCandidate": netkeirin_groups(soup, candidate.get("size")) if candidate else None, "forecastLabelContexts": excerpts,
