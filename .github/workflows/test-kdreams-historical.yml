@@ -1,4 +1,4 @@
-name: Test historical K-Dreams reader
+name: Test historical K-Dreams reader (offline)
 on:
   push:
     paths:
@@ -24,99 +24,9 @@ jobs:
           python-version: '3.12'
       - name: Install public HTML parser dependencies
         run: pip install 'requests==2.32.3' 'beautifulsoup4==4.14.2'
-      - name: Compile isolated historical reader
+      - name: Compile historical reader
         run: python -m py_compile scripts/collect_kdreams_historical.py
-      - name: Test shared daily K-Dreams source (offline only)
+      - name: Test shared daily K-Dreams source (offline)
         run: python scripts/collect_kdreams_result.py
-      - name: Test URL guards and full 7-car extraction (offline only)
+      - name: Test URL guards and full 7-car extraction (offline)
         run: python scripts/collect_kdreams_historical.py --self-test
-      - name: Read-only one-race live K-Dreams probe (not an acceptance gate)
-        continue-on-error: true
-        run: |
-          python - <<'PY'
-          import sys
-          sys.path.insert(0, 'scripts')
-          from collect_kdreams_historical import validate_historical_url, parse_historical_html
-          import collect_kdreams_result as source
-          url='https://keirin.kdreams.jp/tamano/racedetail/6120261123010001/?pageType=showResult'
-          validate_historical_url(url,'2026-11-23','61','玉野',1)
-          try:
-              html=source.fetch(url)  # robots check, one public page, no evasion
-              result=parse_historical_html(html,url=url,day='2026-11-23',code='61',track='玉野',race=1,grade='L1',cars=7)
-          except Exception as exc:
-              print('LIVE_PROBE_HOLD',type(exc).__name__,str(exc)[:120])
-              raise SystemExit(1)
-          print('LIVE_PROBE_OBSERVED',len(result['observation']['results']),
-                result['verificationState'])
-          PY
-      - name: Probe different venue Kurume 3R historical result against V99
-        continue-on-error: true
-        run: |
-          python - <<'PY'
-          import sys,json
-          sys.path.insert(0,'scripts')
-          from collect_kdreams_historical import parse_historical_html
-          import collect_kdreams_result as source
-          from compare_race_results import normalized_name,normalized_prefecture,canonical_method
-          day,code,track,race,grade,cars='2026-10-01','83','久留米',3,'A3',7
-          url='https://keirin.kdreams.jp/kurume/racedetail/8320261001010003/?pageType=showResult'
-          expected=json.loads('''[{"number":1,"name":"久保田智之","prefecture":"福岡","period":"129","finish":"1","method":"捲くり","exception":""},{"number":4,"name":"秋山貴宏","prefecture":"佐賀","period":"89","finish":"2","method":"マーク","exception":""},{"number":3,"name":"森佑樹","prefecture":"岡山","period":"94","finish":"3","method":"","exception":""},{"number":6,"name":"小野祐作","prefecture":"岡山","period":"72","finish":"4","method":"","exception":""},{"number":7,"name":"斎藤敦","prefecture":"大阪","period":"103","finish":"5","method":"","exception":""},{"number":5,"name":"岡崎和久","prefecture":"奈良","period":"78","finish":"6","method":"","exception":""},{"number":2,"name":"樫村伸平","prefecture":"兵庫","period":"99","finish":"7","method":"","exception":""}]''')
-          key=f'{day}|{code}|{race}'
-          try:
-              html=source.fetch(url)
-              obj=parse_historical_html(html,url=url,day=day,code=code,track=track,
-                                        race=race,grade=grade,cars=cars)
-              results={int(r['number']):r for r in obj['observation']['results']}
-              issues=[]
-              for row in expected:
-                  actual=results.get(row['number'])
-                  if actual is None:
-                      issues.append((row['number'],'missing'));continue
-                  for field,normal in (
-                      ('name',normalized_name),('prefecture',normalized_prefecture),
-                      ('period',str),('finish',str),('method',canonical_method),
-                      ('exception',str),
-                  ):
-                      if normal(actual.get(field,'') or '')!=normal(row[field]):
-                          issues.append((row['number'],field))
-              print('KURUME_KDREAMS_OBSERVED',key,len(results))
-              print('KURUME_V99_COMPARE',key,'PASS' if not issues else 'HOLD',
-                    'mismatchCount',len(issues),'details',issues[:7])
-          except Exception as exc:
-              print('KURUME_KDREAMS_HOLD',key,type(exc).__name__,str(exc)[:120])
-              if 'html' in locals():
-                  from bs4 import BeautifulSoup
-                  page=BeautifulSoup(html,'html.parser')
-                  print('KURUME_TITLE',key,(page.title.get_text(' ',strip=True) if page.title else 'NO_TITLE')[:140])
-          PY
-
-      - name: Inspect alternate publisher URL forms on other historical meetings
-        continue-on-error: true
-        run: |
-          python - <<'PY'
-          import sys,re
-          sys.path.insert(0,'scripts')
-          import collect_kdreams_result as source
-          from bs4 import BeautifulSoup
-          cases=[
-              ('2026-10-01|22|1','https://keirin.kdreams.jp/maebashi/racedetail/2220260930020001/?pageType=result'),
-              ('2026-10-04|75|11','https://keirin.kdreams.jp/matsuyama/racedetail/7520261004010011/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT'),
-          ]
-          for key,url in cases:
-              try:
-                  html=source.fetch(url)
-                  soup=BeautifulSoup(html,'html.parser')
-                  title=soup.title.get_text(' ',strip=True) if soup.title else 'NO_TITLE'
-                  tables=[]
-                  for table in soup.select('table'):
-                      tr=table.find('tr')
-                      if not tr: continue
-                      headers=[re.sub(r'\\s+','',a.get_text(' ',strip=True)) for a in tr.find_all('th',recursive=False)]
-                      if {'着順','車番','選手名','決まり手'}<=set(headers):
-                          tables.append((len(table.select('tr'))-1,'RESULT'))
-                      if {'車番','選手名府県/年齢/期別','級班','直近4ヶ月の成績'}<=set(headers):
-                          tables.append((len(table.select('tr'))-1,'ENTRY'))
-                  print('ALTERNATE_SOURCE_PAGE',key,'title',title[:130],'tables',tables)
-              except Exception as exc:
-                  print('ALTERNATE_SOURCE_HOLD',key,type(exc).__name__,str(exc)[:90])
-          PY
