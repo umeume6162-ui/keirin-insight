@@ -60,6 +60,14 @@ def verify_row(row, reread, cache):
     if not re.fullmatch(r"20\d\d-\d\d-\d\d", date) or not code.isdigit() or not 1 <= race <= 12:
         raise ValueError("Invalid race key")
     url, track = row[10], row[5]
+    proof, observation = json.loads(row[11]), json.loads(row[12])
+    if (proof.get("kind") != "web_indexed_full_result_text"
+            or proof.get("sourceUrl") != url
+            or observation.get("raceKey") != row[3]
+            or observation.get("sourceUrl") != url
+            or observation.get("formalPublished") is not False
+            or row[0] == ""):
+        raise ValueError("Conflicting evidence metadata or published state")
     validate_url(url, date, code)
     if urlsplit(url).netloc != "www.chariloto.com":
         raise ValueError("This validator handles only live Chariloto")
