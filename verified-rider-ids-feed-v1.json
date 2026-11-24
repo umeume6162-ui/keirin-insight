@@ -1,10 +1,10 @@
 {
   "schema": "ki-official-rider-ids-v1",
-  "snapshotDate": "2026-11-24",
+  "snapshotDate": "2026-11-25",
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
   "verificationNote": "KEIRIN.JPと異なる別掲載元で氏名・府県・期別・6桁IDの一致。2026-11-24阿部弘、阿部充宏の2名を追加。 2026-11-24阿部蒼大015960、阿部大樹014370を公式証拠2元一致で追加。",
   "summary": {
-    "rows": 264
+    "rows": 269
   },
   "riders": [
     {
@@ -6358,6 +6358,126 @@
           "https://keirin.netkeiba.com/db/profile/?id=14091"
         ],
         "note": "V4証拠台帳 MANUAL-V4-20261124-014091（保存済みPASS証拠と元台帳を再照合。原HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "013410",
+      "name": "伊勢崎彰大",
+      "prefecture": "千葉",
+      "period": "81",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013410",
+      "verifiedDate": "2026-11-25",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013410",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013410",
+          "https://keirin.netkeiba.com/db/profile/?id=13410"
+        ],
+        "note": "2媒体プロフィール本文4項目一致、Google証拠保存・再読済。元受付ID：MANUAL-V4-20261125-013410"
+      }
+    },
+    {
+      "id": "014878",
+      "name": "伊代野貴照",
+      "prefecture": "奈良",
+      "period": "101",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014878",
+      "verifiedDate": "2026-11-25",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014878",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014878",
+          "https://keirin.netkeiba.com/db/profile/?id=14878"
+        ],
+        "note": "2媒体プロフィール本文4項目一致、Google証拠保存・再読済。元受付ID：MANUAL-V4-20261125-014878"
+      }
+    },
+    {
+      "id": "015816",
+      "name": "伊東 佑晟",
+      "prefecture": "三重",
+      "period": "125",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015816",
+      "verifiedDate": "2026-11-25",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015816",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015816",
+          "https://keirin.netkeiba.com/db/profile/?id=15816"
+        ],
+        "note": "2媒体プロフィール本文4項目一致、Google証拠保存・再読済。元受付ID：MANUAL-V4-20261125-015816"
+      }
+    },
+    {
+      "id": "013747",
+      "name": "伊藤 大志",
+      "prefecture": "青森",
+      "period": "86",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013747",
+      "verifiedDate": "2026-11-25",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013747",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013747",
+          "https://keirin.netkeiba.com/db/profile/?id=13747"
+        ],
+        "note": "2媒体プロフィール本文4項目一致、Google証拠保存・再読済。元受付ID：MANUAL-V4-20261125-013747"
+      }
+    },
+    {
+      "id": "015178",
+      "name": "伊藤 稔真",
+      "prefecture": "三重",
+      "period": "111",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015178",
+      "verifiedDate": "2026-11-25",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015178",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015178",
+          "https://keirin.netkeiba.com/db/profile/?id=15178"
+        ],
+        "note": "2媒体プロフィール本文4項目一致、Google証拠保存・再読済。元受付ID：MANUAL-V4-20261125-015178"
       }
     }
   ],
