@@ -4,7 +4,7 @@
     "2026-11-23|玉野|1": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611236101",
       "signature": "29c1728d055f72fd0eb0165dedda7d3d94c400c6c985b6661eec8a3f407ea6c2",
-      "capturedAt": "2026-11-23 18:29 JST",
+      "capturedAt": "2026-11-24 18:08 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -133,12 +133,13 @@
           "top2Rate": "0.0%",
           "top3Rate": "0.0%"
         }
-      }
+      },
+      "forecastGroups": null
     },
     "2026-11-23|玉野|2": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611236102",
       "signature": "6defbe11f06d9ee91c9529d0ac70226956c024f78f6e43ba70383beffc901868",
-      "capturedAt": "2026-11-23 18:29 JST",
+      "capturedAt": "2026-11-24 18:08 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -267,12 +268,13 @@
           "top2Rate": "0.0%",
           "top3Rate": "0.0%"
         }
-      }
+      },
+      "forecastGroups": null
     },
     "2026-11-23|玉野|3": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611236103",
       "signature": "3e7f26bd1386f59bfc6f493cb9188c49e2e1640f091c86b0719716d16716e3a1",
-      "capturedAt": "2026-11-24 09:55 JST",
+      "capturedAt": "2026-11-24 18:08 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -401,12 +403,27 @@
           "top2Rate": "0.0%",
           "top3Rate": "0.0%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          6,
+          7
+        ]
+      ]
     },
     "2026-11-23|玉野|4": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611236104",
       "signature": "cf5a00e432a9bc13f5c5f5b25f10217a7368f8873204b42af16686039ea4c7cf",
-      "capturedAt": "2026-11-24 09:55 JST",
+      "capturedAt": "2026-11-24 18:08 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -535,12 +552,27 @@
           "top2Rate": "24.1%",
           "top3Rate": "27.6%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          3,
+          7
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          5,
+          2,
+          6
+        ]
+      ]
     },
     "2026-11-23|玉野|5": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611236105",
       "signature": "e71c83c30ddb4ee43693aeb4a578968462ae10321c3ad705fa1d183650514106",
-      "capturedAt": "2026-11-23 18:29 JST",
+      "capturedAt": "2026-11-24 18:08 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -669,12 +701,27 @@
           "top2Rate": "4.1%",
           "top3Rate": "8.3%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          4,
+          3,
+          6
+        ],
+        [
+          7
+        ]
+      ]
     },
     "2026-11-23|玉野|6": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611236106",
       "signature": "fcd559de96c447848537efaa84648467e48a4c192baf44cebf4c58177299ce43",
-      "capturedAt": "2026-11-24 09:55 JST",
+      "capturedAt": "2026-11-24 18:08 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -803,12 +850,25 @@
           "top2Rate": "9.3%",
           "top3Rate": "21.9%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          1,
+          2,
+          4,
+          7
+        ],
+        [
+          3,
+          6,
+          5
+        ]
+      ]
     },
     "2026-11-23|玉野|7": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611236107",
       "signature": "e00dd3f45f971e8480e1c5465dc1ef0c775fb2af8da711757a16077f89f69f9b",
-      "capturedAt": "2026-11-23 18:29 JST",
+      "capturedAt": "2026-11-24 18:08 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -937,12 +997,27 @@
           "top2Rate": "37.5%",
           "top3Rate": "45.8%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          6,
+          2
+        ],
+        [
+          7,
+          5
+        ]
+      ]
     },
     "2026-11-23|西武園|1": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611232601",
       "signature": "035c78a0637834a0209cf0173f306096bd116ced968de9fc96d57321705ef9cc",
-      "capturedAt": "2026-11-23 18:19 JST",
+      "capturedAt": "2026-11-24 18:08 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -1071,12 +1146,29 @@
           "top2Rate": "20.8%",
           "top3Rate": "25.0%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          1,
+          7
+        ],
+        [
+          4
+        ],
+        [
+          2,
+          5,
+          3
+        ],
+        [
+          6
+        ]
+      ]
     },
     "2026-11-23|西武園|2": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611232602",
       "signature": "ce60902a9424a4d62fc23c7d5b62a12563ffe19a8de814b4d10032f434df7afd",
-      "capturedAt": "2026-11-23 20:55 JST",
+      "capturedAt": "2026-11-24 18:08 JST",
       "period": "直近4か月（netkeirin掲載値）",
       "rows": {
         "1": {
@@ -1205,7 +1297,22 @@
           "top2Rate": "11.1%",
           "top3Rate": "44.4%"
         }
-      }
+      },
+      "forecastGroups": [
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          4,
+          3,
+          6
+        ]
+      ]
     },
     "2026-11-24|奈良|10": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611245310",
@@ -6997,16 +7104,16 @@
     "2026-11-24|奈良|3": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611245303",
       "signature": "30d58ae05a601739928f781ff25874f785e2ccd4656613417a1b37fe594ba374",
-      "lastAttemptAt": "2026-11-24T13:01:59+09:00",
-      "nextRetryAt": "2026-11-24T17:01:59+09:00",
+      "lastAttemptAt": "2026-11-24T18:08:21+09:00",
+      "nextRetryAt": "2026-11-24T22:08:21+09:00",
       "reasonType": "ValueError",
       "reasonCode": "rider_identity_conflict"
     },
     "2026-11-24|奈良|7": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611245307",
       "signature": "dbd4fcf8926bcc11b58d349e95514635e95680192a86c5c1f965fedcff5abcb9",
-      "lastAttemptAt": "2026-11-24T13:01:59+09:00",
-      "nextRetryAt": "2026-11-24T17:01:59+09:00",
+      "lastAttemptAt": "2026-11-24T18:08:21+09:00",
+      "nextRetryAt": "2026-11-24T22:08:21+09:00",
       "reasonType": "ValueError",
       "reasonCode": "rider_identity_conflict"
     },
@@ -7111,6 +7218,46 @@
       "signature": "ca9889d729135c78bbc88470ada61c0b59df9671778c8e06e1af2f8438c774bd",
       "lastAttemptAt": "2026-11-24T13:01:59+09:00",
       "nextRetryAt": "2026-11-25T01:01:59+09:00",
+      "reasonType": "ValueError",
+      "reasonCode": "source_table_shape"
+    },
+    "2026-11-25|静岡|1": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611253801",
+      "signature": "d5099a6e6645714ccbe5fb6307cea259c4ebb4ec853e710138e85ec3bdb82bd5",
+      "lastAttemptAt": "2026-11-24T18:08:21+09:00",
+      "nextRetryAt": "2026-11-25T06:08:21+09:00",
+      "reasonType": "ValueError",
+      "reasonCode": "source_table_shape"
+    },
+    "2026-11-25|静岡|2": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611253802",
+      "signature": "28fb16dd97790de8f6e826fa4fd8e3cf76ff88ada51857ba804b48a6da24b30c",
+      "lastAttemptAt": "2026-11-24T18:08:21+09:00",
+      "nextRetryAt": "2026-11-25T06:08:21+09:00",
+      "reasonType": "ValueError",
+      "reasonCode": "source_table_shape"
+    },
+    "2026-11-25|静岡|3": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611253803",
+      "signature": "a6835c59eed752a74eae2de75446501119efe64bb8cd57df2f016b979b1d3762",
+      "lastAttemptAt": "2026-11-24T18:08:21+09:00",
+      "nextRetryAt": "2026-11-25T06:08:21+09:00",
+      "reasonType": "ValueError",
+      "reasonCode": "source_table_shape"
+    },
+    "2026-11-25|静岡|4": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611253804",
+      "signature": "f44414e84df2693576ce8939847fa02fab4033047d0b42f94f108fd1edbbff03",
+      "lastAttemptAt": "2026-11-24T18:08:21+09:00",
+      "nextRetryAt": "2026-11-25T06:08:21+09:00",
+      "reasonType": "ValueError",
+      "reasonCode": "source_table_shape"
+    },
+    "2026-11-25|静岡|5": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611253805",
+      "signature": "985afb4fa4153d33b41793bbb7eaeb4d45f8557b61cfff4fa19bca4f4ccc302c",
+      "lastAttemptAt": "2026-11-24T18:08:21+09:00",
+      "nextRetryAt": "2026-11-25T06:08:21+09:00",
       "reasonType": "ValueError",
       "reasonCode": "source_table_shape"
     }
