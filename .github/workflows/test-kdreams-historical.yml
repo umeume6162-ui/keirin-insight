@@ -13,6 +13,13 @@ on:
       - 'scripts/collect_kdreams_result.py'
       - '.github/workflows/test-kdreams-historical.yml'
   workflow_dispatch:
+    inputs:
+      limit:
+        description: Candidate count (5–20)
+        default: "20"
+      offset:
+        description: Candidate offset
+        default: "0"
 permissions:
   contents: read
 jobs:
@@ -36,4 +43,7 @@ jobs:
         run: python scripts/read_forecast_candidates.py --self-test
       - name: Retrieve forecast source observations (read only)
         if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[read-forecast-sources]'))
-        run: python scripts/read_forecast_candidates.py --limit 5 --offset 0
+        env:
+          LIMIT: ${{ inputs.limit || '20' }}
+          OFFSET: ${{ inputs.offset || '0' }}
+        run: python scripts/read_forecast_candidates.py --limit "$LIMIT" --offset "$OFFSET"

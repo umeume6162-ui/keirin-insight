@@ -69,7 +69,39 @@ def source_urls(c, slugs, meetings):
         urls.append(odds)
     return urls
 
-def inspect(html):
+def gamboo_groups(soup, size):
+    """Observed explicit DOM boundaries only; unknown/contested markup is held."""
+    blocks = soup.select("dl.line_position .line_position_inner")
+    if len(blocks) != 1 or size not in (7, 9):
+        return None
+    groups, current = [], []
+    for item in blocks[0].find_all(recursive=False):
+        classes = set(item.get("class", []))
+        if item.name != "span" or "icon_p" not in classes:
+            return None
+        if classes == {"icon_p", "space"} and not item.get_text(strip=True) and not item.find():
+            if current:
+                groups.append(current)
+                current = []
+            continue
+        if classes != {"icon_p"}:
+            return None
+        children = item.find_all(recursive=False)
+        if len(children) == 1 and children[0].get("class") == ["p000"] and children[0].get_text(strip=True) == "←" and not groups and not current:
+            continue
+        if len(children) != 2 or any(x.name != "span" or x.find() for x in children):
+            return None
+        num = children[0].get_text(strip=True)
+        if not re.fullmatch(r"[1-9]", num) or children[0].get("class") != ["p00"+num]:
+            return None
+        if children[1].get("class") != ["p201"] or children[1].get_text(strip=True) not in ("先行", "自在", "追込", "捲り", "差し", "マーク", "自力", "追走"):
+            return None
+        current.append(int(num))
+    if current:
+        groups.append(current)
+    return groups if sorted(n for g in groups for n in g) == list(range(1, size+1)) else None
+
+def inspect(html, candidate=None):
     soup = BeautifulSoup(html, "html.parser")
     title = soup.title.get_text(" ", strip=True) if soup.title else ""
     # Diagnostic excerpts only; never infer line boundaries from whitespace.
@@ -101,7 +133,7 @@ def inspect(html):
         tables.append({"headers":heads,"rows":rows})
         if len(tables) >= 3:
             break
-    return {"title": title, "forecastLabelContexts": excerpts,
+    return {"title": title, "gambooGroupCandidate": gamboo_groups(soup, candidate.get("size")) if candidate else None, "forecastLabelContexts": excerpts,
             "forecastElementHtml": structures, "riderTableObservations": tables}
 
 def main():
@@ -124,6 +156,9 @@ def main():
         observed = inspect('<div><b>並び予想</b><span class="test-group">①②</span><span>③</span></div><table><tr><th>選手名</th></tr><tr><td>試験選手</td></tr></table>')
         assert 'class="test-group"' in observed["forecastElementHtml"][0]
         assert observed["riderTableObservations"][0]["rows"][1] == ["試験選手"]
+        fixture = '<dl class="line_position"><dd><div class="line_position_inner">' + ''.join('<span class="icon_p"><span class="p00'+str(n)+'">'+str(n)+'</span><span class="p201">先行</span></span>' + ('<span class="icon_p space"></span>' if n in (3,5) else '') for n in range(1,8)) + '</div></dd></dl>'
+        assert inspect(fixture, {"size":7})["gambooGroupCandidate"] == [[1,2,3],[4,5],[6,7]]
+        assert inspect(fixture.replace('p003','p002'), {"size":7})["gambooGroupCandidate"] is None
         print("SELF_TEST_OK")
         return
     lines = load("verified-line-snapshots-feed-v1.json")
@@ -159,7 +194,7 @@ def main():
                         data.extend(chunk)
                         if len(data)>3000000:
                             raise ValueError("HTML too large")
-                    record.update(inspect(bytes(data)))
+                    record.update(inspect(bytes(data), c))
                     record.update(state="HTML_RETRIEVED_UNVERIFIED",sha256=hashlib.sha256(data).hexdigest(),retrievedAt=datetime.now(timezone.utc).isoformat())
             except (requests.RequestException,ValueError) as e:
                 record.update(state="HOLD",reason=str(e))
