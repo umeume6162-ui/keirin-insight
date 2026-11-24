@@ -1,22 +1,52 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#081623"><title>事前ライン × 着順 検証 | KEIRIN INSIGHT</title><style>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#081623"><title>事前ライン × 着順 検証 | KEIRIN INSIGHT</title><script src="./verified-publication-guard-v138.js"></script><style>
 :root{color-scheme:dark;--bg:#081623;--panel:#10283a;--line:#345264;--accent:#8ef0c4;--text:#eaf5f7;--muted:#a8bdca;--warn:#f4cf87}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top right,#16433f 0,transparent 45%),var(--bg);color:var(--text);font:15px/1.65 -apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif}main{max-width:1120px;margin:auto;padding:22px 16px 75px}a{color:var(--accent)}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.brand{font-size:12px;letter-spacing:.14em;font-weight:900}.nav{font-size:13px}.nav a{margin-left:12px}.eyebrow{font-size:12px;letter-spacing:.16em;color:var(--accent);font-weight:800;margin-top:28px}h1{font-size:clamp(26px,6vw,43px);line-height:1.2;margin:9px 0}h2{font-size:20px;margin:0 0 15px}h3{margin:0;font-size:17px}.muted,small{color:var(--muted)}.lead{max-width:850px;color:#c8dbe4;margin-bottom:23px}.panel{background:var(--panel);border:1px solid var(--line);padding:18px;border-radius:17px;margin:17px 0}.warning{border-color:#8a7447;background:#2a2b2a;color:#f7dc9a}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.card{display:block;text-decoration:none;color:var(--text);padding:18px;border:1px solid var(--line);border-radius:14px;background:#123045}.card:hover{border-color:var(--accent)}.card b{display:block;color:var(--accent);margin:6px 0}.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}.metric{background:#0a1b2a;border:1px solid var(--line);border-radius:13px;padding:13px}.metric strong{font-size:24px;display:block;color:var(--accent)}.metric span{font-size:12px;color:var(--muted)}.controls{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}select,input,button{background:#091d2c;color:var(--text);border:1px solid #587488;border-radius:11px;padding:11px 12px;font:inherit;min-height:43px}input{min-width:160px;flex:1}button{cursor:pointer;border-color:#4d9d89}.tablebox{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:540px}th,td{text-align:left;border-bottom:1px solid #345060;padding:9px 10px;font-size:13px}th{color:var(--accent);position:sticky;top:0;background:var(--panel)}.note{font-size:13px;color:var(--muted)}.pill{display:inline-block;border:1px solid #426a66;color:#aef6db;padding:2px 8px;border-radius:999px;font-size:12px}.ok{color:#a4eac4}.err{color:#ffb4a8}.sectionTitle{margin-top:25px}.foot{margin-top:38px;font-size:12px;color:var(--muted)}
-</style></head><body><main><header class="top"><div class="brand">KEIRIN INSIGHT / RESEARCH PACK v11.6</div><nav class="nav"><a href="./research-batch-v11-6.html">一括研究ホーム</a><a href="./research-hub.html">既存の研究ホーム</a></nav></header><div class="eyebrow">DATA RESEARCH / 2026</div><h1>事前ライン × 着順 検証</h1><p class="lead">事前並びの参考予想を、同じレースの着順と突き合わせます。ラインの実際の隊列やヨコの動きは断定しません。</p><div class="panel warning">⚠️ 既存の「ライン構成別の実績」に記録されたA3の少数標本が中心です。出典欄を確認してください。A1/A2の未記録データを補完・推定しません。</div><section class="panel"><p id="status" class="note">公開データを読み込み中…</p><div id="metrics" class="metrics"></div></section><section class="panel"><div class="controls"><select id="grade"><option value="">全級班</option><option value="A3">A3</option><option value="A1/A2">A1/A2</option></select><select id="track"></select><select id="role"><option value="">全事前位置</option><option value="先頭">ライン先頭</option><option value="番手">番手</option><option value="3番手">3番手</option><option value="単騎">単騎</option></select></div><div id="tbl"></div></section><section class="panel"><h2>レース単位：同一ラインからの3着以内人数</h2><div id="raceList"></div></section><footer class="foot">公開ページ上で同じ階層のJSONを読み込みます。ローカルの「ファイル」から直接開くとデータ取得に失敗する場合があります。© KEIRIN INSIGHT</footer></main><script>
+</style></head><body><main><header class="top"><div class="brand">KEIRIN INSIGHT / VERIFIED LINE RESULTS</div><nav class="nav"><a href="./index.html">ホーム</a><a href="./line-forecast.html">並び予想</a><a href="./research-hub.html">研究ホーム</a></nav></header><div class="eyebrow">DATA RESEARCH / 2026</div><h1>事前ライン × 着順 検証</h1><p class="lead">事前並びの参考予想を、同じレースの着順と突き合わせます。ラインの実際の隊列やヨコの動きは断定しません。</p><div class="panel warning">正式結果・正式事前ラインの共通レースのみを集計します。ガールズ・アドバンス等の個人戦は別件数で表示し、通常ライン戦の母数から除外します。予想ライン別決着であり実走連係の証明ではありません。</div><section class="panel"><p id="status" class="note">公開データを読み込み中…</p><div id="metrics" class="metrics"></div></section><section class="panel"><div class="controls"><select id="grade" aria-label="級班"></select><select id="track" aria-label="競輪場"></select><select id="kind" aria-label="決着分類"><option value="">全分類</option><option>ライン独占</option><option>別線割込み</option><option>上位3車全別線</option><option>判定保留</option><option>個人戦（対象外）</option></select></div><div id="tbl"></div></section><section class="panel"><h2>レース別の予想ライン決着</h2><div id="raceList"></div></section><footer class="foot">公開ページ上で同じ階層のJSONを読み込みます。ローカルの「ファイル」から直接開くとデータ取得に失敗する場合があります。© KEIRIN INSIGHT</footer></main><script>
+function classifyRace(r,line,rows){
+ const cls=String(r.className||r.grade||'');
+ const individual=line.lineMode==='no_line'||r.lineMode==='no_line'||/ガールズ|L級|L1|L2|アドバンス|advance/i.test(cls);
+ const groups=line.forecastGroups.map(g=>g.map(Number));
+ const base={key:r.key,date:r.date,track:r.track,race:r.race,grade:cls,groups,kind:'判定保留',top:[],pair:'—',other:'—',solo:'—'};
+ if(individual)return {...base,kind:'個人戦（対象外）'};
+ const top=[1,2,3].map(n=>rows.filter(x=>String(x.finishRaw).trim()===String(n)));
+ if(top.some(x=>x.length!==1))return base;
+ const cars=top.map(x=>Number(x[0].number));
+ const ids=cars.map(n=>groups.findIndex(g=>g.includes(n)));
+ if(new Set(cars).size!==3||ids.some(i=>i<0))return base;
+ const solo=cars.map((n,i)=>groups[ids[i]].length===1?(i+1)+'着 '+n+'番':null).filter(Boolean).join('／')||'なし';
+ const out={...base,top:cars,solo};
+ if(new Set(ids).size===1)return {...out,kind:'ライン独占'};
+ if(new Set(ids).size===3)return {...out,kind:'上位3車全別線'};
+ const pair=[[0,1],[0,2],[1,2]].find(([i,j])=>ids[i]===ids[j]);
+ const k=[0,1,2].find(i=>!pair.includes(i));
+ return {...out,kind:'別線割込み',pair:pair.map(i=>i+1).join('-'),other:(k+1)+'着 '+cars[k]+'番（'+groups[ids[k]].join('-')+(groups[ids[k]].length===1?'・単騎':'')+'）'};
+}
+function derive(a,b,l){
+ const map=new Map(a.races.map(r=>[r.key,r])), rows=new Map();
+ for(const raw of b.rows){const x=Object.fromEntries(b.columns.map((c,i)=>[c,raw[i]]));const k=[x.date,String(x.trackCode),Number(x.race)].join('|');if(!rows.has(k))rows.set(k,[]);rows.get(k).push(x)}
+ return l.races.filter(x=>map.has(x.id)).map(x=>classifyRace(map.get(x.id),x,rows.get(x.id)||[]));
+}
 const $=id=>document.getElementById(id);
-const txt=(x)=>String(x??'');
-const esc=(x)=>txt(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const pct=(a,b)=>b?(100*a/b).toFixed(1)+'%':'—';
-const n=(x)=>Number(x).toLocaleString('ja-JP');
-const gradeOf=x=>{let c=txt(x).toUpperCase();return c.includes('A3')?'A3':c.includes('A1')||c.includes('A2')?'A1/A2':c.includes('S')?'S級':c.includes('L')||c.includes('ガールズ')?'ガールズ':'その他'};
-const gradeSelect=(el, grades=['A1/A2','A3','S級','ガールズ'])=>{el.innerHTML='<option value="">全級班</option>'+grades.map(g=>'<option>'+esc(g)+'</option>').join('')};
-const toRows=j=>j.rows.map(row=>Object.fromEntries(j.columns.map((c,i)=>[c,row[i]])));
-async function riderData(){const r=await fetch('./rider-results-feed-v1.json?x='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('選手結果JSONを取得できません（HTTP '+r.status+'）');const j=await r.json();if(j.schema!=='ki-rider-results-v1'||!Array.isArray(j.columns)||!Array.isArray(j.rows))throw Error('選手結果JSONの形式が異なります');const rows=toRows(j).map(r=>({...r,g:gradeOf(r.riderClass),rank:/^\d+$/.test(txt(r.finishRaw))?Number(r.finishRaw):null,num:/^\d+$/.test(txt(r.number))?Number(r.number):null}));return {j,rows};}
-async function raceData(){const r=await fetch('./results-feed-v1.json?x='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('レース索引JSONを取得できません');const j=await r.json();if(j.schema!=='ki-public-results-index-v1'||!Array.isArray(j.races))throw Error('索引の形式が異なります');return j;}
-function metrics(el,items){el.innerHTML=items.map(([label,val])=>'<div class="metric"><strong>'+esc(val)+'</strong><span>'+esc(label)+'</span></div>').join('')}
+const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function table(el,heads,rows){el.innerHTML='<div class="tablebox"><table><thead><tr>'+heads.map(x=>'<th>'+esc(x)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(row=>'<tr>'+row.map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'}
-function status(msg,bad=false){if($('status')){$('status').textContent=msg;$('status').className=bad?'err':'ok'}}
-function unique(xs){return [...new Set(xs)].sort((a,b)=>txt(a).localeCompare(txt(b),'ja'))}
-function options(el,arr,title='すべて'){el.innerHTML='<option value="">'+esc(title)+'</option>'+arr.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('')}
-
-
-async function run(){try{const res=await fetch('./line-structure.html?x='+Date.now(),{cache:'no-store'});if(!res.ok)throw Error('元のライン構成研究を取得できません');const src=await res.text();const a=src.indexOf('const DATA=');const b=src.indexOf(';\nconst el=',a);if(a<0||b<0)throw Error('既存ライン研究のデータ形式が変わりました');const db=JSON.parse(src.slice(a+11,b));if(!Array.isArray(db.races))throw Error('研究レースがありません');const races=db.races.filter(r=>Array.isArray(r.riders)&&r.riders.every(x=>Number.isInteger(x.rank)));const names=unique(races.map(r=>r.track));options($('track'),names,'全競輪場');const role=x=>x.length===1?'単騎':x.pos===1?'先頭':x.pos===2?'番手':x.pos===3?'3番手':'その他';function render(){const chosen=races.filter(r=>(!$('grade').value||r.class===$('grade').value)&&(!$('track').value||r.track===$('track').value));const riders=chosen.flatMap(r=>r.riders.map(x=>({...x,role:role(x)}))).filter(x=>!$('role').value||x.role===$('role').value);metrics($('metrics'),[['分析対象レース',chosen.length+' R'],['位置別の選手行',riders.length+' 件'],['対象1着',riders.filter(x=>x.rank===1).length+' 件'],['3着以内',riders.filter(x=>x.rank<=3).length+' 件']]);const groups=Object.groupBy(riders,x=>x.role);table($('tbl'),['事前位置','選手行','1着','3着以内','3着内率（標本）'],Object.entries(groups).map(([k,rs])=>[k,rs.length,rs.filter(x=>x.rank===1).length,rs.filter(x=>x.rank<=3).length,pct(rs.filter(x=>x.rank<=3).length,rs.length)]));const summaries=chosen.map(r=>{const line=(r.groups||[]).map(g=>g.join('-')+'：'+r.riders.filter(x=>g.includes(x.car)&&x.rank<=3).length+'人').join(' ／ ');return [r.date+' '+r.track+' '+r.race+'R',r.class,r.lineup||'',line,r.validation||'未記載']});table($('raceList'),['レース','級班','事前想定','ライン別3着内人数','出典・照合状態'],summaries);status('収録済み事前並び＋着順のある '+races.length+' レースを読み込みました（事前並びは予想・参考情報）')}[$('grade'),$('track'),$('role')].forEach(e=>e.addEventListener('change',render));render()}catch(e){status(e.message,true)}}run();
+function options(el,arr,title){el.innerHTML='<option value="">'+esc(title)+'</option>'+[...new Set(arr)].sort().map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('')}
+function metrics(el,items){el.innerHTML=items.map(([label,val])=>'<div class="metric"><strong>'+esc(val)+'</strong><span>'+esc(label)+'</span></div>').join('')}
+async function run(){try{
+ const [a,b,i,l]=await window.KIVerified.bundle();
+ const races=derive(a,b,l);
+ options($('grade'),races.map(r=>r.grade),'全級班');options($('track'),races.map(r=>r.track),'全競輪場');
+ function render(){
+ const chosen=races.filter(r=>(!$('grade').value||r.grade===$('grade').value)&&(!$('track').value||r.track===$('track').value));
+ const count=k=>chosen.filter(r=>r.kind===k).length;
+ const individual=count('個人戦（対象外）'),hold=count('判定保留'),den=chosen.length-individual-hold;
+ const types=['ライン独占','別線割込み','上位3車全別線'];
+ const dates=chosen.map(r=>r.date).sort();
+ metrics($('metrics'),[['共通レース',chosen.length+'R'],['分類可能なライン戦',den+'R'],['個人戦（対象外）',individual+'R'],['判定保留',hold+'R'],...types.map(k=>[k,count(k)+'R'])]);
+ table($('tbl'),['分類','件数','分類可能なライン戦に占める割合'],types.map(k=>[k,count(k),den?(100*count(k)/den).toFixed(1)+'%':'—']));
+ const shown=chosen.filter(r=>!$('kind').value||r.kind===$('kind').value);
+ table($('raceList'),['レース','級班','事前グループ','上位3車','決着分類','同一組の着順','別線車','単騎上位'],shown.map(r=>[r.date+' '+r.track+' '+r.race+'R',r.grade,r.groups.map(g=>g.join('-')).join('／'),r.top.join('-')||'—',r.kind,r.pair,r.other,r.solo]));
+ $('status').textContent='正式結果 '+a.races.length+'R／正式ライン '+l.races.length+'R／共通 '+races.length+'R。選択範囲：'+(dates.length?dates[0]+' ～ '+dates[dates.length-1]:'なし')+'。少数標本の実件数であり将来の確率ではありません。';
+ }
+ ['grade','track','kind'].forEach(id=>$(id).addEventListener('change',render));render();
+ }catch(e){$('status').textContent='表示保留：'+(e.message||String(e))}}
+run();
 </script></body></html>

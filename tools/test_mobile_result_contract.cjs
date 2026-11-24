@@ -26,5 +26,27 @@ for(const label of ['媒体の並び予想','脚見せ','他媒体との一致�
 assert.ok(forecast.includes('results.has(r.id)'),'orphan forecast must be visible without result');
 console.log('OK: mobile UI labels, numbered car colors, pre-race forecast rendering guards (static HTML checks only; published feed validation is handled by check_publication_completeness.cjs).');
 
-// Additional one-source orphan-forecast runtime test; still the same UI CI step.
+// Exercise the actual inline classification function without browser/network dependencies.
+const audit=fs.readFileSync('line-result-audit.html','utf8');
+const vm=require('node:vm');
+const from=audit.indexOf('function classifyRace('),to=audit.indexOf('const $=id=>',from);
+assert.ok(from>=0&&to>from);
+const context={};vm.runInNewContext(audit.slice(from,to)+';this.classify=classifyRace;this.derive=derive;',context);
+const race={key:'test',date:'2026-11-24',track:'test',race:1,className:'A3'};
+const line={forecastGroups:[[1,2,3],[4,5],[6],[7]]};
+const ranks=nums=>nums.map((number,i)=>({number,finishRaw:String(i+1)}));
+assert.equal(context.classify(race,line,ranks([1,2,3])).kind,'ライン独占');
+assert.equal(context.classify(race,line,ranks([1,4,2])).pair,'1-3');
+assert.equal(context.classify(race,line,ranks([4,1,2])).pair,'2-3');
+assert.equal(context.classify(race,line,ranks([1,2,6])).pair,'1-2');
+assert.equal(context.classify(race,line,ranks([1,4,6])).kind,'上位3車全別線');
+assert.equal(context.classify(race,line,ranks([1,2])).kind,'判定保留');
+assert.equal(context.classify(race,{...line,lineMode:'no_line'},ranks([1,2,3])).kind,'個人戦（対象外）');
+assert.equal(context.classify({...race,className:'ガールズ'},line,ranks([1,2,3])).kind,'個人戦（対象外）');
+assert.equal(context.classify(race,line,[...ranks([1,2,3]),{number:4,finishRaw:'2'}]).kind,'判定保留');
+const docs=['verified-results-feed-v1.json','verified-rider-results-feed-v1.json','verified-line-snapshots-feed-v1.json'].map(f=>JSON.parse(fs.readFileSync(f)));
+const derived=context.derive(...docs);assert.equal(derived.length,docs[2].races.filter(l=>docs[0].races.some(r=>r.key===l.id)).length);
+assert.ok(audit.includes('window.KIVerified.bundle()'),'audit must use verified data');
+console.log('OK: verified line settlement categories, solo, individual exclusion, ambiguous places and live-key intersection');
+ // Additional one-source orphan-forecast runtime test; still the same UI CI step.
 require('./test_single_source_forecast.cjs');
