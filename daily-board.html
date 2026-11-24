@@ -146,10 +146,30 @@ const today=jstDay();
 el("day").value=today;
 let cache=null,selectedSession="all";
 const sessionNames={morning:"モーニング",day:"デイ",night:"ナイター",midnight:"ミッドナイト",unknown:"時間帯未確認"};
-function raceSession(r){
+function explicitSession(r){
  const value=String(r.session||r.timeSlot||"").trim().toLowerCase();
- // Only explicit, bounded feed metadata is accepted. Never infer from R or venue.
- return ["morning","day","night","midnight"].includes(value)?value:"unknown";
+ return ["morning","day","night","midnight"].includes(value)?value:null;
+}
+function raceSession(r){
+ const direct=explicitSession(r);if(direct)return direct;
+ const meeting=(cache?.races||[]).filter(x=>x.date===r.date&&x.track===r.track);
+ const declared=[...new Set(meeting.map(explicitSession).filter(Boolean))];
+ if(declared.length)return declared.length===1?declared[0]:"unknown";
+ // Display-only estimate from meeting schedule; never infer from venue or race number alone.
+ const times=meeting.flatMap(x=>{
+  const m=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(String(x.startTime||x.scheduledStart||""));
+  return m?[{race:Number(x.race),minute:Number(m[1])*60+Number(m[2])}]:[];
+ });
+ if(!times.length)return "unknown";
+ const first=times.find(x=>x.race===1);
+ const min=Math.min(...times.map(x=>x.minute)),max=Math.max(...times.map(x=>x.minute));
+ if(min<600)return "morning";
+ if(first&&first.minute>=1200)return "midnight";
+ if(first&&first.minute>=840&&first.minute<1200&&max>=1080)return "night";
+ if(first&&first.minute>=600&&first.minute<840&&max<1080)return "day";
+ if(min>=1200&&max>=1320)return "midnight";
+ if(min>=600&&min<780&&max>=900&&max<1080)return "day";
+ return "unknown";
 }
 function syncSessionButtons(){
  document.querySelectorAll("[data-session]").forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.session===selectedSession)));
@@ -334,7 +354,7 @@ function render(){
  stats(chosen);
  el("state").textContent=all.length?day+" の収録記録を表示中":"この日の出走表・結果はまだ台帳から届いていません。";
  if(!chosen.length){
-  root.append(node("p",all.length?"選択した競輪場・時間帯の収録記録はありません。":"収録がないことは、開催がないことを意味しません。","empty-panel"));return;
+  root.append(node("p",all.length?"選択した競輪場・時間帯の収録記録はありません。時間帯未確認の記録もご確認ください。":"収録がないことは、開催がないことを意味しません。","empty-panel"));return;
  }
  const groups=new Map();
  chosen.forEach(r=>{
@@ -348,7 +368,7 @@ function render(){
  let lastSlot=null;
  for(const {slot,venue,races} of ordered){
   if(slot!==lastSlot){
-   root.append(node("h2",sessionNames[slot],"session-head"));
+   root.append(node("h2",sessionNames[slot]+(slot!=="unknown"&&chosen.some(r=>raceSession(r)===slot&&!explicitSession(r))?"（発走時刻からの推定を含む）":""),"session-head"));
    lastSlot=slot;
   }
   const section=node("section",undefined,"venue-group"),heading=node("div",undefined,"venue-title");
