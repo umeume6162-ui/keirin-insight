@@ -61,7 +61,7 @@ def verify_row(row, reread, cache):
         raise ValueError("Invalid race key")
     url, track = row[10], row[5]
     proof, observation = json.loads(row[11]), json.loads(row[12])
-    if (proof.get("kind") != "web_indexed_full_result_text"
+    if (proof.get("kind") not in ("web_indexed_full_result_text", "v99_complete_source_candidate")
             or proof.get("sourceUrl") != url
             or observation.get("raceKey") != row[3]
             or observation.get("sourceUrl") != url
@@ -134,20 +134,22 @@ def main():
     published = {x["key"] for x in official["races"]}
     pending = []
     for row in source:
-        if len(row) < 19 or row[16] != "PASS" or row[17] != "PASS_FALLBACK_CONTENT_ONLY":
+        if len(row) < 19 or (row[16], row[17]) not in (
+            ("PASS", "PASS_FALLBACK_CONTENT_ONLY"), ("PENDING", "WAIT_LIVE_HTML")
+        ):
             continue
         if row[3] in published:
             continue
         try:
             proof = json.loads(row[11])
-            if proof.get("kind") != "web_indexed_full_result_text":
+            if proof.get("kind") not in ("web_indexed_full_result_text", "v99_complete_source_candidate"):
                 continue
             if not re.fullmatch(r"V99選手結果蓄積!A\d+:W\d+", row[8]):
                 continue
             pending.append(row)
         except (ValueError, TypeError):
             continue
-    pending = pending[:6]
+    pending = pending[:10]
     if not pending:
         print("HISTORICAL_PROOF_NO_PENDING_CONTENT_PASS")
         return
