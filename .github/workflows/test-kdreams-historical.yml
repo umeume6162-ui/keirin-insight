@@ -4,12 +4,14 @@ on:
     paths:
       - 'scripts/collect_kdreams_historical.py'
       - 'scripts/read_forecast_candidates.py'
+      - 'scripts/verify_historical_evidence.py'
       - 'scripts/collect_kdreams_result.py'
       - '.github/workflows/test-kdreams-historical.yml'
   pull_request:
     paths:
       - 'scripts/collect_kdreams_historical.py'
       - 'scripts/read_forecast_candidates.py'
+      - 'scripts/verify_historical_evidence.py'
       - 'scripts/collect_kdreams_result.py'
       - '.github/workflows/test-kdreams-historical.yml'
   workflow_dispatch:
@@ -39,6 +41,8 @@ jobs:
         run: python scripts/collect_kdreams_result.py
       - name: Test URL guards and full 7-car extraction (offline)
         run: python scripts/collect_kdreams_historical.py --self-test
+      - name: Test V99 fallback and source switching (offline)
+        run: python scripts/verify_historical_evidence.py --self-test
       - name: Test forecast retrieval helpers (offline)
         run: python scripts/read_forecast_candidates.py --self-test
       - name: Retrieve forecast source observations (read only)
