@@ -2,10 +2,10 @@
   "schema": "ki-line-snapshots-v1",
   "snapshotDate": "2026-11-24",
   "sourceTab": "VERIFIED publication",
-  "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence. 2026-11-21福井3Rは既存Google発走前スナップ7車とKドリームス掲載の媒体並び予想を照合し、結果から逆算せず単一元の予想として公開。 2026-11-21福井4RはGoogle発走前スナップの全7車ラインとKドリームス並び予想を確認し、出走表で府県/期別を補完。結果とは独立した媒体予想。 2026-10-05松山3R/4R: オッズパーク掲載の発走前予想グループを全7車・選手名で照合し、それぞれ単一媒体予想として公開。 2026-10-05松山5/6/8/9R オッズパーク発走前予想4レース全28車と正式結果の本人情報を照合、単騎を維持。",
+  "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence. 2026-11-21福井3Rは既存Google発走前スナップ7車とKドリームス掲載の媒体並び予想を照合し、結果から逆算せず単一元の予想として公開。 2026-11-21福井4RはGoogle発走前スナップの全7車ラインとKドリームス並び予想を確認し、出走表で府県/期別を補完。結果とは独立した媒体予想。 2026-10-05松山3R/4R: オッズパーク掲載の発走前予想グループを全7車・選手名で照合し、それぞれ単一媒体予想として公開。 2026-10-05松山5/6/8/9R オッズパーク発走前予想4レース全28車と正式結果の本人情報を照合、単騎を維持。 2026-10-01久留米1～4R・2026-10-04松山11R: オッズパーク発走前予想の全7車と正式結果の本人情報を照合して5レース追加。",
   "summary": {
-    "races": 15,
-    "rider_rows": 105
+    "races": 20,
+    "rider_rows": 140
   },
   "races": [
     {
@@ -1787,6 +1787,615 @@
           "line": [
             5,
             6,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-01|83|1",
+      "key": "2026-10-01|83|1",
+      "date": "2026-10-01",
+      "track": "久留米",
+      "trackCode": "83",
+      "race": 1,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://sp.oddspark.com/keirin/yosou/kurume/2026/1001.html",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://sp.oddspark.com/keirin/yosou/kurume/2026/1001.html"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "オッズパーク競輪",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "ODDSPARK-20261124-83-20261001-01-FULL-LINE",
+          "comparison": "Original pre-race prediction shows complete 7-car ordered groups and named competitors; cross-checked all numbers/names against formally verified rider results. Forecast, not actual racing order."
+        }
+      },
+      "forecastGroups": [
+        [
+          5,
+          3,
+          7
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          2
+        ],
+        [
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 7,
+          "name": "杉山 正和",
+          "prefecture": "三重",
+          "period": "59",
+          "line": [
+            5,
+            3,
+            7
+          ]
+        },
+        {
+          "number": 3,
+          "name": "鰐渕 正利",
+          "prefecture": "愛知",
+          "period": "65",
+          "line": [
+            5,
+            3,
+            7
+          ]
+        },
+        {
+          "number": 4,
+          "name": "古川 大輔",
+          "prefecture": "広島",
+          "period": "99",
+          "line": [
+            4,
+            1
+          ]
+        },
+        {
+          "number": 1,
+          "name": "住村 実",
+          "prefecture": "徳島",
+          "period": "82",
+          "line": [
+            4,
+            1
+          ]
+        },
+        {
+          "number": 2,
+          "name": "ラモスレオ",
+          "prefecture": "沖縄",
+          "period": "113",
+          "line": [
+            2
+          ]
+        },
+        {
+          "number": 5,
+          "name": "花田 雄飛",
+          "prefecture": "愛知",
+          "period": "127",
+          "line": [
+            5,
+            3,
+            7
+          ]
+        },
+        {
+          "number": 6,
+          "name": "吉田 悟",
+          "prefecture": "熊本",
+          "period": "119",
+          "line": [
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-01|83|2",
+      "key": "2026-10-01|83|2",
+      "date": "2026-10-01",
+      "track": "久留米",
+      "trackCode": "83",
+      "race": 2,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://sp.oddspark.com/keirin/yosou/kurume/2026/1001_2.html",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://sp.oddspark.com/keirin/yosou/kurume/2026/1001_2.html"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "オッズパーク競輪",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "ODDSPARK-20261124-83-20261001-02-FULL-LINE",
+          "comparison": "Original pre-race prediction shows complete 7-car ordered groups and named competitors; cross-checked all numbers/names against formally verified rider results. Forecast, not actual racing order."
+        }
+      },
+      "forecastGroups": [
+        [
+          7,
+          1,
+          5,
+          3
+        ],
+        [
+          6
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "riders": [
+        {
+          "number": 7,
+          "name": "西澤 優聖",
+          "prefecture": "岐阜",
+          "period": "129",
+          "line": [
+            7,
+            1,
+            5,
+            3
+          ]
+        },
+        {
+          "number": 1,
+          "name": "窪田 陽介",
+          "prefecture": "滋賀",
+          "period": "90",
+          "line": [
+            7,
+            1,
+            5,
+            3
+          ]
+        },
+        {
+          "number": 5,
+          "name": "陶器 一馬",
+          "prefecture": "大阪",
+          "period": "86",
+          "line": [
+            7,
+            1,
+            5,
+            3
+          ]
+        },
+        {
+          "number": 3,
+          "name": "水木 裕聡",
+          "prefecture": "高知",
+          "period": "96",
+          "line": [
+            7,
+            1,
+            5,
+            3
+          ]
+        },
+        {
+          "number": 6,
+          "name": "武智 尚之",
+          "prefecture": "愛媛",
+          "period": "70",
+          "line": [
+            6
+          ]
+        },
+        {
+          "number": 2,
+          "name": "篠田 樹",
+          "prefecture": "大分",
+          "period": "113",
+          "line": [
+            2,
+            4
+          ]
+        },
+        {
+          "number": 4,
+          "name": "喜納 隆志",
+          "prefecture": "沖縄",
+          "period": "92",
+          "line": [
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-01|83|3",
+      "key": "2026-10-01|83|3",
+      "date": "2026-10-01",
+      "track": "久留米",
+      "trackCode": "83",
+      "race": 3,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://sp.oddspark.com/keirin/yosou/kurume/2026/1001_3.html",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://sp.oddspark.com/keirin/yosou/kurume/2026/1001_3.html"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "オッズパーク競輪",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "ODDSPARK-20261124-83-20261001-03-FULL-LINE",
+          "comparison": "Original pre-race prediction shows complete 7-car ordered groups and named competitors; cross-checked all numbers/names against formally verified rider results. Forecast, not actual racing order."
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          4
+        ],
+        [
+          7,
+          5,
+          2
+        ],
+        [
+          3,
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "久保田智之",
+          "prefecture": "福岡",
+          "period": "129",
+          "line": [
+            1,
+            4
+          ]
+        },
+        {
+          "number": 4,
+          "name": "秋山 貴宏",
+          "prefecture": "佐賀",
+          "period": "89",
+          "line": [
+            1,
+            4
+          ]
+        },
+        {
+          "number": 3,
+          "name": "森 佑樹",
+          "prefecture": "岡山",
+          "period": "94",
+          "line": [
+            3,
+            6
+          ]
+        },
+        {
+          "number": 6,
+          "name": "小野 祐作",
+          "prefecture": "岡山",
+          "period": "72",
+          "line": [
+            3,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "斎藤 敦",
+          "prefecture": "大阪",
+          "period": "103",
+          "line": [
+            7,
+            5,
+            2
+          ]
+        },
+        {
+          "number": 5,
+          "name": "岡崎 和久",
+          "prefecture": "奈良",
+          "period": "78",
+          "line": [
+            7,
+            5,
+            2
+          ]
+        },
+        {
+          "number": 2,
+          "name": "樫村 伸平",
+          "prefecture": "兵庫",
+          "period": "99",
+          "line": [
+            7,
+            5,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-01|83|4",
+      "key": "2026-10-01|83|4",
+      "date": "2026-10-01",
+      "track": "久留米",
+      "trackCode": "83",
+      "race": 4,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://sp.oddspark.com/keirin/yosou/kurume/2026/1001_4.html",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://sp.oddspark.com/keirin/yosou/kurume/2026/1001_4.html"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "オッズパーク競輪",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "ODDSPARK-20261124-83-20261001-04-FULL-LINE",
+          "comparison": "Original pre-race prediction shows complete 7-car ordered groups and named competitors; cross-checked all numbers/names against formally verified rider results. Forecast, not actual racing order."
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          5,
+          3
+        ],
+        [
+          6
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          7
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "近藤 雄太",
+          "prefecture": "岡山",
+          "period": "121",
+          "line": [
+            1,
+            5,
+            3
+          ]
+        },
+        {
+          "number": 5,
+          "name": "大林 亮介",
+          "prefecture": "香川",
+          "period": "86",
+          "line": [
+            1,
+            5,
+            3
+          ]
+        },
+        {
+          "number": 3,
+          "name": "中井 修",
+          "prefecture": "滋賀",
+          "period": "75",
+          "line": [
+            1,
+            5,
+            3
+          ]
+        },
+        {
+          "number": 2,
+          "name": "仙石 淳",
+          "prefecture": "沖縄",
+          "period": "73",
+          "line": [
+            4,
+            2
+          ]
+        },
+        {
+          "number": 7,
+          "name": "中嶋 樹",
+          "prefecture": "大阪",
+          "period": "119",
+          "line": [
+            7
+          ]
+        },
+        {
+          "number": 6,
+          "name": "滝川 秀嗣",
+          "prefecture": "愛知",
+          "period": "71",
+          "line": [
+            6
+          ]
+        },
+        {
+          "number": 4,
+          "name": "白濱 蓮",
+          "prefecture": "長崎",
+          "period": "129",
+          "line": [
+            4,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04|75|11",
+      "key": "2026-10-04|75|11",
+      "date": "2026-10-04",
+      "track": "松山",
+      "trackCode": "75",
+      "race": 11,
+      "size": 7,
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1004_11.html",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://sp.oddspark.com/keirin/yosou/matsuyama/2026/1004_11.html"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "オッズパーク競輪",
+          "retrievedDate": "2026-11-24",
+          "evidenceRef": "ODDSPARK-20261124-75-20261004-11-FULL-LINE",
+          "comparison": "Original pre-race prediction shows complete 7-car ordered groups and named competitors; cross-checked all numbers/names against formally verified rider results. Forecast, not actual racing order."
+        }
+      },
+      "forecastGroups": [
+        [
+          7,
+          4,
+          1
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "riders": [
+        {
+          "number": 2,
+          "name": "佐々木亮太",
+          "prefecture": "青森",
+          "period": "125",
+          "line": [
+            2,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "福永 大智",
+          "prefecture": "大阪",
+          "period": "113",
+          "line": [
+            7,
+            4,
+            1
+          ]
+        },
+        {
+          "number": 6,
+          "name": "金成 和幸",
+          "prefecture": "福島",
+          "period": "88",
+          "line": [
+            2,
+            6
+          ]
+        },
+        {
+          "number": 4,
+          "name": "中川 勝貴",
+          "prefecture": "福井",
+          "period": "109",
+          "line": [
+            7,
+            4,
+            1
+          ]
+        },
+        {
+          "number": 1,
+          "name": "水谷 良和",
+          "prefecture": "愛知",
+          "period": "70",
+          "line": [
+            7,
+            4,
+            1
+          ]
+        },
+        {
+          "number": 5,
+          "name": "磯川 勝裕",
+          "prefecture": "東京",
+          "period": "113",
+          "line": [
+            5,
+            3
+          ]
+        },
+        {
+          "number": 3,
+          "name": "内田 玄希",
+          "prefecture": "東京",
+          "period": "94",
+          "line": [
+            5,
             3
           ]
         }
