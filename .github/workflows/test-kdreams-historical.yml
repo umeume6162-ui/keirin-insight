@@ -5,12 +5,14 @@ on:
       - 'scripts/collect_kdreams_historical.py'
       - 'scripts/read_forecast_candidates.py'
       - 'scripts/collect_kdreams_result.py'
+      - 'verified-results-feed-v1.json'
       - '.github/workflows/test-kdreams-historical.yml'
   pull_request:
     paths:
       - 'scripts/collect_kdreams_historical.py'
       - 'scripts/read_forecast_candidates.py'
       - 'scripts/collect_kdreams_result.py'
+      - 'verified-results-feed-v1.json'
       - '.github/workflows/test-kdreams-historical.yml'
   workflow_dispatch:
     inputs:
@@ -42,7 +44,7 @@ jobs:
       - name: Test forecast retrieval helpers (offline)
         run: python scripts/read_forecast_candidates.py --self-test
       - name: Retrieve forecast source observations (read only)
-        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[read-forecast-sources]'))
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main' && (contains(github.event.head_commit.message, '[read-forecast-sources]') || contains(github.event.head_commit.message, 'Publish ')))
         env:
           LIMIT: ${{ inputs.limit || '20' }}
           OFFSET: ${{ inputs.offset || '0' }}
