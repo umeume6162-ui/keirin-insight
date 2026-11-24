@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
   "verificationNote": "KEIRIN.JPと異なる別掲載元で氏名・府県・期別・6桁IDの一致。2026-11-24阿部弘、阿部充宏の2名を追加。 2026-11-24阿部蒼大015960、阿部大樹014370を公式証拠2元一致で追加。",
   "summary": {
-    "rows": 251
+    "rows": 256
   },
   "riders": [
     {
@@ -6046,6 +6046,126 @@
           "https://keirin.netkeiba.com/db/profile/?id=15327"
         ],
         "note": "V4証拠台帳 MANUAL-V4-20261124-015327（公開2媒体のプロフィール本文4項目一致。キャッシュ本文利用、原HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "014390",
+      "name": "愛敬 博之",
+      "prefecture": "愛知",
+      "period": "94",
+      "source": "https://keirin.jp/sp/racerprofile?snum=014390",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=014390",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=014390",
+          "https://keirin.netkeiba.com/db/profile/?id=14390"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-014390（公開2媒体のプロフィール本文4項目一致。キャッシュ本文利用、原HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "013768",
+      "name": "旭 啓介",
+      "prefecture": "神奈",
+      "period": "86",
+      "source": "https://www.winticket.jp/keirin/cyclist/013768",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.winticket.jp/keirin/cyclist/013768",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.winticket.jp/keirin/cyclist/013768",
+          "https://keirin.netkeiba.com/db/profile/?id=13768"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-013768（公開2媒体のプロフィール本文4項目一致。キャッシュ本文利用、原HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "014055",
+      "name": "芦澤 大輔",
+      "prefecture": "茨城",
+      "period": "90",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014055",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014055",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014055",
+          "https://keirin.netkeiba.com/db/profile/?id=14055"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-014055（公開2媒体のプロフィール本文4項目一致。キャッシュ本文利用、原HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "014441",
+      "name": "芦澤 辰弘",
+      "prefecture": "茨城",
+      "period": "95",
+      "source": "https://keirin.jp/sp/racerprofile?snum=014441",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=014441",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=014441",
+          "https://keirin.netkeiba.com/db/profile/?id=14441"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-014441（公開2媒体のプロフィール本文4項目一致。キャッシュ本文利用、原HTML全文は保存せず）"
+      }
+    },
+    {
+      "id": "013255",
+      "name": "安坂 洋一",
+      "prefecture": "神奈",
+      "period": "79",
+      "source": "https://keirin.jp/sp/racerprofile?snum=013255",
+      "verifiedDate": "2026-11-24",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.jp/sp/racerprofile?snum=013255",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://keirin.jp/sp/racerprofile?snum=013255",
+          "https://keirin.netkeiba.com/db/profile/?id=13255"
+        ],
+        "note": "V4証拠台帳 MANUAL-V4-20261124-013255（公開2媒体のプロフィール本文4項目一致。キャッシュ本文利用、原HTML全文は保存せず）"
       }
     }
   ],
