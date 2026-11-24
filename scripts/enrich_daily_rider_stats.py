@@ -389,11 +389,87 @@ def self_test():
     robots_policy.cache_clear()
     print("SELF_TEST_OK: full 7-car stats, identity-binding, bounded cooldown, robots batch cache")
 
+def plan_line_cells(board,cache,values):
+    """Plan only complete, identity-matched blank line cells. Preserve entry provenance."""
+    from upsert_daily_sheets import HEADERS
+    if not values or values[0]!=HEADERS["entries"]:
+        raise ValueError("Daily entry header mismatch")
+    by_key={}
+    for index,row in enumerate(values[1:],1):
+        cells=[str(x or "") for x in row]+[""]*max(0,15-len(row))
+        by_key.setdefault(cells[13],[]).append((index,cells))
+    planned=[]
+    for race in board["races"]:
+        rec=cache["races"].get(race["key"],{})
+        groups=rec.get("forecastGroups")
+        entries=race.get("entries",[])
+        if (not groups or rec.get("signature")!=signature(race) or
+            rec.get("sourceUrl")!=source_url(race) or not rec.get("capturedAt") or
+            len(entries) not in (7,9) or clean(race.get("className")).startswith("L")):
+            continue
+        if sorted(n for group in groups for n in group)!=list(range(1,len(entries)+1)):
+            continue
+        key=f'{race["date"]}|{VENUE_CODES[race["track"]]}|{race["race"]}'
+        stored=by_key.get(key,[])
+        if len(stored)!=len(entries) or sorted(x[1][5] for x in stored)!=[str(n) for n in range(1,len(entries)+1)]:
+            continue
+        expected={str(e["number"]):e for e in entries}
+        candidate=[]
+        for index,cells in stored:
+            e=expected[cells[5]]
+            line="-".join(map(str,next(g for g in groups if e["number"] in g)))
+            if (cells[:4]!=[race["date"],VENUE_CODES[race["track"]],race["track"],str(race["race"])] or
+                cells[6:9]!=[e["name"],e["prefecture"],str(e["period"])] or cells[10]!=e["sourceUrl"] or
+                (cells[9] and cells[9]!=line)):
+                break
+            if not cells[9]:
+                note=json.dumps({"kind":"daily_media_forecast","provider":"netkeirin",
+                    "sourceUrl":rec["sourceUrl"],"retrievedAt":rec["capturedAt"],
+                    "forecastGroups":groups,"signature":rec["signature"],
+                    "entrySource":cells[10],"status":"daily_only_not_formal_PASS",
+                    "timing":"published forecast; retrieval may be after race"},ensure_ascii=False)
+                candidate.append((index,line,note))
+        else:
+            planned.extend(candidate)
+    return planned
+
+def save_line_cells(board,cache):
+    from auto_daily_tospo_intake import verify_approved_editor
+    from upsert_daily_sheets import remote_client,SHEET_ID,ensure_write_allowed
+    verify_approved_editor()
+    session,token=remote_client()
+    base="https://sheets.googleapis.com/v4/spreadsheets/"+SHEET_ID
+    headers={"Authorization":"Bearer "+token}
+    def read():
+        response=session.get(base+"/values/"+requests.utils.quote("'KI｜日次出走表'!A1:O",safe=""),headers=headers,timeout=40)
+        response.raise_for_status()
+        return response.json().get("values",[])
+    before=read()
+    planned=plan_line_cells(board,cache,before)
+    if not planned:
+        return 0
+    # Confirm sheet identity and reread before any write.
+    meta=session.get(base,params={"fields":"sheets(properties(sheetId,title)" + ")"},headers=headers,timeout=30)
+    meta.raise_for_status()
+    matches=[x["properties"]["sheetId"] for x in meta.json()["sheets"] if x["properties"]["title"]=="KI｜日次出走表"]
+    if len(matches)!=1 or read()!=before:
+        raise ValueError("Daily entry changed during line planning")
+    payload=[{"updateCells":{"range":{"sheetId":matches[0],"startRowIndex":i,"endRowIndex":i+1,
+        "startColumnIndex":9,"endColumnIndex":10},"rows":[{"values":[{"userEnteredValue":{"stringValue":line},"note":note}]}],
+        "fields":"userEnteredValue,note"}} for i,line,note in planned]
+    response=session.post(base+":batchUpdate",headers=headers,json={"requests":payload},timeout=45)
+    ensure_write_allowed(response)
+    after=read()
+    if any(after[i][9]!=line or after[i][:9]!=before[i][:9] or after[i][10:]!=before[i][10:] for i,line,_ in planned):
+        raise ValueError("Daily line reread mismatch")
+    return len(planned)
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--feed",default="daily-board-feed-v1.json")
     p.add_argument("--cache",default="daily-rider-stats-v1.json")
     p.add_argument("--limit",type=int,default=16)
+    p.add_argument("--save-lines",action="store_true",help="Fill only validated blank daily line cells with source notes")
     p.add_argument("--self-test",action="store_true")
     a=p.parse_args()
     if a.self_test:return self_test()
@@ -401,6 +477,8 @@ def main():
     board=json.loads(board_path.read_text(encoding="utf-8"))
     cache=json.loads(cache_path.read_text(encoding="utf-8")) if cache_path.exists() else {"schema":SCHEMA,"races":{}}
     stats=enrich(board,cache,limit=a.limit)
+    if a.save_lines:
+        print('DAILY_LINE_CELLS_SAVED',save_line_cells(board,cache))
     new_board=json.dumps(board,ensure_ascii=False,indent=2)+"\n"
     new_cache=json.dumps(cache,ensure_ascii=False,indent=2)+"\n"
     if board_path.read_text(encoding="utf-8")!=new_board:
