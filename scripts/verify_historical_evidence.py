@@ -67,7 +67,12 @@ def verify_row(row, reread, cache):
     if count not in (7, 9) or row[13] != f"{count}/{count}":
         raise ValueError("Incomplete original field")
     stored = json.loads(row[9])
-    if len(stored) != count or reread != stored:
+    # Sheets omits empty cells in API ranges, while evidence JSON stores them
+    # as null. Compare the same 23 original columns after empty normalization.
+    def canonical_v99(values):
+        return [[str(row[i] if i < len(row) and row[i] is not None else "")
+                 for i in range(23)] for row in values]
+    if len(stored) != count or len(reread) != count or canonical_v99(reread) != canonical_v99(stored):
         raise ValueError("V99 original rows changed since evidence saving")
     grades = class_group(x[12] for x in stored)
     if any(x[0] != date or str(x[2]).zfill(2) != code or int(x[4]) != race
