@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-def queue(results, lines, limit=20, offset=0):
+def queue(results, lines, limit=20, offset=0, rider_feed=None):
     if not 5 <= limit <= 20 or offset < 0:
         raise ValueError("limit must be 5..20; offset must be nonnegative")
     def index(feed):
@@ -31,6 +31,31 @@ def queue(results, lines, limit=20, offset=0):
     missing.sort(key=priority)
     candidates = [{k:r.get(k) for k in ("key","date","track","track_code","race","size","grade","className","preRaceFormation")}
                   for r in missing[offset:offset+limit]]
+    if rider_feed is not None:
+        columns = rider_feed["columns"]
+        fields = ("name", "prefecture", "period", "date", "track", "trackCode", "race", "number")
+        if any(columns.count(field) != 1 for field in fields):
+            raise ValueError("Missing or duplicate rider feed column")
+        indices = {field: columns.index(field) for field in fields}
+        by_key = {c["key"]: [] for c in candidates}
+        for row in rider_feed["rows"]:
+            if len(row) <= max(indices.values()):
+                raise ValueError("Incomplete rider result row")
+            item = {field: row[i] for field, i in indices.items()}
+            key = f'{item["date"]}|{str(item["trackCode"]).zfill(2)}|{int(item["race"])}'
+            if key in by_key:
+                by_key[key].append(item)
+        for candidate in candidates:
+            riders = by_key[candidate["key"]]
+            numbers = [int(r["number"]) for r in riders]
+            complete = (candidate["size"] in (7, 9)
+                        and sorted(numbers) == list(range(1, candidate["size"] + 1))
+                        and all(r["track"] == candidate["track"] and r["name"]
+                                and r["prefecture"] and r["period"] for r in riders))
+            candidate["referenceIdentityComplete"] = bool(complete)
+            candidate["referenceRiders"] = [
+                {field: r[field] for field in ("number", "name", "prefecture", "period")}
+                for r in sorted(riders, key=lambda r: int(r["number"]))]
     return {"results":len(result),"lines":len(line),"common":len(result.keys() & line.keys()),
             "missing":len(missing),"offset":offset,"nextOffset":offset+limit if offset+limit<len(missing) else None,
             "formalPass":False,"candidates":candidates}
@@ -50,6 +75,13 @@ def self_test():
         pass
     else:
         raise AssertionError("duplicate key accepted")
+    rows[1].update(track="前橋")
+    cols = ["name","prefecture","period","date","track","trackCode","race","number"]
+    reference = {"columns":cols,"rows":[["選手"+str(n),"東京","100","2026-01-01","前橋","22",2,n] for n in range(1,8)]}
+    candidate = queue(r,l,5,rider_feed=reference)["candidates"][0]
+    assert candidate["referenceIdentityComplete"] and len(candidate["referenceRiders"]) == 7
+    reference["rows"].append(reference["rows"][0])
+    assert not queue(r,l,5,rider_feed=reference)["candidates"][0]["referenceIdentityComplete"]
     print("SELF_TEST_OK: missing-line queue, paging and duplicate rejection")
 
 def main():
@@ -65,7 +97,7 @@ def main():
         return json.loads((ROOT/name).read_text(encoding="utf-8"))
     print(json.dumps(queue(load("verified-results-feed-v1.json"),
                            load("verified-line-snapshots-feed-v1.json"),
-                           args.limit,args.offset),ensure_ascii=False,indent=2))
+                           args.limit,args.offset,load("verified-rider-results-feed-v1.json")),ensure_ascii=False,indent=2))
 
 if __name__ == "__main__":
     main()
