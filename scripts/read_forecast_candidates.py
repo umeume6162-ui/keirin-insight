@@ -72,6 +72,7 @@ def source_urls(c, slugs, meetings):
     date_key = datetime.strptime(day, "%Y-%m-%d").strftime("%Y%m%d")
     if re.fullmatch(r"\d{2}", code):
         urls.append(f"https://keirin.netkeiba.com/race/yoso/?race_id={date_key}{code}{int(race):02d}")
+        urls.append(f"https://keirin.netkeiba.com/race/entry/?race_id={date_key}{code}{int(race):02d}")
     return urls
 
 def gamboo_groups(soup, size):
@@ -159,7 +160,7 @@ def inspect(html, candidate=None):
     tables = []
     for table in soup.find_all("table"):
         heads = [th.get_text(" ", strip=True) for th in table.find_all("th")[:30]]
-        if not any("選手名" in h.replace(" ", "") for h in heads):
+        if not any("選手名" in re.sub(r"\s+", "", h) for h in heads) and not ("netkeiba" in title.lower() and len(table.find_all("tr")) >= 7):
             continue
         rows = []
         for tr in table.find_all("tr")[:20]:
@@ -170,7 +171,8 @@ def inspect(html, candidate=None):
         if len(tables) >= 3:
             break
     # Also retain explicit source links to same-race racecard and visible identity cells.
-    identity_links = [a.get("href") for a in soup.select("a[href]") if "/race/shutuba/" in a.get("href", "")][:20]
+    identity_links = [a.get("href") for a in soup.select("a[href]") if "/race/shutuba/" in a.get("href", "") or "/race/entry/" in a.get("href", "")][:20]
+    # Keep compact racecard observations including full identity text if published.
     return {"identityLinks": identity_links, "title": title, "gambooGroupCandidate": gamboo_groups(soup, candidate.get("size")) if candidate else None, "netkeirinGroupCandidate": netkeirin_groups(soup, candidate.get("size")) if candidate else None, "forecastLabelContexts": excerpts,
             "forecastElementHtml": structures, "riderTableObservations": tables}
 
@@ -190,8 +192,8 @@ def main():
         lines["races"].append({"id":"2026-01-02|85|3","officialVerification":{"source":"https://keirin.kdreams.jp/gamboo/keirin-kaisai/race-card/yoso/8520260101/85202601010200/3/"}})
         meetings = meeting_prefixes(lines)
         assert source_urls({"key":"2026-01-02|85|6"},slugs,meetings)[0].endswith("/85202601010200/6/")
-        assert len(source_urls({"key":"2026-01-03|85|6"},slugs,meetings)) == 2
-        assert source_urls({"key":"2026-01-02|22|6"},slugs,meetings) == ["https://keirin.netkeiba.com/race/yoso/?race_id=202601022206"]
+        assert len(source_urls({"key":"2026-01-03|85|6"},slugs,meetings)) == 3
+        assert source_urls({"key":"2026-01-02|22|6"},slugs,meetings) == ["https://keirin.netkeiba.com/race/yoso/?race_id=202601022206", "https://keirin.netkeiba.com/race/entry/?race_id=202601022206"]
         observed = inspect('<div><b>並び予想</b><span class="test-group">①②</span><span>③</span></div><table><tr><th>選手名</th></tr><tr><td>試験選手</td></tr></table>')
         assert 'class="test-group"' in observed["forecastElementHtml"][0]
         assert observed["riderTableObservations"][0]["rows"][1] == ["試験選手"]
