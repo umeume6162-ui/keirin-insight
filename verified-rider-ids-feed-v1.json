@@ -1,10 +1,10 @@
 {
   "schema": "ki-official-rider-ids-v1",
-  "snapshotDate": "2026-11-25",
+  "snapshotDate": "2026-11-26",
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
-  "verificationNote": "KEIRIN.JPと異なる別掲載元で氏名・府県・期別・6桁IDの一致。2026-11-24阿部弘、阿部充宏の2名を追加。 2026-11-24阿部蒼大015960、阿部大樹014370を公式証拠2元一致で追加。",
+  "verificationNote": "異なる2掲載元のプロフィール本文で氏名・府県・期別・6桁ID一致。2026-11-26 Google公式照合証拠再読済3名追加。",
   "summary": {
-    "rows": 270
+    "rows": 273
   },
   "riders": [
     {
@@ -6502,6 +6502,78 @@
           "https://keirin.netkeiba.com/db/profile/?id=15475"
         ],
         "note": "2媒体本文4項目一致、Google証拠保存・再読済。元受付ID：MANUAL-V4-20261125-015475"
+      }
+    },
+    {
+      "id": "013531",
+      "name": "伊藤 司",
+      "prefecture": "福島",
+      "period": "83",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013531",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013531",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013531",
+          "https://www.winticket.jp/keirin/cyclist/013531"
+        ],
+        "note": "Google公式照合証拠再読済：MANUAL-V4-20261126-013531；選手ID照合台帳!A39:K39。プロフィール本文4項目一致。"
+      }
+    },
+    {
+      "id": "014435",
+      "name": "伊藤 勝太",
+      "prefecture": "愛知",
+      "period": "95",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014435",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014435",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014435",
+          "https://www.winticket.jp/keirin/cyclist/014435"
+        ],
+        "note": "Google公式照合証拠再読済：MANUAL-V4-20261126-014435；選手ID照合台帳!A40:K40。プロフィール本文4項目一致。"
+      }
+    },
+    {
+      "id": "014520",
+      "name": "伊藤 彰規",
+      "prefecture": "神奈川",
+      "period": "96",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014520",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014520",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014520",
+          "https://www.winticket.jp/keirin/cyclist/014520"
+        ],
+        "note": "Google公式照合証拠再読済：MANUAL-V4-20261126-014520；選手ID照合台帳!A41:K41。プロフィール本文4項目一致。"
       }
     }
   ],
