@@ -1,11 +1,11 @@
 {
   "schema": "ki-line-snapshots-v1",
-  "snapshotDate": "2026-11-24",
+  "snapshotDate": "2026-11-25",
   "sourceTab": "VERIFIED publication",
   "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence. 2026-11-21福井3Rは既存Google発走前スナップ7車とKドリームス掲載の媒体並び予想を照合し、結果から逆算せず単一元の予想として公開。 2026-11-21福井4RはGoogle発走前スナップの全7車ラインとKドリームス並び予想を確認し、出走表で府県/期別を補完。結果とは独立した媒体予想。 2026-10-05松山3R/4R: オッズパーク掲載の発走前予想グループを全7車・選手名で照合し、それぞれ単一媒体予想として公開。 2026-10-05松山5/6/8/9R オッズパーク発走前予想4レース全28車と正式結果の本人情報を照合、単騎を維持。 2026-10-01久留米1～4R・2026-10-04松山11R: オッズパーク発走前予想の全7車と正式結果の本人情報を照合して5レース追加。 2026-10-01久留米8～11R オッズパーク掲載の全7車発走前ラインを正式結果の本人情報と照合。7Rは番手競りのため単純な同ライン配列にできず保留。 2026-10-01佐世保3RはKドリームス系GambooBET、4Rはオッズパークの発走前予想で検証。掲載元を区別し全7車照合。",
   "summary": {
-    "races": 119,
-    "rider_rows": 833
+    "races": 120,
+    "rider_rows": 840
   },
   "races": [
     {
@@ -14415,6 +14415,101 @@
             1,
             7
           ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-02|85|4",
+      "key": "2026-10-02|85|4",
+      "date": "2026-10-02",
+      "track": "佐世保",
+      "trackCode": "85",
+      "race": 4,
+      "size": 7,
+      "verifiedDate": "2026-11-25",
+      "lineMode": "contested",
+      "originalFormation": "⑥①／③（⑦⑤）／②④",
+      "forecastSlots": [
+        [
+          6,
+          1
+        ],
+        [
+          3,
+          [
+            7,
+            5
+          ]
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "formatEvidenceUrl": "https://www.oddspark.com/loto/blog-rin2/sasebo/2026/1002.html",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.oddspark.com/loto/blog-rin2/sasebo/2026/1002.html",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://www.oddspark.com/loto/blog-rin2/sasebo/2026/1002.html"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "oddspark",
+          "retrievedDate": "2026-11-25",
+          "evidenceRef": "LINE-ODDSPARK-20261125-202610028504",
+          "comparison": "Published explicit parentheses and group separators; all seven identities matched formal results; Google U104 reread; cached published body, no permanent HTML archive."
+        }
+      },
+      "riders": [
+        {
+          "number": 3,
+          "name": "松下 綾馬",
+          "prefecture": "岡山",
+          "period": "121"
+        },
+        {
+          "number": 5,
+          "name": "山本 隼人",
+          "prefecture": "大阪",
+          "period": "111"
+        },
+        {
+          "number": 2,
+          "name": "高倉 俊宏",
+          "prefecture": "福岡",
+          "period": "93"
+        },
+        {
+          "number": 4,
+          "name": "梶山裕次郎",
+          "prefecture": "福岡",
+          "period": "87"
+        },
+        {
+          "number": 1,
+          "name": "島野 浩司",
+          "prefecture": "愛知",
+          "period": "62"
+        },
+        {
+          "number": 7,
+          "name": "中石 昌芳",
+          "prefecture": "広島",
+          "period": "81"
+        },
+        {
+          "number": 6,
+          "name": "下岡 将也",
+          "prefecture": "三重",
+          "period": "111"
         }
       ]
     }
