@@ -189,8 +189,8 @@ jobs:
                   if tag=='script' and self.inside:
                       self.scripts.append(self.current)
                       self.inside=False
-          expected={'index.html':{'races','rows','ids','lines','status','last','refresh'},
-                    'daily-board.html':{'day','track','refresh','state','source','races','race-count','entry-count','result-count','stats-count'}}
+          expected={'index.html':{'races','joint','ids','lines','status','last','refresh'},
+                    'daily-board.html':{'day','track','refresh','state','source','races','entry-count','result-count','stats-count','line-count'}}
           for name,required in expected.items():
               content=Path(name).read_text(encoding='utf-8')
               check=Inspect()
