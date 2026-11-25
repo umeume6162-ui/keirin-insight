@@ -98,7 +98,7 @@ jobs:
               if not pending:
                   break
               if attempt < 2:
-                  time.sleep(15)
+                  time.sleep(45)
           if pending:
               raise SystemExit('Pages not synchronized or unavailable: ' + ', '.join(pending))
           print('PAGES_JSON_MATCH_ALL; browser/device rendering not verified')
