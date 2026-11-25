@@ -587,10 +587,13 @@ jobs:
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/enrich_daily_rider_stats.py --limit 16 --save-lines
-      - name: Commit changed daily feed only
+      - name: Archive daily observations by race date
+        if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))) }}
+        run: python scripts/build_daily_board.py --archive daily-history
+      - name: Commit changed daily feeds and history
         if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))) }}
         run: |
-          git add daily-board-feed-v1.json daily-race-start-times-v1.json daily-rider-stats-v1.json
+          git add daily-board-feed-v1.json daily-race-start-times-v1.json daily-rider-stats-v1.json daily-history/
           if git diff --cached --quiet; then
             echo 'Daily feed unchanged; no commit or duplicate validation.'
             exit 0
