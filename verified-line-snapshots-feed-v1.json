@@ -2,10 +2,10 @@
   "schema": "ki-line-snapshots-v1",
   "snapshotDate": "2026-11-26",
   "sourceTab": "VERIFIED publication",
-  "verificationNote": "2026-11-05福井A3 3〜7Rの発走前ラインを全車照合し、証拠再読後に追加。",
+  "verificationNote": "2026-11-05京王閣A1/A2 3〜9Rの発走前予想を全車照合し、証拠再読後に追加。",
   "summary": {
-    "races": 153,
-    "rider_rows": 1071
+    "races": 160,
+    "rider_rows": 1120
   },
   "races": [
     {
@@ -18604,6 +18604,863 @@
             7,
             4,
             6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05|27|3",
+      "key": "2026-11-05|27|3",
+      "date": "2026-11-05",
+      "track": "京王閣",
+      "trackCode": "27",
+      "race": 3,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010003/?pageType=showResult",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010003/?pageType=showResult"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611052703",
+          "sourceSnapshot": "V99選手結果蓄積!A3057:W3063",
+          "archivedOriginalHtml": false,
+          "comparison": "Kドリームス掲載原文とV99全7予定車の必須項目一致。Google証拠行153を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          2,
+          1
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          7
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "良永 浩一",
+          "prefecture": "福岡",
+          "period": "86",
+          "line": [
+            2,
+            1
+          ]
+        },
+        {
+          "number": 2,
+          "name": "橋本 陸",
+          "prefecture": "福岡",
+          "period": "121",
+          "line": [
+            2,
+            1
+          ]
+        },
+        {
+          "number": 3,
+          "name": "白石 大輔",
+          "prefecture": "福島",
+          "period": "88",
+          "line": [
+            4,
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "橋谷 成海",
+          "prefecture": "埼玉",
+          "period": "125",
+          "line": [
+            4,
+            3
+          ]
+        },
+        {
+          "number": 5,
+          "name": "浅沼 聖士",
+          "prefecture": "静岡",
+          "period": "87",
+          "line": [
+            6,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "渡邊 颯太",
+          "prefecture": "静岡",
+          "period": "109",
+          "line": [
+            6,
+            5
+          ]
+        },
+        {
+          "number": 7,
+          "name": "眞鍋 伸也",
+          "prefecture": "香川",
+          "period": "85",
+          "line": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05|27|4",
+      "key": "2026-11-05|27|4",
+      "date": "2026-11-05",
+      "track": "京王閣",
+      "trackCode": "27",
+      "race": 4,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010004/?pageType=showResult",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010004/?pageType=showResult"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611052704",
+          "sourceSnapshot": "V99選手結果蓄積!A3064:W3070",
+          "archivedOriginalHtml": false,
+          "comparison": "Kドリームス掲載原文とV99全7予定車の必須項目一致。Google証拠行154を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          2,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "蒋野 翔太",
+          "prefecture": "徳島",
+          "period": "115",
+          "line": [
+            1,
+            3
+          ]
+        },
+        {
+          "number": 2,
+          "name": "成海 大聖",
+          "prefecture": "大分",
+          "period": "123",
+          "line": [
+            2,
+            4
+          ]
+        },
+        {
+          "number": 3,
+          "name": "二條 祐也",
+          "prefecture": "徳島",
+          "period": "97",
+          "line": [
+            1,
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "川島 勝",
+          "prefecture": "長崎",
+          "period": "89",
+          "line": [
+            2,
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "中西 司",
+          "prefecture": "神奈川",
+          "period": "95",
+          "line": [
+            6,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "日当 泰之",
+          "prefecture": "青森",
+          "period": "92",
+          "line": [
+            6,
+            5
+          ]
+        },
+        {
+          "number": 7,
+          "name": "佐伯 辰哉",
+          "prefecture": "広島",
+          "period": "109",
+          "line": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05|27|5",
+      "key": "2026-11-05|27|5",
+      "date": "2026-11-05",
+      "track": "京王閣",
+      "trackCode": "27",
+      "race": 5,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010005/?pageType=showResult",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010005/?pageType=showResult"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611052705",
+          "sourceSnapshot": "V99選手結果蓄積!A3071:W3077",
+          "archivedOriginalHtml": false,
+          "comparison": "Kドリームス掲載原文とV99全7予定車の必須項目一致。Google証拠行155を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          4,
+          7
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "小原 唯志",
+          "prefecture": "茨城",
+          "period": "101",
+          "line": [
+            1,
+            4,
+            7
+          ]
+        },
+        {
+          "number": 2,
+          "name": "木村 浩宣",
+          "prefecture": "香川",
+          "period": "97",
+          "line": [
+            2,
+            6
+          ]
+        },
+        {
+          "number": 3,
+          "name": "植草 亮介",
+          "prefecture": "千葉",
+          "period": "90",
+          "line": [
+            5,
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "山崎 悟",
+          "prefecture": "茨城",
+          "period": "92",
+          "line": [
+            1,
+            4,
+            7
+          ]
+        },
+        {
+          "number": 5,
+          "name": "田中 勝仁",
+          "prefecture": "千葉",
+          "period": "93",
+          "line": [
+            5,
+            3
+          ]
+        },
+        {
+          "number": 6,
+          "name": "滝山 実",
+          "prefecture": "徳島",
+          "period": "84",
+          "line": [
+            2,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "岩橋 則明",
+          "prefecture": "埼玉",
+          "period": "78",
+          "line": [
+            1,
+            4,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05|27|6",
+      "key": "2026-11-05|27|6",
+      "date": "2026-11-05",
+      "track": "京王閣",
+      "trackCode": "27",
+      "race": 6,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010006/?pageType=showResult",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010006/?pageType=showResult"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611052706",
+          "sourceSnapshot": "V99選手結果蓄積!A3078:W3084",
+          "archivedOriginalHtml": false,
+          "comparison": "Kドリームス掲載原文とV99全7予定車の必須項目一致。Google証拠行156を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          7,
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "関根健太郎",
+          "prefecture": "神奈川",
+          "period": "100",
+          "line": [
+            1,
+            2,
+            5
+          ]
+        },
+        {
+          "number": 2,
+          "name": "落合 達彦",
+          "prefecture": "静岡",
+          "period": "96",
+          "line": [
+            1,
+            2,
+            5
+          ]
+        },
+        {
+          "number": 3,
+          "name": "土井 慎二",
+          "prefecture": "岡山",
+          "period": "127",
+          "line": [
+            3,
+            4
+          ]
+        },
+        {
+          "number": 4,
+          "name": "藤原 悠斗",
+          "prefecture": "岡山",
+          "period": "91",
+          "line": [
+            3,
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "佐野 恭太",
+          "prefecture": "静岡",
+          "period": "94",
+          "line": [
+            1,
+            2,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "茅野 寛史",
+          "prefecture": "鹿児島",
+          "period": "99",
+          "line": [
+            7,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "飯塚 隼人",
+          "prefecture": "佐賀",
+          "period": "95",
+          "line": [
+            7,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05|27|7",
+      "key": "2026-11-05|27|7",
+      "date": "2026-11-05",
+      "track": "京王閣",
+      "trackCode": "27",
+      "race": 7,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010007/?pageType=showResult",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010007/?pageType=showResult"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611052707",
+          "sourceSnapshot": "V99選手結果蓄積!A3085:W3091",
+          "archivedOriginalHtml": false,
+          "comparison": "Kドリームス掲載原文とV99全7予定車の必須項目一致。Google証拠行157を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          2,
+          7
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          6,
+          5
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "中島 淳",
+          "prefecture": "埼玉",
+          "period": "125",
+          "line": [
+            1,
+            2,
+            7
+          ]
+        },
+        {
+          "number": 2,
+          "name": "台 和紀",
+          "prefecture": "埼玉",
+          "period": "83",
+          "line": [
+            1,
+            2,
+            7
+          ]
+        },
+        {
+          "number": 3,
+          "name": "相笠 翔太",
+          "prefecture": "福島",
+          "period": "96",
+          "line": [
+            3,
+            4
+          ]
+        },
+        {
+          "number": 4,
+          "name": "鈴木 誠",
+          "prefecture": "福島",
+          "period": "84",
+          "line": [
+            3,
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "郡 英治",
+          "prefecture": "広島",
+          "period": "68",
+          "line": [
+            6,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "小西 涼太",
+          "prefecture": "岡山",
+          "period": "127",
+          "line": [
+            6,
+            5
+          ]
+        },
+        {
+          "number": 7,
+          "name": "飯島 淳",
+          "prefecture": "東京",
+          "period": "78",
+          "line": [
+            1,
+            2,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05|27|8",
+      "key": "2026-11-05|27|8",
+      "date": "2026-11-05",
+      "track": "京王閣",
+      "trackCode": "27",
+      "race": 8,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010008/?pageType=showResult",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010008/?pageType=showResult"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611052708",
+          "sourceSnapshot": "V99選手結果蓄積!A3092:W3098",
+          "archivedOriginalHtml": false,
+          "comparison": "Kドリームス掲載原文とV99全7予定車の必須項目一致。Google証拠行158を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          2,
+          6
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          7,
+          5
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "稲留 敦貴",
+          "prefecture": "鹿児島",
+          "period": "125",
+          "line": [
+            1,
+            2,
+            6
+          ]
+        },
+        {
+          "number": 2,
+          "name": "小原 亮哉",
+          "prefecture": "大分",
+          "period": "113",
+          "line": [
+            1,
+            2,
+            6
+          ]
+        },
+        {
+          "number": 3,
+          "name": "小林 申太",
+          "prefecture": "茨城",
+          "period": "101",
+          "line": [
+            3,
+            4
+          ]
+        },
+        {
+          "number": 4,
+          "name": "井上 雄三",
+          "prefecture": "埼玉",
+          "period": "88",
+          "line": [
+            3,
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "山田 和巧",
+          "prefecture": "神奈川",
+          "period": "87",
+          "line": [
+            7,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "足達 重満",
+          "prefecture": "長崎",
+          "period": "80",
+          "line": [
+            1,
+            2,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "竹山 慶太",
+          "prefecture": "宮城",
+          "period": "105",
+          "line": [
+            7,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05|27|9",
+      "key": "2026-11-05|27|9",
+      "date": "2026-11-05",
+      "track": "京王閣",
+      "trackCode": "27",
+      "race": 9,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010009/?pageType=showResult",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/keiokaku/racedetail/2720261105010009/?pageType=showResult"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611052709",
+          "sourceSnapshot": "V99選手結果蓄積!A3099:W3105",
+          "archivedOriginalHtml": false,
+          "comparison": "Kドリームス掲載原文とV99全7予定車の必須項目一致。Google証拠行159を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          4,
+          1,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          6,
+          5
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "菅原 裕太",
+          "prefecture": "静岡",
+          "period": "100",
+          "line": [
+            4,
+            1,
+            7
+          ]
+        },
+        {
+          "number": 2,
+          "name": "成松 春樹",
+          "prefecture": "佐賀",
+          "period": "93",
+          "line": [
+            2,
+            3
+          ]
+        },
+        {
+          "number": 3,
+          "name": "守谷 陽介",
+          "prefecture": "岡山",
+          "period": "87",
+          "line": [
+            2,
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "蒔田 英彦",
+          "prefecture": "千葉",
+          "period": "93",
+          "line": [
+            4,
+            1,
+            7
+          ]
+        },
+        {
+          "number": 5,
+          "name": "小橋 明紀",
+          "prefecture": "青森",
+          "period": "73",
+          "line": [
+            6,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "菊地 圭",
+          "prefecture": "宮城",
+          "period": "123",
+          "line": [
+            6,
+            5
+          ]
+        },
+        {
+          "number": 7,
+          "name": "野中 祐志",
+          "prefecture": "埼玉",
+          "period": "98",
+          "line": [
+            4,
+            1,
+            7
           ]
         }
       ]
