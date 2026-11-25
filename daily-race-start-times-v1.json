@@ -1,51 +1,6 @@
 {
   "schema": "ki-daily-start-times-v1",
   "races": {
-    "2026-11-23|玉野|1": {
-      "startTime": "20:57",
-      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_32479",
-      "signature": "066a7f2c512124ef96c054492ce3a0502bdd7042015d4b9cabd45f2bb9197e7d"
-    },
-    "2026-11-23|玉野|2": {
-      "startTime": "21:21",
-      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_32478",
-      "signature": "9ee702ccdbc948c6e9fe5de5125f86ab8dbba9938fa83067fdd8a23c47a5a530"
-    },
-    "2026-11-23|玉野|3": {
-      "startTime": "21:45",
-      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_32473",
-      "signature": "94691e15a6f1c8103bf49850d2612bb06e5aee05c63f27921dd092bcb15d081e"
-    },
-    "2026-11-23|玉野|4": {
-      "startTime": "22:09",
-      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_32472",
-      "signature": "adbf96d4f4bd82bc1dfff9cccaa19e36334f3102aba7c4bf6904f117a61bba97"
-    },
-    "2026-11-23|玉野|5": {
-      "startTime": "22:36",
-      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_32471",
-      "signature": "6130bb11e020927d83aec2b58acddbd86f52c6f666bd6bc8a2252e5905b43b5c"
-    },
-    "2026-11-23|玉野|6": {
-      "startTime": "23:03",
-      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_32450",
-      "signature": "707635a9d2fcbe2a529e727f5f9e44422d5201f42c4f329e2aeefec672a7255a"
-    },
-    "2026-11-23|玉野|7": {
-      "startTime": "23:30",
-      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_32446",
-      "signature": "40af9ea3e342320faaccca8e752626816136d6aec043663859d7b566b4284c34"
-    },
-    "2026-11-23|西武園|1": {
-      "startTime": "15:28",
-      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31332",
-      "signature": "58dc5fe9d158591650165347ffc7442f7e7c6c49c7970aa1ec8fdbe8740e6de1"
-    },
-    "2026-11-23|西武園|2": {
-      "startTime": "15:52",
-      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261122_31322",
-      "signature": "9f775984e78d73c8b96be1dce06057f12a9fe61a3eb66045d22f1573b7eba41b"
-    },
     "2026-11-24|奈良|10": {
       "startTime": "15:21",
       "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261123_32309",
