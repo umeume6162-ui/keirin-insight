@@ -4,14 +4,14 @@
   "source_snapshot_date": "2026-11-26",
   "latest_race_date": "2026-11-05",
   "official_result_independent_audit": "legacy_two_sources_or_verified_KDreams_or_proven_one_fallback_HTML_with_V99",
-  "notes": "全車原文取得とV99照合を必須。松山5/8/9Rはチャリロト、久留米3Rはnetkeirinの実HTMLを読んだ単一元結果照合。追加の他社独立一致と誤表示しない。 2026-10-01久留米1R/4Rをチャリロト実HTML全車とV99不一致0件で追加。 久留米2Rは数字着順と個人状況『故』を別列のまま原文照合。 久留米2026-10-01の5R〜11Rはチャリロト公開HTML実取得、7車×7R全必須項目をV99と照合し不一致0件。ガールズ/男子A級を別集計。 2026-10-04松山11Rはチャリロト原文全7車V99不一致0。 前橋2026-10-01 1Rをチャリロト実HTML全7車とV98完全一致で追加。 佐世保2026-10-01の1〜7Rはチャリロト実HTMLで全49車V99一致0件。ガールズ2R、A級1・2班5R。 青森2026-10-02の1〜7Rをチャリロト全49車のV99不一致0件で公開。 前橋2026-10-02 1〜7R全49車はチャリロト実原文とV99で一致0差分。 2026-10-02大宮9R（1/2/4/5/8〜12R）をチャリロト原文63車とV99全車一致で追加。3Rは着順/例外不一致、6/7RはV99行数不足で保留。 大宮3RはV99の失と掲載原文の失格を正規化したうえで全7車一致。 2026-10-02川崎1〜5R/7〜12Rの11R・77選手結果をチャリロト原文全車一致で追加。6RはV99原本が6車のみで保留。 2026-10-07静岡1〜3R、2026-11-01宇都宮2〜4Rはチャリロト公開HTMLの各7車とV99を比較し必須項目不一致0件、計6R/42行を2026-11-24追加。単一原文であり2媒体一致は未主張。 2026-10-07静岡4〜8R、2026-11-01宇都宮5〜7Rの計8R・56選手についてチャリロトの公開実HTML全車とV99の必須項目一致0差分を確認、単一掲載元として2026-11-24正式公開。 2026-10-02奈良1～3Rはチャリロト実HTMLをGitHub Actions run 45301935842で再取得、各7車をV99と照合し不一致0、単一元の正式公開。 2026-10-02奈良4～7Rは2026-11-24の実HTML再取得ログで全28車をV99再読照合。4Rの数字6着＋落車個人状況と落車着順を分けて記録。 2026-10-02久留米1Rはチャリロトの実HTMLをGitHub Actions run 45305704556で取得しV99全車一致を確認。 2026-10-02久留米2～4RはActions 45306223137の実HTMLをV99原本全車と再照合、各7車・不一致0。 2026-10-02久留米5～9Rは実HTML全35車をV99再読照合し、A1/A2混在とガールズL1を区別して公開。 2026-10-02久留米10・11R、佐世保2〜5・7R、10-03大宮1・2・11Rは実HTML Actions 45332420688でV99全車一致、Google証拠保存・再読済み。 2026-11-05小倉・別府のA3計8RはKドリームスの出走表・確定結果とV99の全56車を照合し追加。 2026-11-05小倉5〜9RはKドリームスの実原文をV99全35車と照合後に収録。 2026-11-05福井A3の3〜7RはKドリームスの実原文をV99全35予定車と照合後に収録。 2026-11-05京王閣A1/A2の3〜9RはKドリームス実原文とV99全49車を照合して追加。 2026-11-05大宮1〜12Rを追加。 Kドリームス実原文とV99の全予定車を照合。 2026-11-04別府 A3 1〜4R・A1/A2 7〜11Rを追加。 Kドリームス実原文とV99の全予定車を照合。",
+  "notes": "全車原文取得とV99照合を必須。松山5/8/9Rはチャリロト、久留米3Rはnetkeirinの実HTMLを読んだ単一元結果照合。追加の他社独立一致と誤表示しない。 2026-10-01久留米1R/4Rをチャリロト実HTML全車とV99不一致0件で追加。 久留米2Rは数字着順と個人状況『故』を別列のまま原文照合。 久留米2026-10-01の5R〜11Rはチャリロト公開HTML実取得、7車×7R全必須項目をV99と照合し不一致0件。ガールズ/男子A級を別集計。 2026-10-04松山11Rはチャリロト原文全7車V99不一致0。 前橋2026-10-01 1Rをチャリロト実HTML全7車とV98完全一致で追加。 佐世保2026-10-01の1〜7Rはチャリロト実HTMLで全49車V99一致0件。ガールズ2R、A級1・2班5R。 青森2026-10-02の1〜7Rをチャリロト全49車のV99不一致0件で公開。 前橋2026-10-02 1〜7R全49車はチャリロト実原文とV99で一致0差分。 2026-10-02大宮9R（1/2/4/5/8〜12R）をチャリロト原文63車とV99全車一致で追加。3Rは着順/例外不一致、6/7RはV99行数不足で保留。 大宮3RはV99の失と掲載原文の失格を正規化したうえで全7車一致。 2026-10-02川崎1〜5R/7〜12Rの11R・77選手結果をチャリロト原文全車一致で追加。6RはV99原本が6車のみで保留。 2026-10-07静岡1〜3R、2026-11-01宇都宮2〜4Rはチャリロト公開HTMLの各7車とV99を比較し必須項目不一致0件、計6R/42行を2026-11-24追加。単一原文であり2媒体一致は未主張。 2026-10-07静岡4〜8R、2026-11-01宇都宮5〜7Rの計8R・56選手についてチャリロトの公開実HTML全車とV99の必須項目一致0差分を確認、単一掲載元として2026-11-24正式公開。 2026-10-02奈良1～3Rはチャリロト実HTMLをGitHub Actions run 45301935842で再取得、各7車をV99と照合し不一致0、単一元の正式公開。 2026-10-02奈良4～7Rは2026-11-24の実HTML再取得ログで全28車をV99再読照合。4Rの数字6着＋落車個人状況と落車着順を分けて記録。 2026-10-02久留米1Rはチャリロトの実HTMLをGitHub Actions run 45305704556で取得しV99全車一致を確認。 2026-10-02久留米2～4RはActions 45306223137の実HTMLをV99原本全車と再照合、各7車・不一致0。 2026-10-02久留米5～9Rは実HTML全35車をV99再読照合し、A1/A2混在とガールズL1を区別して公開。 2026-10-02久留米10・11R、佐世保2〜5・7R、10-03大宮1・2・11Rは実HTML Actions 45332420688でV99全車一致、Google証拠保存・再読済み。 2026-11-05小倉・別府のA3計8RはKドリームスの出走表・確定結果とV99の全56車を照合し追加。 2026-11-05小倉5〜9RはKドリームスの実原文をV99全35車と照合後に収録。 2026-11-05福井A3の3〜7RはKドリームスの実原文をV99全35予定車と照合後に収録。 2026-11-05京王閣A1/A2の3〜9RはKドリームス実原文とV99全49車を照合して追加。 2026-11-05大宮1〜12Rを追加。 Kドリームス実原文とV99の全予定車を照合。 2026-11-04別府 A3 1〜4R・A1/A2 7〜11Rを追加。 Kドリームス実原文とV99の全予定車を照合。 2026-11-04武雄A3 2〜5・7Rを追加。 Kドリームス実原文とV99の全予定車を照合。",
   "summary": {
-    "races": 164,
-    "rider_rows": 1148,
+    "races": 169,
+    "rider_rows": 1183,
     "by_grade": {
       "S級": 26,
       "A1/A2": 77,
-      "A3": 53,
+      "A3": 58,
       "ガールズ": 8
     }
   },
@@ -6477,6 +6477,191 @@
           "retrievedDate": "2026-11-26",
           "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611048611",
           "comparisonResult": "Kドリームス掲載原文とV99全7予定車の必須項目一致。Google証拠行180を再読。",
+          "originalHtmlArchived": false
+        }
+      }
+    },
+    {
+      "key": "2026-11-04|84|2",
+      "date": "2026-11-04",
+      "track": "武雄",
+      "track_code": "84",
+      "race": 2,
+      "size": 7,
+      "grade": "A3",
+      "non_numeric": 0,
+      "className": "チャレンジ一般",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/takeo/racedetail/8420261102030002/?pageType=showResult",
+        "method": "kdreams_single_source_verified",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/takeo/racedetail/8420261102030002/?pageType=showResult"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611048402",
+          "comparisonResult": "Kドリームス掲載原文とV99全7予定車の必須項目一致。Google証拠行181を再読。",
+          "originalHtmlArchived": false
+        }
+      }
+    },
+    {
+      "key": "2026-11-04|84|3",
+      "date": "2026-11-04",
+      "track": "武雄",
+      "track_code": "84",
+      "race": 3,
+      "size": 7,
+      "grade": "A3",
+      "non_numeric": 0,
+      "className": "チャレンジ一般",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/takeo/racedetail/8420261102030003/?pageType=showResult",
+        "method": "kdreams_single_source_verified",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/takeo/racedetail/8420261102030003/?pageType=showResult"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611048403",
+          "comparisonResult": "Kドリームス掲載原文とV99全7予定車の必須項目一致。Google証拠行182を再読。",
+          "originalHtmlArchived": false
+        }
+      }
+    },
+    {
+      "key": "2026-11-04|84|4",
+      "date": "2026-11-04",
+      "track": "武雄",
+      "track_code": "84",
+      "race": 4,
+      "size": 7,
+      "grade": "A3",
+      "non_numeric": 0,
+      "className": "チャレンジ選抜",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/takeo/racedetail/8420261102030004/?pageType=showResult",
+        "method": "kdreams_single_source_verified",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/takeo/racedetail/8420261102030004/?pageType=showResult"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611048404",
+          "comparisonResult": "Kドリームス掲載原文とV99全7予定車の必須項目一致。Google証拠行183を再読。",
+          "originalHtmlArchived": false
+        }
+      }
+    },
+    {
+      "key": "2026-11-04|84|5",
+      "date": "2026-11-04",
+      "track": "武雄",
+      "track_code": "84",
+      "race": 5,
+      "size": 7,
+      "grade": "A3",
+      "non_numeric": 0,
+      "className": "チャレンジ選抜",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/takeo/racedetail/8420261102030005/?pageType=showResult",
+        "method": "kdreams_single_source_verified",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/takeo/racedetail/8420261102030005/?pageType=showResult"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611048405",
+          "comparisonResult": "Kドリームス掲載原文とV99全7予定車の必須項目一致。Google証拠行184を再読。",
+          "originalHtmlArchived": false
+        }
+      }
+    },
+    {
+      "key": "2026-11-04|84|7",
+      "date": "2026-11-04",
+      "track": "武雄",
+      "track_code": "84",
+      "race": 7,
+      "size": 7,
+      "grade": "A3",
+      "non_numeric": 0,
+      "className": "チャレンジ決勝",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/takeo/racedetail/8420261102030007/?pageType=showResult",
+        "method": "kdreams_single_source_verified",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/takeo/racedetail/8420261102030007/?pageType=showResult"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611048407",
+          "comparisonResult": "Kドリームス掲載原文とV99全7予定車の必須項目一致。Google証拠行185を再読。",
           "originalHtmlArchived": false
         }
       }
