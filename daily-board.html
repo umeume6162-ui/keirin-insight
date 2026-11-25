@@ -112,6 +112,14 @@
 <div><label for="track">競輪場</label><select id="track"><option value="">すべての競輪場</option></select></div>
 <button type="button" id="refresh">最新を取得</button>
 </div>
+<details><summary>レース・選手・ラインで絞り込む</summary>
+<div class="filter-bar">
+<div><label for="race-number">レース番号</label><input type="number" id="race-number" min="1" max="12" inputmode="numeric"></div>
+<div><label for="race-class">級班</label><select id="race-class"><option value="">すべて</option><option>A3</option><option>A1・A2</option><option>S級</option><option>ガールズ</option></select></div>
+<div><label for="rider-name">選手名</label><input id="rider-name" type="search"></div>
+<div><label for="line-filter">ライン</label><select id="line-filter"><option value="">すべて</option><option value="grouped">ライン構成あり</option><option value="single">単騎あり</option></select></div>
+</div>
+</details>
 <div class="session-filter" role="group" aria-label="開催時間帯で絞り込む">
 <button type="button" data-session="all" aria-pressed="true">すべて</button>
 <button type="button" data-session="morning" aria-pressed="false">モーニング</button>
@@ -131,10 +139,10 @@
 <div id="state" role="status" aria-live="polite">データを確認しています…</div>
 <p id="source" class="muted"></p>
 <div class="day-stats" aria-label="表示中のレース数">
-<div class="day-stat"><strong id="race-count">—</strong><small>表示レース</small></div>
-<div class="day-stat"><strong id="entry-count">—</strong><small>出走表の車数</small></div>
-<div class="day-stat"><strong id="result-count">—</strong><small>結果記録の車数</small></div>
-<div class="day-stat"><strong id="stats-count">—</strong><small>選手統計ありのR数</small></div>
+<div class="day-stat"><strong id="entry-count">—</strong><small>出走表収録済み</small></div>
+<div class="day-stat"><strong id="result-count">—</strong><small>結果収録済み</small></div>
+<div class="day-stat"><strong id="stats-count">—</strong><small>選手統計収録済み</small></div>
+<div class="day-stat"><strong id="line-count">—</strong><small>ライン収録済み</small></div>
 </div>
 </section>
 <div id="races" aria-label="開催場・レース一覧"></div>
@@ -147,7 +155,7 @@ const jstDay=()=>new Date().toLocaleDateString("sv-SE",{timeZone:"Asia/Tokyo"});
 const changeJst=(offset)=>{const base=new Date(jstDay()+"T12:00:00+09:00");base.setUTCDate(base.getUTCDate()+offset);return base.toLocaleDateString("sv-SE",{timeZone:"Asia/Tokyo"})};
 const today=jstDay();
 el("day").value=today;
-let cache=null,selectedSession="all";
+let cache=null,daily=null,dayRequest=0,selectedSession="all";
 const sessionNames={morning:"モーニング",day:"デイ",night:"ナイター",midnight:"ミッドナイト",unknown:"時間帯未確認"};
 function explicitSession(r){
  const value=String(r.session||r.timeSlot||"").trim().toLowerCase();
@@ -178,7 +186,29 @@ function syncSessionButtons(){
  document.querySelectorAll("[data-session]").forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.session===selectedSession)));
 }
 function node(tag,text,cls){const x=document.createElement(tag);if(text!==undefined)x.textContent=String(text);if(cls)x.className=cls;return x}
-function stats(races){el("race-count").textContent=String(races.length);el("entry-count").textContent=String(races.reduce((n,r)=>n+(Array.isArray(r.entries)?r.entries.length:0),0));el("result-count").textContent=String(races.reduce((n,r)=>n+(Array.isArray(r.results)?r.results.length:0),0));el("stats-count").textContent=String(races.filter(r=>Array.isArray(r.entries)&&r.entries.length>0&&r.entries.every(e=>e.riderStats&&r.riderStatsSource?.url)).length)+"/"+races.length}
+function stats(races){
+ const counts=new Map(["entry","result","stats","line"].map(key=>[key,[0,0]]));
+ for(const race of new Map(races.map(r=>[r.key,r])).values()){
+  const entries=race.entries||[],results=race.results||[];
+  const expected=race.expectedCount;
+  const complete=(rows)=>[7,9].includes(expected)&&rows.length===expected&&
+   new Set(rows.map(row=>Number(row.number))).size===expected&&
+   rows.every(row=>Number.isInteger(Number(row.number))&&Number(row.number)>=1&&Number(row.number)<=9);
+  const fullEntry=complete(entries);
+  const keyedResults=fullEntry&&complete(results)&&results.every(r=>entries.some(e=>e.number===r.number));
+  const statsRows=entries.filter(e=>e.riderStats&&race.riderStatsSource?.url);
+  const lines=fullEntry&&allLines(entries);
+  for(const [key,total,full] of [
+    ["entry",entries.length,fullEntry],["result",results.length,keyedResults],
+    ["stats",statsRows.length,fullEntry&&statsRows.length===expected],
+    ["line",entries.some(e=>e.preRaceLine),Boolean(lines)]]){
+   if(total)counts.get(key)[full?0:1]++;
+  }
+ }
+ for(const [key,[full,partial]] of counts){
+  el(key+"-count").textContent=full+"R"+(partial?" ＋ 部分 "+partial+"R":"");
+ }
+}
 function syncQuickButtons(){const day=el("day").value;document.querySelectorAll("[data-day-offset]").forEach(btn=>btn.setAttribute("aria-pressed",String(day===changeJst(Number(btn.dataset.dayOffset)))))}
 function updateVenues(){
  const old=el("track").value, select=el("track"), day=el("day").value;
@@ -238,13 +268,7 @@ function linePanel(r,entries){
   const singles=lines.filter(g=>g.length===1).map(g=>g[0]);
   if(singles.length)wrapper.append(node("p","単騎予想："+singles.map(x=>x+"番").join("、"),"source-caption"));
  }else wrapper.append(node("p","事前ライン：未取得または全車の構成未確認。単騎も未判定です。","source-caption"));
- const origin=r.lineSourceUrl||entries.find(x=>x.preRaceLine&&x.sourceUrl)?.sourceUrl;
- if(lines&&origin){
-  const link=node("a","並び予想の掲載元");
-  link.href=origin;link.target="_blank";link.rel="noopener noreferrer";
-  wrapper.append(link);
- }
- wrapper.append(node("p","媒体による予想の違いがあります。実際の隊列を確定したものではありません。","source-caption"));
+ if(lines&&r.lineCapturedAt)wrapper.append(node("p","取得 "+r.lineCapturedAt,"source-caption"));
  return wrapper;
 }
 function topThree(results){
@@ -288,9 +312,8 @@ function riderEntryList(entries,race){
      " ｜ 1着 "+show(d.first)+"・2着 "+show(d.second)+"・3着 "+show(d.third)+"・着外 "+show(d.other)));
   }
   wrapper.append(more);
-  wrapper.append(node("p",(statCount===entries.length?"全"+statCount+"選手":statCount+"/"+entries.length+"選手")+"の掲載統計値。集計期間："+show(src.period)+
-   " ／ 取得："+show(src.capturedAt)+"。単一媒体の掲載値であり、発走前時点の統計や正式照合PASSとは限りません。","entry-stats-caption"));
-  const link=node("a","競走成績の掲載元を見る");link.href=src.url;link.rel="noopener noreferrer";link.target="_blank";wrapper.append(link);
+  wrapper.append(node("p",(statCount===entries.length?"全"+statCount+"選手":statCount+"/"+entries.length+"選手")+"の掲載統計値。集計期間："+show(src.period?.replace(/（[^）]*掲載値）/g,""))+
+   " ／ 取得："+show(src.capturedAt)+(race.statsPhase==="atOrAfterStart"?"（発走時刻以後）":race.statsPhase==="preRace"?"（発走時刻前）":""),"entry-stats-caption"));
  }else wrapper.append(node("p","このレースの競走得点・S/B・勝率・連対率は未収録です。未取得値は「—」で表示します。","entry-stats-caption"));
  return wrapper;
 }
@@ -352,12 +375,22 @@ function render(){
  const day=el("day").value,track=el("track").value;
  if(day<cache.windowStart||day>cache.windowEnd){stats([]);el("state").textContent="選択日はこの配信の対象範囲外です。";root.append(node("p","この配信は "+cache.windowStart+" ～ "+cache.windowEnd+" の範囲を表示します。","empty-panel"));return}
  const all=cache.races.filter(r=>r.date===day);
- const chosen=all.filter(r=>(!track||r.track===track)&&(selectedSession==="all"||raceSession(r)===selectedSession));
+ const raceNumber=el("race-number").value, raceClass=el("race-class").value;
+ const rider=el("rider-name").value.replace(/\s/g,""), line=el("line-filter").value;
+ const classes={"A3":/^A3|Ａ級３|チャレンジ/,"A1・A2":/^A[12]|Ａ級[１２]/,"S級":/^S|Ｓ級/,"ガールズ":/^L1|Ｌ級|ガールズ/};
+ const chosen=all.filter(r=>{
+  if(track&&r.track!==track||selectedSession!=="all"&&raceSession(r)!==selectedSession)return false;
+  if(raceNumber&&Number(raceNumber)!==r.race||raceClass&&!classes[raceClass].test(r.className||""))return false;
+  if(rider&&![...(r.entries||[]),...(r.results||[])].some(x=>(x.name||"").replace(/\s/g,"").includes(rider)))return false;
+  if(!line)return true;
+  const groups=allLines(r.entries||[]);
+  return Boolean(groups?.some(g=>line==="single"?g.length===1:g.length>1));
+ });
  syncSessionButtons();
  stats(chosen);
  el("state").textContent=all.length?day+" の収録記録を表示中":"この日の出走表・結果はまだ台帳から届いていません。";
  if(!chosen.length){
-  root.append(node("p",all.length?"選択した競輪場・時間帯の収録記録はありません。時間帯未確認の記録もご確認ください。":"収録がないことは、開催がないことを意味しません。","empty-panel"));return;
+  root.append(node("p",all.length?"選択した条件に一致するレースはありません。":"収録がないことは、開催がないことを意味しません。","empty-panel"));return;
  }
  const groups=new Map();
  chosen.forEach(r=>{
@@ -381,6 +414,38 @@ function render(){
   section.append(grid);root.append(section);
  }
 }
+function displayHistoryRace(r){
+ const stats=r.statSnapshots?.preRace||r.statSnapshots?.atOrAfterStart||r.statSnapshots?.unknown;
+ const line=r.lineSnapshots?.preRace||r.lineSnapshots?.atOrAfterStart||r.lineSnapshots?.unknown;
+ return {...r,statsPhase:Object.keys(r.statSnapshots||{}).find(key=>r.statSnapshots[key]===stats),riderStatsSource:stats?.source,lineSourceUrl:line?.sourceUrl,lineCapturedAt:line?.capturedAt,
+  entries:r.entries.map(entry=>({...entry,riderStats:stats?.byCar[entry.number],
+   preRaceLine:line?line.byCar[entry.number]:entry.preRaceLine}))};
+}
+async function showDay(){
+ const day=el("day").value, request=++dayRequest;
+ if(!daily)return;
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(day)||day>=daily.windowStart){
+  cache=daily;updateVenues();render();return;
+ }
+ cache=null;el("races").replaceChildren();
+ el("state").textContent="履歴を確認しています…";
+ try{
+  const response=await fetch("./daily-history/"+day+".json",{cache:"no-cache"});
+  if(request!==dayRequest)return;
+  if(response.status===404){
+   stats([]);el("state").textContent="この日の履歴は未収録です。";return;
+  }
+  if(!response.ok)throw Error("HTTP "+response.status);
+  const data=await response.json();
+  if(request!==dayRequest)return;
+  if(data.schema!=="ki-daily-history-v1"||data.date!==day||!Array.isArray(data.races))throw Error("履歴形式が不一致");
+  cache={windowStart:day,windowEnd:day,races:data.races.map(displayHistoryRace)};
+  updateVenues();render();
+ }catch(error){
+  if(request!==dayRequest)return;
+  stats([]);el("state").textContent="履歴を読み込めませんでした："+error.message;
+ }
+}
 async function load(){
  el("state").textContent="最新の配信を確認しています…";el("refresh").disabled=true;
  try{
@@ -388,18 +453,19 @@ async function load(){
   if(!response.ok)throw Error("HTTP "+response.status);
   const data=await response.json();
   if(data.schema!=="ki-daily-board-v1"||!Array.isArray(data.races)||!/^\d{4}-\d{2}-\d{2}$/.test(data.windowStart||"")||!/^\d{4}-\d{2}-\d{2}$/.test(data.windowEnd||""))throw Error("配信形式が不一致");
-  cache=data;updateVenues();
+  daily=data;
   el("source").textContent="対象 "+data.windowStart+" ～ "+data.windowEnd+" ／ 出走表最新 "+(data.sourceLatest?.entries||"未取得")+" ／ 結果最新 "+(data.sourceLatest?.results||"未取得");
   el("source").classList.toggle("stale",(data.sourceLatest?.entries||"")<today);
-  render();
- }catch(error){cache=null;el("races").replaceChildren();stats([]);el("state").textContent="配信を読み込めませんでした："+error.message;el("source").textContent="最新データと断定できないため表示しません。"}
+  await showDay();
+ }catch(error){daily=null;cache=null;el("races").replaceChildren();stats([]);el("state").textContent="配信を読み込めませんでした："+error.message;el("source").textContent="最新データと断定できないため表示しません。"}
  finally{el("refresh").disabled=false}
 }
-el("day").addEventListener("change",()=>{updateVenues();render()});
+el("day").addEventListener("change",showDay);
+for(const id of ["race-number","race-class","rider-name","line-filter"])el(id).addEventListener("input",render);
 el("track").addEventListener("change",render);
 document.querySelectorAll("[data-session]").forEach(btn=>btn.addEventListener("click",()=>{selectedSession=btn.dataset.session;render()}));
 el("refresh").addEventListener("click",load);
-document.querySelectorAll("[data-day-offset]").forEach(btn=>btn.addEventListener("click",()=>{el("day").value=changeJst(Number(btn.dataset.dayOffset));updateVenues();render()}));
+document.querySelectorAll("[data-day-offset]").forEach(btn=>btn.addEventListener("click",()=>{el("day").value=changeJst(Number(btn.dataset.dayOffset));showDay()}));
 load();
 })();
 </script></body></html>
