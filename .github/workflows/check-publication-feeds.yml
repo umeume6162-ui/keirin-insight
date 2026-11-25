@@ -14,6 +14,7 @@ on:
       - 'line-forecast.html'
       - 'tools/test_single_source_forecast.cjs'
       - 'race-result-detail.html'
+      - 'race-index-live.html'
       - 'reconstruction-status.html'
       - '.github/workflows/check-publication-feeds.yml'
   pull_request:
@@ -30,6 +31,7 @@ on:
       - 'line-forecast.html'
       - 'tools/test_single_source_forecast.cjs'
       - 'race-result-detail.html'
+      - 'race-index-live.html'
       - 'reconstruction-status.html'
       - '.github/workflows/check-publication-feeds.yml'
   workflow_dispatch:
@@ -57,8 +59,8 @@ jobs:
         run: node tools/test_mobile_result_contract.cjs
 
   deployed:
-    # Scheduled/manual checks use current main, never a PR's unmerged files.
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+    # Use current main for scheduled/manual checks or an explicitly tagged push.
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[verify-pages]')))
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -76,7 +78,13 @@ jobs:
                    'verified-rider-ids-feed-v1.json', 'verified-line-snapshots-feed-v1.json',
                    'daily-board-feed-v1.json', 'collection-status-snapshot-v1.json',
                    'ledger-status-snapshot-v1.json')
-          pending = list(feeds)
+          archive = sorted(Path('daily-history').glob('[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].json'))
+          if not archive:
+              raise SystemExit('Daily history files missing from main')
+          daily = json.loads(Path('daily-board-feed-v1.json').read_text(encoding='utf-8'))
+          outside_daily = [p for p in archive if p.stem < daily['windowStart']]
+          sample = (outside_daily or archive)[-1]
+          pending = [*feeds, sample.as_posix()]
           for attempt in range(3):
               failures = []
               for name in pending:

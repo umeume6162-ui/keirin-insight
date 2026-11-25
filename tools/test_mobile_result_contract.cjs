@@ -51,3 +51,12 @@ assert.ok(audit.includes('window.KIVerified.bundle()'),'audit must use verified 
 console.log('OK: verified line settlement categories, solo, individual exclusion, ambiguous places and live-key intersection');
  // Additional one-source orphan-forecast runtime test; still the same UI CI step.
 require('./test_single_source_forecast.cjs');
+
+const resultIndex=fs.readFileSync('race-index-live.html','utf8');
+const orderStart=resultIndex.indexOf('function compareRaceOrder(');
+const orderEnd=resultIndex.indexOf('function filtered()',orderStart);
+assert.ok(orderStart>=0&&orderEnd>orderStart,'race index must define date order');
+const order=new Function(resultIndex.slice(orderStart,orderEnd)+'\nreturn compareRaceOrder;')();
+const racesInFeedOrder=[{date:'2026-10-01',track:'奈良',race:1},{date:'2026-11-05',track:'大宮',race:10},{date:'2026-11-05',track:'大宮',race:2}];
+assert.deepEqual(racesInFeedOrder.sort(order).map(r=>r.race),[2,10,1]);
+assert.ok(resultIndex.includes('records=checked.sort(compareRaceOrder);'),'newest records must precede page slicing');
