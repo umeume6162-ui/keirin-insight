@@ -189,8 +189,8 @@ jobs:
                   if tag=='script' and self.inside:
                       self.scripts.append(self.current)
                       self.inside=False
-          expected={'index.html':{'races','rows','ids','lines','status','last','refresh'},
-                    'daily-board.html':{'day','track','refresh','state','source','races','race-count','entry-count','result-count','stats-count'}}
+          expected={'index.html':{'races','joint','ids','lines','status','last','refresh'},
+                    'daily-board.html':{'day','track','refresh','state','source','races','entry-count','result-count','stats-count','line-count'}}
           for name,required in expected.items():
               content=Path(name).read_text(encoding='utf-8')
               check=Inspect()
@@ -572,6 +572,7 @@ jobs:
               out.write("\n".join(rows) + "\n")
           PY
       - name: Build daily board
+        id: build_daily_board
         if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))) }}
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
@@ -587,10 +588,14 @@ jobs:
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: python scripts/enrich_daily_rider_stats.py --limit 16 --save-lines
-      - name: Commit changed daily feed only
-        if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))) }}
+      - name: Archive daily observations by race date
+        id: archive_daily_board
+        if: ${{ !cancelled() && steps.build_daily_board.outcome == 'success' && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))) }}
+        run: python scripts/build_daily_board.py --archive daily-history
+      - name: Commit changed daily feeds and history
+        if: ${{ !cancelled() && steps.archive_daily_board.outcome == 'success' && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))) }}
         run: |
-          git add daily-board-feed-v1.json daily-race-start-times-v1.json daily-rider-stats-v1.json
+          git add daily-board-feed-v1.json daily-race-start-times-v1.json daily-rider-stats-v1.json daily-history/
           if git diff --cached --quiet; then
             echo 'Daily feed unchanged; no commit or duplicate validation.'
             exit 0
