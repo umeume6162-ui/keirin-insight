@@ -1,11 +1,11 @@
 {
   "schema": "ki-line-snapshots-v1",
-  "snapshotDate": "2026-11-25",
+  "snapshotDate": "2026-11-26",
   "sourceTab": "VERIFIED publication",
-  "verificationNote": "Matsuyama 11R and 12R pre-race predicted groups matched by two publishers; not actual race sequence. 2026-11-21福井3Rは既存Google発走前スナップ7車とKドリームス掲載の媒体並び予想を照合し、結果から逆算せず単一元の予想として公開。 2026-11-21福井4RはGoogle発走前スナップの全7車ラインとKドリームス並び予想を確認し、出走表で府県/期別を補完。結果とは独立した媒体予想。 2026-10-05松山3R/4R: オッズパーク掲載の発走前予想グループを全7車・選手名で照合し、それぞれ単一媒体予想として公開。 2026-10-05松山5/6/8/9R オッズパーク発走前予想4レース全28車と正式結果の本人情報を照合、単騎を維持。 2026-10-01久留米1～4R・2026-10-04松山11R: オッズパーク発走前予想の全7車と正式結果の本人情報を照合して5レース追加。 2026-10-01久留米8～11R オッズパーク掲載の全7車発走前ラインを正式結果の本人情報と照合。7Rは番手競りのため単純な同ライン配列にできず保留。 2026-10-01佐世保3RはKドリームス系GambooBET、4Rはオッズパークの発走前予想で検証。掲載元を区別し全7車照合。",
+  "verificationNote": "発走前の掲載予想を全車照合し、証拠保存・再読み取り後に公開。2026-11-26 静岡6Rを追加。",
   "summary": {
-    "races": 120,
-    "rider_rows": 840
+    "races": 126,
+    "rider_rows": 882
   },
   "races": [
     {
@@ -14510,6 +14510,752 @@
           "name": "下岡 将也",
           "prefecture": "三重",
           "period": "111"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26|38|3",
+      "key": "2026-11-26|38|3",
+      "date": "2026-11-26",
+      "track": "静岡",
+      "trackCode": "38",
+      "race": 3,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124030003/",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124030003/"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "LINE-KDREAMS-20261126-38-03",
+          "sourceSnapshot": "KI｜日次出走表!A870:O876",
+          "archivedOriginalHtml": false,
+          "comparison": "同日静岡3Rの掲載予想・出走表とGoogle日次原本を車番・氏名・府県・期別で全7車照合。不一致0。Google証拠行120を再読済み。取得 2026-11-26 04:41〜04:42 JST。"
+        }
+      },
+      "forecastGroups": [
+        [
+          2,
+          7
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "北野 武史",
+          "prefecture": "石川",
+          "period": "78",
+          "line": [
+            4,
+            1
+          ]
+        },
+        {
+          "number": 2,
+          "name": "金田 涼馬",
+          "prefecture": "神奈川",
+          "period": "119",
+          "line": [
+            2,
+            7
+          ]
+        },
+        {
+          "number": 3,
+          "name": "隅 貴史",
+          "prefecture": "山口",
+          "period": "91",
+          "line": [
+            5,
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "坂本 拓也",
+          "prefecture": "福島",
+          "period": "111",
+          "line": [
+            4,
+            1
+          ]
+        },
+        {
+          "number": 5,
+          "name": "徳永 泰粋",
+          "prefecture": "熊本",
+          "period": "123",
+          "line": [
+            5,
+            3
+          ]
+        },
+        {
+          "number": 6,
+          "name": "薮 謙治",
+          "prefecture": "京都",
+          "period": "83",
+          "line": [
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "大竹 哲也",
+          "prefecture": "静岡",
+          "period": "93",
+          "line": [
+            2,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26|38|5",
+      "key": "2026-11-26|38|5",
+      "date": "2026-11-26",
+      "track": "静岡",
+      "trackCode": "38",
+      "race": 5,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124030005/",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124030005/"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "LINE-KDREAMS-20261126-38-05",
+          "sourceSnapshot": "KI｜日次出走表!A884:O890",
+          "archivedOriginalHtml": false,
+          "comparison": "同日静岡5Rの掲載予想・出走表とGoogle日次原本を車番・氏名・府県・期別で全7車照合。不一致0。Google証拠行121を再読済み。取得 2026-11-26 04:41〜04:42 JST。"
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          5,
+          7
+        ],
+        [
+          4,
+          3,
+          2
+        ],
+        [
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "瀬戸 栄作",
+          "prefecture": "長崎",
+          "period": "109",
+          "line": [
+            1,
+            5,
+            7
+          ]
+        },
+        {
+          "number": 2,
+          "name": "内藤 高裕",
+          "prefecture": "東京",
+          "period": "96",
+          "line": [
+            4,
+            3,
+            2
+          ]
+        },
+        {
+          "number": 3,
+          "name": "谷田 泰平",
+          "prefecture": "岐阜",
+          "period": "93",
+          "line": [
+            4,
+            3,
+            2
+          ]
+        },
+        {
+          "number": 4,
+          "name": "貴志 修己",
+          "prefecture": "和歌山",
+          "period": "117",
+          "line": [
+            4,
+            3,
+            2
+          ]
+        },
+        {
+          "number": 5,
+          "name": "佐々木 翔一",
+          "prefecture": "佐賀",
+          "period": "93",
+          "line": [
+            1,
+            5,
+            7
+          ]
+        },
+        {
+          "number": 6,
+          "name": "吉田 裕全",
+          "prefecture": "埼玉",
+          "period": "90",
+          "line": [
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "近藤 誠二",
+          "prefecture": "香川",
+          "period": "80",
+          "line": [
+            1,
+            5,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26|38|7",
+      "key": "2026-11-26|38|7",
+      "date": "2026-11-26",
+      "track": "静岡",
+      "trackCode": "38",
+      "race": 7,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124030007/",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124030007/"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "LINE-KDREAMS-20261126-38-07",
+          "sourceSnapshot": "KI｜日次出走表!A898:O904",
+          "archivedOriginalHtml": false,
+          "comparison": "同日静岡7Rの掲載予想・出走表とGoogle日次原本を車番・氏名・府県・期別で全7車照合。不一致0。Google証拠行122を再読済み。取得 2026-11-26 04:41〜04:42 JST。"
+        }
+      },
+      "forecastGroups": [
+        [
+          3,
+          6
+        ],
+        [
+          2
+        ],
+        [
+          5
+        ],
+        [
+          4,
+          7,
+          1
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "伊豆田 浩人",
+          "prefecture": "神奈川",
+          "period": "87",
+          "line": [
+            4,
+            7,
+            1
+          ]
+        },
+        {
+          "number": 2,
+          "name": "天田 裕輝",
+          "prefecture": "群馬",
+          "period": "91",
+          "line": [
+            2
+          ]
+        },
+        {
+          "number": 3,
+          "name": "北川 大五郎",
+          "prefecture": "大阪",
+          "period": "103",
+          "line": [
+            3,
+            6
+          ]
+        },
+        {
+          "number": 4,
+          "name": "望月 湧世",
+          "prefecture": "静岡",
+          "period": "123",
+          "line": [
+            4,
+            7,
+            1
+          ]
+        },
+        {
+          "number": 5,
+          "name": "小林 大介",
+          "prefecture": "群馬",
+          "period": "79",
+          "line": [
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "佐野 梅一",
+          "prefecture": "京都",
+          "period": "78",
+          "line": [
+            3,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "加藤 圭一",
+          "prefecture": "神奈川",
+          "period": "85",
+          "line": [
+            4,
+            7,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26|38|10",
+      "key": "2026-11-26|38|10",
+      "date": "2026-11-26",
+      "track": "静岡",
+      "trackCode": "38",
+      "race": 10,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124030010/",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124030010/"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "LINE-KDREAMS-20261126-38-10",
+          "sourceSnapshot": "KI｜日次出走表!A919:O925",
+          "archivedOriginalHtml": false,
+          "comparison": "同日静岡10Rの掲載予想・出走表とGoogle日次原本を車番・氏名・府県・期別で全7車照合。不一致0。Google証拠行123を再読済み。取得 2026-11-26 04:41〜04:42 JST。"
+        }
+      },
+      "forecastGroups": [
+        [
+          2,
+          7,
+          5
+        ],
+        [
+          1,
+          4,
+          6,
+          3
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "日高 裕太",
+          "prefecture": "静岡",
+          "period": "121",
+          "line": [
+            1,
+            4,
+            6,
+            3
+          ]
+        },
+        {
+          "number": 2,
+          "name": "太田 竜馬",
+          "prefecture": "徳島",
+          "period": "109",
+          "line": [
+            2,
+            7,
+            5
+          ]
+        },
+        {
+          "number": 3,
+          "name": "石川 裕二",
+          "prefecture": "茨城",
+          "period": "99",
+          "line": [
+            1,
+            4,
+            6,
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "菊池 竣太朗",
+          "prefecture": "静岡",
+          "period": "111",
+          "line": [
+            1,
+            4,
+            6,
+            3
+          ]
+        },
+        {
+          "number": 5,
+          "name": "鈴木 伸之",
+          "prefecture": "愛知",
+          "period": "87",
+          "line": [
+            2,
+            7,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "鈴木 謙太郎",
+          "prefecture": "茨城",
+          "period": "90",
+          "line": [
+            1,
+            4,
+            6,
+            3
+          ]
+        },
+        {
+          "number": 7,
+          "name": "掛水 泰範",
+          "prefecture": "高知",
+          "period": "98",
+          "line": [
+            2,
+            7,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26|38|11",
+      "key": "2026-11-26|38|11",
+      "date": "2026-11-26",
+      "track": "静岡",
+      "trackCode": "38",
+      "race": 11,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124030011/",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124030011/"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "LINE-KDREAMS-20261126-38-11",
+          "sourceSnapshot": "KI｜日次出走表!A926:O932",
+          "archivedOriginalHtml": false,
+          "comparison": "同日静岡11Rの掲載予想・出走表とGoogle日次原本を車番・氏名・府県・期別で全7車照合。不一致0。Google証拠行124を再読済み。取得 2026-11-26 04:41〜04:42 JST。"
+        }
+      },
+      "forecastGroups": [
+        [
+          7,
+          1,
+          5
+        ],
+        [
+          3
+        ],
+        [
+          2,
+          6,
+          4
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "小田倉 勇二",
+          "prefecture": "埼玉",
+          "period": "91",
+          "line": [
+            7,
+            1,
+            5
+          ]
+        },
+        {
+          "number": 2,
+          "name": "常次 勇人",
+          "prefecture": "大阪",
+          "period": "121",
+          "line": [
+            2,
+            6,
+            4
+          ]
+        },
+        {
+          "number": 3,
+          "name": "吉田 智哉",
+          "prefecture": "愛媛",
+          "period": "111",
+          "line": [
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "山田 裕哉",
+          "prefecture": "岐阜",
+          "period": "98",
+          "line": [
+            2,
+            6,
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "長井 優斗",
+          "prefecture": "東京",
+          "period": "95",
+          "line": [
+            7,
+            1,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "中武 三四郎",
+          "prefecture": "大阪",
+          "period": "113",
+          "line": [
+            2,
+            6,
+            4
+          ]
+        },
+        {
+          "number": 7,
+          "name": "岡部 伶音",
+          "prefecture": "福島",
+          "period": "123",
+          "line": [
+            7,
+            1,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26|38|12",
+      "key": "2026-11-26|38|12",
+      "date": "2026-11-26",
+      "track": "静岡",
+      "trackCode": "38",
+      "race": 12,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124030012/",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124030012/"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "LINE-KDREAMS-20261126-38-12",
+          "sourceSnapshot": "KI｜日次出走表!A933:O939",
+          "archivedOriginalHtml": false,
+          "comparison": "同日静岡12Rの掲載予想・出走表とGoogle日次原本を車番・氏名・府県・期別で全7車照合。不一致0。Google証拠行125を再読済み。取得 2026-11-26 04:41〜04:42 JST。"
+        }
+      },
+      "forecastGroups": [
+        [
+          7,
+          2
+        ],
+        [
+          6,
+          5,
+          1
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "岡村 潤",
+          "prefecture": "静岡",
+          "period": "86",
+          "line": [
+            6,
+            5,
+            1
+          ]
+        },
+        {
+          "number": 2,
+          "name": "原井 博斗",
+          "prefecture": "福岡",
+          "period": "115",
+          "line": [
+            7,
+            2
+          ]
+        },
+        {
+          "number": 3,
+          "name": "佐々木 雄一",
+          "prefecture": "福島",
+          "period": "83",
+          "line": [
+            4,
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "皿屋 豊",
+          "prefecture": "三重",
+          "period": "111",
+          "line": [
+            4,
+            3
+          ]
+        },
+        {
+          "number": 5,
+          "name": "東 龍之介",
+          "prefecture": "神奈川",
+          "period": "96",
+          "line": [
+            6,
+            5,
+            1
+          ]
+        },
+        {
+          "number": 6,
+          "name": "野口 裕史",
+          "prefecture": "千葉",
+          "period": "111",
+          "line": [
+            6,
+            5,
+            1
+          ]
+        },
+        {
+          "number": 7,
+          "name": "梶原 海斗",
+          "prefecture": "福岡",
+          "period": "123",
+          "line": [
+            7,
+            2
+          ]
         }
       ]
     }
