@@ -11011,8 +11011,8 @@
     "2026-11-24|奈良|3": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611245303",
       "signature": "30d58ae05a601739928f781ff25874f785e2ccd4656613417a1b37fe594ba374",
-      "lastAttemptAt": "2026-11-25T08:01:44+09:00",
-      "nextRetryAt": "2026-11-25T20:01:44+09:00",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T11:29:14+09:00",
       "reasonType": "ValueError",
       "reasonCode": "rider_identity_conflict"
     },
@@ -11099,56 +11099,56 @@
     "2026-11-25|武雄|4": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611258404",
       "signature": "0f0b3f0495bdc629b675758a252a2b022646e47cb9e889e5b52592e42ffce0d9",
-      "lastAttemptAt": "2026-11-25T18:15:38+09:00",
-      "nextRetryAt": "2026-11-25T22:15:38+09:00",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T03:29:14+09:00",
       "reasonType": "ValueError",
       "reasonCode": "rider_identity_conflict"
     },
     "2026-11-25|武雄|6": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611258406",
       "signature": "3cd2708aba16588f831139ea05e1ae26b314cead783cdb32c625a4f55d515f8c",
-      "lastAttemptAt": "2026-11-25T18:15:38+09:00",
-      "nextRetryAt": "2026-11-25T22:15:38+09:00",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T03:29:14+09:00",
       "reasonType": "ValueError",
       "reasonCode": "rider_identity_conflict"
     },
     "2026-11-25|静岡|2": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611253802",
       "signature": "28fb16dd97790de8f6e826fa4fd8e3cf76ff88ada51857ba804b48a6da24b30c",
-      "lastAttemptAt": "2026-11-25T18:15:38+09:00",
-      "nextRetryAt": "2026-11-25T22:15:38+09:00",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T03:29:14+09:00",
       "reasonType": "ValueError",
       "reasonCode": "rider_identity_conflict"
     },
     "2026-11-25|静岡|3": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611253803",
       "signature": "a6835c59eed752a74eae2de75446501119efe64bb8cd57df2f016b979b1d3762",
-      "lastAttemptAt": "2026-11-25T18:15:38+09:00",
-      "nextRetryAt": "2026-11-25T22:15:38+09:00",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T03:29:14+09:00",
       "reasonType": "ValueError",
       "reasonCode": "rider_identity_conflict"
     },
     "2026-11-25|静岡|6": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611253806",
       "signature": "701f187133f0b1550366d42cd8e29be314906cfab26d96cf72b6714c09fb203c",
-      "lastAttemptAt": "2026-11-25T18:15:38+09:00",
-      "nextRetryAt": "2026-11-25T22:15:38+09:00",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T03:29:14+09:00",
       "reasonType": "ValueError",
       "reasonCode": "rider_identity_conflict"
     },
     "2026-11-25|静岡|7": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611253807",
       "signature": "71a0636a96f1d9b5a094cd73fe2960d74d20257e3266dd815c1c221e9fdcd063",
-      "lastAttemptAt": "2026-11-25T18:15:38+09:00",
-      "nextRetryAt": "2026-11-25T22:15:38+09:00",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T03:29:14+09:00",
       "reasonType": "ValueError",
       "reasonCode": "rider_identity_conflict"
     },
     "2026-11-25|静岡|9": {
       "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611253809",
       "signature": "7f11717fc38a3b211139086c7cb311d80eb238ba16993ed10329b8967aee67cb",
-      "lastAttemptAt": "2026-11-25T18:15:38+09:00",
-      "nextRetryAt": "2026-11-25T22:15:38+09:00",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T03:29:14+09:00",
       "reasonType": "ValueError",
       "reasonCode": "rider_identity_conflict"
     },
@@ -11157,6 +11157,22 @@
       "signature": "0cf1903327ec99b7699eb8778edbdf80f9c271cc6df3a46a1bed92a145b00084",
       "lastAttemptAt": "2026-11-25T18:15:38+09:00",
       "nextRetryAt": "2026-11-26T06:15:38+09:00",
+      "reasonType": "ValueError",
+      "reasonCode": "source_table_shape"
+    },
+    "2026-11-26|富山|10": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611264610",
+      "signature": "0917df7d00b64d24c3b3da6f12b07362d099ac50f4dcfde56af7ce3ed28b661b",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T11:29:14+09:00",
+      "reasonType": "ValueError",
+      "reasonCode": "source_table_shape"
+    },
+    "2026-11-26|富山|11": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611264611",
+      "signature": "c049b45638f15aa2306be88edb41bc291a586365638223d10eabd1bd608af1fe",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T11:29:14+09:00",
       "reasonType": "ValueError",
       "reasonCode": "source_table_shape"
     },
@@ -11173,6 +11189,54 @@
       "signature": "b2a20f61a6420a8bd8820f64513e0004546f8f1cab68e00d0657233e9d6ac7b7",
       "lastAttemptAt": "2026-11-25T18:15:38+09:00",
       "nextRetryAt": "2026-11-26T06:15:38+09:00",
+      "reasonType": "ValueError",
+      "reasonCode": "source_table_shape"
+    },
+    "2026-11-26|富山|4": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611264604",
+      "signature": "e09c1e7d2666a1b8fe4ac786f4c9a2768f816ebb9332983c121ce59697577273",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T11:29:14+09:00",
+      "reasonType": "ValueError",
+      "reasonCode": "source_table_shape"
+    },
+    "2026-11-26|富山|6": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611264606",
+      "signature": "90e6a3fb0575c958906040a468217ef4422e85bbb2f8cb1383033799fd5aa346",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T11:29:14+09:00",
+      "reasonType": "ValueError",
+      "reasonCode": "source_table_shape"
+    },
+    "2026-11-26|富山|7": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611264607",
+      "signature": "984584a47e40e083818a7608908cbfba5411a5d497cb302406cc084371292db3",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T11:29:14+09:00",
+      "reasonType": "ValueError",
+      "reasonCode": "source_table_shape"
+    },
+    "2026-11-26|富山|8": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611264608",
+      "signature": "a393ed3ef0a81f4e653177a0aaa14dc15124ccdbc417a9a6726ad68af3f3a11d",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T11:29:14+09:00",
+      "reasonType": "ValueError",
+      "reasonCode": "source_table_shape"
+    },
+    "2026-11-26|富山|9": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611264609",
+      "signature": "38750514f2bbf593f02c7826c5e6d4eef56a8c6de7bd564e8d80f31aa06eb559",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T11:29:14+09:00",
+      "reasonType": "ValueError",
+      "reasonCode": "source_table_shape"
+    },
+    "2026-11-26|小松島|1": {
+      "sourceUrl": "https://keirin.netkeiba.com/race/entry/?race_id=202611267301",
+      "signature": "350f05cd8ebc7d87e1767702099a9d8847e0b6b0bbeb6afd00c970f4246bb5e4",
+      "lastAttemptAt": "2026-11-25T23:29:14+09:00",
+      "nextRetryAt": "2026-11-26T11:29:14+09:00",
       "reasonType": "ValueError",
       "reasonCode": "source_table_shape"
     }

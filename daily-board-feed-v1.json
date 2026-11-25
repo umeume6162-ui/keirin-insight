@@ -15911,8 +15911,79 @@
           }
         }
       ],
-      "results": [],
-      "status": "entry_only",
+      "results": [
+        {
+          "number": 1,
+          "name": "浜田 翔平",
+          "prefecture": "大阪",
+          "period": "111",
+          "finish": "1",
+          "method": "捲",
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252602"
+        },
+        {
+          "number": 2,
+          "name": "茂木 和臣",
+          "prefecture": "埼玉",
+          "period": "63",
+          "finish": "2",
+          "method": "差",
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252602"
+        },
+        {
+          "number": 7,
+          "name": "柴田 健",
+          "prefecture": "神奈川",
+          "period": "71",
+          "finish": "3",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252602"
+        },
+        {
+          "number": 4,
+          "name": "小塚 潤",
+          "prefecture": "愛知",
+          "period": "86",
+          "finish": "4",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252602"
+        },
+        {
+          "number": 5,
+          "name": "平川 雅晃",
+          "prefecture": "長野",
+          "period": "107",
+          "finish": "5",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252602"
+        },
+        {
+          "number": 3,
+          "name": "浦崎 貴史",
+          "prefecture": "北海道",
+          "period": "75",
+          "finish": "6",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252602"
+        },
+        {
+          "number": 6,
+          "name": "佐藤 裕輝",
+          "prefecture": "福島",
+          "period": "98",
+          "finish": "7",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252602"
+        }
+      ],
+      "status": "results_recorded",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
       "expectedCount": 7,
@@ -17300,8 +17371,79 @@
           }
         }
       ],
-      "results": [],
-      "status": "entry_only",
+      "results": [
+        {
+          "number": 4,
+          "name": "三宅 裕武",
+          "prefecture": "三重",
+          "period": "88",
+          "finish": "1",
+          "method": "差",
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252608"
+        },
+        {
+          "number": 5,
+          "name": "樋口 開土",
+          "prefecture": "東京",
+          "period": "113",
+          "finish": "2",
+          "method": "差",
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252608"
+        },
+        {
+          "number": 1,
+          "name": "水谷 将司",
+          "prefecture": "愛知",
+          "period": "105",
+          "finish": "3",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252608"
+        },
+        {
+          "number": 2,
+          "name": "台 和紀",
+          "prefecture": "埼玉",
+          "period": "83",
+          "finish": "4",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252608"
+        },
+        {
+          "number": 7,
+          "name": "伊早坂 駿一",
+          "prefecture": "茨城",
+          "period": "105",
+          "finish": "5",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252608"
+        },
+        {
+          "number": 6,
+          "name": "佐々木 祐太",
+          "prefecture": "岩手",
+          "period": "123",
+          "finish": "6",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252608"
+        },
+        {
+          "number": 3,
+          "name": "江連 和洋",
+          "prefecture": "栃木",
+          "period": "76",
+          "finish": "7",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252608"
+        }
+      ],
+      "status": "results_recorded",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
       "expectedCount": 7,
@@ -17960,8 +18102,79 @@
           }
         }
       ],
-      "results": [],
-      "status": "entry_only",
+      "results": [
+        {
+          "number": 5,
+          "name": "仲野 結音",
+          "prefecture": "大阪",
+          "period": "117",
+          "finish": "1",
+          "method": "差",
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252611"
+        },
+        {
+          "number": 3,
+          "name": "中釜 健次",
+          "prefecture": "大阪",
+          "period": "121",
+          "finish": "2",
+          "method": "ク",
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252611"
+        },
+        {
+          "number": 1,
+          "name": "山本 勝利",
+          "prefecture": "東京",
+          "period": "117",
+          "finish": "3",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252611"
+        },
+        {
+          "number": 6,
+          "name": "岡本 英之",
+          "prefecture": "千葉",
+          "period": "85",
+          "finish": "4",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252611"
+        },
+        {
+          "number": 4,
+          "name": "平根 優大",
+          "prefecture": "福島",
+          "period": "125",
+          "finish": "5",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252611"
+        },
+        {
+          "number": 7,
+          "name": "吉村 和之",
+          "prefecture": "岐阜",
+          "period": "80",
+          "finish": "6",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252611"
+        },
+        {
+          "number": 2,
+          "name": "辻田 祥大",
+          "prefecture": "三重",
+          "period": "127",
+          "finish": "7",
+          "method": null,
+          "exception": null,
+          "sourceUrl": "https://keirin.netkeiba.com/race/result/?race_id=202611252611"
+        }
+      ],
+      "status": "results_recorded",
       "entrySource": "KI｜日次出走表",
       "resultSource": "KI｜日次結果",
       "expectedCount": 7,
@@ -23760,6 +23973,6 @@
   "summary": {
     "races": 134,
     "entries": 938,
-    "resultRows": 217
+    "resultRows": 238
   }
 }
