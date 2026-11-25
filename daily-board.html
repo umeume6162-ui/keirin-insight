@@ -425,9 +425,13 @@ async function showDay(){
  const day=el("day").value, request=++dayRequest;
  if(!daily)return;
  if(!/^\d{4}-\d{2}-\d{2}$/.test(day)||day>=daily.windowStart){
-  cache=daily;updateVenues();render();return;
+  cache=daily;
+  el("source").textContent="対象 "+daily.windowStart+" ～ "+daily.windowEnd+" ／ 出走表最新 "+(daily.sourceLatest?.entries||"未取得")+" ／ 結果最新 "+(daily.sourceLatest?.results||"未取得");
+  el("source").classList.toggle("stale",(daily.sourceLatest?.entries||"")<today);
+  updateVenues();render();return;
  }
  cache=null;el("races").replaceChildren();
+ el("source").textContent="日次履歴（未正式照合）";el("source").classList.remove("stale");
  el("state").textContent="履歴を確認しています…";
  try{
   const response=await fetch("./daily-history/"+day+".json",{cache:"no-cache"});
@@ -454,8 +458,6 @@ async function load(){
   const data=await response.json();
   if(data.schema!=="ki-daily-board-v1"||!Array.isArray(data.races)||!/^\d{4}-\d{2}-\d{2}$/.test(data.windowStart||"")||!/^\d{4}-\d{2}-\d{2}$/.test(data.windowEnd||""))throw Error("配信形式が不一致");
   daily=data;
-  el("source").textContent="対象 "+data.windowStart+" ～ "+data.windowEnd+" ／ 出走表最新 "+(data.sourceLatest?.entries||"未取得")+" ／ 結果最新 "+(data.sourceLatest?.results||"未取得");
-  el("source").classList.toggle("stale",(data.sourceLatest?.entries||"")<today);
   await showDay();
  }catch(error){daily=null;cache=null;el("races").replaceChildren();stats([]);el("state").textContent="配信を読み込めませんでした："+error.message;el("source").textContent="最新データと断定できないため表示しません。"}
  finally{el("refresh").disabled=false}
