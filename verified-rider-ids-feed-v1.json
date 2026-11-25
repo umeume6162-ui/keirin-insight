@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
   "verificationNote": "KEIRIN.JPと異なる別掲載元で氏名・府県・期別・6桁IDの一致。2026-11-24阿部弘、阿部充宏の2名を追加。 2026-11-24阿部蒼大015960、阿部大樹014370を公式証拠2元一致で追加。",
   "summary": {
-    "rows": 269
+    "rows": 270
   },
   "riders": [
     {
@@ -6478,6 +6478,30 @@
           "https://keirin.netkeiba.com/db/profile/?id=15178"
         ],
         "note": "2媒体プロフィール本文4項目一致、Google証拠保存・再読済。元受付ID：MANUAL-V4-20261125-015178"
+      }
+    },
+    {
+      "id": "015475",
+      "name": "伊藤 旭",
+      "prefecture": "熊本",
+      "period": "117",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015475",
+      "verifiedDate": "2026-11-25",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015475",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015475",
+          "https://keirin.netkeiba.com/db/profile/?id=15475"
+        ],
+        "note": "2媒体本文4項目一致、Google証拠保存・再読済。元受付ID：MANUAL-V4-20261125-015475"
       }
     }
   ],
