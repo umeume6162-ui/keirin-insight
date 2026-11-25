@@ -4,14 +4,14 @@
   "source_snapshot_date": "2026-11-26",
   "latest_race_date": "2026-11-05",
   "official_result_independent_audit": "legacy_two_sources_or_verified_KDreams_or_proven_one_fallback_HTML_with_V99",
-  "notes": "全車原文取得とV99照合を必須。松山5/8/9Rはチャリロト、久留米3Rはnetkeirinの実HTMLを読んだ単一元結果照合。追加の他社独立一致と誤表示しない。 2026-10-01久留米1R/4Rをチャリロト実HTML全車とV99不一致0件で追加。 久留米2Rは数字着順と個人状況『故』を別列のまま原文照合。 久留米2026-10-01の5R〜11Rはチャリロト公開HTML実取得、7車×7R全必須項目をV99と照合し不一致0件。ガールズ/男子A級を別集計。 2026-10-04松山11Rはチャリロト原文全7車V99不一致0。 前橋2026-10-01 1Rをチャリロト実HTML全7車とV98完全一致で追加。 佐世保2026-10-01の1〜7Rはチャリロト実HTMLで全49車V99一致0件。ガールズ2R、A級1・2班5R。 青森2026-10-02の1〜7Rをチャリロト全49車のV99不一致0件で公開。 前橋2026-10-02 1〜7R全49車はチャリロト実原文とV99で一致0差分。 2026-10-02大宮9R（1/2/4/5/8〜12R）をチャリロト原文63車とV99全車一致で追加。3Rは着順/例外不一致、6/7RはV99行数不足で保留。 大宮3RはV99の失と掲載原文の失格を正規化したうえで全7車一致。 2026-10-02川崎1〜5R/7〜12Rの11R・77選手結果をチャリロト原文全車一致で追加。6RはV99原本が6車のみで保留。 2026-10-07静岡1〜3R、2026-11-01宇都宮2〜4Rはチャリロト公開HTMLの各7車とV99を比較し必須項目不一致0件、計6R/42行を2026-11-24追加。単一原文であり2媒体一致は未主張。 2026-10-07静岡4〜8R、2026-11-01宇都宮5〜7Rの計8R・56選手についてチャリロトの公開実HTML全車とV99の必須項目一致0差分を確認、単一掲載元として2026-11-24正式公開。 2026-10-02奈良1～3Rはチャリロト実HTMLをGitHub Actions run 45301935842で再取得、各7車をV99と照合し不一致0、単一元の正式公開。 2026-10-02奈良4～7Rは2026-11-24の実HTML再取得ログで全28車をV99再読照合。4Rの数字6着＋落車個人状況と落車着順を分けて記録。 2026-10-02久留米1Rはチャリロトの実HTMLをGitHub Actions run 45305704556で取得しV99全車一致を確認。 2026-10-02久留米2～4RはActions 45306223137の実HTMLをV99原本全車と再照合、各7車・不一致0。 2026-10-02久留米5～9Rは実HTML全35車をV99再読照合し、A1/A2混在とガールズL1を区別して公開。 2026-10-02久留米10・11R、佐世保2〜5・7R、10-03大宮1・2・11Rは実HTML Actions 45332420688でV99全車一致、Google証拠保存・再読済み。 2026-11-05小倉・別府のA3計8RはKドリームスの出走表・確定結果とV99の全56車を照合し追加。 2026-11-05小倉5〜9RはKドリームスの実原文をV99全35車と照合後に収録。",
+  "notes": "全車原文取得とV99照合を必須。松山5/8/9Rはチャリロト、久留米3Rはnetkeirinの実HTMLを読んだ単一元結果照合。追加の他社独立一致と誤表示しない。 2026-10-01久留米1R/4Rをチャリロト実HTML全車とV99不一致0件で追加。 久留米2Rは数字着順と個人状況『故』を別列のまま原文照合。 久留米2026-10-01の5R〜11Rはチャリロト公開HTML実取得、7車×7R全必須項目をV99と照合し不一致0件。ガールズ/男子A級を別集計。 2026-10-04松山11Rはチャリロト原文全7車V99不一致0。 前橋2026-10-01 1Rをチャリロト実HTML全7車とV98完全一致で追加。 佐世保2026-10-01の1〜7Rはチャリロト実HTMLで全49車V99一致0件。ガールズ2R、A級1・2班5R。 青森2026-10-02の1〜7Rをチャリロト全49車のV99不一致0件で公開。 前橋2026-10-02 1〜7R全49車はチャリロト実原文とV99で一致0差分。 2026-10-02大宮9R（1/2/4/5/8〜12R）をチャリロト原文63車とV99全車一致で追加。3Rは着順/例外不一致、6/7RはV99行数不足で保留。 大宮3RはV99の失と掲載原文の失格を正規化したうえで全7車一致。 2026-10-02川崎1〜5R/7〜12Rの11R・77選手結果をチャリロト原文全車一致で追加。6RはV99原本が6車のみで保留。 2026-10-07静岡1〜3R、2026-11-01宇都宮2〜4Rはチャリロト公開HTMLの各7車とV99を比較し必須項目不一致0件、計6R/42行を2026-11-24追加。単一原文であり2媒体一致は未主張。 2026-10-07静岡4〜8R、2026-11-01宇都宮5〜7Rの計8R・56選手についてチャリロトの公開実HTML全車とV99の必須項目一致0差分を確認、単一掲載元として2026-11-24正式公開。 2026-10-02奈良1～3Rはチャリロト実HTMLをGitHub Actions run 45301935842で再取得、各7車をV99と照合し不一致0、単一元の正式公開。 2026-10-02奈良4～7Rは2026-11-24の実HTML再取得ログで全28車をV99再読照合。4Rの数字6着＋落車個人状況と落車着順を分けて記録。 2026-10-02久留米1Rはチャリロトの実HTMLをGitHub Actions run 45305704556で取得しV99全車一致を確認。 2026-10-02久留米2～4RはActions 45306223137の実HTMLをV99原本全車と再照合、各7車・不一致0。 2026-10-02久留米5～9Rは実HTML全35車をV99再読照合し、A1/A2混在とガールズL1を区別して公開。 2026-10-02久留米10・11R、佐世保2〜5・7R、10-03大宮1・2・11Rは実HTML Actions 45332420688でV99全車一致、Google証拠保存・再読済み。 2026-11-05小倉・別府のA3計8RはKドリームスの出走表・確定結果とV99の全56車を照合し追加。 2026-11-05小倉5〜9RはKドリームスの実原文をV99全35車と照合後に収録。 2026-11-05福井A3の3〜7RはKドリームスの実原文をV99全35予定車と照合後に収録。",
   "summary": {
-    "races": 131,
-    "rider_rows": 917,
+    "races": 136,
+    "rider_rows": 952,
     "by_grade": {
       "S級": 19,
       "A1/A2": 60,
-      "A3": 44,
+      "A3": 49,
       "ガールズ": 8
     }
   },
@@ -5256,6 +5256,191 @@
           "retrievedDate": "2026-11-26",
           "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611058109",
           "comparisonResult": "V99と実掲載元の全7車の必須項目一致・Google証拠行147再読済み。",
+          "originalHtmlArchived": false
+        }
+      }
+    },
+    {
+      "key": "2026-11-05|51|3",
+      "date": "2026-11-05",
+      "track": "福井",
+      "track_code": "51",
+      "race": 3,
+      "size": 7,
+      "grade": "A3",
+      "non_numeric": 0,
+      "className": "チャレンジ予選",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/fukui/racedetail/5120261105010003/?pageType=showResult",
+        "method": "kdreams_single_source_verified",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/fukui/racedetail/5120261105010003/?pageType=showResult"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611055103",
+          "comparisonResult": "Kドリームス実掲載ページとV99全7予定車の必須項目一致。Google証拠行148再読済み。",
+          "originalHtmlArchived": false
+        }
+      }
+    },
+    {
+      "key": "2026-11-05|51|4",
+      "date": "2026-11-05",
+      "track": "福井",
+      "track_code": "51",
+      "race": 4,
+      "size": 7,
+      "grade": "A3",
+      "non_numeric": 0,
+      "className": "チャレンジ予選",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/fukui/racedetail/5120261105010004/?pageType=showResult",
+        "method": "kdreams_single_source_verified",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/fukui/racedetail/5120261105010004/?pageType=showResult"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611055104",
+          "comparisonResult": "Kドリームス実掲載ページとV99全7予定車の必須項目一致。Google証拠行149再読済み。",
+          "originalHtmlArchived": false
+        }
+      }
+    },
+    {
+      "key": "2026-11-05|51|5",
+      "date": "2026-11-05",
+      "track": "福井",
+      "track_code": "51",
+      "race": 5,
+      "size": 7,
+      "grade": "A3",
+      "non_numeric": 2,
+      "className": "チャレンジ予選",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/fukui/racedetail/5120261105010005/?pageType=showResult",
+        "method": "kdreams_single_source_verified",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/fukui/racedetail/5120261105010005/?pageType=showResult"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611055105",
+          "comparisonResult": "Kドリームス実掲載ページとV99全7予定車の必須項目一致。Google証拠行150再読済み。",
+          "originalHtmlArchived": false
+        }
+      }
+    },
+    {
+      "key": "2026-11-05|51|6",
+      "date": "2026-11-05",
+      "track": "福井",
+      "track_code": "51",
+      "race": 6,
+      "size": 7,
+      "grade": "A3",
+      "non_numeric": 0,
+      "className": "チャレンジ予選",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/fukui/racedetail/5120261105010006/?pageType=showResult",
+        "method": "kdreams_single_source_verified",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/fukui/racedetail/5120261105010006/?pageType=showResult"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611055106",
+          "comparisonResult": "Kドリームス実掲載ページとV99全7予定車の必須項目一致。Google証拠行151再読済み。",
+          "originalHtmlArchived": false
+        }
+      }
+    },
+    {
+      "key": "2026-11-05|51|7",
+      "date": "2026-11-05",
+      "track": "福井",
+      "track_code": "51",
+      "race": 7,
+      "size": 7,
+      "grade": "A3",
+      "non_numeric": 0,
+      "className": "チャレンジ予選",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/fukui/racedetail/5120261105010007/?pageType=showResult",
+        "method": "kdreams_single_source_verified",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/fukui/racedetail/5120261105010007/?pageType=showResult"
+        ],
+        "fields": [
+          "finish",
+          "number",
+          "name",
+          "prefecture",
+          "period",
+          "riderClass",
+          "winningMethod",
+          "exception"
+        ],
+        "sourceProof": {
+          "kind": "live_html",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-LIVE-20261126-202611055107",
+          "comparisonResult": "Kドリームス実掲載ページとV99全7予定車の必須項目一致。Google証拠行152再読済み。",
           "originalHtmlArchived": false
         }
       }
