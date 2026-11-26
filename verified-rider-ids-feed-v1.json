@@ -1,10 +1,10 @@
 {
   "schema": "ki-official-rider-ids-v1",
-  "snapshotDate": "2026-11-26",
+  "snapshotDate": "2026-11-27",
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
   "verificationNote": "異なる2掲載元のプロフィール本文で氏名・府県・期別・6桁IDを照合。Google証拠保存と再読み取り済み。",
   "summary": {
-    "rows": 281
+    "rows": 285
   },
   "riders": [
     {
@@ -6766,6 +6766,102 @@
           "https://www.winticket.jp/keirin/cyclist/015390"
         ],
         "note": "2媒体プロフィール本文4項目一致・Google証拠保存再読済。証拠ID：MANUAL-V4-20261126-2224-015390"
+      }
+    },
+    {
+      "id": "013879",
+      "name": "伊豆田 浩人",
+      "prefecture": "神奈",
+      "period": "87",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=013879",
+      "verifiedDate": "2026-11-27",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=013879",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=013879",
+          "https://www.winticket.jp/keirin/cyclist/013879"
+        ],
+        "note": "2媒体プロフィール本文4項目一致・Google証拠保存再読済。証拠ID：MANUAL-V4-20261127-0620-013879"
+      }
+    },
+    {
+      "id": "015702",
+      "name": "依田 翔大",
+      "prefecture": "山梨",
+      "period": "123",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015702",
+      "verifiedDate": "2026-11-27",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015702",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015702",
+          "https://www.winticket.jp/keirin/cyclist/015702"
+        ],
+        "note": "2媒体プロフィール本文4項目一致・Google証拠保存再読済。証拠ID：MANUAL-V4-20261127-0620-015702"
+      }
+    },
+    {
+      "id": "012193",
+      "name": "井手　尚治",
+      "prefecture": "神奈",
+      "period": "65",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=012193",
+      "verifiedDate": "2026-11-27",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=012193",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=012193",
+          "https://www.winticket.jp/keirin/cyclist/012193"
+        ],
+        "note": "2媒体プロフィール本文4項目一致・Google証拠保存再読済。証拠ID：MANUAL-V4-20261127-0620-012193"
+      }
+    },
+    {
+      "id": "014280",
+      "name": "井上　公利",
+      "prefecture": "宮城",
+      "period": "93",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014280",
+      "verifiedDate": "2026-11-27",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014280",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014280",
+          "https://www.winticket.jp/keirin/cyclist/014280"
+        ],
+        "note": "2媒体プロフィール本文4項目一致・Google証拠保存再読済。証拠ID：MANUAL-V4-20261127-0620-014280"
       }
     }
   ],
