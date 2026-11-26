@@ -2,10 +2,10 @@
   "schema": "ki-line-snapshots-v1",
   "snapshotDate": "2026-11-26",
   "sourceTab": "VERIFIED publication",
-  "verificationNote": "2026-11-04取手A1/A2 1〜7Rの発走前予想を全車照合・証拠再読後に追加。",
+  "verificationNote": "2026-11-01松戸1Rの発走前予想を全車照合・証拠再読後に追加。",
   "summary": {
-    "races": 226,
-    "rider_rows": 1582
+    "races": 227,
+    "rider_rows": 1589
   },
   "races": [
     {
@@ -27603,6 +27603,133 @@
           "line": [
             7,
             4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-01|31|1",
+      "key": "2026-11-01|31|1",
+      "date": "2026-11-01",
+      "track": "松戸",
+      "race": 1,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "trackCode": "31",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/matsudo/racedetail/3120261030030001/?pageType=showResult",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/matsudo/racedetail/3120261030030001/?pageType=showResult"
+        ],
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-20261126-MATSUDO-20261101-1",
+          "sourceSnapshot": "V99選手結果蓄積!A878:W884",
+          "archivedOriginalHtml": false,
+          "comparison": "掲載の並び予想の明示区切りと全車本人を確認し、Google証拠行226を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          2,
+          3,
+          4,
+          7
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "小磯 知也",
+          "prefecture": "徳島",
+          "period": "76",
+          "line": [
+            1,
+            5
+          ]
+        },
+        {
+          "number": 2,
+          "name": "等々力久就",
+          "prefecture": "長野",
+          "period": "98",
+          "line": [
+            2,
+            3,
+            4,
+            7
+          ]
+        },
+        {
+          "number": 3,
+          "name": "渡邊 政幸",
+          "prefecture": "埼玉",
+          "period": "90",
+          "line": [
+            2,
+            3,
+            4,
+            7
+          ]
+        },
+        {
+          "number": 4,
+          "name": "戸ノ下太郎",
+          "prefecture": "千葉",
+          "period": "76",
+          "line": [
+            2,
+            3,
+            4,
+            7
+          ]
+        },
+        {
+          "number": 5,
+          "name": "取鳥 敬一",
+          "prefecture": "岡山",
+          "period": "69",
+          "line": [
+            1,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "南 和夫",
+          "prefecture": "福岡",
+          "period": "82",
+          "line": [
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "井上 典善",
+          "prefecture": "千葉",
+          "period": "66",
+          "line": [
+            2,
+            3,
+            4,
+            7
           ]
         }
       ]
