@@ -2,10 +2,10 @@
   "schema": "ki-line-snapshots-v1",
   "snapshotDate": "2026-11-26",
   "sourceTab": "VERIFIED publication",
-  "verificationNote": "2026-11-01松戸4・6Rの発走前予想を全車照合・証拠再読後に追加。",
+  "verificationNote": "2026-11-01松戸5・7Rの発走前予想を全車照合・証拠再読後に追加。",
   "summary": {
-    "races": 230,
-    "rider_rows": 1610
+    "races": 232,
+    "rider_rows": 1624
   },
   "races": [
     {
@@ -28100,6 +28100,252 @@
             4,
             3,
             6,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-01|31|5",
+      "key": "2026-11-01|31|5",
+      "date": "2026-11-01",
+      "track": "松戸",
+      "race": 5,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "trackCode": "31",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/matsudo/racedetail/3120261030030005/?pageType=showResult",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/matsudo/racedetail/3120261030030005/?pageType=showResult"
+        ],
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-20261126-MATSUDO-20261101-5",
+          "sourceSnapshot": "V99選手結果蓄積!A906:W912",
+          "archivedOriginalHtml": false,
+          "comparison": "掲載とV99の全7車を照合し、Google証拠行233を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          5,
+          1
+        ],
+        [
+          2,
+          4,
+          6
+        ],
+        [
+          7,
+          3
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "小川 巧",
+          "prefecture": "岡山",
+          "period": "57",
+          "line": [
+            5,
+            1
+          ]
+        },
+        {
+          "number": 2,
+          "name": "藤岡 祐馬",
+          "prefecture": "神奈",
+          "period": "129",
+          "line": [
+            2,
+            4,
+            6
+          ]
+        },
+        {
+          "number": 3,
+          "name": "藤野 竜也",
+          "prefecture": "栃木",
+          "period": "117",
+          "line": [
+            7,
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "櫻川 雅彦",
+          "prefecture": "千葉",
+          "period": "99",
+          "line": [
+            2,
+            4,
+            6
+          ]
+        },
+        {
+          "number": 5,
+          "name": "吉成 晃一",
+          "prefecture": "熊本",
+          "period": "92",
+          "line": [
+            5,
+            1
+          ]
+        },
+        {
+          "number": 6,
+          "name": "亀井 道佳",
+          "prefecture": "宮城",
+          "period": "83",
+          "line": [
+            2,
+            4,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "山崎 寛巳",
+          "prefecture": "新潟",
+          "period": "93",
+          "line": [
+            7,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-01|31|7",
+      "key": "2026-11-01|31|7",
+      "date": "2026-11-01",
+      "track": "松戸",
+      "race": 7,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "trackCode": "31",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/matsudo/racedetail/3120261030030007/?pageType=showResult",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/matsudo/racedetail/3120261030030007/?pageType=showResult"
+        ],
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-20261126-MATSUDO-20261101-7",
+          "sourceSnapshot": "V99選手結果蓄積!A920:W926",
+          "archivedOriginalHtml": false,
+          "comparison": "掲載とV99の全7車を照合し、Google証拠行234を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          2,
+          1,
+          7
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          4
+        ],
+        [
+          5
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "吉川 敬介",
+          "prefecture": "東京",
+          "period": "129",
+          "line": [
+            2,
+            1,
+            7
+          ]
+        },
+        {
+          "number": 2,
+          "name": "阿部 凪汰",
+          "prefecture": "埼玉",
+          "period": "129",
+          "line": [
+            2,
+            1,
+            7
+          ]
+        },
+        {
+          "number": 3,
+          "name": "半田 莉都",
+          "prefecture": "熊本",
+          "period": "129",
+          "line": [
+            3,
+            6
+          ]
+        },
+        {
+          "number": 4,
+          "name": "庄子 琢心",
+          "prefecture": "宮城",
+          "period": "129",
+          "line": [
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "村上 貴彦",
+          "prefecture": "栃木",
+          "period": "100",
+          "line": [
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "水本 博行",
+          "prefecture": "岡山",
+          "period": "78",
+          "line": [
+            3,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "早川 成矢",
+          "prefecture": "埼玉",
+          "period": "78",
+          "line": [
+            2,
+            1,
             7
           ]
         }
