@@ -115,7 +115,7 @@ def build(entry_values, result_values, today):
             "summary": {"races": len(races), "entries": sum(len(x["entries"]) for x in races),
                         "resultRows": sum(len(x["results"]) for x in races)}}
 
-def merge_new(board, entry_values, result_values, today):
+def merge_new(board, entry_values, result_values, today, *, window=None):
     """Prefer fresh intake tabs for the same race, while retaining legacy archive only as fallback.
 
     Fresh results do not invent missing pre-race entries and do not get marked PASS.
@@ -129,8 +129,7 @@ def merge_new(board, entry_values, result_values, today):
                              "着順原文","決まり手","個人状況・例外","元URL","取得日時JST","レースキー"]:
         raise ValueError("Daily result sheet header changed")
     by_key = {race["key"]: race for race in board["races"]}
-    start = today - timedelta(days=2)
-    end = today + timedelta(days=2)
+    start, end = window or (today - timedelta(days=2), today + timedelta(days=2))
     kinds = (("entries", entry_values[1:]), ("results", result_values[1:]))
     for kind, rows in kinds:
         latest = board["sourceLatest"][kind] or ""
@@ -281,6 +280,14 @@ def archive_board(board, directory):
     return changed
 
 
+def carryover_board(entries, results, today):
+    """Reuse daily intake from the result retry window before the display window."""
+    start, end = today - timedelta(days=7), today - timedelta(days=3)
+    board = {"schema": "ki-daily-board-v1", "verification": DAILY_VERIFICATION,
+             "sourceLatest": {"entries": None, "results": None}, "races": []}
+    return merge_new(board, entries, results, today, window=(start, end))
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--self-test", action="store_true", help="Offline fresh-intake merge check")
@@ -288,11 +295,20 @@ def main():
     parser.add_argument("--results-fixture", help="JSON array-of-rows for local testing")
     parser.add_argument("--out", default="daily-board-feed-v1.json")
     parser.add_argument("--archive", type=Path, help="Archive the existing enriched --out instead of fetching Sheets")
+    parser.add_argument("--archive-carryover", type=Path,
+                        help="Write/read job-local intake outside the display window")
     parser.add_argument("--date", default=datetime.now(JST).date().isoformat())
     args = parser.parse_args()
     today = datetime.strptime(args.date, "%Y-%m-%d").date()
     if args.archive:
         board = json.loads(Path(args.out).read_text(encoding="utf8"))
+        if args.archive_carryover:
+            carryover = json.loads(args.archive_carryover.read_text(encoding="utf8"))
+            if (carryover["schema"] != board["schema"]
+                    or carryover["verification"] != board["verification"]
+                    or any(race["date"] >= board["windowStart"] for race in carryover["races"])):
+                raise ValueError("Invalid carryover archive input")
+            board["races"].extend(carryover["races"])
         print(f"DAILY_HISTORY_CHANGED_DAYS={archive_board(board, args.archive)}")
         return
     if args.self_test:
@@ -328,6 +344,18 @@ def main():
             assert saved["statSnapshots"]["preRace"]["byCar"]["1"]["score"] == "70"
             assert saved["statSnapshots"]["atOrAfterStart"]["byCar"]["1"]["score"] == "75"
             assert archive_board(dict(out, races=[]), archived) == 0
+            # A result recovered after the display window must still append to
+            # history, using the original pre-race record already on disk.
+            original = dict(out, races=[dict(race, results=[])])
+            carry_dir = archived / "carryover"
+            assert archive_board(original, carry_dir) == 1
+            later = test_day + timedelta(days=3)
+            carry = carryover_board([entry_header, entry], [result_header, result], later)
+            assert carry["races"][0]["results"][0]["capturedAt"] == result[13]
+            assert archive_board(carry, carry_dir) == 1
+            assert archive_board(carry, carry_dir) == 0
+            assert not carryover_board([entry_header, entry], [result_header, result],
+                                       test_day + timedelta(days=8))["races"]
         print("SELF_TEST_OK: daily merge and immutable daily history; no live data or Sheets modified")
         return
     if bool(args.entries_fixture) != bool(args.results_fixture):
@@ -340,6 +368,9 @@ def main():
     else:
         entries, results, fresh_entries, fresh_results = fetch_sheets()
     out = merge_new(build(entries, results, today), fresh_entries, fresh_results, today)
+    if args.archive_carryover:
+        carryover = carryover_board(fresh_entries, fresh_results, today)
+        args.archive_carryover.write_text(json.dumps(carryover, ensure_ascii=False), encoding="utf8")
     # No clock timestamp: reruns on unchanged source and date do not create commits.
     content = json.dumps(out, ensure_ascii=False, indent=2) + "\n"
     target = Path(args.out)

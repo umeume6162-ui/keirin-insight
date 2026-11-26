@@ -576,7 +576,7 @@ jobs:
         if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))) }}
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-        run: python scripts/build_daily_board.py --out daily-board-feed-v1.json
+        run: python scripts/build_daily_board.py --out daily-board-feed-v1.json --archive-carryover /tmp/ki-daily-archive-carryover.json
       # Source identity and full rider field must agree before exposing startTime.
       - name: Enrich daily start times using the original racecard sources
         if: ${{ !cancelled() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[refresh-daily-feed]'))) }}
@@ -591,7 +591,7 @@ jobs:
       - name: Archive daily observations by race date
         id: archive_daily_board
         if: ${{ !cancelled() && steps.build_daily_board.outcome == 'success' && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))) }}
-        run: python scripts/build_daily_board.py --archive daily-history
+        run: python scripts/build_daily_board.py --archive daily-history --archive-carryover /tmp/ki-daily-archive-carryover.json
       - name: Commit changed daily feeds and history
         if: ${{ !cancelled() && steps.archive_daily_board.outcome == 'success' && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_result_url == '' && inputs.historical_batch_plan == '') || (github.event_name == 'push' && (contains(github.event.head_commit.message, '[refresh-daily-feed]') || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[collect-daily-results]'))))) }}
         run: |
