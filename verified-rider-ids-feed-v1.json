@@ -4,7 +4,7 @@
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
   "verificationNote": "異なる2掲載元のプロフィール本文で氏名・府県・期別・6桁IDを照合。Google証拠保存と再読み取り済み。",
   "summary": {
-    "rows": 278
+    "rows": 281
   },
   "riders": [
     {
@@ -6694,6 +6694,78 @@
           "https://keirin.netkeiba.com/db/profile/?id=14096"
         ],
         "note": "Google公式照合証拠再読済：MANUAL-V4-20261126-014096；選手ID照合台帳!A44:K44。プロフィール本文4項目一致。"
+      }
+    },
+    {
+      "id": "014072",
+      "name": "伊藤　之人",
+      "prefecture": "東京",
+      "period": "90",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014072",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014072",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014072",
+          "https://www.winticket.jp/keirin/cyclist/014072"
+        ],
+        "note": "2媒体プロフィール本文4項目一致・Google証拠保存再読済。証拠ID：MANUAL-V4-20261126-2224-014072"
+      }
+    },
+    {
+      "id": "015857",
+      "name": "伊藤　優里",
+      "prefecture": "三重",
+      "period": "126",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015857",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015857",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015857",
+          "https://www.winticket.jp/keirin/cyclist/015857"
+        ],
+        "note": "2媒体プロフィール本文4項目一致・Google証拠保存再読済。証拠ID：MANUAL-V4-20261126-2224-015857"
+      }
+    },
+    {
+      "id": "015390",
+      "name": "伊藤　颯馬",
+      "prefecture": "沖縄",
+      "period": "115",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015390",
+      "verifiedDate": "2026-11-26",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015390",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015390",
+          "https://www.winticket.jp/keirin/cyclist/015390"
+        ],
+        "note": "2媒体プロフィール本文4項目一致・Google証拠保存再読済。証拠ID：MANUAL-V4-20261126-2224-015390"
       }
     }
   ],
