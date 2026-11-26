@@ -17,7 +17,7 @@ JST = ZoneInfo("Asia/Tokyo")
 def clean(value):
     return str(value or "").strip()
 
-def fetch_sheets():
+def fetch_sheets(*, entries_only=False):
     import google.auth.transport.requests
     from google.oauth2 import service_account
     import requests
@@ -30,15 +30,15 @@ def fetch_sheets():
     )
     creds.refresh(google.auth.transport.requests.Request())
     url = "https://sheets.googleapis.com/v4/spreadsheets/" + SHEET_ID + "/values:batchGet"
-    params = [("ranges", "'AI事前出走スナップ'!A1:O250"),
-              ("ranges", "'V99選手結果蓄積'!A1:W10000"),
-              ("ranges", "'KI｜日次出走表'!A1:O"),
-              ("ranges", "'KI｜日次結果'!A1:O")]
+    ranges = ["'AI事前出走スナップ'!A1:O250", "'KI｜日次出走表'!A1:O"]
+    if not entries_only:
+        ranges.extend(["'V99選手結果蓄積'!A1:W10000", "'KI｜日次結果'!A1:O"])
+    params = [("ranges", name) for name in ranges]
     response = requests.get(url, params=params, headers={"Authorization": "Bearer " + creds.token}, timeout=50)
     response.raise_for_status()
     values = response.json().get("valueRanges", [])
-    if len(values) != 4:
-        raise RuntimeError("Google Sheets did not return both source ranges")
+    if len(values) != len(ranges):
+        raise RuntimeError("Google Sheets did not return all requested source ranges")
     return [x.get("values", []) for x in values]
 
 def parse_date(s):
@@ -75,7 +75,8 @@ def build(entry_values, result_values, today):
                                  "period": r[8] or None, "preRaceLine": r[9] or None,
                                  "position": r[10] or None, "capturedAt": r[13] or None,
                                  "sourceUrl": r[14] or None})
-    for row in bounded_rows(result_values, 23):
+    result_rows = [] if result_values is None else bounded_rows(result_values, 23)
+    for row in result_rows:
         r = [clean(x) for x in row] + [""] * max(0, 23 - len(row))
         if not parse_date(r[0]) or not r[1] or not r[4]:
             continue
@@ -120,17 +121,19 @@ def merge_new(board, entry_values, result_values, today, *, window=None):
 
     Fresh results do not invent missing pre-race entries and do not get marked PASS.
     """
-    if not entry_values or not result_values:
+    if not entry_values or result_values == []:
         raise ValueError("Daily intake tabs absent")
     if entry_values[0] != ["開催日","場コード","競輪場","R","級班","車番","選手名","府県","期別",
                             "発走前ライン","元URL","取得日時JST","収集状態","レースキー","ソースID"]:
         raise ValueError("Daily entry sheet header changed")
-    if result_values[0] != ["開催日","場コード","競輪場","R","級班","車番","選手名","府県","期別",
+    if result_values is not None and result_values[0] != ["開催日","場コード","競輪場","R","級班","車番","選手名","府県","期別",
                              "着順原文","決まり手","個人状況・例外","元URL","取得日時JST","レースキー"]:
         raise ValueError("Daily result sheet header changed")
     by_key = {race["key"]: race for race in board["races"]}
     start, end = window or (today - timedelta(days=2), today + timedelta(days=2))
-    kinds = (("entries", entry_values[1:]), ("results", result_values[1:]))
+    kinds = [("entries", entry_values[1:])]
+    if result_values is not None:
+        kinds.append(("results", result_values[1:]))
     for kind, rows in kinds:
         latest = board["sourceLatest"][kind] or ""
         for row in rows:
@@ -294,11 +297,17 @@ def main():
     parser.add_argument("--entries-fixture", help="JSON array-of-rows for local testing")
     parser.add_argument("--results-fixture", help="JSON array-of-rows for local testing")
     parser.add_argument("--out", default="daily-board-feed-v1.json")
+    parser.add_argument("--entries-only", action="store_true",
+                        help="Read just racecards for the job-local start-time check")
     parser.add_argument("--archive", type=Path, help="Archive the existing enriched --out instead of fetching Sheets")
     parser.add_argument("--archive-carryover", type=Path,
                         help="Write/read job-local intake outside the display window")
     parser.add_argument("--date", default=datetime.now(JST).date().isoformat())
     args = parser.parse_args()
+    if args.entries_only and (args.archive or args.archive_carryover or
+                              args.entries_fixture or args.results_fixture or
+                              Path(args.out).resolve() == Path("daily-board-feed-v1.json").resolve()):
+        parser.error("--entries-only requires a separate output and cannot be archived")
     today = datetime.strptime(args.date, "%Y-%m-%d").date()
     if args.archive:
         board = json.loads(Path(args.out).read_text(encoding="utf8"))
@@ -319,6 +328,10 @@ def main():
         test_day=datetime.strptime("2026-11-23","%Y-%m-%d").date()
         out=merge_new(build([["header"]*15],[["header"]*23],test_day),
                       [entry_header,entry],[result_header,result],test_day)
+        gate = merge_new(build([["header"] * 15], None, test_day),
+                         [entry_header, entry], None, test_day)
+        assert gate["races"][0]["entries"] == out["races"][0]["entries"]
+        assert not gate["races"][0]["results"] and gate["sourceLatest"]["results"] is None
         r=out["races"]
         assert len(r)==1 and len(r[0]["entries"])==1 and len(r[0]["results"])==1
         assert r[0]["status"]=="results_partial" and out["sourceLatest"]["entries"]=="2026-11-23"
@@ -365,8 +378,11 @@ def main():
         results = json.loads(Path(args.results_fixture).read_text(encoding="utf8"))
         fresh_entries = [list(["開催日","場コード","競輪場","R","級班","車番","選手名","府県","期別","発走前ライン","元URL","取得日時JST","収集状態","レースキー","ソースID"])]
         fresh_results = [list(["開催日","場コード","競輪場","R","級班","車番","選手名","府県","期別","着順原文","決まり手","個人状況・例外","元URL","取得日時JST","レースキー"])]
+    elif args.entries_only:
+        entries, fresh_entries = fetch_sheets(entries_only=True)
+        results = fresh_results = None
     else:
-        entries, results, fresh_entries, fresh_results = fetch_sheets()
+        entries, fresh_entries, results, fresh_results = fetch_sheets()
     out = merge_new(build(entries, results, today), fresh_entries, fresh_results, today)
     if args.archive_carryover:
         carryover = carryover_board(fresh_entries, fresh_results, today)

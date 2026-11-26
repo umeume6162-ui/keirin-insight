@@ -439,10 +439,10 @@ jobs:
         if: ${{ !cancelled() && github.event_name == 'schedule' }}
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-        run: python scripts/build_daily_board.py --out daily-board-feed-v1.json
+        run: python scripts/build_daily_board.py --entries-only --out /tmp/ki-entry-gate.json
       - name: Refresh sourced start-time gate before result intake
         if: ${{ !cancelled() && github.event_name == 'schedule' }}
-        run: python scripts/enrich_daily_start_times.py --limit 36
+        run: python scripts/enrich_daily_start_times.py --feed /tmp/ki-entry-gate.json --limit 36
       # Stored racecards are independently eligible for result retries. Even if
       # today's venue-index fetch fails, keep this step running and retain the
       # earlier step's failure status; never mark the workflow as successful.
