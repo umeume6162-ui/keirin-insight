@@ -2,10 +2,10 @@
   "schema": "ki-line-snapshots-v1",
   "snapshotDate": "2026-11-26",
   "sourceTab": "VERIFIED publication",
-  "verificationNote": "2026-11-01松戸2Rの発走前予想を全車照合・証拠再読後に追加。",
+  "verificationNote": "2026-11-01松戸4・6Rの発走前予想を全車照合・証拠再読後に追加。",
   "summary": {
-    "races": 228,
-    "rider_rows": 1596
+    "races": 230,
+    "rider_rows": 1610
   },
   "races": [
     {
@@ -27850,6 +27850,256 @@
           "prefecture": "神奈",
           "period": "95",
           "line": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-01|31|4",
+      "key": "2026-11-01|31|4",
+      "date": "2026-11-01",
+      "track": "松戸",
+      "race": 4,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "trackCode": "31",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/matsudo/racedetail/3120261030030004/?pageType=showResult",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/matsudo/racedetail/3120261030030004/?pageType=showResult"
+        ],
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-20261126-MATSUDO-20261101-4",
+          "sourceSnapshot": "V99選手結果蓄積!A899:W905",
+          "archivedOriginalHtml": false,
+          "comparison": "掲載とV99の全7車を照合し、Google証拠行231を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "大竹野裕樹",
+          "prefecture": "鹿児",
+          "period": "88",
+          "line": [
+            1,
+            2
+          ]
+        },
+        {
+          "number": 2,
+          "name": "田中 弘章",
+          "prefecture": "福岡",
+          "period": "68",
+          "line": [
+            1,
+            2
+          ]
+        },
+        {
+          "number": 3,
+          "name": "安藤 宜明",
+          "prefecture": "神奈",
+          "period": "74",
+          "line": [
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "関根 崇人",
+          "prefecture": "福島",
+          "period": "94",
+          "line": [
+            7,
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "星野 京旺",
+          "prefecture": "新潟",
+          "period": "127",
+          "line": [
+            5,
+            6
+          ]
+        },
+        {
+          "number": 6,
+          "name": "関 敬",
+          "prefecture": "栃木",
+          "period": "81",
+          "line": [
+            5,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "牧田 賢也",
+          "prefecture": "福島",
+          "period": "111",
+          "line": [
+            7,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-01|31|6",
+      "key": "2026-11-01|31|6",
+      "date": "2026-11-01",
+      "track": "松戸",
+      "race": 6,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "trackCode": "31",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/matsudo/racedetail/3120261030030006/?pageType=showResult",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/matsudo/racedetail/3120261030030006/?pageType=showResult"
+        ],
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-20261126-MATSUDO-20261101-6",
+          "sourceSnapshot": "V99選手結果蓄積!A913:W919",
+          "archivedOriginalHtml": false,
+          "comparison": "掲載とV99の全7車を照合し、Google証拠行232を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          2,
+          1,
+          5
+        ],
+        [
+          4,
+          3,
+          6,
+          7
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "松永 真太",
+          "prefecture": "福岡",
+          "period": "92",
+          "line": [
+            2,
+            1,
+            5
+          ]
+        },
+        {
+          "number": 2,
+          "name": "鶴 健志",
+          "prefecture": "福岡",
+          "period": "129",
+          "line": [
+            2,
+            1,
+            5
+          ]
+        },
+        {
+          "number": 3,
+          "name": "及川 裕奨",
+          "prefecture": "岩手",
+          "period": "86",
+          "line": [
+            4,
+            3,
+            6,
+            7
+          ]
+        },
+        {
+          "number": 4,
+          "name": "石田 宏樹",
+          "prefecture": "青森",
+          "period": "91",
+          "line": [
+            4,
+            3,
+            6,
+            7
+          ]
+        },
+        {
+          "number": 5,
+          "name": "宮本 龍一",
+          "prefecture": "福岡",
+          "period": "92",
+          "line": [
+            2,
+            1,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "佐藤 有輝",
+          "prefecture": "神奈",
+          "period": "85",
+          "line": [
+            4,
+            3,
+            6,
+            7
+          ]
+        },
+        {
+          "number": 7,
+          "name": "渡辺 馨",
+          "prefecture": "神奈",
+          "period": "96",
+          "line": [
+            4,
+            3,
+            6,
             7
           ]
         }
