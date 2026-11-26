@@ -626,6 +626,56 @@
       "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261125_32773",
       "signature": "2211e58041e09850a417882fdb0d04210e92fefa5862bc92da7c0fb32e3ece62"
     },
+    "2026-11-27|富山|1": {
+      "startTime": "11:21",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32640",
+      "signature": "b1e78f25271a0c9d7beb54bf94440e1692fd2bb10fa79ae6b00d8ea4f28fb2f3"
+    },
+    "2026-11-27|富山|10": {
+      "startTime": "15:26",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32613",
+      "signature": "74ec6d09909c751db84c798456a8e29addc2701ce2407c0de9f2bea3951691e4"
+    },
+    "2026-11-27|富山|11": {
+      "startTime": "15:56",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32612",
+      "signature": "56308e986ee022a1ad02c35af005da0bcf5687efb4d9d2850fd4f4ab8ea3b78f"
+    },
+    "2026-11-27|富山|2": {
+      "startTime": "11:45",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32637",
+      "signature": "81190bdde26b879b6affb63e124bbab91598906179f6d465458f343de56ca0f4"
+    },
+    "2026-11-27|富山|3": {
+      "startTime": "12:12",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32632",
+      "signature": "b97d83da8c5478fc6d8fad7e611655dcabbb4db29268d21f998a40c32b6b18aa"
+    },
+    "2026-11-27|富山|4": {
+      "startTime": "12:39",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32631",
+      "signature": "75dd99ca560888572ba0cd0656297ec4f364dd742c741808c6529ae57dfad070"
+    },
+    "2026-11-27|富山|6": {
+      "startTime": "13:33",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32621",
+      "signature": "256b8f733cbbce3a69a7c338769a2ccf9be5f58bde1df0e77ef155642cd233d2"
+    },
+    "2026-11-27|富山|7": {
+      "startTime": "14:00",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32620",
+      "signature": "8b12a3ec1c09dc3f4fc13099e3d3987606ac50d8e9f99d532149635a0afbb773"
+    },
+    "2026-11-27|富山|8": {
+      "startTime": "14:27",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32615",
+      "signature": "a13d982a14912cc0ea595dbebf5addb3adf488450765bdcec75f6ac647642471"
+    },
+    "2026-11-27|富山|9": {
+      "startTime": "14:56",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32614",
+      "signature": "7cecb76321790a78c6c0d9dab15c3ba9350f7b3d1af0e2179ac6d6662808dd50"
+    },
     "2026-11-27|小松島|1": {
       "startTime": "08:50",
       "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_30589",
@@ -660,6 +710,121 @@
       "startTime": "10:50",
       "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_30581",
       "signature": "a9a8a091482c52ebd120d228484fbd2c61caa6685d638c957e8eaab35f65b029"
+    },
+    "2026-11-27|平塚|1": {
+      "startTime": "11:13",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_31211",
+      "signature": "1c452af046882767a820fc89fe31324be53324a92ca64c7e464adc9c4bfc150c"
+    },
+    "2026-11-27|平塚|10": {
+      "startTime": "15:16",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_31186",
+      "signature": "27c212802b07fff18775a377e1e05c5176d8f2c3334f8ffd071399921b04c26e"
+    },
+    "2026-11-27|平塚|11": {
+      "startTime": "15:46",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_31185",
+      "signature": "81aa9479bb0296fc0752ca7fef1635f81c9cbed820dd5d1c7cbad8e15b7d06a7"
+    },
+    "2026-11-27|平塚|12": {
+      "startTime": "16:20",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_31183",
+      "signature": "c7d356437e4f32db0f639a6acf81f2b10b7416ffea54acb1b35dcccfbcdccb01"
+    },
+    "2026-11-27|平塚|2": {
+      "startTime": "11:37",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_31209",
+      "signature": "4ea5e3f46f424cc4b17d2f75e09898a6ec89bcc88d2c83e0680f12aeca61f1cb"
+    },
+    "2026-11-27|平塚|3": {
+      "startTime": "12:03",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_31206",
+      "signature": "d044ef55a9908294e013bb3c8822017d455bd03032138c6203cc96feb8886438"
+    },
+    "2026-11-27|平塚|4": {
+      "startTime": "12:30",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_31205",
+      "signature": "af4167b153cb749f16bd5e4d8b1476083507453ffd301fb7bd8f67582957a9bf"
+    },
+    "2026-11-27|平塚|5": {
+      "startTime": "12:57",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_31199",
+      "signature": "f9024128afb882b55c75619d83f9ee746c7c9776e17e5a39b727c47f9d1616aa"
+    },
+    "2026-11-27|平塚|6": {
+      "startTime": "13:24",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_31192",
+      "signature": "faf3ba18c95af66245e8de0367112e6709e53f06470aaff83c8049d1267375c7"
+    },
+    "2026-11-27|平塚|7": {
+      "startTime": "13:51",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_31191",
+      "signature": "0028dde26e997c90de7c27010bde537a649ab8e06086c6488756fed62696eee4"
+    },
+    "2026-11-27|平塚|8": {
+      "startTime": "14:18",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_31190",
+      "signature": "214425a4847f9eb5e5b6dfbd5723cd59855f57a240b6dd3b86c7a129a81ff77a"
+    },
+    "2026-11-27|平塚|9": {
+      "startTime": "14:46",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_31187",
+      "signature": "ee877fc94c7645531587532f4f676667feeb26aa2749529d12a859a22f49b4b6"
+    },
+    "2026-11-27|福井|1": {
+      "startTime": "11:05",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32984",
+      "signature": "d1fd5c3e887f1e93afc1199b31f07cb8fbf185b1db135b81643f75207e0ebadf"
+    },
+    "2026-11-27|福井|10": {
+      "startTime": "15:06",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32959",
+      "signature": "2e42c55183af5569788d0bdf254ae23250ac7b5ecf96cd5faf1aab7716a7d25b"
+    },
+    "2026-11-27|福井|11": {
+      "startTime": "15:36",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32956",
+      "signature": "0b5f04c6009e74c84565a793b36eccd12ca98b3d1c0bc985766b0775400c9073"
+    },
+    "2026-11-27|福井|12": {
+      "startTime": "16:10",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32955",
+      "signature": "e42f4938398221ea6e153fb85d40075fa4906aa8d7018604fa03f850e3587112"
+    },
+    "2026-11-27|福井|2": {
+      "startTime": "11:29",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32982",
+      "signature": "db0177141155f43a6f2014b55e3e3bdb72690c3741d3567c8c4231924228b56c"
+    },
+    "2026-11-27|福井|3": {
+      "startTime": "11:54",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32981",
+      "signature": "993b47fd634086d3d806b812d140973c6d774a014e0e94a4942dc6a1c08ac310"
+    },
+    "2026-11-27|福井|4": {
+      "startTime": "12:21",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32980",
+      "signature": "cba6e9af75ff63dacd5362e39826b00a1e648a98231e2bb16ce8ca82b7dffd67"
+    },
+    "2026-11-27|福井|6": {
+      "startTime": "13:15",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32968",
+      "signature": "114386be74c5f3daff152748bdc4195fc6e102cb0ac707a05f3aea65ef8484c5"
+    },
+    "2026-11-27|福井|7": {
+      "startTime": "13:42",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32967",
+      "signature": "0c7ea44ac205607c03bdc72a2f5f53a7d9e7cfeb65cdf69d03f847b1e229f018"
+    },
+    "2026-11-27|福井|8": {
+      "startTime": "14:09",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32966",
+      "signature": "84c62cb221827dc58296c9fbad24a7d0eb7b2e3ba69e79793054909af29553b3"
+    },
+    "2026-11-27|福井|9": {
+      "startTime": "14:36",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32964",
+      "signature": "beff167acac9d3ba197e700b3dcc522afc4fb77c858fbf9c6564b07f0bdfb5f3"
     }
   }
 }
