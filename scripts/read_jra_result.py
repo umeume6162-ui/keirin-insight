@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Read and validate a public JRA flat-race result into private-ledger row shape.
 
-Requires lxml. Pair official result URLs with --race numbers in the same
-order for one meeting date and venue. The output is JSON on stdout.
+Requires lxml. Pair official result URLs with --race numbers in order, or
+pass one result URL with --discover to resolve requested races. Outputs JSON.
 """
 import argparse
 from datetime import date, datetime
@@ -10,7 +10,7 @@ from decimal import Decimal
 from functools import lru_cache
 import json
 import re
-from urllib.parse import parse_qs, urlsplit
+from urllib.parse import parse_qs, urlencode, urljoin, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 from urllib.robotparser import RobotFileParser
 from zoneinfo import ZoneInfo
@@ -46,22 +46,33 @@ def jra_access():
     return opener, policy
 
 
-def read_result(url):
+def result_key(url):
     source = urlsplit(url)
     query = parse_qs(source.query)
     if (source.scheme != "https" or source.netloc != HOST or source.fragment
             or source.path != "/JRADB/accessS.html" or set(query) != {"CNAME"}
-            or len(query["CNAME"]) != 1
-            or not re.fullmatch(r"pw01sde[0-9]+/[A-F0-9]{2}", query["CNAME"][0])):
+            or len(query["CNAME"]) != 1):
         raise ValueError("Expected an official JRA result URL")
+    key = re.fullmatch(r"pw01sde(\d{12})(0[1-9]|1[0-2])(\d{8})/[A-F0-9]{2}", query["CNAME"][0])
+    if not key:
+        raise ValueError("Invalid JRA result identifier")
+    return key
+
+
+def fetch_page(url, form=None):
     opener, policy = jra_access()
     if not policy.can_fetch(AGENT, url):
-        raise ValueError("JRA robots policy disallows result URL")
-    with opener.open(Request(url, headers={"User-Agent": AGENT}), timeout=20) as response:
+        raise ValueError("JRA robots policy disallows page")
+    with opener.open(Request(url, data=form, headers={"User-Agent": AGENT}), timeout=20) as response:
         data = response.read(2000001)
     if len(data) > 2000000:
-        raise ValueError("Result page exceeds the size limit")
+        raise ValueError("JRA page exceeds the size limit")
     return data
+
+
+def read_result(url):
+    result_key(url)
+    return fetch_page(url)
 
 
 def one(nodes, field):
@@ -74,8 +85,7 @@ def wording(node):
     return " ".join(node.text_content().split())
 
 
-def parse_result(data, url, day, venue, race, acquired):
-    doc = html.fromstring(data)
+def meeting_header(doc, day, venue, race):
     header = one(doc.xpath('//div[@class="race_header"]'), "race header")
     meeting = wording(one(header.xpath('.//div[@class="cell date"]'), "meeting date"))
     stamp = re.fullmatch(r"(\d{4})年(\d{1,2})月(\d{1,2})日（[^）]+）\s*(\d+)回(.+?)(\d+)日", meeting)
@@ -83,6 +93,43 @@ def parse_result(data, url, day, venue, race, acquired):
     if (not stamp or date(*map(int, stamp.groups()[:3])) != day
             or stamp[5] != venue or number != [f"{race}レース"]):
         raise ValueError("Published JRA meeting date, venue or race number differs")
+    return header, stamp
+
+
+def discovery_links(seed, seed_url, day, venue):
+    doc = html.fromstring(seed)
+    meeting_header(doc, day, venue, int(result_key(seed_url)[2]))
+    actions = set()
+    for link in doc.xpath('//a[@onclick]'):
+        if wording(link) not in {"レース選択へ戻る", "レース結果 レース選択"}:
+            continue
+        action = re.search(r"doAction\('/JRADB/accessS.html',\s*'(pw01srl(\d{12})(\d{8})/[A-F0-9]{2})'\)",
+                           link.get("onclick", ""))
+        if action and action[3] == day.strftime("%Y%m%d"):
+            actions.add((action[1], action[2], action[3]))
+    token, meeting, day_key = one(list(actions), "same-meeting selection link")
+    endpoint = f"https://{HOST}/JRADB/accessS.html"
+    listing = html.fromstring(fetch_page(endpoint, urlencode({"CNAME": token}).encode("ascii")))
+    links = {}
+    for link in listing.xpath('//a[contains(@href,"pw01sde")][img]'):
+        marker = link.xpath('./img/@alt')
+        if len(marker) != 1 or not re.fullmatch(r"(?:[1-9]|1[0-2])レース", marker[0]):
+            continue
+        url = urljoin(endpoint, link.get("href"))
+        key = result_key(url)
+        number = int(key[2])
+        if (key[1], key[3]) != (meeting, day_key) or marker[0] != f"{number}レース":
+            raise ValueError("Result listing contains a mismatched race link")
+        if links.setdefault(number, url) != url:
+            raise ValueError("Result listing contains conflicting links")
+    if not links:
+        raise ValueError("Official selection page lists no results")
+    return links
+
+
+def parse_result(data, url, day, venue, race, acquired):
+    doc = html.fromstring(data)
+    header, stamp = meeting_header(doc, day, venue, race)
     context = wording(one(header.xpath('.//div[@class="cell course"]'), "course"))
     course = re.fullmatch(r"コース：([0-9,]+)メートル（(芝|ダート)・(右|左|直線)(?:[ 　]+(内|外))?）", context)
     if not course:
@@ -165,14 +212,35 @@ def main():
     p.add_argument("--date", required=True, type=date.fromisoformat)
     p.add_argument("--venue", required=True, choices=VENUES)
     p.add_argument("--race", required=True, action="append", type=int, choices=range(1, 13))
+    p.add_argument("--discover", action="store_true",
+                   help="Discover requested races from one known result URL of the same meeting")
     args = p.parse_args()
-    if len(args.urls) != len(args.race) or len(set(args.race)) != len(args.race):
-        p.error("Provide one URL per distinct race number")
+    if len(set(args.race)) != len(args.race):
+        p.error("Race numbers must be distinct")
+    if len(args.urls) != (1 if args.discover else len(args.race)):
+        p.error("Provide one seed URL with --discover or one URL per race")
+    reused = {}
+    urls = dict(zip(args.race, args.urls))
+    if args.discover:
+        seed_url = args.urls[0]
+        try:
+            seed = read_result(seed_url)
+            urls = discovery_links(seed, seed_url, args.date, args.venue)
+            seed_race = int(result_key(seed_url)[2])
+            if seed_race in urls:
+                reused[seed_race] = seed
+                urls[seed_race] = seed_url
+        except (OSError, ValueError, KeyError, IndexError, AttributeError) as exc:
+            p.exit(1, f"JRA meeting selection held: {exc}\n")
     acquired = datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
     results, holds = [], []
-    for url, race in zip(args.urls, args.race):
+    for race in args.race:
         try:
-            results.append(parse_result(read_result(url), url, args.date, args.venue, race, acquired))
+            url = urls.get(race)
+            if not url:
+                raise ValueError("Result has no published link on the official selection page")
+            data = reused[race] if race in reused else read_result(url)
+            results.append(parse_result(data, url, args.date, args.venue, race, acquired))
         except (OSError, ValueError, KeyError, IndexError, ArithmeticError, AttributeError) as exc:
             holds.append({"race": race, "reason": str(exc)})
     print(json.dumps({"results": results, "holds": holds}, ensure_ascii=False))
