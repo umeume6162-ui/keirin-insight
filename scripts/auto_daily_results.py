@@ -38,7 +38,7 @@ def collect(*args):
     return collect_auto(*args, allow_single=True)
 
 # Evidence-scoped source display differences; do not generalize all kanji.
-PREFECTURE_ALIASES = {"神奈": "神奈川", "北海": "北海道", "鹿児": "鹿児島"}
+PREFECTURE_ALIASES = {"神奈": "神奈川", "北海": "北海道", "鹿児": "鹿児島", "和歌": "和歌山"}
 RIDER_NAME_ALIASES = {
     "国井裕樹": "國井裕樹", "斎藤輝彦": "齋藤輝彦",
     # Confirmed exact-name differences on 2026-11-23 Tamano 3R, 4R and 6R.
@@ -47,6 +47,15 @@ RIDER_NAME_ALIASES = {
     "連仏康浩": "連佛康浩",
     "辺見竜馬": "邊見竜馬",
     "真鍋伸也": "眞鍋伸也",
+    # Exact variants verified against KEIRIN.JP profiles for daily statistics.
+    "桜井太士": "櫻井太士",
+    "滝本匡平": "瀧本匡平",  # 014595 / 愛知 / 97期
+    "中野楚楽": "中野楚樂",  # 015959 / 宮城 / 129期
+    "斎藤昌弘": "齋藤昌弘",  # 014062 / 群馬 / 90期
+    "宮沢晃": "宮澤晃",      # 012957 / 山梨 / 75期
+    "三ツ井武": "三ッ井武",  # 014525 / 神奈川 / 96期
+    "斎藤友幸": "齋藤友幸",  # 014086 / 静岡 / 90期
+    "浜口健二": "濱口健二",  # 011734 / 高知 / 60期
 }
 
 
@@ -540,6 +549,10 @@ def self_test():
     assert eligible_races(older, [], older_day + timedelta(days=1), start_day) == []
     assert canonical_rider_name("国井 裕樹") == canonical_rider_name("國井裕樹")
     assert canonical_prefecture("神奈") == canonical_prefecture("神奈川")
+    assert canonical_prefecture("和歌") == canonical_prefecture("和歌山")
+    assert canonical_prefecture("和歌") != canonical_prefecture("大阪")
+    for original, published in RIDER_NAME_ALIASES.items():
+        assert canonical_rider_name(original) == canonical_rider_name(published)
     assert canonical_rider_name("国井裕樹") != canonical_rider_name("國村洋")
     for original, published in (
         ("末広 快理", "末廣快理"),

@@ -71,30 +71,6 @@ def signature(race):
     except (KeyError,TypeError):
         return None
 
-# Only exact, source-observed abbreviations are normalized for daily stat attachment.
-# This does NOT change V99, formal rider ID verification, or result acceptance.
-STAT_PREFECTURE_ALIASES={"和歌":"和歌山"}
-# Exact identity-preserving spellings checked against KEIRIN.JP individual profiles.
-# Never apply a blanket kanji replacement to unrelated riders.
-STAT_NAME_ALIASES={
-    "桜井太士":"櫻井太士",
-    "滝本匡平":"瀧本匡平",  # 014595 / 愛知 / 97期
-    "中野楚楽":"中野楚樂",  # 015959 / 宮城 / 129期
-    "斎藤昌弘":"齋藤昌弘",  # 014062 / 群馬 / 90期
-    "宮沢晃":"宮澤晃",      # 012957 / 山梨 / 75期
-    "三ツ井武":"三ッ井武",  # 014525 / 神奈川 / 96期
-    "斎藤友幸":"齋藤友幸",  # 014086 / 静岡 / 90期
-    "浜口健二":"濱口健二",  # 011734 / 高知 / 60期
-}
-
-def stats_name(value):
-    name=canonical_rider_name(value)
-    return STAT_NAME_ALIASES.get(name,name)
-
-def stats_prefecture(value):
-    name=canonical_prefecture(value)
-    return STAT_PREFECTURE_ALIASES.get(name,name)
-
 ROBOTS_AGENT="KEIRIN-INSIGHT-Research/1.0 (racecard stat read-only)"
 
 @lru_cache(maxsize=1)
@@ -186,8 +162,8 @@ def extract(html,race,url,with_groups=False):
     for source in recorded:
         original=expected[source["number"]]
         mismatches=[]
-        if stats_name(source["name"])!=stats_name(original["name"]):mismatches.append("name")
-        if stats_prefecture(source["prefecture"])!=stats_prefecture(original["prefecture"]):mismatches.append("prefecture")
+        if canonical_rider_name(source["name"])!=canonical_rider_name(original["name"]):mismatches.append("name")
+        if canonical_prefecture(source["prefecture"])!=canonical_prefecture(original["prefecture"]):mismatches.append("prefecture")
         if clean(source["period"])!=clean(original["period"]).removesuffix("期"):mismatches.append("period:"+clean(source["period"])+" / "+clean(original["period"]))
         if mismatches:
             raise ValueError("Rider identity mismatch in source car "+str(source["number"])+": "+",".join(mismatches))
@@ -351,13 +327,11 @@ def self_test():
     assert result["fetched"]==1 and race["entries"][0]["riderStats"]["b"]==5
     assert canonical_rider_name("國井裕樹")==canonical_rider_name("国井裕樹")
     assert canonical_prefecture("神奈")==canonical_prefecture("神奈川")
-    assert stats_prefecture("和歌")==stats_prefecture("和歌山")
-    assert stats_name("桜井太士")==stats_name("櫻井太士")
-    assert stats_name("桜井太士")!=stats_name("桜井太郎")
-    for short,formal in STAT_NAME_ALIASES.items():
-        assert stats_name(short)==stats_name(formal),(short,formal)
-    assert stats_name("斎藤別人")!=stats_name("齋藤別人")
-    assert stats_prefecture("和歌")!=stats_prefecture("大阪")
+    assert canonical_prefecture("和歌")==canonical_prefecture("和歌山")
+    assert canonical_rider_name("桜井太士")==canonical_rider_name("櫻井太士")
+    assert canonical_rider_name("桜井太士")!=canonical_rider_name("桜井太郎")
+    assert canonical_rider_name("斎藤別人")!=canonical_rider_name("齋藤別人")
+    assert canonical_prefecture("和歌")!=canonical_prefecture("大阪")
     assert race["entries"][0]["riderStats"]["winRate"]=="25.9%"
     assert enrich(board,cache,lambda _:(_ for _ in ()).throw(AssertionError("no fetch")),1)["cached"]==1
     race["entries"][0]["name"]="別選手"
