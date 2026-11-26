@@ -186,8 +186,12 @@ def parse_result(data, url, day, venue, race, acquired):
     expected = list(range(1, count + 1))
     if not 1 <= count <= 18 or sorted(row[2] for row in horses) != expected:
         raise ValueError("Result horse numbers are incomplete or duplicated")
-    if [int(row[10]) for row in horses] != expected:
-        raise ValueError("Tied or non-sequential finish requires review")
+    for position, row in enumerate(horses, 1):
+        if row[12] == "同着":
+            if position == 1 or row[10:12] != horses[position - 2][10:12]:
+                raise ValueError("Official dead heat does not match the preceding rank and time")
+        elif int(row[10]) != position:
+            raise ValueError("Non-sequential finish without an official dead-heat mark")
     positions = [n for n in doc.xpath('//th') if re.match(r"^[1-4]コーナー", wording(n))]
     if not positions or any(sorted(map(int, re.findall(r"\d+", wording(n.getnext())))) != expected
                             for n in positions):
