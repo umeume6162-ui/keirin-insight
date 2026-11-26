@@ -166,7 +166,8 @@ def parse_result(data, url, day, venue, race, acquired):
         mass = re.fullmatch(r"(\d+)\(([+-]?\d+|初出走)\)", cell["h_weight"])
         frame = cells["waku"].xpath('./img/@alt')
         finish = cell["place"]
-        if not sex_age or not mass or not frame or not finish.isdigit():
+        did_not_finish = finish == "中止"
+        if not sex_age or not mass or not frame or not (finish.isdigit() or did_not_finish):
             raise ValueError("Unsupported cancellation, abnormal result or missing result measurement")
         positions = [None] * 4
         for node in cells["corner"].xpath(".//li"):
@@ -174,19 +175,27 @@ def parse_result(data, url, day, venue, race, acquired):
             if not corner or positions[int(corner[1]) - 1] is not None:
                 raise ValueError("Unrecognized or duplicate corner")
             positions[int(corner[1]) - 1] = int(wording(node))
-        if not all(cell[k] for k in ("horse", "jockey", "time", "trainer")):
-            raise ValueError("Missing horse, rider, time or trainer")
+        if not all(cell[k] for k in ("horse", "jockey", "trainer")):
+            raise ValueError("Missing horse, rider or trainer")
+        if did_not_finish and any(cell[k] for k in ("time", "margin", "f_time")):
+            raise ValueError("Conflicting finish measurements for a horse marked 中止")
+        if not did_not_finish and not cell["time"]:
+            raise ValueError("Missing finisher time")
         horses.append([race_id, None, int(cell["num"]), int(re.match(r"枠([1-8])", frame[0])[1]),
                        cell["horse"], int(sex_age[2]), sex_age[1], float(cell["weight"]),
-                       cell["jockey"].lstrip("▲△☆★◇◆"), cell["trainer"], finish, cell["time"],
-                       cell["margin"] or None, *positions, float(cell["f_time"]), int(cell["pop"]),
+                       cell["jockey"].lstrip("▲△☆★◇◆"), cell["trainer"], finish, cell["time"] or None,
+                       cell["margin"] or None, *positions,
+                       None if did_not_finish else float(cell["f_time"]), int(cell["pop"]),
                        int(mass[1]), None if mass[2] == "初出走" else int(mass[2]),
                        None, None, None, acquired, url, "JRA公式結果確認・馬ID未照合"])
     count = len(horses)
     expected = list(range(1, count + 1))
     if not 1 <= count <= 18 or sorted(row[2] for row in horses) != expected:
         raise ValueError("Result horse numbers are incomplete or duplicated")
-    for position, row in enumerate(horses, 1):
+    finishers = [row for row in horses if row[10] != "中止"]
+    if not finishers or horses[:len(finishers)] != finishers:
+        raise ValueError("Official 中止 rows must follow the finishers")
+    for position, row in enumerate(finishers, 1):
         if row[12] == "同着":
             if position == 1 or row[10:12] != horses[position - 2][10:12]:
                 raise ValueError("Official dead heat does not match the preceding rank and time")
