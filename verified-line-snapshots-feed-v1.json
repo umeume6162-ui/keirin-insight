@@ -2,10 +2,10 @@
   "schema": "ki-line-snapshots-v1",
   "snapshotDate": "2026-11-26",
   "sourceTab": "VERIFIED publication",
-  "verificationNote": "2026-11-01小田原1〜3Rの発走前予想を全車照合・証拠再読後に追加。",
+  "verificationNote": "2026-11-01小田原4・5Rの発走前予想を全車照合・証拠再読後に追加。",
   "summary": {
-    "races": 235,
-    "rider_rows": 1645
+    "races": 237,
+    "rider_rows": 1659
   },
   "races": [
     {
@@ -28720,6 +28720,252 @@
           "prefecture": "奈良",
           "period": "127",
           "line": [
+            7,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-01|36|4",
+      "key": "2026-11-01|36|4",
+      "date": "2026-11-01",
+      "track": "小田原",
+      "race": 4,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "trackCode": "36",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/odawara/racedetail/3620261101010004/?pageType=showResult",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/odawara/racedetail/3620261101010004/?pageType=showResult"
+        ],
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-20261126-ODAWARA-20261101-4",
+          "sourceSnapshot": "V99選手結果蓄積!A948:W954",
+          "archivedOriginalHtml": false,
+          "comparison": "掲載とV99の全7車を照合し、Google証拠行239を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          5,
+          2
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          1,
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "法月 成祐",
+          "prefecture": "神奈",
+          "period": "77",
+          "line": [
+            4,
+            1,
+            6
+          ]
+        },
+        {
+          "number": 2,
+          "name": "真田 晃",
+          "prefecture": "兵庫",
+          "period": "86",
+          "line": [
+            5,
+            2
+          ]
+        },
+        {
+          "number": 3,
+          "name": "山崎 翼",
+          "prefecture": "大分",
+          "period": "95",
+          "line": [
+            3,
+            7
+          ]
+        },
+        {
+          "number": 4,
+          "name": "池田 充槻",
+          "prefecture": "秋田",
+          "period": "127",
+          "line": [
+            4,
+            1,
+            6
+          ]
+        },
+        {
+          "number": 5,
+          "name": "丹波 孝佑",
+          "prefecture": "大阪",
+          "period": "98",
+          "line": [
+            5,
+            2
+          ]
+        },
+        {
+          "number": 6,
+          "name": "梅原 大治",
+          "prefecture": "静岡",
+          "period": "81",
+          "line": [
+            4,
+            1,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "山崎 岳志",
+          "prefecture": "佐賀",
+          "period": "74",
+          "line": [
+            3,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-01|36|5",
+      "key": "2026-11-01|36|5",
+      "date": "2026-11-01",
+      "track": "小田原",
+      "race": 5,
+      "size": 7,
+      "verifiedDate": "2026-11-26",
+      "trackCode": "36",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/odawara/racedetail/3620261101010005/?pageType=showResult",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/odawara/racedetail/3620261101010005/?pageType=showResult"
+        ],
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-26",
+          "evidenceRef": "RACE-KDREAMS-20261126-ODAWARA-20261101-5",
+          "sourceSnapshot": "V99選手結果蓄積!A955:W961",
+          "archivedOriginalHtml": false,
+          "comparison": "掲載とV99の全7車を照合し、Google証拠行238を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          6,
+          7,
+          3
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "蕗澤鴻太郎",
+          "prefecture": "群馬",
+          "period": "111",
+          "line": [
+            1,
+            4
+          ]
+        },
+        {
+          "number": 2,
+          "name": "望月 一成",
+          "prefecture": "静岡",
+          "period": "111",
+          "line": [
+            2,
+            5
+          ]
+        },
+        {
+          "number": 3,
+          "name": "吉田 智哉",
+          "prefecture": "愛媛",
+          "period": "111",
+          "line": [
+            6,
+            7,
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "金ヶ江勇気",
+          "prefecture": "佐賀",
+          "period": "111",
+          "line": [
+            1,
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "能代谷 元",
+          "prefecture": "神奈",
+          "period": "111",
+          "line": [
+            2,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "吉川 希望",
+          "prefecture": "石川",
+          "period": "111",
+          "line": [
+            6,
+            7,
+            3
+          ]
+        },
+        {
+          "number": 7,
+          "name": "今野 大輔",
+          "prefecture": "岡山",
+          "period": "111",
+          "line": [
+            6,
             7,
             3
           ]
