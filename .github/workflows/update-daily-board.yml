@@ -473,7 +473,7 @@ jobs:
               python scripts/auto_daily_results.py --apply --date "$RETRY_RESULT_DATE" --max-races 12 --max-seconds 720 | tee /tmp/ki-daily-result-intake.json
             fi
           else
-            python scripts/auto_daily_results.py --apply --max-races 12 --max-seconds 720 --lookback-days 7 | tee /tmp/ki-daily-result-intake.json
+            python scripts/auto_daily_results.py --apply --max-races 16 --max-seconds 720 --lookback-days 7 | tee /tmp/ki-daily-result-intake.json
           fi
           python - <<'PY'
           import collections, json, os, re
