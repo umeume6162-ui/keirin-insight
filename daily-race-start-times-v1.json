@@ -771,6 +771,61 @@
       "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_31187",
       "signature": "ee877fc94c7645531587532f4f676667feeb26aa2749529d12a859a22f49b4b6"
     },
+    "2026-11-27|松阪|10": {
+      "startTime": "19:38",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_34753",
+      "signature": "6e5c66e9921ab821c5bd182d64ef0589430327d2448b68c5643125705fd22465"
+    },
+    "2026-11-27|松阪|11": {
+      "startTime": "20:04",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_34752",
+      "signature": "75365963839a8ea1f804c975ae4d0c2c39b81611bfee46ff0cecd6d5631529b9"
+    },
+    "2026-11-27|松阪|12": {
+      "startTime": "20:30",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_34749",
+      "signature": "b531c70972786c954266413cf344c413aa0d4abc3760578c4e98698e6471bb6a"
+    },
+    "2026-11-27|松阪|2": {
+      "startTime": "16:27",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_34776",
+      "signature": "9caaafee2ed2b5806e2a5470ead85174353331fd7c40e4277cf96a127710f616"
+    },
+    "2026-11-27|松阪|3": {
+      "startTime": "16:50",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_34775",
+      "signature": "007253e3c5b30adc6cbeaaf12cc46dc5fcc014a2a5c3693bf83351196f67b77e"
+    },
+    "2026-11-27|松阪|4": {
+      "startTime": "17:13",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_34772",
+      "signature": "53bfa5ddf728ed91a0decdad954d5fd638ee766d613f83b36c0fa39ccbd92215"
+    },
+    "2026-11-27|松阪|5": {
+      "startTime": "17:36",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_34771",
+      "signature": "a12c624c097b5cce5edd00f5f093ac2618b685a9ec5b2c2b449c1630bd0211d1"
+    },
+    "2026-11-27|松阪|6": {
+      "startTime": "18:00",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_34764",
+      "signature": "35c982f07f9bcafeffa79f8df1a418fca10ce548e06c2a5ed6f254767baa88a5"
+    },
+    "2026-11-27|松阪|7": {
+      "startTime": "18:24",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_34761",
+      "signature": "e9eb30d7b6086a440e711a0ea42d7f19f58c70186451c36a3435a69b61a4e632"
+    },
+    "2026-11-27|松阪|8": {
+      "startTime": "18:48",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_34760",
+      "signature": "42ae747d3e6bff0fe618f8144f994a0c0f244dfc69b8fbe97d999fc5e467f87d"
+    },
+    "2026-11-27|松阪|9": {
+      "startTime": "19:13",
+      "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_34759",
+      "signature": "1daa7b7a0f4d3f1d07f7d7a236ae329200365cd7a76e6f1ebb3efea97aead893"
+    },
     "2026-11-27|福井|1": {
       "startTime": "11:05",
       "sourceUrl": "https://keirin.tokyo-sports.co.jp/list/race/20261126_32984",
