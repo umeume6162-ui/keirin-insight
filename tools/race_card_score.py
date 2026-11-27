@@ -403,7 +403,34 @@ def test_daily_board_prediction_audit():
     return 6
 
 
+def audit_daily_board_cli():
+    import argparse
+    import json
+    from pathlib import Path
+
+    parser = argparse.ArgumentParser(description="Audit one saved keirin race before prediction")
+    parser.add_argument("--board", required=True, type=Path)
+    parser.add_argument("--rider-ids", required=True, type=Path)
+    parser.add_argument("--race-key", required=True, help="YYYY-MM-DD|track code|race number")
+    parser.add_argument("--predicted-at", required=True)
+    args = parser.parse_args()
+    board = json.loads(args.board.read_text(encoding="utf-8"))
+    identities = json.loads(args.rider_ids.read_text(encoding="utf-8"))
+    if board.get("schema") != "ki-daily-board-v1" or identities.get("schema") != "ki-official-rider-ids-v1":
+        parser.error("Expected the daily board and formal rider ID feeds")
+    matches = [race for race in board["races"]
+               if f"{race.get('date')}|{race.get('trackCode')}|{race.get('race')}" == args.race_key]
+    if len(matches) != 1:
+        parser.error("Expected exactly one race for --race-key")
+    report = daily_board_prediction_audit(matches[0], identities["riders"], args.predicted_at)
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+
+
 if __name__ == "__main__":
+    import sys
+    if sys.argv[1:]:
+        audit_daily_board_cli()
+        raise SystemExit
     print("prediction timestamp cases:", test_prediction_time_check())
     print("prediction identity cases:", test_prediction_identity_check())
     print("prediction input cases:", test_prediction_input_check())
