@@ -19,6 +19,12 @@ const colors=['#f4f4f4','#242424','#d84242','#2d5fbb','#efd849','#278850','#ed93
 for(const color of colors)assert.ok(html.includes(color),'missing keirin car color '+color);
 const forecast=fs.readFileSync('line-forecast.html','utf8');
 const home=fs.readFileSync('index.html','utf8');
+const hub=fs.readFileSync('research-hub.html','utf8');
+const oldHub=fs.readFileSync('research-hub 2.html','utf8');
+assert.ok(hub.includes('window.KIVerified.bundle()'),'data management must use the shared publication guard');
+assert.ok(!hub.includes('function verifyPublication('),'data management must not retain the old validator');
+assert.match(oldHub,/content="0; url=\.\/research-hub\.html"/,'old research URL must open the active page');
+assert.ok(!oldHub.includes('<script'),'old research URL must not load another set of feeds');
 assert.ok(home.includes('href="./line-forecast.html"'),'home must link independent line forecast view');
 assert.ok(home.includes('window.KIVerified.bundle()'),'home must use shared publication guard');
 assert.ok(!home.includes('function verifyPublication(a,b,i,l){'),'home must not retain old two-source forecast validator');
