@@ -173,6 +173,24 @@ function refreshRace() {
   }
 }
 
+function rememberSelection() {
+  const url = new URL(location.href);
+  if (datePattern.test(day.value)) url.searchParams.set("day", day.value);
+  else url.searchParams.delete("day");
+  if (venue.value) url.searchParams.set("track", venue.value);
+  else url.searchParams.delete("track");
+  if (current) url.searchParams.set("race", String(current.race));
+  else url.searchParams.delete("race");
+  history.replaceState(null, "", url);
+}
+
+function changeSelectedDay() {
+  initialSelection = null;
+  const loading = showDay();
+  rememberSelection();
+  return loading;
+}
+
 function refreshNumbers(preferred) {
   const atVenue = races.filter(r=>r.track===venue.value).sort((a,b)=>a.race-b.race);
   options(race,"Rを選択",atVenue.map(r=>[String(r.race),r.race+"R"]));
@@ -295,12 +313,12 @@ function shiftDay(offset) {
   const date = new Date();
   date.setUTCDate(date.getUTCDate()+offset);
   day.value = jst(date);
-  showDay();
+  changeSelectedDay();
 }
 
-day.addEventListener("change",showDay);
-venue.addEventListener("change",()=>refreshNumbers());
-race.addEventListener("change",refreshRace);
+day.addEventListener("change",changeSelectedDay);
+venue.addEventListener("change",()=>{refreshNumbers();rememberSelection();});
+race.addEventListener("change",()=>{refreshRace();rememberSelection();});
 $("today").addEventListener("click",()=>shiftDay(0));
 $("tomorrow").addEventListener("click",()=>shiftDay(1));
 $("show-forecast").addEventListener("click",()=>{
