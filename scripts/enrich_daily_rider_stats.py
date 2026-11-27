@@ -454,34 +454,45 @@ def save_line_cells(board,cache):
     return len(planned)
 
 
-def audit_stats_cache(board, cache, race_date):
+def audit_stats_cache(board, cache, race_date, *, details=False):
     """Explain missing daily stats without fetching sources or changing feeds."""
     from collections import Counter
+    from datetime import date
 
+    if date.fromisoformat(race_date).isoformat() != race_date:
+        raise ValueError("Expected YYYY-MM-DD")
     if board.get("schema") != "ki-daily-board-v1" or cache.get("schema") != SCHEMA:
         raise ValueError("Unknown board or cache schema")
     counts = Counter()
+    races = []
     for race in board["races"]:
         if race.get("date") != race_date:
             continue
         url, sig = source_url(race), signature(race)
-        if not url or not sig:
-            counts["notApplicable"] += 1
-            continue
         key = race.get("key")
         record = cache["races"].get(key) or {}
         hold = cache.get("holds", {}).get(key) or {}
-        if race.get("riderStatsSource"):
-            counts["attached"] += 1
+        if not url or not sig:
+            state = "notApplicable"
+        elif race.get("riderStatsSource"):
+            state = "attached"
         elif record.get("sourceUrl") == url and record.get("signature") == sig:
-            counts["cacheRecordWithoutAttachment"] += 1
+            state = "cacheRecordWithoutAttachment"
         elif hold.get("sourceUrl") == url and hold.get("signature") == sig:
-            counts["hold:" + hold.get("reasonCode", "unknown")] += 1
+            state = "hold:" + hold.get("reasonCode", "unknown")
         elif record or hold:
-            counts["staleEvidence"] += 1
+            state = "staleEvidence"
         else:
-            counts["noRetainedEvidence"] += 1
-    return dict(sorted(counts.items()))
+            state = "noRetainedEvidence"
+        counts[state] += 1
+        if details:
+            row = {"raceKey": key, "state": state}
+            if state.startswith("hold:"):
+                row.update(sourceUrl=url, lastAttemptAt=hold.get("lastAttemptAt"),
+                           nextRetryAt=hold.get("nextRetryAt"))
+            races.append(row)
+    summary = dict(sorted(counts.items()))
+    return {"counts": summary, "races": races} if details else summary
 
 
 def main():
@@ -491,8 +502,11 @@ def main():
     p.add_argument("--limit",type=int,default=16)
     p.add_argument("--save-lines",action="store_true",help="Fill only validated blank daily line cells with source notes")
     p.add_argument("--audit-cache-date", help="Read-only cache diagnostics for YYYY-MM-DD")
+    p.add_argument("--audit-cache-details", action="store_true", help="Include each race and retained retry evidence")
     p.add_argument("--self-test",action="store_true")
     a=p.parse_args()
+    if a.audit_cache_details and not a.audit_cache_date:
+        p.error("--audit-cache-details requires --audit-cache-date")
     if a.self_test:return self_test()
     board_path,cache_path=Path(a.feed),Path(a.cache)
     board=json.loads(board_path.read_text(encoding="utf-8"))
@@ -500,7 +514,7 @@ def main():
     if a.audit_cache_date:
         if a.save_lines:
             p.error("--audit-cache-date cannot be combined with --save-lines")
-        print(json.dumps(audit_stats_cache(board, cache, a.audit_cache_date), ensure_ascii=False))
+        print(json.dumps(audit_stats_cache(board, cache, a.audit_cache_date, details=a.audit_cache_details), ensure_ascii=False))
         return
     stats=enrich(board,cache,limit=a.limit)
     if a.save_lines:
