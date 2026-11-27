@@ -214,6 +214,9 @@ async function showDay() {
     if(venues.includes(initialSelection?.venue))venue.value=initialSelection.venue;
     else if(venues.length===1)venue.value=venues[0];
     refreshNumbers(initialSelection?.race);
+    if (initialSelection && current && location.hash === "#input-status") {
+      $("input-status").scrollIntoView({block:"start"});
+    }
     initialSelection = null;
     $("pick-status").textContent = venues.length ? "" : "この日の出走データはまだ表示できません。";
   }catch(error){

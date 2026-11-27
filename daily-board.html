@@ -278,8 +278,8 @@ function buildRace(r){
  const pending=node("span",results.length?"結果記録あり":"出走表のみ","pill pending");
  summary.append(text,pending);details.append(summary);
  const body=node("div",undefined,"race-body");
- const prediction=node("a","このレースの予想・研究","action-secondary");
- prediction.href="./index.html?"+new URLSearchParams({day:r.date,track:r.track,race:r.race});
+ const prediction=node("a","このレースの予想前データ","action-secondary");
+ prediction.href="./index.html?"+new URLSearchParams({day:r.date,track:r.track,race:r.race})+"#input-status";
  body.append(prediction);
  if(results.length){
   body.append(node("h3","着順・決まり手"));
