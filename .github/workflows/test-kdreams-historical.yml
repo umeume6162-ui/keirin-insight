@@ -4,6 +4,7 @@ on:
     paths:
       - 'scripts/collect_kdreams_historical.py'
       - 'scripts/read_forecast_candidates.py'
+      - 'tools/plan_missing_lines.py'
       - 'scripts/collect_kdreams_result.py'
       - 'verified-results-feed-v1.json'
       - '.github/workflows/test-kdreams-historical.yml'
@@ -11,9 +12,13 @@ on:
     paths:
       - 'scripts/collect_kdreams_historical.py'
       - 'scripts/read_forecast_candidates.py'
+      - 'tools/plan_missing_lines.py'
       - 'scripts/collect_kdreams_result.py'
       - 'verified-results-feed-v1.json'
       - '.github/workflows/test-kdreams-historical.yml'
+  schedule:
+    # 19:12 JST, before the evening review task.
+    - cron: '12 10 * * *'
   workflow_dispatch:
     inputs:
       limit:
@@ -25,7 +30,21 @@ on:
 permissions:
   contents: read
 jobs:
+  daily-archive-candidates:
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[plan-daily-lines]')))
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Summarize reusable archived line observations
+        run: python tools/plan_missing_lines.py --daily-archive-summary --limit 10 >> "$GITHUB_STEP_SUMMARY"
   historical-offline-test:
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
