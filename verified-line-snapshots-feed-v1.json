@@ -1,11 +1,11 @@
 {
   "schema": "ki-line-snapshots-v1",
-  "snapshotDate": "2026-11-26",
+  "snapshotDate": "2026-11-27",
   "sourceTab": "VERIFIED publication",
-  "verificationNote": "2026-11-01名古屋1〜3Rの発走前予想を全車照合・証拠再読後に追加。",
+  "verificationNote": "2026-11-25西武園1・4Rの発走前予想を全車照合・証拠再読後に追加。",
   "summary": {
-    "races": 240,
-    "rider_rows": 1680
+    "races": 242,
+    "rider_rows": 1694
   },
   "races": [
     {
@@ -29339,6 +29339,258 @@
           "line": [
             4,
             7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25|26|1",
+      "key": "2026-11-25|26|1",
+      "date": "2026-11-25",
+      "track": "西武園",
+      "trackCode": "26",
+      "race": 1,
+      "size": 7,
+      "verifiedDate": "2026-11-27",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/seibuen/racedetail/2620261123030001/?pageType=showResult",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/seibuen/racedetail/2620261123030001/?pageType=showResult"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-27",
+          "evidenceRef": "LINE-KDREAMS-20261127-202611252601",
+          "sourceSnapshot": "KI｜日次出走表!A527:O533",
+          "archivedOriginalHtml": false,
+          "comparison": "全7車の本人とライン内順序を事前観測と照合。旧字体はJKA公式プロフィールで確認。Google証拠行247を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          5,
+          4,
+          6
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          7
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "石田 宏樹",
+          "prefecture": "青森",
+          "period": "91",
+          "line": [
+            1,
+            5,
+            4,
+            6
+          ]
+        },
+        {
+          "number": 2,
+          "name": "畠山 裕行",
+          "prefecture": "神奈川",
+          "period": "82",
+          "line": [
+            2
+          ]
+        },
+        {
+          "number": 3,
+          "name": "木本 賢二",
+          "prefecture": "大阪",
+          "period": "69",
+          "line": [
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "高瀬 卓",
+          "prefecture": "埼玉",
+          "period": "87",
+          "line": [
+            1,
+            5,
+            4,
+            6
+          ]
+        },
+        {
+          "number": 5,
+          "name": "吉橋 秀城",
+          "prefecture": "埼玉",
+          "period": "85",
+          "line": [
+            1,
+            5,
+            4,
+            6
+          ]
+        },
+        {
+          "number": 6,
+          "name": "落合 豊",
+          "prefecture": "茨城",
+          "period": "69",
+          "line": [
+            1,
+            5,
+            4,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "齋藤 輝彦",
+          "prefecture": "神奈川",
+          "period": "93",
+          "line": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25|26|4",
+      "key": "2026-11-25|26|4",
+      "date": "2026-11-25",
+      "track": "西武園",
+      "trackCode": "26",
+      "race": 4,
+      "size": 7,
+      "verifiedDate": "2026-11-27",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/seibuen/racedetail/2620261123030004/?pageType=showResult",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/seibuen/racedetail/2620261123030004/?pageType=showResult"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-27",
+          "evidenceRef": "LINE-KDREAMS-20261127-202611252604",
+          "sourceSnapshot": "KI｜日次出走表!A548:O554",
+          "archivedOriginalHtml": false,
+          "comparison": "全7車の本人とライン内順序を事前観測と照合。旧字体はJKA公式プロフィールで確認。Google証拠行248を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          4,
+          6
+        ],
+        [
+          3
+        ],
+        [
+          5,
+          7,
+          2
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "瀧本 匡平",
+          "prefecture": "愛知",
+          "period": "97",
+          "line": [
+            1,
+            4,
+            6
+          ]
+        },
+        {
+          "number": 2,
+          "name": "天沼 雅貴",
+          "prefecture": "埼玉",
+          "period": "96",
+          "line": [
+            5,
+            7,
+            2
+          ]
+        },
+        {
+          "number": 3,
+          "name": "市川 博章",
+          "prefecture": "静岡",
+          "period": "80",
+          "line": [
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "永橋 武司",
+          "prefecture": "大阪",
+          "period": "90",
+          "line": [
+            1,
+            4,
+            6
+          ]
+        },
+        {
+          "number": 5,
+          "name": "等々力 久就",
+          "prefecture": "長野",
+          "period": "98",
+          "line": [
+            5,
+            7,
+            2
+          ]
+        },
+        {
+          "number": 6,
+          "name": "中川 博文",
+          "prefecture": "福井",
+          "period": "61",
+          "line": [
+            1,
+            4,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "川村 昭弘",
+          "prefecture": "新潟",
+          "period": "81",
+          "line": [
+            5,
+            7,
+            2
           ]
         }
       ]
