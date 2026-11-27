@@ -99,16 +99,29 @@ def fetch(url):
         raise ValueError("Racecard too large")
     return page.text
 
+class SourceShapeError(ValueError):
+    """A hold with fixed diagnostic codes safe to retain in the cache."""
+
+    def __init__(self, message, *details):
+        super().__init__(message)
+        self.details = details
+
+
 def extract(html,race,url,with_groups=False):
     soup=BeautifulSoup(html,"html.parser")
     title=clean(soup.title.get_text(" ",strip=True) if soup.title else "")
     y,m,d=map(int,race["date"].split("-"))
-    if (race["track"] not in title or
-        not re.search(rf"{y}年\s*0?{m}月\s*0?{d}日",title) or
-        not re.search(rf"(?<!\d){race['race']}\s*R(?!\d)",title)):
-        raise ValueError("Race title does not prove meeting/date/race")
+    checks = {
+        "title_venue": race["track"] in title,
+        "title_date": bool(re.search(rf"{y}年\s*0?{m}月\s*0?{d}日", title)),
+        "title_race_number": bool(re.search(rf"(?<!\d){race['race']}\s*R(?!\d)", title)),
+    }
+    missing = [field for field, matches in checks.items() if not matches]
+    if missing:
+        raise SourceShapeError("Race title does not prove meeting/date/race", *missing)
     tables=[]
-    for table in soup.select("table.RaceCard_Table"):
+    source_tables = soup.select("table.RaceCard_Table")
+    for table in source_tables:
         head=table.select_one("tr.Header")
         if not head:continue
         labels=[clean(c.get_text(" ",strip=True)).replace(" ","").replace("｜","ー")
@@ -119,12 +132,15 @@ def extract(html,race,url,with_groups=False):
                 and all(labels[i]==check[i] for i in range(len(check)) if i!=4)):
             tables.append(table)
     if len(tables)!=1:
-        raise ValueError("Unique full-name racecard table not found")
+        detail = "table_missing" if not source_tables else (
+            "table_header_mismatch" if not tables else "table_ambiguous")
+        raise SourceShapeError("Unique full-name racecard table not found", detail)
     table=tables[0]
     recorded=[]
     for row in table.select("tr.PlayerList"):
         cells=row.find_all("td",recursive=False)
-        if len(cells)!=len(HEADERS):raise ValueError("Racecard column count changed")
+        if len(cells)!=len(HEADERS):
+            raise SourceShapeError("Racecard column count changed", "table_row_width")
         car=clean(cells[1].get_text(" ",strip=True))
         if not car.isdigit() or not 1<=int(car)<=9:
             raise ValueError("Invalid car number in source")
@@ -271,6 +287,8 @@ def enrich(board,cache,loader=fetch,limit=16):
                "nextRetryAt":(now+timedelta(hours=hours)).isoformat(timespec="seconds"),
                "reasonType":type(exc).__name__,
                "reasonCode":hold_reason(exc)}
+            if isinstance(exc, SourceShapeError):
+                next_holds[race["key"]]["reasonDetails"] = list(exc.details)
     counts["deferred"]=max(0,len(pending)-limit)
     cache["races"]=dict(sorted(next_cache.items()))
     cache["holds"]=dict(sorted(next_holds.items()))
@@ -453,18 +471,70 @@ def save_line_cells(board,cache):
         raise ValueError("Daily line reread mismatch")
     return len(planned)
 
+
+def audit_stats_cache(board, cache, race_date, *, details=False):
+    """Explain missing daily stats without fetching sources or changing feeds."""
+    from collections import Counter
+    from datetime import date
+
+    if date.fromisoformat(race_date).isoformat() != race_date:
+        raise ValueError("Expected YYYY-MM-DD")
+    if board.get("schema") != "ki-daily-board-v1" or cache.get("schema") != SCHEMA:
+        raise ValueError("Unknown board or cache schema")
+    counts = Counter()
+    races = []
+    for race in board["races"]:
+        if race.get("date") != race_date:
+            continue
+        url, sig = source_url(race), signature(race)
+        key = race.get("key")
+        record = cache["races"].get(key) or {}
+        hold = cache.get("holds", {}).get(key) or {}
+        if not url or not sig:
+            state = "notApplicable"
+        elif race.get("riderStatsSource"):
+            state = "attached"
+        elif record.get("sourceUrl") == url and record.get("signature") == sig:
+            state = "cacheRecordWithoutAttachment"
+        elif hold.get("sourceUrl") == url and hold.get("signature") == sig:
+            state = "hold:" + hold.get("reasonCode", "unknown")
+        elif record or hold:
+            state = "staleEvidence"
+        else:
+            state = "noRetainedEvidence"
+        counts[state] += 1
+        if details:
+            row = {"raceKey": key, "state": state}
+            if state.startswith("hold:"):
+                row.update(sourceUrl=url, lastAttemptAt=hold.get("lastAttemptAt"),
+                           nextRetryAt=hold.get("nextRetryAt"),
+                           reasonDetails=hold.get("reasonDetails", []))
+            races.append(row)
+    summary = dict(sorted(counts.items()))
+    return {"counts": summary, "races": races} if details else summary
+
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--feed",default="daily-board-feed-v1.json")
     p.add_argument("--cache",default="daily-rider-stats-v1.json")
     p.add_argument("--limit",type=int,default=16)
     p.add_argument("--save-lines",action="store_true",help="Fill only validated blank daily line cells with source notes")
+    p.add_argument("--audit-cache-date", help="Read-only cache diagnostics for YYYY-MM-DD")
+    p.add_argument("--audit-cache-details", action="store_true", help="Include each race and retained retry evidence")
     p.add_argument("--self-test",action="store_true")
     a=p.parse_args()
+    if a.audit_cache_details and not a.audit_cache_date:
+        p.error("--audit-cache-details requires --audit-cache-date")
     if a.self_test:return self_test()
     board_path,cache_path=Path(a.feed),Path(a.cache)
     board=json.loads(board_path.read_text(encoding="utf-8"))
     cache=json.loads(cache_path.read_text(encoding="utf-8")) if cache_path.exists() else {"schema":SCHEMA,"races":{}}
+    if a.audit_cache_date:
+        if a.save_lines:
+            p.error("--audit-cache-date cannot be combined with --save-lines")
+        print(json.dumps(audit_stats_cache(board, cache, a.audit_cache_date, details=a.audit_cache_details), ensure_ascii=False))
+        return
     stats=enrich(board,cache,limit=a.limit)
     if a.save_lines:
         print('DAILY_LINE_CELLS_SAVED',save_line_cells(board,cache))
