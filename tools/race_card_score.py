@@ -32,3 +32,20 @@ def race_card_score(race_id, race_date, registration, number, raw_score,
     record={"schema":"ki-race-card-score-candidate-v1","raceId":race_id,"raceDate":race_date,"registration":registration,"number":number,"rawScore":raw_score,"value":value,"state":state,"source":source,"observedAt":observed_at,"evidenceId":evidence_id,"aggregationScope":aggregation_scope,"profileDisplayAllowed":False,"independentApproval":"PENDING","publicationAllowed":False,"trainingAllowed":False,"preStartTimeVerified":False}
     record["sha256"]=digest(record)
     return record
+
+
+def prediction_time_check(observed_at, predicted_at, start_at):
+    """Check temporal eligibility only; never grant publication or training approval."""
+    from datetime import datetime, timedelta
+    try:
+        times = [datetime.fromisoformat(v) for v in (observed_at, predicted_at, start_at)]
+        if any(t.utcoffset() != timedelta(hours=9) for t in times):
+            return "HOLD_UNKNOWN_TIME"
+    except (ValueError, TypeError):
+        return "HOLD_UNKNOWN_TIME"
+    observed, predicted, start = times
+    if predicted >= start or observed >= start:
+        return "HOLD_POST_START"
+    if observed > predicted:
+        return "HOLD_AFTER_PREDICTION"
+    return "TIME_PASS"
