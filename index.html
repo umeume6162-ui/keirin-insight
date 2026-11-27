@@ -70,6 +70,7 @@
 <button class="action-secondary" type="button" id="request" aria-controls="request-panel" aria-expanded="false">予想を依頼</button>
 <a class="action-secondary" id="card" href="./daily-board.html">出走表・結果</a>
 </div>
+<section id="input-status" class="preview-content" aria-label="予想前データ" hidden></section>
 <div id="forecast" class="preview-content" aria-live="polite" hidden></div>
 <div id="request-panel" class="preview-content" hidden>
 <label for="request-text">ChatGPTに送る依頼文</label>
@@ -165,6 +166,7 @@ function refreshRace() {
   $("race-meta").textContent = current
     ? [current.date,current.className,current.startTime&&"発走 "+current.startTime,current.results?.length&&"結果あり"].filter(Boolean).join(" ・ ")
     : "開催日と競輪場からレースを選んでください。";
+  renderInputStatus(current);
   if(current){
     $("card").href = trackLink(current);
     $("request-text").value = requestText(current);
@@ -206,6 +208,38 @@ function capturedBeforeStart(captured, r) {
   const match = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}) JST$/.exec(captured || "");
   const start = /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(r.startTime) && Date.parse(r.date + "T" + r.startTime + ":00+09:00");
   return Boolean(match && start && Date.parse(match[1]+"T"+match[2]+":00+09:00")<start);
+}
+
+function renderInputStatus(r) {
+  const panel = $("input-status");
+  panel.replaceChildren();
+  panel.hidden = !r;
+  if (!r) return;
+  const missing = [];
+  if (!r.startTimeSourceUrl || !r.startTime) missing.push("出典付きの発走時刻");
+  const stats = r.riderStatsSource;
+  const entries = r.entries || [];
+  const fullCard = [7, 9].includes(r.expectedCount) &&
+    entries.length === r.expectedCount &&
+    entries.every(entry => Number.isInteger(entry.number) && entry.number >= 1 && entry.number <= r.expectedCount) &&
+    new Set(entries.map(entry => entry.number)).size === r.expectedCount;
+  if (!fullCard) missing.push("全車の出走表");
+  if (!fullCard || !/^https:\/\//.test(stats?.url || "") ||
+      !capturedBeforeStart(stats.capturedAt, r) ||
+      entries.some(entry => !entry.riderStats?.score || !entry.riderStats?.style ||
+        !Number.isInteger(entry.riderStats?.b))) {
+    missing.push("発走前に取得した全車の得点・脚質・B回数");
+  }
+  if (!String(r.className || "").startsWith("L") && !dailyForecast(r)) {
+    missing.push("発走前ラインの出典・取得時刻・並び");
+  }
+  panel.append(node("strong", missing.length ? "日次データで不足している項目" : "日次データの基本項目を確認"));
+  if (missing.length) {
+    const list = node("ul", "");
+    missing.forEach(label => list.append(node("li", label)));
+    panel.append(list);
+  }
+  panel.append(node("p", "予想には、本人照合と予想時点の確認が必要です。"));
 }
 
 function dailyForecast(r) {
