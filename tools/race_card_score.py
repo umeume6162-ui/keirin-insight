@@ -106,6 +106,41 @@ def test_prediction_identity_check():
     return len(cases)
 
 
+
+def prediction_input_check(expected, observed, observed_at, predicted_at, start_at, phase):
+    """Candidate eligibility only; provenance and official approval remain separate."""
+    if phase != "pre_race":
+        return "HOLD_NON_PRE_RACE"
+    identity = prediction_identity_check(expected, observed)
+    if identity != "IDENTITY_MATCH":
+        return identity
+    timing = prediction_time_check(observed_at, predicted_at, start_at)
+    if timing != "TIME_PASS":
+        return timing
+    return "CANDIDATE_ONLY"
+
+
+def test_prediction_input_check():
+    base = {"race_id": "race-a", "entrant_number": 1, "entrant_id": "000001"}
+    p = "2026-11-28T12:00:00+09:00"
+    s = "2026-11-28T12:30:00+09:00"
+    cases = [
+        (base, p, "pre_race", "CANDIDATE_ONLY"),
+        (base, p, "result", "HOLD_NON_PRE_RACE"),
+        (base, p, None, "HOLD_NON_PRE_RACE"),
+        (dict(base, race_id="race-b"), p, "pre_race", "HOLD_IDENTITY_MISMATCH"),
+        (base, s, "pre_race", "HOLD_POST_START"),
+        (base, None, "pre_race", "HOLD_UNKNOWN_TIME"),
+        (base, "2026-11-28T12:01:00+09:00", "pre_race", "HOLD_AFTER_PREDICTION"),
+    ]
+    for observed, stamp, phase, expected in cases:
+        actual = prediction_input_check(base, observed, stamp, p, s, phase)
+        if actual != expected:
+            raise AssertionError((expected, actual))
+    return len(cases)
+
+
 if __name__ == "__main__":
     print("prediction timestamp cases:", test_prediction_time_check())
     print("prediction identity cases:", test_prediction_identity_check())
+    print("prediction input cases:", test_prediction_input_check())
