@@ -54,7 +54,11 @@ function labelRace(key) {
 }
 
 function valid(row) {
-  return row && Object.keys(row).length === fields.length + 1 && Object.hasOwn(states, row.state) &&
+  const keys = new Set(["state", "asOf", ...fields.map(([key]) => key)]);
+  return row && Object.keys(row).every(key => keys.has(key)) && Object.hasOwn(states, row.state) &&
+    (!Object.hasOwn(row, "asOf") || (typeof row.asOf === "string" &&
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?\+09:00$/.test(row.asOf) &&
+      Number.isFinite(Date.parse(row.asOf)))) &&
     Number.isInteger(row.expectedCount) && row.expectedCount >= 1 && row.expectedCount <= 18 &&
     fields.every(([key]) => Number.isInteger(row[key]) && row[key] >= 0 && row[key] <= row.expectedCount) &&
     row.missingIdCount + row.missingFormCount + row.heldFormCount <= row.expectedCount;
@@ -64,7 +68,7 @@ function render() {
   const row = reports.get(race.value);
   counts.replaceChildren();
   if (!row) return;
-  status.textContent = states[row.state];
+  status.textContent = states[row.state] + (row.asOf ? " 検査基準 " + row.asOf.slice(0, 16).replace("T", " ") + " JST。" : " 検査基準時刻は未記録です。");
   for (const [key, label] of fields) {
     const title = document.createElement("dt");
     const value = document.createElement("dd");
