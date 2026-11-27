@@ -146,7 +146,39 @@ def test_prediction_input_check():
     return len(cases)
 
 
+
+def prediction_acquisition_check(observed_at, acquired_at, predicted_at, start_at):
+    """Require both observation and actual acquisition before prediction."""
+    observation = prediction_time_check(observed_at, predicted_at, start_at)
+    if observation != "TIME_PASS":
+        return observation
+    acquisition = prediction_time_check(acquired_at, predicted_at, start_at)
+    if acquisition != "TIME_PASS":
+        return acquisition
+    from datetime import datetime
+    if datetime.fromisoformat(acquired_at) < datetime.fromisoformat(observed_at):
+        return "HOLD_ACQUISITION_ORDER"
+    return "TIME_PASS"
+
+
+def test_prediction_acquisition_check():
+    o = "2026-11-28T11:00:00+09:00"
+    p = "2026-11-28T12:00:00+09:00"
+    s = "2026-11-28T12:30:00+09:00"
+    cases = [(o, "TIME_PASS"), (p, "TIME_PASS"),
+             (None, "HOLD_UNKNOWN_TIME"),
+             ("2026-11-28T10:59:59+09:00", "HOLD_ACQUISITION_ORDER"),
+             ("2026-11-28T12:00:01+09:00", "HOLD_AFTER_PREDICTION"),
+             (s, "HOLD_POST_START")]
+    for acquired, expected in cases:
+        actual = prediction_acquisition_check(o, acquired, p, s)
+        if actual != expected:
+            raise AssertionError((acquired, expected, actual))
+    return len(cases)
+
+
 if __name__ == "__main__":
     print("prediction timestamp cases:", test_prediction_time_check())
     print("prediction identity cases:", test_prediction_identity_check())
     print("prediction input cases:", test_prediction_input_check())
+    print("prediction acquisition cases:", test_prediction_acquisition_check())
