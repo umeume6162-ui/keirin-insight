@@ -182,8 +182,43 @@ def test_prediction_acquisition_check():
     return len(cases)
 
 
+def prediction_feature_coverage(expected, observations, required, predicted_at, start_at):
+    """Read-only candidate coverage; never grants training or publication approval."""
+    states = {}
+    for name in dict.fromkeys(required):
+        item = observations.get(name)
+        if not isinstance(item, dict) or item.get("value") is None or item.get("value") == "":
+            states[name] = "HOLD_MISSING"
+            continue
+        states[name] = prediction_input_check(
+            expected, item.get("identity"), item.get("observed_at"),
+            predicted_at, start_at, item.get("phase"),
+            acquired_at=item.get("acquired_at"))
+    eligible = sum(v == "CANDIDATE_ONLY" for v in states.values())
+    return {"required": len(states), "eligible": eligible, "states": states,
+            "complete": bool(states) and eligible == len(states),
+            "trainingAllowed": False, "publicationAllowed": False}
+
+
+def test_prediction_feature_coverage():
+    identity = {"race_id": "fixture", "entrant_number": 1, "entrant_id": "000001"}
+    p = "2026-11-28T12:00:00+09:00"
+    s = "2026-11-28T12:30:00+09:00"
+    item = {"identity": identity, "value": 0, "observed_at": p,
+            "acquired_at": p, "phase": "pre_race"}
+    result = prediction_feature_coverage(identity, {"a": item, "b": dict(item, phase="result")},
+                                         ["a", "b", "c"], p, s)
+    assert result["eligible"] == 1 and result["required"] == 3
+    assert result["states"] == {"a": "CANDIDATE_ONLY", "b": "HOLD_NON_PRE_RACE", "c": "HOLD_MISSING"}
+    assert not result["complete"] and not result["trainingAllowed"] and not result["publicationAllowed"]
+    assert prediction_feature_coverage(identity, {"a": item}, ["a"], p, s)["complete"]
+    assert not prediction_feature_coverage(identity, {}, [], p, s)["complete"]
+    return 3
+
+
 if __name__ == "__main__":
     print("prediction timestamp cases:", test_prediction_time_check())
     print("prediction identity cases:", test_prediction_identity_check())
     print("prediction input cases:", test_prediction_input_check())
     print("prediction acquisition cases:", test_prediction_acquisition_check())
+    print("prediction coverage cases:", test_prediction_feature_coverage())
