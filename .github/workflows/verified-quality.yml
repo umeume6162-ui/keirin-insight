@@ -24,6 +24,8 @@ jobs:
           python-version: '3.12'
       - name: Test missing-line candidate queue
         run: python tools/plan_missing_lines.py --self-test
+      - name: Check full-roster prediction input guards
+        run: python tools/race_card_score.py
       - name: Compile validation scripts
         run: python -m compileall -q tools
       - name: Check fallback and browser guard JavaScript syntax
