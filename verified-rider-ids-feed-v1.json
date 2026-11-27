@@ -1,10 +1,10 @@
 {
   "schema": "ki-official-rider-ids-v1",
-  "snapshotDate": "2026-11-27",
+  "snapshotDate": "2026-11-28",
   "sourceTab": "KI｜手動照合受付＋KI｜公式照合証拠",
   "verificationNote": "異なる2掲載元のプロフィール本文で氏名・府県・期別・6桁IDを照合。Google証拠保存と再読み取り済み。",
   "summary": {
-    "rows": 285
+    "rows": 287
   },
   "riders": [
     {
@@ -6862,6 +6862,54 @@
           "https://www.winticket.jp/keirin/cyclist/014280"
         ],
         "note": "2媒体プロフィール本文4項目一致・Google証拠保存再読済。証拠ID：MANUAL-V4-20261127-0620-014280"
+      }
+    },
+    {
+      "id": "014506",
+      "name": "磯田　旭",
+      "prefecture": "栃木",
+      "period": "96",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=014506",
+      "verifiedDate": "2026-11-28",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=014506",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=014506",
+          "https://www.winticket.jp/keirin/cyclist/014506"
+        ],
+        "note": "2掲載元プロフィール本文4項目一致・証拠保存再読済。証拠ID MANUAL-V4-20261128-0620-014506"
+      }
+    },
+    {
+      "id": "015723",
+      "name": "稲毛　知也",
+      "prefecture": "和歌山",
+      "period": "123",
+      "source": "https://www.keirin.jp/pc/racerprofile?snum=015723",
+      "verifiedDate": "2026-11-28",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://www.keirin.jp/pc/racerprofile?snum=015723",
+        "fields": [
+          "name",
+          "prefecture",
+          "period",
+          "id"
+        ],
+        "method": "two_distinct_sites_agree",
+        "matchingSources": [
+          "https://www.keirin.jp/pc/racerprofile?snum=015723",
+          "https://www.winticket.jp/keirin/cyclist/015723"
+        ],
+        "note": "2掲載元プロフィール本文4項目一致・証拠保存再読済。証拠ID MANUAL-V4-20261128-0620-015723"
       }
     }
   ],
