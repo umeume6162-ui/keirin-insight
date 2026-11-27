@@ -81,9 +81,11 @@ def prediction_identity_check(expected, observed):
     for key in ("race_id", "entrant_number", "entrant_id"):
         left, right = expected.get(key), observed.get(key)
         if key == "entrant_number":
-            valid = all(type(v) is int and v > 0 for v in (left, right))
+            valid = all(type(v) is int and 1 <= v <= 9 for v in (left, right))
         else:
             valid = all(isinstance(v, str) and v.strip() and v == v.strip() for v in (left, right))
+        if key == "entrant_id" and valid:
+            valid = all(re.fullmatch(r"[0-9]{6}", v) is not None for v in (left, right))
         if not valid:
             return "HOLD_UNKNOWN_IDENTITY"
         if left != right:
@@ -98,7 +100,11 @@ def test_prediction_identity_check():
              (dict(base, entrant_number=2), "HOLD_IDENTITY_MISMATCH"),
              (dict(base, entrant_id="000002"), "HOLD_IDENTITY_MISMATCH"),
              (dict(base, entrant_id=None), "HOLD_UNKNOWN_IDENTITY"),
-             (dict(base, entrant_number=True), "HOLD_UNKNOWN_IDENTITY")]
+             (dict(base, entrant_number=True), "HOLD_UNKNOWN_IDENTITY"),
+             (dict(base, entrant_number=10), "HOLD_UNKNOWN_IDENTITY"),
+             (dict(base, entrant_number=0), "HOLD_UNKNOWN_IDENTITY"),
+             (dict(base, entrant_id="12345"), "HOLD_UNKNOWN_IDENTITY"),
+             (dict(base, entrant_id="ABCDEF"), "HOLD_UNKNOWN_IDENTITY")]
     for observed, expected in cases:
         actual = prediction_identity_check(base, observed)
         if actual != expected:
