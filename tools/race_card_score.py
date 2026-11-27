@@ -73,5 +73,39 @@ def test_prediction_time_check():
             raise AssertionError((observed, predicted, start, expected, actual))
     return len(cases)
 
+
+def prediction_identity_check(expected, observed):
+    """Compare canonical race, entrant number and verified identity keys."""
+    if not isinstance(expected, dict) or not isinstance(observed, dict):
+        return "HOLD_UNKNOWN_IDENTITY"
+    for key in ("race_id", "entrant_number", "entrant_id"):
+        left, right = expected.get(key), observed.get(key)
+        if key == "entrant_number":
+            valid = all(type(v) is int and v > 0 for v in (left, right))
+        else:
+            valid = all(isinstance(v, str) and v.strip() and v == v.strip() for v in (left, right))
+        if not valid:
+            return "HOLD_UNKNOWN_IDENTITY"
+        if left != right:
+            return "HOLD_IDENTITY_MISMATCH"
+    return "IDENTITY_MATCH"
+
+
+def test_prediction_identity_check():
+    base = {"race_id": "race-a", "entrant_number": 1, "entrant_id": "000001"}
+    cases = [(base, "IDENTITY_MATCH"),
+             (dict(base, race_id="race-b"), "HOLD_IDENTITY_MISMATCH"),
+             (dict(base, entrant_number=2), "HOLD_IDENTITY_MISMATCH"),
+             (dict(base, entrant_id="000002"), "HOLD_IDENTITY_MISMATCH"),
+             (dict(base, entrant_id=None), "HOLD_UNKNOWN_IDENTITY"),
+             (dict(base, entrant_number=True), "HOLD_UNKNOWN_IDENTITY")]
+    for observed, expected in cases:
+        actual = prediction_identity_check(base, observed)
+        if actual != expected:
+            raise AssertionError((observed, expected, actual))
+    return len(cases)
+
+
 if __name__ == "__main__":
     print("prediction timestamp cases:", test_prediction_time_check())
+    print("prediction identity cases:", test_prediction_identity_check())
