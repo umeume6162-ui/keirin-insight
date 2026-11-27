@@ -1,6 +1,6 @@
 import unittest
 
-from audit_prediction_outcomes import audit_batch, audit_outcome
+from audit_prediction_outcomes import audit_batch, audit_ledger_export, audit_outcome
 
 
 class PredictionOutcomeTest(unittest.TestCase):
@@ -31,3 +31,23 @@ class PredictionOutcomeTest(unittest.TestCase):
                          {"HOLD_REVIEW_KEY_CONFLICT": 1})
         with self.assertRaisesRegex(ValueError, "duplicate prediction ID"):
             audit_batch([item, item], [saved])
+
+    def test_ledger_uses_only_formal_complete_order(self):
+        key = "2026-11-27|83|8"
+        data = {
+            "prediction_values": [["予想ID", "レースID", "車立て", "使用データ時点(JST)",
+                                   "予想記録日時(JST)", "三連単候補"],
+                                  ["a", key, "7", "2026-11-27 22:50 JST",
+                                   "2026-11-27 22:51 JST", "1-2-3"]],
+            "review_values": [["予想ID", "レースID"]],
+            "starts": {key: "2026-11-27 23:00 JST"},
+            "results": {"schema": "ki-public-results-index-v1",
+                        "races": [{"key": key, "size": 7, "officialVerification": {"status": "verified"}}]},
+            "riders": {"schema": "ki-rider-results-v1",
+                       "columns": ["date", "trackCode", "race", "number", "finishRaw"],
+                       "rows": [["2026-11-27", "83", 8, n, str(n)] for n in range(1, 8)]},
+        }
+        report = audit_ledger_export(data)
+        self.assertTrue(report["reports"][0]["exact_order"])
+        data["riders"]["rows"].pop()
+        self.assertEqual(audit_ledger_export(data)["counts"], {"HOLD_INCOMPLETE_ORDER": 1})
