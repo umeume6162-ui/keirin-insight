@@ -113,14 +113,14 @@ def test_prediction_identity_check():
 
 
 
-def prediction_input_check(expected, observed, observed_at, predicted_at, start_at, phase):
+def prediction_input_check(expected, observed, observed_at, predicted_at, start_at, phase, *, acquired_at=None):
     """Candidate eligibility only; provenance and official approval remain separate."""
     if phase != "pre_race":
         return "HOLD_NON_PRE_RACE"
     identity = prediction_identity_check(expected, observed)
     if identity != "IDENTITY_MATCH":
         return identity
-    timing = prediction_time_check(observed_at, predicted_at, start_at)
+    timing = prediction_acquisition_check(observed_at, acquired_at, predicted_at, start_at)
     if timing != "TIME_PASS":
         return timing
     return "CANDIDATE_ONLY"
@@ -140,10 +140,15 @@ def test_prediction_input_check():
         (base, "2026-11-28T12:01:00+09:00", "pre_race", "HOLD_AFTER_PREDICTION"),
     ]
     for observed, stamp, phase, expected in cases:
-        actual = prediction_input_check(base, observed, stamp, p, s, phase)
+        actual = prediction_input_check(base, observed, stamp, p, s, phase, acquired_at=stamp)
         if actual != expected:
             raise AssertionError((expected, actual))
-    return len(cases)
+    extra = [(None, "HOLD_UNKNOWN_TIME"), ("2026-11-28T12:00:01+09:00", "HOLD_AFTER_PREDICTION")]
+    for acquired, expected in extra:
+        actual = prediction_input_check(base, base, p, p, s, "pre_race", acquired_at=acquired)
+        if actual != expected:
+            raise AssertionError((expected, actual))
+    return len(cases) + len(extra)
 
 
 
