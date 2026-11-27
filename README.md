@@ -9,8 +9,13 @@
 - **サイト監視・集計**は既存Actionsが担当します。GASや旧台帳の利用状況と保護条件もV4に記載しています。
 - 過去の実測値、試験、旧仕様はGitの変更履歴を参照してください。
 
+## 競輪・競馬共通の予想仕様
+
+サイト内で開催・レースを選び、発走前のデータから予想と根拠を表示し、確定後の結果検証に接続する方針は [V4 §1](tools/STAGED_INTAKE_V4.md#1-目的正本と優先順位) を参照してください。
+
 ## リンク
 
 - [KEIRIN INSIGHT｜予想・研究](https://umeume6162-ui.github.io/keirin-insight/)
+- [正式な並び予想と確定結果](https://umeume6162-ui.github.io/keirin-insight/line-forecast.html)
 - [日次出走表・結果](https://umeume6162-ui.github.io/keirin-insight/daily-board.html)
 - [本番Googleスプレッドシート](https://docs.google.com/spreadsheets/d/1gCe5q5STYH0T8XKqxJbVawB0Cl8TPsCISFJiRUdA02M/edit)
