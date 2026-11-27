@@ -231,7 +231,11 @@ def prediction_race_coverage(race_id, roster, observations, required, predicted_
     for identity in roster:
         if prediction_identity_check(identity, identity) != "IDENTITY_MATCH":
             race_state = "HOLD_UNKNOWN_IDENTITY"
-            break
+            if isinstance(identity, dict) and type(identity.get("entrant_number")) is int:
+                number = identity["entrant_number"]
+                entrants.setdefault(number, prediction_feature_coverage(
+                    identity, observations.get(number, {}), required, predicted_at, start_at))
+            continue
         number = identity["entrant_number"]
         entrant_id = identity["entrant_id"]
         if identity["race_id"] != race_id or number in entrants or entrant_id in entrant_ids:
@@ -378,7 +382,9 @@ def test_daily_board_prediction_audit():
     report = daily_board_prediction_audit(race, riders, cutoff)
     assert report["state"] == "HOLD_INCOMPLETE_FEATURES" and report["missingIds"] == []
     assert report["entrants"][7]["states"]["line"] == "HOLD_MISSING"
-    assert daily_board_prediction_audit(race, riders[:-1], cutoff)["missingIds"] == [7]
+    partial = daily_board_prediction_audit(race, riders[1:], cutoff)
+    assert partial["missingIds"] == [1] and len(partial["entrants"]) == 7
+    assert partial["state"] == "HOLD_UNKNOWN_IDENTITY"
     assert daily_board_prediction_audit(dict(race, entries=race["entries"][:-1]), riders, cutoff)["state"] == "HOLD_INCOMPLETE_ROSTER"
     return 3
 
