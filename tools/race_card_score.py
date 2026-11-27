@@ -366,7 +366,16 @@ def daily_board_prediction_audit(race, rider_ids, predicted_at):
     if not str(race.get("className", "")).startswith("L"):
         required.append("line")
     report = prediction_race_coverage(race_id, roster, observations, required, predicted, start_at)
-    return dict(report, raceId=race_id, rosterCount=count, missingIds=missing_ids)
+    source_states = {}
+    for feature in required:
+        source_url = race.get("lineSourceUrl") if feature == "line" else stats_source.get("url")
+        captured = line_time if feature == "line" else stats_time
+        if not source_url:
+            source_states[feature] = "HOLD_MISSING_SOURCE"
+        else:
+            source_states[feature] = prediction_acquisition_check(captured, captured, predicted, start_at)
+    return dict(report, raceId=race_id, rosterCount=count, missingIds=missing_ids,
+                sourceStates=source_states)
 
 
 def test_daily_board_prediction_audit():
@@ -386,7 +395,12 @@ def test_daily_board_prediction_audit():
     assert partial["missingIds"] == [1] and len(partial["entrants"]) == 7
     assert partial["state"] == "HOLD_UNKNOWN_IDENTITY"
     assert daily_board_prediction_audit(dict(race, entries=race["entries"][:-1]), riders, cutoff)["state"] == "HOLD_INCOMPLETE_ROSTER"
-    return 3
+    assert report["sourceStates"]["score"] == "HOLD_MISSING_SOURCE"
+    race["riderStatsSource"] = {"url": "https://example.test/stats", "capturedAt": "2026-11-28 12:01 JST"}
+    assert daily_board_prediction_audit(race, riders, cutoff)["sourceStates"]["score"] == "HOLD_AFTER_PREDICTION"
+    race["riderStatsSource"]["capturedAt"] = "2026-11-28"
+    assert daily_board_prediction_audit(race, riders, cutoff)["sourceStates"]["score"] == "HOLD_UNKNOWN_TIME"
+    return 6
 
 
 if __name__ == "__main__":
