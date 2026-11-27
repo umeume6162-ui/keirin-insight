@@ -453,18 +453,55 @@ def save_line_cells(board,cache):
         raise ValueError("Daily line reread mismatch")
     return len(planned)
 
+
+def audit_stats_cache(board, cache, race_date):
+    """Explain missing daily stats without fetching sources or changing feeds."""
+    from collections import Counter
+
+    if board.get("schema") != "ki-daily-board-v1" or cache.get("schema") != SCHEMA:
+        raise ValueError("Unknown board or cache schema")
+    counts = Counter()
+    for race in board["races"]:
+        if race.get("date") != race_date:
+            continue
+        url, sig = source_url(race), signature(race)
+        if not url or not sig:
+            counts["notApplicable"] += 1
+            continue
+        key = race.get("key")
+        record = cache["races"].get(key) or {}
+        hold = cache.get("holds", {}).get(key) or {}
+        if race.get("riderStatsSource"):
+            counts["attached"] += 1
+        elif record.get("sourceUrl") == url and record.get("signature") == sig:
+            counts["cacheRecordWithoutAttachment"] += 1
+        elif hold.get("sourceUrl") == url and hold.get("signature") == sig:
+            counts["hold:" + hold.get("reasonCode", "unknown")] += 1
+        elif record or hold:
+            counts["staleEvidence"] += 1
+        else:
+            counts["noRetainedEvidence"] += 1
+    return dict(sorted(counts.items()))
+
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--feed",default="daily-board-feed-v1.json")
     p.add_argument("--cache",default="daily-rider-stats-v1.json")
     p.add_argument("--limit",type=int,default=16)
     p.add_argument("--save-lines",action="store_true",help="Fill only validated blank daily line cells with source notes")
+    p.add_argument("--audit-cache-date", help="Read-only cache diagnostics for YYYY-MM-DD")
     p.add_argument("--self-test",action="store_true")
     a=p.parse_args()
     if a.self_test:return self_test()
     board_path,cache_path=Path(a.feed),Path(a.cache)
     board=json.loads(board_path.read_text(encoding="utf-8"))
     cache=json.loads(cache_path.read_text(encoding="utf-8")) if cache_path.exists() else {"schema":SCHEMA,"races":{}}
+    if a.audit_cache_date:
+        if a.save_lines:
+            p.error("--audit-cache-date cannot be combined with --save-lines")
+        print(json.dumps(audit_stats_cache(board, cache, a.audit_cache_date), ensure_ascii=False))
+        return
     stats=enrich(board,cache,limit=a.limit)
     if a.save_lines:
         print('DAILY_LINE_CELLS_SAVED',save_line_cells(board,cache))
