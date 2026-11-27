@@ -1,4 +1,4 @@
-"""Read-only comparison of starting line roles in verified A1/A2 3-2-2 races."""
+"""Read-only comparison of starting line roles in verified A1/A2 races."""
 import argparse
 from collections import Counter, defaultdict
 import json
@@ -15,7 +15,7 @@ def identity(name, prefecture, period):
                  for value in (name, prefecture, period))
 
 
-def summarize(results, lines, riders):
+def summarize(results, lines, riders, *, compare_same_meeting=False):
     """Exclude races without a complete identity match or unique top three."""
     if not all(isinstance(feed, dict) for feed in (results, lines, riders)):
         raise ValueError("Expected three feed objects")
@@ -30,6 +30,9 @@ def summarize(results, lines, riders):
 
     counters = defaultdict(lambda: {role: Counter(runners=0, wins=0, top_three=0) for role in ROLES})
     included, excluded = set(), Counter()
+    matched = defaultdict(lambda: defaultdict(list))
+    comparison_shapes = {(2, 2, 3): "3-2-2", (1, 3, 3): "3-3-1"}
+    allowed_shapes = comparison_shapes if compare_same_meeting else {(2, 2, 3)}
     seen = set()
     for race in results["races"]:
         key = race["key"]
@@ -40,7 +43,8 @@ def summarize(results, lines, riders):
         if race.get("grade") != "A1/A2" or race.get("size") != 7 or not line:
             continue
         groups = line.get("forecastGroups") or []
-        if line.get("lineMode") in ("no_line", "contested") or sorted(map(len, groups)) != [2, 2, 3]:
+        shape = tuple(sorted(map(len, groups)))
+        if line.get("lineMode") in ("no_line", "contested") or shape not in allowed_shapes:
             continue
         rows = rider_by_key[key]
         number_to_row = {row[8]: row for row in rows}
@@ -59,6 +63,11 @@ def summarize(results, lines, riders):
         if sorted(place for place in rank.values() if place <= 3) != [1, 2, 3]:
             excluded["ambiguous_top_three"] += 1
             continue
+        if compare_same_meeting:
+            meeting = key.rsplit("|", 1)[0]
+            matched[meeting][comparison_shapes[shape]].append(
+                [tuple(rank[n] for n in group) for group in groups if len(group) == 3])
+            continue
         included.add(key)
         for group in groups:
             roles = ROLES[:3] if len(group) == 3 else ROLES[3:]
@@ -68,17 +77,32 @@ def summarize(results, lines, riders):
                     count["runners"] += 1
                     count["wins"] += rank[number] == 1
                     count["top_three"] += rank[number] <= 3
+    if compare_same_meeting:
+        shared = [meeting for meeting in matched.values() if len(meeting) == 2]
+        shapes = {}
+        for name in comparison_shapes.values():
+            races = [race_lines for meeting in shared for race_lines in meeting[name]]
+            grouped = [line for race_lines in races for line in race_lines]
+            shapes[name] = {
+                "races": len(races),
+                "three_rider_lines": len(grouped),
+                "roles": {role: {"wins": sum(line[i] == 1 for line in grouped),
+                                 "top_three": sum(line[i] <= 3 for line in grouped)}
+                          for i, role in enumerate(ROLES[:3])},
+            }
+        return {"matched_meetings": len(shared), "formations": shapes, "excluded": dict(excluded)}
     return {"races": len(included), "excluded": dict(excluded), "roles": dict(counters)}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--directory", type=Path, default=Path("."))
+    parser.add_argument("--compare-same-meeting", action="store_true")
     args = parser.parse_args()
     names = ("verified-results-feed-v1.json", "verified-line-snapshots-feed-v1.json",
              "verified-rider-results-feed-v1.json")
     data = [json.loads((args.directory / name).read_text(encoding="utf-8")) for name in names]
-    print(json.dumps(summarize(*data), ensure_ascii=False, indent=2))
+    print(json.dumps(summarize(*data, compare_same_meeting=args.compare_same_meeting), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
