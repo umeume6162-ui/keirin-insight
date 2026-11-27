@@ -49,3 +49,26 @@ def prediction_time_check(observed_at, predicted_at, start_at):
     if observed > predicted:
         return "HOLD_AFTER_PREDICTION"
     return "TIME_PASS"
+
+
+def test_prediction_time_check():
+    """Regression cases for temporal eligibility."""
+    p = "2026-11-28T12:00:00+09:00"
+    s = "2026-11-28T12:30:00+09:00"
+    cases = [
+        (p, p, s, "TIME_PASS"),
+        ("2026-11-28T11:59:59+09:00", p, s, "TIME_PASS"),
+        ("2026-11-28T12:00:01+09:00", p, s, "HOLD_AFTER_PREDICTION"),
+        (s, p, s, "HOLD_POST_START"),
+        (p, s, s, "HOLD_POST_START"),
+        ("2026-11-28T12:30:01+09:00", p, s, "HOLD_POST_START"),
+        (None, p, s, "HOLD_UNKNOWN_TIME"),
+        ("2026-11-28T11:00:00", p, s, "HOLD_UNKNOWN_TIME"),
+        ("invalid", p, s, "HOLD_UNKNOWN_TIME"),
+        (p, p, None, "HOLD_UNKNOWN_TIME"),
+    ]
+    for observed, predicted, start, expected in cases:
+        actual = prediction_time_check(observed, predicted, start)
+        if actual != expected:
+            raise AssertionError((observed, predicted, start, expected, actual))
+    return len(cases)
