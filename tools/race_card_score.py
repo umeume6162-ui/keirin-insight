@@ -72,3 +72,6 @@ def test_prediction_time_check():
         if actual != expected:
             raise AssertionError((observed, predicted, start, expected, actual))
     return len(cases)
+
+if __name__ == "__main__":
+    print("prediction timestamp cases:", test_prediction_time_check())
