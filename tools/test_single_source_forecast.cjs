@@ -8,8 +8,15 @@ const base={
  'verified-rider-ids-feed-v1.json':JSON.parse(fs.readFileSync('verified-rider-ids-feed-v1.json')),
  'verified-line-snapshots-feed-v1.json':JSON.parse(fs.readFileSync('verified-line-snapshots-feed-v1.json'))
 };
+const usedRaceKeys=new Set([
+ ...base['verified-results-feed-v1.json'].races.map(x=>x.key),
+ ...base['verified-line-snapshots-feed-v1.json'].races.map(x=>x.key)
+]);
+let year=2099;
+while(usedRaceKeys.has(year+'-11-25|26|1'))year++;
+const date=year+'-11-25',key=date+'|26|1';
 const synthetic={
- id:'2026-11-25|26|1',key:'2026-11-25|26|1',date:'2026-11-25',
+ id:key,key,date,
  track:'西武園',trackCode:'26',race:1,size:7,verifiedDate:'2026-11-24',
  officialVerification:{status:'verified',source:'https://keirin.kdreams.jp/example/line-forecast',
   method:'published_single_source_forecast',forecastType:'media_prediction',
