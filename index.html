@@ -1,64 +1,307 @@
 <!doctype html>
 <html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07131e"><title>KEIRIN INSIGHT｜競輪研究ホーム</title>
-<meta name="description" content="競輪の出走表・結果と、独立照合された研究データを分けて確認するKEIRIN INSIGHT。">
+<meta name="theme-color" content="#07131e">
+<title>KEIRIN INSIGHT｜競輪の予想・研究</title>
+<meta name="description" content="競輪のレースを選び、発走前の並び予想、出走表、選手・バンクの傾向を確認。選んだレースの予想をChatGPTに依頼できます。">
 <link rel="stylesheet" href="./site-ui.css">
 <script src="./verified-publication-guard-v138.js"></script>
-<script>function kiGuardedFetch(...args){if(!window.KIVerified||window.KIVerified.version!=="13.8")return Promise.reject(Error("共通掲載検査が未取得です"));return window.fetch(...args)}</script>
-</head><body>
+<script src="./daily-line-groups.js"></script>
+<style>
+.home .main-nav{grid-template-columns:repeat(4,minmax(0,1fr))}
+.home main{padding-top:clamp(23px,5vw,54px)}
+.home h1{font-size:clamp(29px,5vw,48px);letter-spacing:-.035em}
+.home .lead{margin-bottom:22px}
+.picker{background:#0d2431;border-color:#3b6e6d;padding:0;overflow:hidden;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,5fr)}
+.picker-controls,.race-preview{padding:clamp(16px,4vw,30px);min-width:0}
+.race-preview{border-left:1px solid #315554;background:#0a1d2a}
+.race-preview h2{margin:0}
+.date-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:end;gap:8px}
+.date-row button{padding-inline:11px}
+.fields{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,3fr);gap:10px;margin-top:12px}
+.field label{display:block;font-size:13px;color:var(--muted);font-weight:700;margin-bottom:5px}
+.field input,.field select{display:block;width:100%;min-width:0;min-height:44px;font-size:16px}
+.field input[type=date]{appearance:none;-webkit-appearance:none;text-align:center}
+.field input[type=date]::-webkit-date-and-time-value{margin:0;text-align:center}
+.field select:disabled{opacity:.62}
+.pick-status{margin:10px 0 0;font-size:13px;color:var(--muted)}
+.pick-status:empty{display:none}
+.race-preview .actions{gap:8px;margin:16px 0 0}
+.race-preview .actions>*{min-height:44px;padding-inline:11px;font-size:14px}
+.preview-meta{color:var(--muted);margin:6px 0 0}
+.preview-content{margin-top:16px;border-top:1px solid var(--stroke);padding-top:13px}
+.preview-content[hidden],.race-preview [hidden]{display:none}
+.formation{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.formation span{padding:4px 9px;border:1px solid #437775;border-radius:7px;background:#153a40;color:#ddfff3;font-weight:800;letter-spacing:.04em}
+.preview-content textarea{box-sizing:border-box;width:100%;min-height:140px;padding:9px;color:var(--text);background:#081925;border:1px solid var(--stroke);border-radius:8px;font:inherit;font-size:16px}
+.home .research-links .link-card{min-height:94px}
+.home .site-footer{display:flex;gap:12px;flex-wrap:wrap}
+@media(max-width:680px){.picker{grid-template-columns:1fr}.race-preview{border-left:0;border-top:1px solid #315554}.home .lead{margin-bottom:14px}}
+</style>
+</head><body class="home">
 <a href="#main" class="skip">本文へ移動</a>
 <header class="site-header"><div class="header-inner">
 <a class="wordmark" href="./index.html"><span>KEIRIN</span> INSIGHT</a>
 <nav class="main-nav" aria-label="主要ページ">
-<a href="./index.html" aria-current="page">競輪ホーム</a>
-<a href="./daily-board.html">出走表・結果</a>
-<a href="./race-analysis-v12.html">実戦分析</a>
-<a href="./research-hub.html">データ管理</a>
-<a href="./horse.html">競馬</a>
+<a href="./index.html" aria-current="page">予想・研究</a><a href="./daily-board.html">出走表・結果</a>
+<a href="#research">研究メニュー</a><a href="./horse.html">競馬</a>
 </nav></div></header>
 <main id="main" class="shell">
-<section aria-labelledby="hero-title">
-<p class="eyebrow">KEIRIN INSIGHT / RACE RESEARCH</p>
-<h1 id="hero-title">今日のレースから、<br>次の予想につなげる。</h1>
-<p class="lead">出走表・結果・ライン・選手情報を、確認状態を明確に分けて整理する競輪研究サイトです。</p>
-<div class="actions"><a class="action-primary" href="./daily-board.html">今日・明日の出走表を見る</a><a class="action-secondary" href="./race-analysis-v12.html">実戦分析へ</a></div>
+<h1>競輪の予想・研究</h1>
+<p class="lead">レースを選んで、発走前の並びを確認したり、展開の予想を依頼したりできます。</p>
+<section class="surface picker" aria-labelledby="picker-title">
+<div class="picker-controls">
+<h2 id="picker-title">レースを選ぶ</h2>
+<div class="date-row">
+<div class="field"><label for="day">開催日</label><input class="form-input" id="day" type="date"></div>
+<button type="button" id="today">今日</button><button type="button" id="tomorrow">明日</button>
+</div>
+<div class="fields">
+<div class="field"><label for="venue">競輪場</label><select class="form-input" id="venue" disabled><option value="">競輪場を選択</option></select></div>
+<div class="field"><label for="race">レース</label><select class="form-input" id="race" disabled><option value="">Rを選択</option></select></div>
+</div>
+<p id="pick-status" class="pick-status" role="status">出走データを読み込み中…</p>
+</div>
+<section class="race-preview" aria-labelledby="race-title">
+<h2 id="race-title">レースの予想・資料</h2>
+<p id="race-meta" class="preview-meta">開催日と競輪場からレースを選んでください。</p>
+<div id="race-actions" class="actions" hidden>
+<button class="action-primary" type="button" id="show-forecast" aria-controls="forecast" aria-expanded="false">並び予想を見る</button>
+<button class="action-secondary" type="button" id="request" aria-controls="request-panel" aria-expanded="false">予想を依頼</button>
+<a class="action-secondary" id="card" href="./daily-board.html">出走表・結果</a>
+</div>
+<div id="forecast" class="preview-content" aria-live="polite" hidden></div>
+<div id="request-panel" class="preview-content" hidden>
+<label for="request-text">ChatGPTに送る依頼文</label>
+<textarea id="request-text" readonly></textarea>
+<div class="actions"><button type="button" class="action-secondary" id="copy-request">依頼文をコピー</button>
+<a class="action-secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPTを開く</a></div>
+<p id="copy-status" class="pick-status" role="status"></p>
+</div>
 </section>
-<section class="section-head"><div><p class="eyebrow">DAILY</p><h2>毎日のレース</h2></div><span class="pill pending">出走表は未正式照合を含みます</span></section>
-<a class="link-card" href="./daily-board.html" style="min-height:0;display:flex;align-items:center;justify-content:space-between;gap:14px">
-<div><strong>開催日別 出走表・結果</strong><span>日付と競輪場で絞り込み、Rごとに選手・結果を確認</span></div><span aria-hidden="true" style="font-size:24px;color:var(--mint)">›</span></a>
-<section class="section-head"><div><p class="eyebrow">VERIFIED DATA</p><h2>公式確認済みデータ</h2></div></section>
-<section class="surface" aria-labelledby="verified-title">
-<h3 id="verified-title" style="margin-top:0">公開データの照合状況</h3>
-<p class="muted">下記は正式な掲載検査に合格したデータだけの件数です。未照合の出走表は含みません。</p>
-<div class="metrics">
-<div class="metric"><strong id="races">—</strong><small>照合済みレース</small></div>
-<div class="metric"><strong id="joint">—</strong><small>結果・ライン収録済み</small></div>
-<div class="metric"><strong id="ids">—</strong><small>本人確認済み選手</small></div>
-<div class="metric"><strong id="lines">—</strong><small>ライン収録済み</small></div>
-</div>
-<p id="status" role="status" style="overflow-wrap:anywhere">確認中…</p>
-<p id="last" class="muted" style="font-size:13px">最終確認：—</p>
-<button type="button" id="refresh">公開データを再確認</button>
-<p class="muted" style="font-size:12px">掲載基準に不一致があるときは、件数を推測して表示しません。</p>
 </section>
-<section class="section-head"><div><p class="eyebrow">RESEARCH</p><h2>研究メニュー</h2></div></section>
-<div class="cards" aria-label="研究ページ">
-<a class="link-card" href="./race-analysis-v12.html"><strong>実戦分析</strong><span>レースを選び、展開や特徴を検討</span></a>
-<a class="link-card" href="./rider-records-live.html"><strong>選手研究</strong><span>選手ID・過去成績を調査</span></a>
-<a class="link-card" href="./line-forecast.html"><strong>媒体の並び予想</strong><span>結果の有無にかかわらず出典付きの予想を表示</span></a>
-<a class="link-card" href="./line-scenario-lab.html"><strong>ライン研究</strong><span>発走前ラインと展開を検証</span></a>
-<a class="link-card" href="./track-results-live.html"><strong>競輪場研究</strong><span>競輪場別のレース傾向を確認</span></a>
-<a class="link-card" href="./race-index-live.html"><strong>正式結果検索</strong><span>照合済みレースを検索</span></a>
-<a class="link-card" href="./comparison-races.html"><strong>全車照合記録</strong><span>一致候補と保留を区別して確認</span></a>
+<section id="research" aria-labelledby="research-title">
+<div class="section-head"><h2 id="research-title">予想の根拠を研究する</h2></div>
+<div class="cards research-links">
+<a class="link-card" href="./race-analysis-v12.html"><strong>A級7車の実戦分析</strong><span>出走選手を比較し、展開仮説を組み立てる</span></a>
+<a class="link-card" href="./line-result-audit.html"><strong>ラインと着順</strong><span>番手・単騎・別線の決着を検証する</span></a>
+<a class="link-card" href="./track-results-live.html"><strong>競輪場別の傾向</strong><span>開催場ごとの着順・決まり手を調べる</span></a>
+<a class="link-card" href="./rider-records-live.html"><strong>選手の成績</strong><span>選手ごとの過去成績を確認する</span></a>
+<a class="link-card" href="./line-forecast.html"><strong>過去の並び予想</strong><span>発走前に掲載されたラインを確認する</span></a>
+<a class="link-card" href="./race-index-live.html"><strong>レース結果の検証</strong><span>過去の確定結果を探す</span></a>
 </div>
-<section class="section-head"><div><p class="eyebrow">DATA QUALITY</p><h2>更新状況・管理</h2></div></section>
-<div class="cards">
-<a class="link-card" href="./research-hub.html"><strong>データ管理</strong><span>掲載基準・収集と公開の状態</span></a>
-<a class="link-card" href="./race-audit-progress.html"><strong>照合進捗</strong><span>照合件数と確認の進み具合</span></a>
-<a class="link-card" href="./reconstruction-status.html"><strong>再構築研究</strong><span>過去データの検証状況</span></a>
-<a class="link-card" href="./publication-audit.html?v=14.8"><strong>公開品質監査</strong><span>掲載内容と品質基準の確認</span></a>
-</div>
-<footer class="site-footer">KEIRIN INSIGHTは独立した競輪研究サイトです。公式競輪サイトや投票サービスではありません。</footer>
+</section>
+<footer class="site-footer"><a href="./research-hub.html">データ管理</a><a href="./publication-audit.html?v=14.8">掲載基準</a></footer>
 </main>
-<script>(()=>{'use strict';const $=id=>document.getElementById(id);let busy=false,last=0;async function check(){if(busy)return;busy=true;last=Date.now();$('refresh').disabled=true;for(const k of ['races','joint','ids','lines'])$(k).textContent='—';$('status').textContent='確認中…';try{const [a,b,i,l]=await Promise.all(['results','rider-results','rider-ids','line-snapshots'].map(async k=>{const r=await kiGuardedFetch('./verified-'+k+'-feed-v1.json',{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const j=await r.json();if(j.publicationPolicy!=='ki-verified-only-v1')throw Error('掲載基準不一致');return j}));if(a.schema!=='ki-public-results-index-v1'||b.schema!=='ki-rider-results-v1'||i.schema!=='ki-official-rider-ids-v1'||l.schema!=='ki-line-snapshots-v1'||!Array.isArray(a.races)||!Array.isArray(b.rows)||!Array.isArray(i.riders)||!Array.isArray(l.races)||a.source_snapshot_date!==b.snapshotDate||a.latest_race_date!==b.latestEventDate||a.summary?.races!==a.races.length||b.summary?.races!==a.races.length||a.summary?.rider_rows!==b.rows.length||b.summary?.rows!==b.rows.length||i.summary?.rows!==i.riders.length||l.summary?.races!==l.races.length||a.races.reduce((n,r)=>n+r.size,0)!==b.rows.length)throw Error('配信データ整合性不成立');window.KIVerified.validate(a,b,i,l);const resultKeys=new Set(a.races.map(r=>r.key));const joint=l.races.filter(r=>resultKeys.has(r.key)).length;for(const [k,n] of [['races',a.races.length],['joint',joint],['ids',i.riders.length],['lines',l.races.length]])$(k).textContent=n.toLocaleString('ja-JP')+(k==='ids'?'人':'R');$('status').textContent=a.races.length?'最終掲載開催日：'+a.latest_race_date:'現在、掲載基準を満たす確定結果はありません。';}catch(e){$('status').textContent='公開データ確認不可：'+e.message}finally{$('last').textContent='最終確認：'+new Date().toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'});$('refresh').disabled=false;busy=false}}$('refresh').onclick=check;setInterval(()=>{if(!document.hidden&&Date.now()-last>=300000)check()},60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-last>=300000)check()});check()})();</script></body></html>
+<script>
+(() => {
+"use strict";
+const $ = id => document.getElementById(id);
+const day = $("day"), venue = $("venue"), race = $("race");
+const jst = date => date.toLocaleDateString("sv-SE",{timeZone:"Asia/Tokyo"});
+const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+const dailyPolicy = "source_sheet_unverified_do_not_treat_as_formal_PASS";
+const query = new URLSearchParams(location.search);
+const requestedDate = query.get("day") || "";
+let initialSelection = {venue:query.get("track"),race:query.get("race")};
+let board, current, races = [];
+let dayRequest = 0, forecastRequest = 0;
+const histories = new Map();
+
+function node(tag, text, className) {
+  const element = document.createElement(tag);
+  element.textContent = text;
+  if(className)element.className = className;
+  return element;
+}
+
+function options(select, placeholder, values) {
+  select.replaceChildren(new Option(placeholder,""),...values.map(([value,label])=>new Option(label,value)));
+  select.disabled = values.length===0;
+}
+
+function trackLink(r) {
+  return "./daily-board.html?" + new URLSearchParams({day:r.date,track:r.track,race:r.race});
+}
+
+function title(r) { return r.date + " " + r.track + " " + r.race + "R"; }
+
+function requestText(r) {
+  return [
+    "KEIRIN INSIGHTの " + title(r) + " を予想してください。",
+    "出走表 " + new URL(trackLink(r),location.href).href,
+    "発走前に確認できた材料を使い、ライン・先行候補・番手・単騎、選手の競走得点・S/B・直近成績、バンク傾向を確認してください。",
+    "主な展開と別展開、それぞれの軸候補・相手候補と理由を示してください。競り・直付け、欠車、確認できない材料は分けてください。",
+    "すでに終了したレースを研究する場合も、結論を作るまでは確定着順・払戻を参照せず、事前予想として扱ってください。"
+  ].join("\n");
+}
+
+async function fetchJson(url) {
+  const response = await fetch(url,{cache:"no-cache"});
+  if(!response.ok)throw Error("HTTP " + response.status);
+  return response.json();
+}
+
+function historyFor(date) {
+  if(!histories.has(date)){
+    histories.set(date,fetchJson("./daily-history/" + date + ".json").then(data=>{
+      if(data.schema!=="ki-daily-history-v1"||data.verification!==dailyPolicy||data.date!==date||!Array.isArray(data.races))throw Error("履歴形式を確認できません");
+      return data.races;
+    }).catch(error=>{histories.delete(date);throw error;}));
+  }
+  return histories.get(date);
+}
+
+function refreshRace() {
+  ++forecastRequest;
+  current = races.find(r=>r.track===venue.value&&String(r.race)===race.value);
+  $("race-actions").hidden = !current;
+  $("forecast").hidden = true;
+  $("request-panel").hidden = true;
+  $("show-forecast").setAttribute("aria-expanded","false");
+  $("request").setAttribute("aria-expanded","false");
+  $("copy-status").textContent = "";
+  $("race-title").textContent = current ? current.track + " " + current.race + "R" : "レースの予想・資料";
+  $("race-meta").textContent = current
+    ? [current.date,current.className,current.startTime&&"発走 "+current.startTime,current.results?.length&&"結果あり"].filter(Boolean).join(" ・ ")
+    : "開催日と競輪場からレースを選んでください。";
+  if(current){
+    $("card").href = trackLink(current);
+    $("request-text").value = requestText(current);
+  }
+}
+
+function refreshNumbers(preferred) {
+  const atVenue = races.filter(r=>r.track===venue.value).sort((a,b)=>a.race-b.race);
+  options(race,"Rを選択",atVenue.map(r=>[String(r.race),r.race+"R"]));
+  if(atVenue.some(r=>String(r.race)===preferred))race.value=preferred;
+  refreshRace();
+}
+
+async function showDay() {
+  const selected = day.value, sequence = ++dayRequest;
+  races = [];
+  options(venue,"競輪場を選択",[]);
+  refreshNumbers();
+  if(!board||!datePattern.test(selected))return;
+  $("pick-status").textContent = "出走データを読み込み中…";
+  try{
+    const source = selected>=board.windowStart&&selected<=board.windowEnd ? board.races : await historyFor(selected);
+    if(sequence!==dayRequest)return;
+    races = source.filter(r=>r.date===selected&&r.track&&Number.isInteger(r.race)&&r.race>=1&&r.race<=12);
+    const venues = [...new Set(races.map(r=>r.track))].sort((a,b)=>a.localeCompare(b,"ja"));
+    options(venue,"競輪場を選択",venues.map(name=>[name,name]));
+    if(venues.includes(initialSelection?.venue))venue.value=initialSelection.venue;
+    else if(venues.length===1)venue.value=venues[0];
+    refreshNumbers(initialSelection?.race);
+    initialSelection = null;
+    $("pick-status").textContent = venues.length ? "" : "この日の出走データはまだ表示できません。";
+  }catch(error){
+    if(sequence===dayRequest)$("pick-status").textContent = error.message==="HTTP 404"
+      ? "この日の日次履歴は未収録です。" : "出走データを読み込めませんでした。";
+  }
+}
+
+function capturedBeforeStart(captured, r) {
+  const match = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}) JST$/.exec(captured || "");
+  const start = /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(r.startTime) && Date.parse(r.date + "T" + r.startTime + ":00+09:00");
+  return Boolean(match && start && Date.parse(match[1]+"T"+match[2]+":00+09:00")<start);
+}
+
+function dailyForecast(r) {
+  const saved = r.lineSnapshots?.preRace;
+  const captured = saved?.capturedAt || r.lineCapturedAt;
+  const source = saved?.sourceUrl || r.lineSourceUrl;
+  if(!/^https:\/\//.test(source||"")||!capturedBeforeStart(captured,r))return null;
+  const entries = (r.entries||[]).map(entry=>saved ? {...entry,preRaceLine:saved.byCar?.[entry.number]} : entry);
+  const groups = allLines(entries);
+  return groups && {groups,captured};
+}
+
+async function showForecast() {
+  const r = current, panel = $("forecast"), sequence = ++forecastRequest;
+  if(!r)return;
+  panel.hidden = false;
+  $("show-forecast").setAttribute("aria-expanded","true");
+  panel.textContent = "発走前の並びを確認しています…";
+  const key = r.date+"|"+String(r.trackCode||r.key?.split("|")[1]||"").padStart(2,"0")+"|"+r.race;
+  const archived = dailyForecast(r);
+  const [verified, backup] = await Promise.allSettled([
+    Promise.resolve().then(()=>window.KIVerified.bundle()),
+    archived || historyFor(r.date).then(rows=>{
+      const saved = rows.find(row=>row.key===key||row.track===r.track&&row.race===r.race);
+      return saved ? dailyForecast(saved) : null;
+    })
+  ]);
+  if(sequence!==forecastRequest)return;
+  const official = verified.status==="fulfilled"&&verified.value[3].races.find(line=>line.id===key);
+  const daily = backup.status==="fulfilled"&&backup.value;
+  panel.replaceChildren(node("h3","発走前の並び予想"));
+  if(!official&&!daily){
+    panel.append(node("p",verified.status==="rejected"
+      ? "公式確認済みの予想を読み込めず、発走前と確認できる保存記録も表示できません。"
+      : "このレースの発走前の並び予想はまだ表示できません。","muted"));
+    return;
+  }
+  if(official?.lineMode==="no_line"){
+    panel.append(node("p","個人戦のためラインなし。","muted"));
+    return;
+  }
+  const groups = official
+    ? official.lineMode==="contested" ? [official.originalFormation] : official.forecastGroups.map(group=>group.join("－"))
+    : daily.groups.map(group=>group.join("－"));
+  const formation = node("div","","formation");
+  formation.append(...groups.map(group=>node("span",group)));
+  panel.append(formation,node("p",official
+    ? "掲載確認済みの媒体予想。実走の隊列は含みません。"
+    : "日次の発走前記録（未正式照合） ・ 取得 " + daily.captured,"muted"));
+}
+
+function shiftDay(offset) {
+  const date = new Date();
+  date.setUTCDate(date.getUTCDate()+offset);
+  day.value = jst(date);
+  showDay();
+}
+
+day.addEventListener("change",showDay);
+venue.addEventListener("change",()=>refreshNumbers());
+race.addEventListener("change",refreshRace);
+$("today").addEventListener("click",()=>shiftDay(0));
+$("tomorrow").addEventListener("click",()=>shiftDay(1));
+$("show-forecast").addEventListener("click",()=>{
+  if($("forecast").hidden)showForecast();
+  else{
+    ++forecastRequest;
+    $("forecast").hidden = true;
+    $("show-forecast").setAttribute("aria-expanded","false");
+  }
+});
+$("request").addEventListener("click",()=>{
+  const panel = $("request-panel");
+  panel.hidden = !panel.hidden;
+  $("request").setAttribute("aria-expanded",String(!panel.hidden));
+});
+$("copy-request").addEventListener("click",async()=>{
+  const input = $("request-text"), text = input.value;
+  try{
+    await navigator.clipboard.writeText(text);
+    if(input.value===text)$("copy-status").textContent = "コピーしました。ChatGPTに貼り付けて送信できます。";
+  }catch{
+    if(input.value!==text)return;
+    input.focus();
+    input.select();
+    $("copy-status").textContent = "選択した依頼文をコピーしてください。";
+  }
+});
+day.value = datePattern.test(requestedDate) ? requestedDate : jst(new Date());
+if(!day.value)day.value = jst(new Date());
+fetchJson("./daily-board-feed-v1.json").then(data=>{
+  if(data.schema!=="ki-daily-board-v1"||data.verification!==dailyPolicy||!Array.isArray(data.races)
+     ||!datePattern.test(data.windowStart)||!datePattern.test(data.windowEnd))throw Error("配信形式を確認できません");
+  board = data;
+  return showDay();
+}).catch(()=>{$("pick-status").textContent = "出走データを読み込めませんでした。";});
+})();
+</script>
+</body></html>

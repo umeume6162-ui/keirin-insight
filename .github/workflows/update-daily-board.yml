@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'daily-board.html'
+      - 'daily-line-groups.js'
       - 'scripts/test_daily_board_ui.js'
       - 'scripts/discover_tospo_races.py'
       - 'scripts/auto_daily_tospo_intake.py'
@@ -25,6 +26,7 @@ on:
     paths:
       - 'index.html'
       - 'daily-board.html'
+      - 'daily-line-groups.js'
       - 'scripts/test_daily_board_ui.js'
       - 'site-ui.css'
       - 'scripts/collect_chariloto_entry.py'
@@ -189,8 +191,8 @@ jobs:
                   if tag=='script' and self.inside:
                       self.scripts.append(self.current)
                       self.inside=False
-          expected={'index.html':{'races','joint','ids','lines','status','last','refresh'},
-                    'daily-board.html':{'day','track','refresh','state','source','races','entry-count','result-count','stats-count','line-count'}}
+          expected={'index.html':{'day','venue','race','show-forecast','request','request-text'},
+                    'daily-board.html':{'day','track','refresh','state','source','races','race-number'}}
           for name,required in expected.items():
               content=Path(name).read_text(encoding='utf-8')
               check=Inspect()

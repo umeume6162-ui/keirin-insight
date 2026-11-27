@@ -8,7 +8,7 @@ const start=html.indexOf("function badge(number){");
 const end=html.indexOf("function buildRace(r){",start);
 assert(start>=0&&end>start,"Expected daily-board visual helper functions");
 const context={};
-vm.runInNewContext(html.slice(start,end)+
+vm.runInNewContext(fs.readFileSync("daily-line-groups.js","utf8")+html.slice(start,end)+
   "\nthis.checkLines=allLines;this.checkTopThree=topThree;",context);
 const make=(groups)=>groups.flatMap(g=>g.map(n=>({number:n,preRaceLine:g.length===1?"単騎":g.join("-")})));
 const groups=make([[4,1],[2,7,5],[6,3]]);
