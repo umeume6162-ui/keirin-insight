@@ -99,16 +99,29 @@ def fetch(url):
         raise ValueError("Racecard too large")
     return page.text
 
+class SourceShapeError(ValueError):
+    """A hold with fixed diagnostic codes safe to retain in the cache."""
+
+    def __init__(self, message, *details):
+        super().__init__(message)
+        self.details = details
+
+
 def extract(html,race,url,with_groups=False):
     soup=BeautifulSoup(html,"html.parser")
     title=clean(soup.title.get_text(" ",strip=True) if soup.title else "")
     y,m,d=map(int,race["date"].split("-"))
-    if (race["track"] not in title or
-        not re.search(rf"{y}年\s*0?{m}月\s*0?{d}日",title) or
-        not re.search(rf"(?<!\d){race['race']}\s*R(?!\d)",title)):
-        raise ValueError("Race title does not prove meeting/date/race")
+    checks = {
+        "title_venue": race["track"] in title,
+        "title_date": bool(re.search(rf"{y}年\s*0?{m}月\s*0?{d}日", title)),
+        "title_race_number": bool(re.search(rf"(?<!\d){race['race']}\s*R(?!\d)", title)),
+    }
+    missing = [field for field, matches in checks.items() if not matches]
+    if missing:
+        raise SourceShapeError("Race title does not prove meeting/date/race", *missing)
     tables=[]
-    for table in soup.select("table.RaceCard_Table"):
+    source_tables = soup.select("table.RaceCard_Table")
+    for table in source_tables:
         head=table.select_one("tr.Header")
         if not head:continue
         labels=[clean(c.get_text(" ",strip=True)).replace(" ","").replace("｜","ー")
@@ -119,12 +132,15 @@ def extract(html,race,url,with_groups=False):
                 and all(labels[i]==check[i] for i in range(len(check)) if i!=4)):
             tables.append(table)
     if len(tables)!=1:
-        raise ValueError("Unique full-name racecard table not found")
+        detail = "table_missing" if not source_tables else (
+            "table_header_mismatch" if not tables else "table_ambiguous")
+        raise SourceShapeError("Unique full-name racecard table not found", detail)
     table=tables[0]
     recorded=[]
     for row in table.select("tr.PlayerList"):
         cells=row.find_all("td",recursive=False)
-        if len(cells)!=len(HEADERS):raise ValueError("Racecard column count changed")
+        if len(cells)!=len(HEADERS):
+            raise SourceShapeError("Racecard column count changed", "table_row_width")
         car=clean(cells[1].get_text(" ",strip=True))
         if not car.isdigit() or not 1<=int(car)<=9:
             raise ValueError("Invalid car number in source")
@@ -271,6 +287,8 @@ def enrich(board,cache,loader=fetch,limit=16):
                "nextRetryAt":(now+timedelta(hours=hours)).isoformat(timespec="seconds"),
                "reasonType":type(exc).__name__,
                "reasonCode":hold_reason(exc)}
+            if isinstance(exc, SourceShapeError):
+                next_holds[race["key"]]["reasonDetails"] = list(exc.details)
     counts["deferred"]=max(0,len(pending)-limit)
     cache["races"]=dict(sorted(next_cache.items()))
     cache["holds"]=dict(sorted(next_holds.items()))
@@ -489,7 +507,8 @@ def audit_stats_cache(board, cache, race_date, *, details=False):
             row = {"raceKey": key, "state": state}
             if state.startswith("hold:"):
                 row.update(sourceUrl=url, lastAttemptAt=hold.get("lastAttemptAt"),
-                           nextRetryAt=hold.get("nextRetryAt"))
+                           nextRetryAt=hold.get("nextRetryAt"),
+                           reasonDetails=hold.get("reasonDetails", []))
             races.append(row)
     summary = dict(sorted(counts.items()))
     return {"counts": summary, "races": races} if details else summary
