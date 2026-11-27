@@ -73,13 +73,72 @@ def audit_batch(snapshots, existing):
     return {"counts": dict(counts), "reports": reports}
 
 
+def audit_ledger_export(data):
+    """Join raw prediction and review rows to the formal public result feeds."""
+    from collections import defaultdict
+
+    def table(rows, required):
+        if not rows or any(rows[0].count(name) != 1 for name in required):
+            raise ValueError("Unexpected ledger headers")
+        return [dict(zip(rows[0], row)) for row in rows[1:] if any(row)]
+
+    predictions = table(data["prediction_values"], (
+        "予想ID", "レースID", "車立て", "使用データ時点(JST)", "予想記録日時(JST)", "三連単候補"
+    ))
+    existing = table(data["review_values"], ("予想ID", "レースID"))
+    if (data["results"].get("schema") != "ki-public-results-index-v1"
+            or data["riders"].get("schema") != "ki-rider-results-v1"):
+        raise ValueError("Expected the formal result and rider result feeds")
+    index = {}
+    for race in data["results"]["races"]:
+        key = race["key"]
+        if key in index:
+            raise ValueError("Duplicate formal result key")
+        index[key] = race
+    by_race = defaultdict(list)
+    columns = data["riders"]["columns"]
+    required = ("date", "trackCode", "race", "number", "finishRaw")
+    if any(columns.count(name) != 1 for name in required):
+        raise ValueError("Unexpected rider result headers")
+    for row in data["riders"]["rows"]:
+        item = dict(zip(columns, row))
+        by_race[f"{item['date']}|{item['trackCode']}|{item['race']}"].append(item)
+
+    snapshots = []
+    legacy = 0
+    for row in predictions:
+        key = row.get("レースID") or ""
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}\|\d{2}\|(?:[1-9]|1[0-2])", key):
+            legacy += 1
+            continue
+        official = index.get(key, {})
+        finish = {str(r["finishRaw"]): r["number"] for r in by_race[key]}
+        size = str(row.get("車立て"))
+        confirmed = (official.get("officialVerification", {}).get("status") == "verified"
+                     and str(official.get("size")) == size)
+        places = [str(n) for n in range(1, int(size) + 1)] if size in ("7", "9") else []
+        order = []
+        if len(by_race[key]) == len(places) and set(finish) == set(places):
+            order = [finish[place] for place in places]
+        snapshots.append({"prediction": row, "result": {
+            "race_id": key, "start_at": data["starts"].get(key), "confirmed": confirmed, "order": order,
+        }})
+    report = audit_batch(snapshots, existing)
+    report["legacy_records_skipped"] = legacy
+    return report
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("snapshot", type=Path)
     args = parser.parse_args()
     data = json.loads(args.snapshot.read_text(encoding="utf-8"))
-    report = (audit_batch(data["snapshots"], data.get("existing", [])) if "snapshots" in data
-              else audit_outcome(data["prediction"], data["result"]))
+    if "prediction_values" in data:
+        report = audit_ledger_export(data)
+    elif "snapshots" in data:
+        report = audit_batch(data["snapshots"], data.get("existing", []))
+    else:
+        report = audit_outcome(data["prediction"], data["result"])
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
