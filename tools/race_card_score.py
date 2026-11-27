@@ -283,6 +283,106 @@ def test_prediction_race_coverage():
     return 8
 
 
+def sheet_capture_time(value):
+    """Parse an explicit JST timestamp, preserving its recorded precision."""
+    from datetime import datetime
+    if not isinstance(value, str):
+        return None
+    if re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}(?::[0-9]{2})? JST", value):
+        value = value.removesuffix(" JST") + "+09:00"
+    try:
+        stamp = datetime.fromisoformat(value)
+    except ValueError:
+        return None
+    if stamp.utcoffset() != timedelta(hours=9):
+        return None
+    return stamp.isoformat()
+
+
+
+def daily_board_prediction_audit(race, rider_ids, predicted_at):
+    """Audit saved daily-board stats and lines using the formal rider-ID feed."""
+    from collections import defaultdict
+    from audit_evidence_sheet import person
+
+    entries = race.get("entries", [])
+    count = race.get("expectedCount")
+    numbers = [entry.get("number") for entry in entries]
+    if count not in (7, 9) or any(type(number) is not int for number in numbers) or sorted(numbers) != list(range(1, count + 1)):
+        return {"state": "HOLD_INCOMPLETE_ROSTER", "entrants": {},
+                "trainingAllowed": False, "publicationAllowed": False}
+    race_day = race.get("date", "")
+    track = race.get("trackCode", "")
+    race_number = race.get("race")
+    if not isinstance(track, str) or not re.fullmatch(r"[0-9]{2}", track) or type(race_number) is not int or not 1 <= race_number <= 12:
+        raise ValueError("Canonical race key unavailable")
+    race_id = f"{date.fromisoformat(race_day).isoformat()}|{track}|{race_number}"
+    start_at = None
+    if race.get("startTime") and race.get("startTimeSourceUrl"):
+        start_at = sheet_capture_time(f"{race_day} {race['startTime']} JST")
+    predicted = sheet_capture_time(predicted_at)
+    cutoff_day = predicted[:10] if predicted else ""
+    by_person = defaultdict(set)
+    for rider in rider_ids:
+        if rider.get("officialVerification", {}).get("status") != "verified":
+            continue
+        verified = rider.get("verifiedDate", "")
+        registration = rider.get("id", "")
+        if not isinstance(verified, str) or not re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", verified) or verified >= cutoff_day:
+            continue
+        identity = [rider.get(key) for key in ("name", "prefecture", "period")]
+        if all(isinstance(value, str) and value.strip() for value in identity) and isinstance(registration, str) and re.fullmatch(r"[0-9]{6}", registration):
+            by_person[person(*identity)].add(registration)
+
+    stats_source = race.get("riderStatsSource") or {}
+    stats_time = sheet_capture_time(stats_source.get("capturedAt")) if stats_source.get("url") else None
+    line_time = sheet_capture_time(race.get("lineCapturedAt")) if race.get("lineSourceUrl") else None
+    roster, observations, missing_ids = [], {}, []
+    for entry in entries:
+        number = entry["number"]
+        name_fields = [entry.get(key) or "" for key in ("name", "prefecture", "period")]
+        matches = by_person.get(person(*name_fields), set())
+        registration = next(iter(matches)) if len(matches) == 1 else None
+        if registration is None:
+            missing_ids.append(number)
+        identity = {"race_id": race_id, "entrant_number": number, "entrant_id": registration}
+        roster.append(identity)
+        stats = entry.get("riderStats") or {}
+        observations[number] = {
+            feature: {"value": value, "identity": identity, "phase": "pre_race",
+                      "observed_at": captured, "acquired_at": captured}
+            for feature, value, captured in (
+                ("score", stats.get("score"), stats_time),
+                ("style", stats.get("style"), stats_time),
+                ("b", stats.get("b"), stats_time),
+                ("line", entry.get("preRaceLine"), line_time),
+            )
+        }
+    required = ["score", "style", "b"]
+    if not str(race.get("className", "")).startswith("L"):
+        required.append("line")
+    report = prediction_race_coverage(race_id, roster, observations, required, predicted, start_at)
+    return dict(report, raceId=race_id, rosterCount=count, missingIds=missing_ids)
+
+
+def test_daily_board_prediction_audit():
+    race = {"date": "2026-11-28", "trackCode": "46", "race": 1,
+            "expectedCount": 7, "className": "A3", "startTime": "12:30",
+            "startTimeSourceUrl": "https://example.test/card",
+            "entries": [{"number": n, "name": f"選手{n}", "prefecture": "東京", "period": "99"}
+                        for n in range(1, 8)]}
+    riders = [{"name": row["name"], "prefecture": "東京都", "period": "99期",
+               "id": f"{row['number']:06d}", "verifiedDate": "2026-11-27",
+               "officialVerification": {"status": "verified"}} for row in race["entries"]]
+    cutoff = "2026-11-28 12:00 JST"
+    report = daily_board_prediction_audit(race, riders, cutoff)
+    assert report["state"] == "HOLD_INCOMPLETE_FEATURES" and report["missingIds"] == []
+    assert report["entrants"][7]["states"]["line"] == "HOLD_MISSING"
+    assert daily_board_prediction_audit(race, riders[:-1], cutoff)["missingIds"] == [7]
+    assert daily_board_prediction_audit(dict(race, entries=race["entries"][:-1]), riders, cutoff)["state"] == "HOLD_INCOMPLETE_ROSTER"
+    return 3
+
+
 if __name__ == "__main__":
     print("prediction timestamp cases:", test_prediction_time_check())
     print("prediction identity cases:", test_prediction_identity_check())
@@ -290,3 +390,4 @@ if __name__ == "__main__":
     print("prediction acquisition cases:", test_prediction_acquisition_check())
     print("prediction coverage cases:", test_prediction_feature_coverage())
     print("prediction race coverage cases:", test_prediction_race_coverage())
+    print("source adapter cases:", test_daily_board_prediction_audit())
