@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>競馬の予想前データ | RACE INSIGHT</title>
+<link rel="stylesheet" href="./site-ui.css">
+<style>
+main { max-width: 38rem; margin-inline: auto; padding: 1rem; }
+label, select { display: block; }
+select { width: 100%; margin-block: .25rem 1rem; font: inherit; }
+dt { font-weight: 600; }
+dd { margin: 0 0 .75rem; }
+</style>
+<main>
+<a href="./index.html">競輪の予想・研究</a>
+<h1>競馬の予想前データ</h1>
+<div id="picker" hidden>
+<label for="race">開催日・競馬場・R</label>
+<select id="race"></select>
+</div>
+<p id="status" role="status">保存済みの検査集計を読み込んでいます…</p>
+<dl id="counts"></dl>
+</main>
+<script>
+"use strict";
+const feed = "https://raw.githubusercontent.com/umeume6162-ui/jra-insight/main/public-prediction-audits.json";
+const fields = [
+  ["expectedCount", "出走予定"],
+  ["missingIdCount", "公式馬IDの確認が必要"],
+  ["missingFormCount", "近走未収録"],
+  ["heldFormCount", "近走の再確認が必要"]
+];
+const venues = {
+  SAPPORO:"札幌", HAKODATE:"函館", FUKUSHIMA:"福島", NIIGATA:"新潟",
+  TOKYO:"東京", NAKAYAMA:"中山", CHUKYO:"中京", KYOTO:"京都", HANSHIN:"阪神", KOKURA:"小倉"
+};
+const states = {
+  CANDIDATE_ONLY:"保存済みの近走データを確認済み",
+  HOLD_UNKNOWN_IDENTITY:"予想保留。公式馬IDの確認が必要です。",
+  HOLD_INCOMPLETE_FEATURES:"予想保留。近走データが不足しています。",
+  HOLD_UNKNOWN_TIME:"予想保留。検査時点を確認できません。",
+  HOLD_POST_START:"予想保留。取得時刻を確認してください。",
+  HOLD_IDENTITY_MISMATCH:"予想保留。出馬表の照合が必要です。"
+};
+const race = document.getElementById("race");
+const counts = document.getElementById("counts");
+const status = document.getElementById("status");
+let reports = new Map();
+
+function labelRace(key) {
+  const match = /^(\d{4}-\d{2}-\d{2})-([A-Z]+)-(0[1-9]|1[0-2])$/.exec(key);
+  if (!match || !Object.hasOwn(venues, match[2])) throw new Error("Invalid race key");
+  return match[1] + " " + venues[match[2]] + " " + Number(match[3]) + "R";
+}
+
+function valid(row) {
+  return row && Object.keys(row).length === fields.length + 1 && Object.hasOwn(states, row.state) &&
+    Number.isInteger(row.expectedCount) && row.expectedCount >= 1 && row.expectedCount <= 18 &&
+    fields.every(([key]) => Number.isInteger(row[key]) && row[key] >= 0 && row[key] <= row.expectedCount) &&
+    row.missingIdCount + row.missingFormCount + row.heldFormCount <= row.expectedCount;
+}
+
+function render() {
+  const row = reports.get(race.value);
+  counts.replaceChildren();
+  if (!row) return;
+  status.textContent = states[row.state];
+  for (const [key, label] of fields) {
+    const title = document.createElement("dt");
+    const value = document.createElement("dd");
+    title.textContent = label;
+    value.textContent = row[key] + "頭";
+    counts.append(title, value);
+  }
+}
+
+race.addEventListener("change", render);
+fetch(feed).then(response => {
+  if (!response.ok) throw new Error("Public coverage unavailable");
+  return response.json();
+}).then(data => {
+  if (data.schema !== "jra-public-prediction-coverage-v1") throw new Error("Unknown schema");
+  const entries = Object.entries(data.reports || {}).sort(([a], [b]) => b.localeCompare(a));
+  if (!entries.length || !entries.every(([,row]) => valid(row))) throw new Error("Invalid coverage rows");
+  race.replaceChildren(...entries.map(([key]) => {
+    const option = document.createElement("option");
+    option.value = key;
+    option.textContent = labelRace(key);
+    return option;
+  }));
+  reports = new Map(entries);
+  document.getElementById("picker").hidden = false;
+  render();
+}).catch(() => {
+  status.textContent = "公開用の検査集計を読み込めませんでした。";
+});
+</script>
+</html>
