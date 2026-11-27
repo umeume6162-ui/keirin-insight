@@ -45,12 +45,42 @@ def audit_outcome(prediction, result):
                 exact_order=actual in picks, winning_car_listed=any(x[0] == actual[0] for x in picks))
 
 
+def audit_batch(snapshots, existing):
+    """Plan outcome reviews while preserving existing verification rows."""
+    from collections import Counter
+
+    verified = {}
+    for row in existing:
+        pred_id = row.get("予想ID")
+        race_id = row.get("レースID")
+        if pred_id and race_id:
+            verified.setdefault(pred_id, set()).add(race_id)
+    counts, reports, seen = Counter(), [], set()
+    for snapshot in snapshots:
+        prediction = snapshot["prediction"]
+        pred_id, race_id = prediction["予想ID"], prediction["レースID"]
+        if not pred_id or pred_id in seen:
+            raise ValueError("Missing or duplicate prediction ID")
+        seen.add(pred_id)
+        known = verified.get(pred_id)
+        if known:
+            state = "ALREADY_REVIEWED" if known == {race_id} else "HOLD_REVIEW_KEY_CONFLICT"
+            report = {"prediction_id": pred_id, "race_id": race_id, "state": state}
+        else:
+            report = audit_outcome(prediction, snapshot["result"])
+        counts[report["state"]] += 1
+        reports.append(report)
+    return {"counts": dict(counts), "reports": reports}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("snapshot", type=Path)
     args = parser.parse_args()
     data = json.loads(args.snapshot.read_text(encoding="utf-8"))
-    print(json.dumps(audit_outcome(data["prediction"], data["result"]), ensure_ascii=False, indent=2))
+    report = (audit_batch(data["snapshots"], data.get("existing", [])) if "snapshots" in data
+              else audit_outcome(data["prediction"], data["result"]))
+    print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
