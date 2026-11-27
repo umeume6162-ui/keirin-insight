@@ -2,10 +2,10 @@
   "schema": "ki-line-snapshots-v1",
   "snapshotDate": "2026-11-27",
   "sourceTab": "VERIFIED publication",
-  "verificationNote": "2026-11-25西武園1・4Rの発走前予想を全車照合・証拠再読後に追加。",
+  "verificationNote": "2026-11-25西武園7R・静岡8R/11Rの発走前予想を全車照合・証拠再読後に追加。",
   "summary": {
-    "races": 242,
-    "rider_rows": 1694
+    "races": 245,
+    "rider_rows": 1715
   },
   "races": [
     {
@@ -29591,6 +29591,377 @@
             5,
             7,
             2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25|26|7",
+      "key": "2026-11-25|26|7",
+      "date": "2026-11-25",
+      "track": "西武園",
+      "trackCode": "26",
+      "race": 7,
+      "size": 7,
+      "verifiedDate": "2026-11-27",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/seibuen/racedetail/2620261123030007/?pageType=showResult",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/seibuen/racedetail/2620261123030007/?pageType=showResult"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-27",
+          "evidenceRef": "LINE-KDREAMS-20261127-202611252607",
+          "sourceSnapshot": "KI｜日次出走表!A569:O575",
+          "archivedOriginalHtml": false,
+          "comparison": "発走前の全7車・並びを原文と照合。Google証拠行253を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          7,
+          1,
+          6
+        ],
+        [
+          3
+        ],
+        [
+          2,
+          5,
+          4
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "三ッ井 武",
+          "prefecture": "神奈川",
+          "period": "96",
+          "line": [
+            7,
+            1,
+            6
+          ]
+        },
+        {
+          "number": 2,
+          "name": "小林 申太",
+          "prefecture": "茨城",
+          "period": "101",
+          "line": [
+            2,
+            5,
+            4
+          ]
+        },
+        {
+          "number": 3,
+          "name": "小谷田 公則",
+          "prefecture": "福島",
+          "period": "88",
+          "line": [
+            3
+          ]
+        },
+        {
+          "number": 4,
+          "name": "佐藤 政利",
+          "prefecture": "新潟",
+          "period": "91",
+          "line": [
+            2,
+            5,
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "石川 雅望",
+          "prefecture": "群馬",
+          "period": "91",
+          "line": [
+            2,
+            5,
+            4
+          ]
+        },
+        {
+          "number": 6,
+          "name": "増田 利明",
+          "prefecture": "静岡",
+          "period": "81",
+          "line": [
+            7,
+            1,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "坪内 恒",
+          "prefecture": "千葉",
+          "period": "123",
+          "line": [
+            7,
+            1,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25|38|8",
+      "key": "2026-11-25|38|8",
+      "date": "2026-11-25",
+      "track": "静岡",
+      "trackCode": "38",
+      "race": 8,
+      "size": 7,
+      "verifiedDate": "2026-11-27",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124020008/?pageType=showResult",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124020008/?pageType=showResult"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-27",
+          "evidenceRef": "LINE-KDREAMS-20261127-202611253808",
+          "sourceSnapshot": "KI｜日次出走表!A492:O498",
+          "archivedOriginalHtml": false,
+          "comparison": "発走前の全7車・並びを原文と照合。Google証拠行254を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          3,
+          7,
+          1
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          4
+        ],
+        [
+          6
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "中本 匠栄",
+          "prefecture": "熊本",
+          "period": "97",
+          "line": [
+            3,
+            7,
+            1
+          ]
+        },
+        {
+          "number": 2,
+          "name": "中田 雄喜",
+          "prefecture": "福島",
+          "period": "97",
+          "line": [
+            2,
+            5
+          ]
+        },
+        {
+          "number": 3,
+          "name": "才迫 開",
+          "prefecture": "広島",
+          "period": "101",
+          "line": [
+            3,
+            7,
+            1
+          ]
+        },
+        {
+          "number": 4,
+          "name": "伊豆田 浩人",
+          "prefecture": "神奈川",
+          "period": "87",
+          "line": [
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "天田 裕輝",
+          "prefecture": "群馬",
+          "period": "91",
+          "line": [
+            2,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "北川 大五郎",
+          "prefecture": "大阪",
+          "period": "103",
+          "line": [
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "山口 敦也",
+          "prefecture": "佐賀",
+          "period": "113",
+          "line": [
+            3,
+            7,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25|38|11",
+      "key": "2026-11-25|38|11",
+      "date": "2026-11-25",
+      "track": "静岡",
+      "trackCode": "38",
+      "race": 11,
+      "size": 7,
+      "verifiedDate": "2026-11-27",
+      "officialVerification": {
+        "status": "verified",
+        "source": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124020011/?pageType=showResult",
+        "method": "published_single_source_forecast",
+        "forecastType": "media_prediction",
+        "matchingSources": [
+          "https://keirin.kdreams.jp/shizuoka/racedetail/3820261124020011/?pageType=showResult"
+        ],
+        "fields": [
+          "completePreRaceLineGroups",
+          "lineRiderNumbers",
+          "lineRiderIdentities"
+        ],
+        "sourceProof": {
+          "kind": "published_pre_race_forecast",
+          "provider": "楽天Kドリームス",
+          "retrievedDate": "2026-11-27",
+          "evidenceRef": "LINE-KDREAMS-20261127-202611253811",
+          "sourceSnapshot": "KI｜日次出走表!A513:O519",
+          "archivedOriginalHtml": false,
+          "comparison": "発走前の全7車・並びを原文と照合。Google証拠行255を再読。"
+        }
+      },
+      "forecastGroups": [
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          7,
+          6
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "riders": [
+        {
+          "number": 1,
+          "name": "児玉 虎之介",
+          "prefecture": "岐阜",
+          "period": "123",
+          "line": [
+            1,
+            5
+          ]
+        },
+        {
+          "number": 2,
+          "name": "塩島 嵩一朗",
+          "prefecture": "神奈川",
+          "period": "125",
+          "line": [
+            2,
+            7,
+            6
+          ]
+        },
+        {
+          "number": 3,
+          "name": "梶原 海斗",
+          "prefecture": "福岡",
+          "period": "123",
+          "line": [
+            3,
+            4
+          ]
+        },
+        {
+          "number": 4,
+          "name": "原井 博斗",
+          "prefecture": "福岡",
+          "period": "115",
+          "line": [
+            3,
+            4
+          ]
+        },
+        {
+          "number": 5,
+          "name": "藤田 勝也",
+          "prefecture": "和歌山",
+          "period": "94",
+          "line": [
+            1,
+            5
+          ]
+        },
+        {
+          "number": 6,
+          "name": "荻原 尚人",
+          "prefecture": "宮城",
+          "period": "89",
+          "line": [
+            2,
+            7,
+            6
+          ]
+        },
+        {
+          "number": 7,
+          "name": "菊池 竣太朗",
+          "prefecture": "静岡",
+          "period": "111",
+          "line": [
+            2,
+            7,
+            6
           ]
         }
       ]
