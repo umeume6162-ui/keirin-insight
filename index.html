@@ -231,6 +231,18 @@ function capturedBeforeStart(captured, r) {
   return Boolean(match && start && Date.parse(match[1]+"T"+match[2]+":00+09:00")<start);
 }
 
+function sourceCaptureLabel(source, captured, r) {
+  if (!/^https:\/\//.test(source || "")) return "出典未確認";
+  if (!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2} JST$/.test(captured || "") ||
+      !Number.isFinite(Date.parse(captured.replace(" JST", "+09:00").replace(" ", "T")))) {
+    return "取得時刻未確認";
+  }
+  if (!r.startTimeSourceUrl || !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(r.startTime || "")) {
+    return captured + "（発走時刻未確認）";
+  }
+  return captured + (capturedBeforeStart(captured, r) ? "（発走前）" : "（発走時刻以降）");
+}
+
 function renderInputStatus(r) {
   const panel = $("input-status");
   panel.replaceChildren();
@@ -260,7 +272,17 @@ function renderInputStatus(r) {
     missing.forEach(label => list.append(node("li", label)));
     panel.append(list);
   }
-  panel.append(node("p", "予想には、本人照合と予想時点の確認が必要です。"));
+  const times = node("dl", "");
+  const captured = [[
+    "選手統計の取得", sourceCaptureLabel(stats?.url, stats?.capturedAt, r)
+  ]];
+  if (!String(r.className || "").startsWith("L")) {
+    const line = r.lineSnapshots?.preRace;
+    captured.push(["ラインの取得", sourceCaptureLabel(
+      line?.sourceUrl || r.lineSourceUrl, line?.capturedAt || r.lineCapturedAt, r)]);
+  }
+  for (const [label, value] of captured) times.append(node("dt", label), node("dd", value));
+  panel.append(times, node("p", "予想には、本人照合と予想時点の確認が必要です。"));
 }
 
 function dailyForecast(r) {
