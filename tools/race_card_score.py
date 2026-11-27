@@ -216,9 +216,77 @@ def test_prediction_feature_coverage():
     return 3
 
 
+def prediction_race_coverage(race_id, roster, observations, required, predicted_at, start_at):
+    """Audit required features for every entrant in the trusted pre-race roster.
+
+    Observations are grouped by integer entrant number. The caller supplies
+    the complete roster and the required features for this race's conditions.
+    """
+    required = tuple(dict.fromkeys(required))
+    entrants = {}
+    entrant_ids = set()
+    race_state = prediction_time_check(predicted_at, predicted_at, start_at)
+    if race_state == "TIME_PASS":
+        race_state = "CANDIDATE_ONLY" if roster and required else "HOLD_MISSING"
+    for identity in roster:
+        if prediction_identity_check(identity, identity) != "IDENTITY_MATCH":
+            race_state = "HOLD_UNKNOWN_IDENTITY"
+            break
+        number = identity["entrant_number"]
+        entrant_id = identity["entrant_id"]
+        if identity["race_id"] != race_id or number in entrants or entrant_id in entrant_ids:
+            race_state = "HOLD_IDENTITY_MISMATCH"
+            break
+        entrant_ids.add(entrant_id)
+        entrants[number] = prediction_feature_coverage(
+            identity, observations.get(number, {}), required, predicted_at, start_at)
+    else:
+        if race_state == "CANDIDATE_ONLY" and not all(row["complete"] for row in entrants.values()):
+            race_state = "HOLD_INCOMPLETE_FEATURES"
+    return {
+        "state": race_state,
+        "entrants": entrants,
+        "trainingAllowed": False,
+        "publicationAllowed": False,
+    }
+
+
+def test_prediction_race_coverage():
+    predicted = "2026-11-28T12:00:00+09:00"
+    start = "2026-11-28T12:30:00+09:00"
+    first = {"race_id": "fixture", "entrant_number": 1, "entrant_id": "000001"}
+    second = dict(first, entrant_number=2, entrant_id="000002")
+    roster = [first, second]
+    feature = {"identity": first, "value": 0, "phase": "pre_race",
+               "observed_at": predicted, "acquired_at": predicted}
+    second_feature = dict(feature, identity=second)
+    observations = {1: {"form": feature}, 2: {"form": second_feature}}
+
+    def audit(entries=roster, data=observations, cutoff=start):
+        return prediction_race_coverage("fixture", entries, data, ["form"], predicted, cutoff)
+
+    complete = audit()
+    assert complete["state"] == "CANDIDATE_ONLY"
+    assert not complete["trainingAllowed"] and not complete["publicationAllowed"]
+    for replacement, reason in (
+        ({}, "HOLD_MISSING"),
+        ({"form": feature}, "HOLD_IDENTITY_MISMATCH"),
+        ({"form": dict(second_feature, acquired_at=start)}, "HOLD_POST_START"),
+    ):
+        report = audit(data={1: observations[1], 2: replacement})
+        assert report["state"] == "HOLD_INCOMPLETE_FEATURES"
+        assert report["entrants"][2]["states"]["form"] == reason
+    assert audit(entries=[first, dict(second, entrant_id=first["entrant_id"])])["state"] == "HOLD_IDENTITY_MISMATCH"
+    assert audit(entries=[first, first])["state"] == "HOLD_IDENTITY_MISMATCH"
+    assert audit(entries=[])["state"] == "HOLD_MISSING"
+    assert audit(cutoff=predicted)["state"] == "HOLD_POST_START"
+    return 8
+
+
 if __name__ == "__main__":
     print("prediction timestamp cases:", test_prediction_time_check())
     print("prediction identity cases:", test_prediction_identity_check())
     print("prediction input cases:", test_prediction_input_check())
     print("prediction acquisition cases:", test_prediction_acquisition_check())
     print("prediction coverage cases:", test_prediction_feature_coverage())
+    print("prediction race coverage cases:", test_prediction_race_coverage())
